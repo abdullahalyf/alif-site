@@ -1,0 +1,44 @@
+.travel-book { width: min(100% - 3rem, 76rem); margin-inline: auto; padding-block: 2rem 4rem; --book-progress: 0.125; }
+.travel-book > h2 { margin-bottom: 2rem; max-width: 20ch; }
+.travel-book-hint { font-size: 0.8125rem; color: var(--ink-muted); padding-block: 0.75rem; }
+.book-hint-snap, .book-hint-pinned { display: none; }
+.travel-book-track { display: grid; gap: 3rem; position: relative; }
+.travel-book-page { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); padding: 2rem 1.25rem; min-width: 0; border-bottom: 1px solid var(--line); }
+.travel-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; padding: 1rem; min-width: 0; align-items: center; }
+.travel-photo-grid--1 { grid-template-columns: 1fr; }
+.travel-photo-grid--3 .travel-frame:first-child { grid-column: 1 / -1; width: 70%; justify-self: center; }
+.travel-frame { position: relative; background: #fff; padding: 0.65rem 0.65rem 1rem; transform: rotate(var(--frame-tilt)); box-shadow: 0 7px 24px #1e1c191a; min-width: 0; }
+.travel-frame::before { content: ""; position: absolute; z-index: 1; top: -0.5rem; left: 35%; width: 30%; height: 1.15rem; transform: rotate(-7deg); background: #d6cebf9c; }
+.travel-frame img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.travel-frame figcaption { font-size: 0.75rem; margin-top: 0.65rem; color: var(--ink-muted); overflow-wrap: anywhere; }
+.travel-book-text { display: grid; gap: 1.15rem; min-width: 0; }
+.travel-book-text h3 { font-size: var(--type-h3); }
+.travel-label { font: 400 0.75rem/1.6 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+.travel-people { font-size: 0.875rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.travel-people > span { display: block; color: var(--ink-muted); margin-bottom: 0.35rem; }
+.travel-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; }
+.travel-tags li { padding: 0.2rem 0.65rem; border: 1px solid var(--line); border-radius: 999px; font-size: 0.75rem; }
+.travel-book-controls { display: none; align-items: center; gap: 1rem; padding: 1.5rem 0.25rem; }
+.travel-book-controls button { min-width: 44px; min-height: 44px; border: 1px solid var(--ink-muted); border-radius: 50%; background: var(--cream); color: var(--ink); }
+.travel-book-controls button:disabled { opacity: 0.45; cursor: default; }
+.travel-book-progress { flex: 1; height: 2px; background: var(--line); }
+.travel-book-progress > span { display: block; width: 100%; height: 100%; background: var(--ink); transform: scaleX(var(--book-progress)); transform-origin: left; }
+.travel-book-counter { font-size: 0.8125rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.travel-book[data-layout] .travel-book-controls { display: flex; }
+.travel-book[data-layout] .book-hint-list { display: none; }
+.travel-book[data-layout="snap"] .book-hint-snap, .travel-book[data-layout="pinned"] .book-hint-pinned { display: inline; }
+.travel-book[data-layout] .travel-book-track { display: flex; gap: 2rem; }
+.travel-book[data-layout] .travel-book-page { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
+.travel-book[data-layout="snap"] .travel-book-viewport { overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
+.travel-book[data-layout="pinned"] .travel-book-viewport { overflow: hidden; }
+.travel-book[data-layout="pinned"] .travel-frame img { max-height: clamp(110px, 22svh, 180px); }
+.travel-book[data-layout="pinned"] .travel-photo-grid--1 .travel-frame img { max-height: 40svh; }
+@media (max-width: 899px), (pointer: coarse) {
+  .travel-book-page { grid-template-columns: 1fr; align-content: start; padding: 1.25rem 0.75rem; }
+  .travel-photo-grid { width: min(100%, 30rem); justify-self: center; }
+  .travel-frame img { max-height: 24svh; }
+  .travel-photo-grid--1 .travel-frame img { max-height: 36svh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .travel-book-track, .travel-book-page, .travel-frame, .travel-frame img, .travel-book-text > * { animation: none !important; transition: none !important; }
+}
