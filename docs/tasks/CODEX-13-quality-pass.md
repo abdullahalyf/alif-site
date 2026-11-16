@@ -16,7 +16,7 @@ Agent: Codex **web/cloud** (repo checked out at main in its container) · Model:
    Notes: <max 5 lines>
    ```
 
-## Do NOT edit (another agent, Pookoo, is changing these right now)
+## Do NOT edit (another agent, Puku, is changing these right now)
 - any `src/app/**/page.tsx`, `src/app/layout.tsx`, `src/app/globals.css`
 - anything in `src/components/` and `src/lib/`
 - `src/content/site.ts` and `src/content/schema.ts`

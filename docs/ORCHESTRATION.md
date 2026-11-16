@@ -1,6 +1,6 @@
 # Orchestration workflow (Claude)
 
-Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connected) and **Pookoo** (Opus, Alif's PC at `E:\Projects\alif-site`) = builders. **Alif** = starts agents, says "done", gives real info.
+Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connected) and **Puku** (Opus, Alif's PC at `E:\Projects\alif-site`) = builders. **Alif** = starts agents, says "done", gives real info.
 
 ## Loop
 1. **Plan** — Claude writes a task file `docs/tasks/<AGENT>-<NN>-<name>.md` (agent + settings, run order, parts, file boundaries, report format), commits to main.
@@ -19,6 +19,6 @@ Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connect
 - Every task starts from latest main.
 
 ## Backlog
-- CODEX-11 Writing + Now (in progress) → CODEX-12 demo content → POOKOO-01 motion/brand/hero/polish → template ("plug-and-play" for other people: content folder + theme file + TEMPLATE.md) → real content from Alif (education, results, awards, projects, story photos, Alez screenshots).
+- CODEX-11 Writing + Now (in progress) → CODEX-12 demo content → PUKU-01 motion/brand/hero/polish → template ("plug-and-play" for other people: content folder + theme file + TEMPLATE.md) → real content from Alif (education, results, awards, projects, story photos, Alez screenshots).
 
 Live: https://alif-site-flame.vercel.app (Vercel auto-deploys main; PRs get previews).
