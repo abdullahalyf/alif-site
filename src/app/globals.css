@@ -169,3 +169,42 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .story-chapter:nth-child(even) figure { order: 0; }
   .story-chapter--1 figure { padding-top: 0; }
 }
+
+.page-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; padding-block: 3rem 5rem; }
+.page-intro p { max-width: 45ch; color: var(--ink-muted); }
+.approach-steps { list-style: none; padding: 0; }
+.approach-steps li { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: clamp(2.5rem, 5vw, 5rem); border-top: 1px solid var(--line); }
+.step-number { font: 400 var(--type-h1)/1 var(--font-serif); color: var(--ink-muted); }
+.approach-steps p { max-width: 50ch; }
+.work-list { list-style: none; padding: 0; }
+.work-list li { border-top: 1px solid var(--line); }
+.work-list li:last-child { border-bottom: 1px solid var(--line); }
+.work-row { display: grid; grid-template-columns: 12rem 1fr auto; gap: 2rem; align-items: center; position: relative; padding-block: 3rem; }
+.work-row h2 { font-size: var(--type-h3); max-width: 28ch; }
+.work-row:hover { text-decoration: none; }
+.work-row:hover h2, .work-row:focus-visible h2 { text-decoration: underline; text-underline-offset: 0.2em; }
+.work-arrow { font-size: 2rem; }
+.work-preview { display: none; }
+@media (min-width: 64rem) and (hover: hover) {
+  .work-preview { display: block; position: absolute; right: 4rem; top: 50%; width: 17rem; transform: translateY(-50%); opacity: 0; pointer-events: none; z-index: 2; }
+  .work-row:hover .work-preview, .work-row:focus-visible .work-preview { opacity: 1; }
+}
+.case-intro { display: grid; gap: 1.75rem; padding-block: 3rem; }
+.case-intro h1 { max-width: 22ch; }
+.case-cover .project-media { aspect-ratio: 16 / 9; }
+.case-sections { padding-block: 3rem; }
+.case-section { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; border-top: 1px solid var(--line); padding-block: 3rem; }
+.detail-list { display: grid; gap: 1rem; list-style: disc; padding-left: 1.25rem; max-width: 65ch; }
+.stack-pills { display: flex; flex-wrap: wrap; align-content: start; gap: 0.75rem; list-style: none; padding: 0; }
+.stack-pills li { border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 1rem; font-size: 0.875rem; }
+.next-project { padding-block: 3rem 1rem; }
+.next-project > a { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 2rem; font: 400 var(--type-h2)/1.1 var(--font-serif); }
+@media (max-width: 47.999rem) {
+  .page-intro, .case-section { grid-template-columns: 1fr; }
+  .approach-steps li { grid-template-columns: 3rem 1fr; gap: 1.25rem; }
+  .step-number { font-size: var(--type-h3); }
+  .approach-steps h2 { font-size: var(--type-h3); }
+  .work-row { grid-template-columns: 1fr auto; gap: 1rem; padding-block: 2rem; }
+  .work-row .label { grid-column: 1 / -1; }
+  .case-cover .project-media { aspect-ratio: 4 / 3; }
+}

@@ -162,3 +162,14 @@ export const aboutContent = {
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
 };
+
+export const pageContent = {
+  approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
+  workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
+  problem: "Problem",
+  solution: "Solution",
+  stack: "Stack",
+  results: "Results",
+  nextProject: "Next project",
+  projectLink: "Visit project",
+};
