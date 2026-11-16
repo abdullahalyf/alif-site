@@ -28,7 +28,6 @@ export const siteSchema = z.object({
   aboutPhoto: image,
   services: z.array(z.string().min(1)).min(1),
   tagline: z.string().min(1),
-  heroCutout: image,
   approach: z
     .array(z.object({ title: z.string().min(1), text: z.string().min(1) }))
     .min(1),

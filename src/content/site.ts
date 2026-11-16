@@ -48,12 +48,6 @@ export const site = {
     "Database design & access control",
   ],
   tagline: "Systems first, screens second.",
-  heroCutout: {
-    src: "/images/alif-cutout.png",
-    width: 818,
-    height: 1140,
-    alt: "Abdullah Alif in a cream patterned shirt, hands in pockets",
-  },
   approach: [
     {
       title: "Understand the business",

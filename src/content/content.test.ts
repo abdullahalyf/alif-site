@@ -19,7 +19,6 @@ describe("content", () => {
       site.heroPhoto,
       site.avatar,
       site.aboutPhoto,
-      site.heroCutout,
       ...site.story.map((c) => c.image),
       ...projects.flatMap((p) => p.images),
     ]
