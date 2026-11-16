@@ -5,7 +5,8 @@ import type { Site } from "./schema";
 export const site = {
   name: "Abdullah Alif",
   fullName: "Md. Abdullah Alif",
-  logoText: "© Built by Alif",
+  logoText: "Built by Alif",
+  logoInitial: "A",
   role: "Software Systems Architect & Freelance Developer",
   location: "Dhaka, Bangladesh",
   intro:

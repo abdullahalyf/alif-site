@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { shell, site } from "@/content/site";
+import { shell } from "@/content/site";
 import { Button } from "./button";
+import { BrandMark } from "./brand-mark";
 import { useHideOnScroll } from "@/lib/use-hide-on-scroll";
 
 const HIDE_THRESHOLD = 100;
@@ -46,7 +47,7 @@ export function Header() {
   return (
     <header className={`header ${hidden && !open ? "header--hidden" : ""}`}>
       <div className="container header-inner">
-        <Link className="logo" href={shell.home.href}>{site.logoText}</Link>
+        <BrandMark />
         <nav className="desktop-nav" aria-label={shell.navigation}>{links()}</nav>
         <button ref={trigger} className="menu-trigger button button--secondary" aria-expanded={open} aria-controls="mobile-menu" aria-haspopup="dialog" onClick={() => { dialog.current?.showModal(); setOpen(true); }}>
           {shell.menu}

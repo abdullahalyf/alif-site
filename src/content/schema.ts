@@ -19,6 +19,7 @@ export const siteSchema = z.object({
   name: z.string().min(1),
   fullName: z.string().min(1),
   logoText: z.string().min(1),
+  logoInitial: z.string().min(1),
   role: z.string().min(1),
   location: z.string().min(1),
   intro: z.string().min(1),
