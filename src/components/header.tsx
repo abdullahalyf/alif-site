@@ -5,13 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { shell, site } from "@/content/site";
 import { Button } from "./button";
+import { useHideOnScroll } from "@/lib/use-hide-on-scroll";
+
+const HIDE_THRESHOLD = 100;
 
 export function Header() {
   const pathname = usePathname();
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const hidden = useHideOnScroll(HIDE_THRESHOLD);
 
   function close() {
     dialog.current?.close();
@@ -31,17 +34,6 @@ export function Header() {
       media.removeEventListener("change", resize);
     };
   }, [open]);
-
-  useEffect(() => {
-    let previous = window.scrollY;
-    const scroll = () => {
-      const current = window.scrollY;
-      setHidden(current > 100 && current > previous);
-      previous = current;
-    };
-    window.addEventListener("scroll", scroll, { passive: true });
-    return () => window.removeEventListener("scroll", scroll);
-  }, []);
 
   function links() {
     return shell.nav.map((link) => (

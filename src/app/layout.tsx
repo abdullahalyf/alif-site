@@ -4,6 +4,7 @@ import { shell, site } from "@/content/site";
 import localFont from "next/font/local";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { SmoothScroll } from "@/components/motion";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
@@ -25,10 +26,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
       <body>
-        <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>
-        <Header />
-        <main id="main" tabIndex={-1}>{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>
+          <Header />
+          <main id="main" tabIndex={-1}>{children}</main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -12,8 +12,12 @@ type StaggerInProps = {
   distance?: number;
   /** ScrollTrigger start position. */
   start?: string;
+  /** Element to render. Use `li` when the group is a list. */
+  as?: ElementType;
+  /** Ref to the rendered element, for scrolling or measuring. */
+  listRef?: React.RefObject<HTMLElement | null>;
   className?: string;
-};
+} & Omit<ComponentProps<"div">, "children" | "className" | "ref">;
 
 /**
  * Slides a group of children in from the right, one after another, when the
@@ -28,10 +32,13 @@ export function StaggerIn({
   stagger = 0.09,
   distance = 48,
   start = "top 85%",
+  as: Component = "div",
+  listRef,
   className,
+  ...rest
 }: StaggerInProps) {
   const reducedMotion = useReducedMotion();
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -59,9 +66,14 @@ export function StaggerIn({
     };
   }, [reducedMotion, stagger, distance, start]);
 
+  const setRefs = (element: HTMLElement | null) => {
+    rootRef.current = element;
+    if (listRef) listRef.current = element;
+  };
+
   return (
-    <div ref={rootRef} className={className}>
+    <Component ref={setRefs} className={className} {...rest}>
       {children}
-    </div>
+    </Component>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -12,8 +12,10 @@ type RevealProps = {
   stagger?: number;
   /** ScrollTrigger start position. */
   start?: string;
+  /** Element to render. Use `li` when the group is a list. */
+  as?: ElementType;
   className?: string;
-};
+} & Omit<ComponentProps<"div">, "children" | "className" | "ref">;
 
 /**
  * Reveals its content when it scrolls into view: each child rises 24px and
@@ -29,10 +31,12 @@ export function Reveal({
   lines = false,
   stagger = 0.08,
   start = "top 85%",
+  as: Component = "div",
   className,
+  ...rest
 }: RevealProps) {
   const reducedMotion = useReducedMotion();
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (reducedMotion) return;
@@ -61,8 +65,8 @@ export function Reveal({
   }, [reducedMotion, lines, stagger, start]);
 
   return (
-    <div ref={rootRef} className={className}>
+    <Component ref={rootRef} className={className} {...rest}>
       {children}
-    </div>
+    </Component>
   );
 }

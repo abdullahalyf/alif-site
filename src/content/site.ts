@@ -137,6 +137,7 @@ export const site = {
 
 export const shell = {
   home: { label: "Home", href: "/" },
+  introWord: "Alif",
   nav: [
     { label: "Work", href: "/work" },
     { label: "Approach", href: "/approach" },

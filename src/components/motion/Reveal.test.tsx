@@ -55,4 +55,28 @@ describe("Reveal", () => {
     expect(html).not.toContain("opacity: 0");
     expect(html).not.toContain("opacity:0");
   });
+
+  it("renders as a list item when asked", () => {
+    mockMatchMedia(false);
+    const { container } = render(
+      <ul>
+        <Reveal as="li">
+          <p>Headline</p>
+        </Reveal>
+      </ul>,
+    );
+
+    expect(container.querySelector("li > p")).toHaveTextContent("Headline");
+  });
+
+  it("passes extra props to the rendered element", () => {
+    mockMatchMedia(false);
+    render(
+      <Reveal id="step-1" data-testid="step">
+        <p>Headline</p>
+      </Reveal>,
+    );
+
+    expect(screen.getByTestId("step")).toHaveAttribute("id", "step-1");
+  });
 });

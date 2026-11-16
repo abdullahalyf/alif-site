@@ -12,6 +12,9 @@
   --type-h1: clamp(3rem, 1.8rem + 5vw, 6rem);
   --type-h2: clamp(2.25rem, 1.5rem + 3vw, 4rem);
   --type-h3: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  /* Page colours. `BackgroundShift` overrides these while a dark section is in view. */
+  --page-bg: var(--cream);
+  --page-fg: var(--ink);
 }
 
 @theme inline {
@@ -31,7 +34,7 @@
 }
 
 html { scroll-padding-top: 7rem; }
-body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; }
+body { margin: 0; background: var(--page-bg); color: var(--page-fg); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; transition: background-color 400ms ease, color 400ms ease; }
 main { min-height: 60dvh; }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; }
 h1 { font-size: var(--type-h1); max-width: 18ch; }
@@ -40,6 +43,20 @@ h3 { font-size: var(--type-h3); }
 p { max-width: 65ch; }
 a { text-underline-offset: 0.25em; }
 a:hover { text-decoration: underline; }
+/* Links underline from the left on hover (DESIGN.md animation 8). */
+@media (hover: hover) {
+  a:not(.button):not(.work-row):not(.tagline) {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 260ms ease;
+  }
+  a:not(.button):not(.work-row):not(.tagline):hover {
+    text-decoration: none;
+    background-size: 100% 1px;
+  }
+}
 button, a { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 button:disabled { cursor: not-allowed; opacity: 0.6; }
@@ -59,8 +76,11 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .button--primary:hover { background: var(--cream); color: var(--ink); }
   .button--secondary:hover { background: var(--ink); color: var(--cream); }
 }
-.header { position: sticky; top: 0; z-index: 20; background: var(--cream); border-bottom: 1px solid var(--line); transition: transform 180ms; }
-.header--hidden { transform: translateY(-100%); }
+/* Intro overlay — created by JS only, so the page is visible without it. */
+.intro-overlay { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; overflow: hidden; }
+.intro-word { font-family: var(--font-serif); font-size: clamp(4rem, 18vw, 14rem); line-height: 1; letter-spacing: -0.03em; }
+
+.header { position: sticky; top: 0; z-index: 20; background: var(--cream); border-bottom: 1px solid var(--line); transition: transform 180ms; }.header--hidden { transform: translateY(-100%); }
 .header:focus-within { transform: none; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 5.5rem; gap: 1rem; flex-wrap: wrap; }
 .logo { font-size: 0.9rem; }
@@ -115,12 +135,10 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 .location span { width: 0.5rem; height: 0.5rem; background: var(--accent); border-radius: 50%; }
 .hero-panel { position: relative; margin-top: 3rem; border-radius: 24px; isolation: isolate; background: linear-gradient(var(--cream), var(--cream-2)); }
 .hero-panel::after { content: ""; position: absolute; inset: 65% 0 0; background: linear-gradient(transparent, var(--cream)); border-radius: 0 0 24px 24px; pointer-events: none; }
+.hero-photo-wrap { border-radius: 24px; overflow: hidden; }
 .hero-photo { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 35%; border-radius: 24px; }
 .hero-stripes { position: absolute; inset: -2rem 0 auto; height: 8rem; overflow: hidden; pointer-events: none; }
-.hero-stripes span { position: absolute; top: 0; left: 50%; width: 1px; height: 12rem; background: var(--line); transform: rotate(-45deg); transform-origin: top; }
-.hero-stripes span:nth-child(2) { left: 60%; }
-.hero-stripes span:nth-child(3) { left: 70%; }
-.hero-stripes span:nth-child(4) { left: 80%; }
+.hero-stripes svg { display: block; width: 100%; height: 100%; }
 .service-list { list-style: none; padding: 0; }
 .service-list li { display: grid; grid-template-columns: 2.5rem 1fr auto; align-items: baseline; gap: 1rem; border-top: 1px solid var(--line); padding-block: 1.75rem; }
 .service-list li:last-child { border-bottom: 1px solid var(--line); }
@@ -153,7 +171,8 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 }
 
 .about-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: center; }
-.about-intro > img { width: 100%; height: auto; border-radius: 1.5rem; }
+.about-photo-wrap { border-radius: 1.5rem; overflow: hidden; }
+.about-photo-wrap img { width: 100%; height: auto; border-radius: 1.5rem; }
 .story-chapters { display: grid; gap: clamp(4rem, 12vw, 10rem); }
 .story-chapter { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: center; }
 .story-chapter:nth-child(even) figure { order: 2; }
@@ -179,16 +198,12 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 .work-list { list-style: none; padding: 0; }
 .work-list li { border-top: 1px solid var(--line); }
 .work-list li:last-child { border-bottom: 1px solid var(--line); }
+.work-row-wrap { display: block; }
 .work-row { display: grid; grid-template-columns: 12rem 1fr auto; gap: 2rem; align-items: center; position: relative; padding-block: 3rem; }
 .work-row h2 { font-size: var(--type-h3); max-width: 28ch; }
 .work-row:hover { text-decoration: none; }
 .work-row:hover h2, .work-row:focus-visible h2 { text-decoration: underline; text-underline-offset: 0.2em; }
 .work-arrow { font-size: 2rem; }
-.work-preview { display: none; }
-@media (min-width: 64rem) and (hover: hover) {
-  .work-preview { display: block; position: absolute; right: 4rem; top: 50%; width: 17rem; transform: translateY(-50%); opacity: 0; pointer-events: none; z-index: 2; }
-  .work-row:hover .work-preview, .work-row:focus-visible .work-preview { opacity: 1; }
-}
 .case-intro { display: grid; gap: 1.75rem; padding-block: 3rem; }
 .case-intro h1 { max-width: 22ch; }
 .case-cover .project-media { aspect-ratio: 16 / 9; }
