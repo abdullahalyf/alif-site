@@ -1,0 +1,15 @@
+.travel-page-hero { padding-block: clamp(3rem, 8vw, 7rem) 3rem; }
+.travel-page-hero h1 { margin-bottom: 1.75rem; }
+.travel-page-intro { max-width: 48ch; font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); }
+.travel-demo-notice { color: var(--ink-muted); font-size: 0.8125rem; margin-top: 1.5rem; }
+.travel-places { padding-block: clamp(3rem, 8vw, 7rem); border-top: 1px solid var(--line); }
+.travel-places h2 { margin-bottom: 3rem; }
+.travel-places-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 1.5rem; }
+.travel-places-grid article { min-width: 0; }
+.travel-place-photo { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 0.4rem; background: var(--cream-2); margin-bottom: 1rem; }
+.travel-place-photo img { width: 100%; height: 100%; object-fit: cover; }
+.travel-places-grid h3 { margin-bottom: 0.75rem; font-size: var(--type-h3); }
+.travel-closing { padding-block: 3rem 6rem; display: grid; gap: 2rem; }
+.travel-closing > p { font-family: var(--font-serif); font-size: var(--type-h2); line-height: 1.1; max-width: 25ch; }
+@media (max-width: 899px) { .travel-places-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .travel-places-grid { grid-template-columns: 1fr; } }
