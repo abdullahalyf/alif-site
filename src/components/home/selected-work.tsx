@@ -11,7 +11,7 @@ export function SelectedWork() {
     <SectionLabel>{workContent.selectedLabel}</SectionLabel>
     <div className="section-heading"><h2 id="selected-title">{workContent.selectedTitle}</h2><Link className="text-link" href={shell.nav[0].href}>{workContent.allWork}<ArrowUpRight /></Link></div>
     <WorkCarousel>{projects.map((project) => <li className="project-card" key={project.slug}>
-      <Link href={shell.projectHref(project.slug)} aria-labelledby={`project-${project.slug}`}>
+      <Link href={shell.projectHref(project.slug)}>
         <ProjectMedia image={project.images[0]} />
         <p className="label">{project.category}</p>
         <h3 id={`project-${project.slug}`}>{project.title}</h3>

@@ -13,7 +13,7 @@ export default function Work() {
     <SectionLabel>{site.name}</SectionLabel>
     <div className="page-intro"><h1>{shell.workTitle}</h1><p>{pageContent.workIntro}</p></div>
     <ul className="work-list">{projects.map((project) => <li key={project.slug}>
-      <Link className="work-row" href={shell.projectHref(project.slug)} aria-labelledby={`work-${project.slug}`}>
+      <Link className="work-row" href={shell.projectHref(project.slug)}>
         <span className="label">{project.year} · {project.category}</span>
         <h2 id={`work-${project.slug}`}>{project.title}</h2>
         <ArrowUpRight className="work-arrow" />
