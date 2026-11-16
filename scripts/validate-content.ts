@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, statSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve, relative, sep } from 'node:path';
 import { z } from 'zod';
 import { site } from '../src/content/site';
@@ -19,7 +19,7 @@ function images(value: unknown, file: string, path = '') {
   if (typeof obj.src === 'string' && obj.src.startsWith('/')) {
     const publicRoot = resolve('public');
     const target = resolve(publicRoot, obj.src.slice(1));
-    if (relative(publicRoot, target).startsWith(`..${sep}`) || !existsSync(target)) error(`${file} → ${path}.src: local image missing or outside public. Example: /images/portrait.jpg (add that file to public/images).`);
+    if (relative(publicRoot, target) === '..' || relative(publicRoot, target).startsWith(`..${sep}`) || !existsSync(target) || !statSync(target).isFile()) error(`${file} → ${path}.src: local image missing or outside public. Example: /images/portrait.jpg (add that file to public/images).`);
   }
   Object.entries(obj).forEach(([key, child]) => images(child, file, path ? `${path}.${key}` : key));
 }

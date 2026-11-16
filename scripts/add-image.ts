@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 
 // Resolve the sharp installation supplied by Next without relying on pnpm hoisting.
 const requireFromNext = createRequire(createRequire(import.meta.url).resolve('next/package.json'));
-export const sharp: ReturnType<typeof import('next/dist/server/image-optimizer').getSharp> = requireFromNext('sharp');
+export const sharp: ReturnType<typeof import('next/dist/server/image-optimizer/transform').getSharp> = requireFromNext('sharp');
 
 export async function addImage(input: string, name: string, max = 2400, outputDirectory = resolve('public/images')) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(name)) throw new Error('Name must be lowercase words separated by hyphens, e.g. your-portrait');
