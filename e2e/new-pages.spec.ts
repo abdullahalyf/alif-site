@@ -96,17 +96,34 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   await expect(page).toHaveURL(/\/services$/);
 });
 
-test("the header search button opens search from any page", async ({
+test("search opens from the keyboard and the header button on any page", async ({
   page,
 }) => {
-  for (const path of ["/", "/about", "/work"]) {
+  for (const path of ["/", "/about", "/work", "/services", "/writing"]) {
     await page.goto(path);
+
+    // Ctrl+K opens the dialog from anywhere, without touching the mouse.
+    await page.keyboard.press("Control+k");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("combobox")).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+
+    // The header button opens the same dialog.
     await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page.getByRole("combobox")).toBeFocused();
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).not.toBeVisible();
   }
+});
+
+test("the /search route still works on its own", async ({ page }) => {
+  await page.goto("/search");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(search.title);
+  await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("combobox")).toBeFocused();
 });
 test("search index is public JSON without drafts", async ({ request }) => {
   const response = await request.get("/search-index.json");
