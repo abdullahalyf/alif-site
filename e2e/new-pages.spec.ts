@@ -1,9 +1,9 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { contactContent as c } from "../src/content/contact";
-import { site, shell } from "../src/content/site";
+import { site, shell, pageContent } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
-import { diagrams } from "../src/content/diagrams";
+import { diagrams, diagramContent } from "../src/content/diagrams";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
 }) => {
@@ -162,6 +162,61 @@ test("diagram exposes its graph as an accessible image and text", async ({
   await expect(
     page.getByRole("heading", { name: "Page not found", exact: true }),
   ).toBeVisible();
+});
+
+test("a case study carries its system design diagram", async ({ page }) => {
+  await page.goto("/work/multi-branch-pos");
+  const diagram = diagrams["multi-branch-pos"];
+
+  const section = page.locator(".case-section--diagram");
+  await expect(section).toBeVisible();
+  await expect(
+    section.getByRole("heading", { name: pageContent.systemDesign }),
+  ).toBeVisible();
+  await expect(
+    section.getByRole("img", { name: new RegExp(diagram.title) }),
+  ).toBeVisible();
+
+  // The legend headings sit one level below the section heading.
+  await expect(
+    section.getByRole("heading", { name: diagramContent.nodes, level: 3 }),
+  ).toBeVisible();
+  await expect(
+    section.getByRole("heading", { name: diagramContent.connections, level: 3 }),
+  ).toBeVisible();
+
+  // The full-size diagram is one click away.
+  await section.getByRole("link", { name: pageContent.systemDesignLink }).click();
+  await expect(page).toHaveURL(
+    new RegExp(`${diagramContent.path("multi-branch-pos")}$`),
+  );
+});
+
+test("the diagram stays static under reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/work/multi-branch-pos");
+  await page.locator(".case-section--diagram").scrollIntoViewIfNeeded();
+
+  const state = await page.evaluate(() => {
+    const edges = [
+      ...document.querySelectorAll<SVGPathElement>(
+        ".case-section--diagram .diagram-edge",
+      ),
+    ];
+    const nodes = [
+      ...document.querySelectorAll<SVGGElement>(
+        ".case-section--diagram .diagram-node",
+      ),
+    ];
+    return {
+      offsets: edges.map((edge) => getComputedStyle(edge).strokeDashoffset),
+      opacities: nodes.map((node) => getComputedStyle(node).opacity),
+    };
+  });
+
+  // Nothing is hidden and no edge is left half-drawn.
+  expect(state.offsets.every((offset) => offset === "0px")).toBe(true);
+  expect(state.opacities.every((opacity) => opacity === "1")).toBe(true);
 });
 
 test("new pages fit the viewport with a single main heading", async ({

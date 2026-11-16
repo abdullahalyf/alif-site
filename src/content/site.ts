@@ -272,6 +272,10 @@ export const pageContent = {
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",
+  /** The section heading for the architecture diagram inside a case study. */
+  systemDesign: "System design",
+  /** The link to the full-size diagram. */
+  systemDesignLink: "Open the full diagram",
 };
 
 export const writingContent = {
