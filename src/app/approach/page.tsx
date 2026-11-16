@@ -1,0 +1,11 @@
+import { shell, site } from "@/content/site";
+import { SectionLabel } from "@/components/section-label";
+
+export default function Approach() {
+  return <div className="container page-shell">
+    <SectionLabel>{site.name}</SectionLabel>
+    <h1>{shell.approachTitle}</h1>
+    <p>{site.intro}</p>
+    {site.approach.map((step) => <section className="placeholder-row" key={step.title}><h2>{step.title}</h2><p>{step.text}</p></section>)}
+  </div>;
+}
