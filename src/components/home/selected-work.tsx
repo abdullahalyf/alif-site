@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "@/components/arrows";
 import Link from "next/link";
 import { shell, workContent } from "@/content/site";
 import { projects } from "@/content/projects";
@@ -8,7 +9,7 @@ import { WorkCarousel } from "./work-carousel";
 export function SelectedWork() {
   return <section className="container section-space selected-work" aria-labelledby="selected-title">
     <SectionLabel>{workContent.selectedLabel}</SectionLabel>
-    <div className="section-heading"><h2 id="selected-title">{workContent.selectedTitle}</h2><Link className="text-link" href={shell.nav[0].href}>{workContent.allWork}<span aria-hidden="true"> ↗</span></Link></div>
+    <div className="section-heading"><h2 id="selected-title">{workContent.selectedTitle}</h2><Link className="text-link" href={shell.nav[0].href}>{workContent.allWork}<ArrowUpRight /></Link></div>
     <WorkCarousel>{projects.map((project) => <li className="project-card" key={project.slug}>
       <Link href={shell.projectHref(project.slug)} aria-labelledby={`project-${project.slug}`}>
         <ProjectMedia image={project.images[0]} />

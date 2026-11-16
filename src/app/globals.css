@@ -208,3 +208,6 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .work-row .label { grid-column: 1 / -1; }
   .case-cover .project-media { aspect-ratio: 4 / 3; }
 }
+
+.text-link { display: inline-flex; align-items: center; gap: 0.5rem; }
+.text-link svg, .service-list svg, .work-arrow, .next-project svg { flex-shrink: 0; }

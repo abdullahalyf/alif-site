@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "@/components/arrows";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
@@ -42,7 +43,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
     {project.images.slice(1).map((image) => <ProjectMedia key={image.src} image={image} sizes="(max-width: 768px) 100vw, 1216px" />)}
     <nav className="next-project" aria-label={pageContent.nextProject}>
       <SectionLabel>{pageContent.nextProject}</SectionLabel>
-      <Link href={shell.projectHref(next.slug)}><span>{next.title}</span><span aria-hidden="true">↗</span></Link>
+      <Link href={shell.projectHref(next.slug)}><span>{next.title}</span><ArrowUpRight /></Link>
     </nav>
   </article>;
 }

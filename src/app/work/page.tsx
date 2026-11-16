@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "@/components/arrows";
 import Link from "next/link";
 import { pageContent, shell, site, seo } from "@/content/site";
 import { projects } from "@/content/projects";
@@ -15,7 +16,7 @@ export default function Work() {
       <Link className="work-row" href={shell.projectHref(project.slug)} aria-labelledby={`work-${project.slug}`}>
         <span className="label">{project.year} · {project.category}</span>
         <h2 id={`work-${project.slug}`}>{project.title}</h2>
-        <span className="work-arrow" aria-hidden="true">↗</span>
+        <ArrowUpRight className="work-arrow" />
         <div className="work-preview" aria-hidden="true"><ProjectMedia image={project.images[0]} sizes="320px" /></div>
       </Link>
     </li>)}</ul>

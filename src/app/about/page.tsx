@@ -12,7 +12,7 @@ export default function About() {
       <SectionLabel>{site.name}</SectionLabel>
       <h1 id="about-title" className="section-title">{shell.aboutTitle}</h1>
       <div className="about-intro">
-        <Image {...site.aboutPhoto} sizes="(max-width: 768px) 100vw, 50vw" preload />
+        <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 768px) 100vw, 50vw" preload />
         <div className="prose">{site.about.map((text) => <p key={text}>{text}</p>)}</div>
       </div>
     </section>

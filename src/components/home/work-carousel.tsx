@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowLeft, ArrowRight } from "@/components/arrows";
 import { useRef, type ReactNode } from "react";
 import { workContent } from "@/content/site";
 import { Button } from "@/components/button";
@@ -12,8 +13,8 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
   }
   return <>
     <div className="carousel-controls">
-      <Button variant="secondary" onClick={() => move(-1)} aria-label={workContent.previous} aria-controls="selected-projects"><span aria-hidden="true">←</span></Button>
-      <Button variant="secondary" onClick={() => move(1)} aria-label={workContent.next} aria-controls="selected-projects"><span aria-hidden="true">→</span></Button>
+      <Button variant="secondary" onClick={() => move(-1)} aria-label={workContent.previous} aria-controls="selected-projects"><ArrowLeft /></Button>
+      <Button variant="secondary" onClick={() => move(1)} aria-label={workContent.next} aria-controls="selected-projects"><ArrowRight /></Button>
     </div>
     <noscript><style>{`.carousel-controls { display: none; }`}</style></noscript>
     <ul ref={row} id="selected-projects" className="project-carousel" tabIndex={0} aria-label={workContent.carouselLabel}>{children}</ul>

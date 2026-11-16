@@ -19,7 +19,9 @@ test("page and project metadata match content, and Home exposes Person JSON-LD",
     await page.goto(entry.path);
     await expect(page).toHaveTitle(entry.path === shell.home.href ? entry.title : `${entry.title} — ${site.name}`);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", entry.description);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", new RegExp(`${entry.path}$`));
+    const canonical = page.locator('link[rel="canonical"]');
+    await expect(canonical).toHaveAttribute("href", /^https?:\/\//);
+    expect(new URL((await canonical.getAttribute("href"))!).pathname).toBe(entry.path);
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", entry.title);
   }
   await page.goto(shell.home.href);

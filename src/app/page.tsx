@@ -7,7 +7,10 @@ import { HowIWork } from "@/components/home/how-i-work";
 import { SelectedWork } from "@/components/home/selected-work";
 import { Services } from "@/components/home/services";
 
-export const metadata = pageMetadata(seo.pages.home.title, seo.pages.home.description, seo.pages.home.path);
+export const metadata = {
+  ...pageMetadata(seo.pages.home.title, seo.pages.home.description, seo.pages.home.path),
+  title: { absolute: seo.pages.home.title },
+};
 
 export default function Home() {
   return <><PersonJsonLd /><Hero /><AboutTeaser /><HowIWork /><Services /><SelectedWork /></>;

@@ -15,7 +15,7 @@ export function Hero() {
       <p className="location"><span aria-hidden="true" />{site.location}</p>
     </div>
     <div className="hero-panel">
-      <Image {...site.heroPhoto} sizes="(max-width: 768px) 100vw, 1216px" preload className="hero-photo" />
+      <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 768px) 100vw, 1216px" preload className="hero-photo" />
       <div className="hero-stripes" aria-hidden="true"><span /><span /><span /><span /></div>
     </div>
   </section>;
