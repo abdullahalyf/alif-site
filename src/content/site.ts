@@ -160,10 +160,21 @@ export const shell = {
   introWord: "Alif",
   nav: [
     { label: "Work", href: "/work" },
+    { label: "Services", href: "/services" },
     { label: "Approach", href: "/approach" },
     { label: "Writing", href: "/writing" },
     { label: "About me", href: "/about" },
-    { label: "Contact", href: "#contact" },
+    { label: "Contact", href: "/contact" },
+  ],
+  /**
+   * Links that only appear in the mobile menu. The desktop nav stays short;
+   * these are the quieter pages a visitor is more likely to look for on a
+   * phone than on a wide screen.
+   */
+  menuExtra: [
+    { label: "Résumé", href: "/resume" },
+    { label: "Uses", href: "/uses" },
+    { label: "Now", href: "/now" },
   ],
   navigation: "Main navigation",
   menu: "Menu",
@@ -184,7 +195,31 @@ export const shell = {
   notFoundText: "This page isn't here. Let's get you back home.",
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
+  /** The search button in the header. */
+  searchLabel: "Search",
+  /** The keyboard hint shown next to the search button. */
+  searchHint: "⌘K",
+  /** The links column in the footer. */
+  footerLinksLabel: "More",
+  footerLinks: [
+    { label: "Résumé", href: "/resume" },
+    { label: "Uses", href: "/uses" },
+    { label: "Now", href: "/now" },
+    { label: "Writing RSS", href: "/writing/rss.xml" },
+  ],
 };
+
+/**
+ * Looks a navigation link up by its path.
+ *
+ * The nav is a plain list, so its order is free to change; this keeps the
+ * handful of places that link to "the approach page" or "the about page"
+ * honest when the list is reordered.
+ */
+export function navHref(path: string): string {
+  const link = shell.nav.find((item) => item.href === path);
+  return link?.href ?? path;
+}
 
 
 export const seo = {
@@ -194,11 +229,11 @@ export const seo = {
   imagePath: "/opengraph-image",
   pages: {
     home: { title: `${site.name} — ${site.role}`, description: site.intro, path: shell.home.href },
-    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[3].href },
-    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: shell.nav[1].href },
+    about: { title: shell.aboutTitle, description: site.about[0], path: navHref("/about") },
+    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: navHref("/approach") },
     writing: { title: "Writing", description: "Notes on software systems, research and things I'm learning.", path: "/writing" },
     now: { title: "What I'm doing now", description: "What Abdullah Alif is building, studying and learning now.", path: "/now" },
-    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
+    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: navHref("/work") },
   },
 };
 

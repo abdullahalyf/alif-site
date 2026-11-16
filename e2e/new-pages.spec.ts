@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { contactContent as c } from "../src/content/contact";
-import { site } from "../src/content/site";
+import { site, shell } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
 import { diagrams } from "../src/content/diagrams";
 test("contact validates inline errors and prepares both external destinations", async ({
@@ -62,7 +62,8 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   page,
 }) => {
   await page.goto("/search");
-  await page.getByRole("button", { name: search.open, exact: true }).focus();
+  const trigger = page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first();
+  await trigger.focus();
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
@@ -87,14 +88,25 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   await input.focus();
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
-  await expect(
-    page.getByRole("button", { name: search.open, exact: true }),
-  ).toBeFocused();
+  await expect(trigger).toBeFocused();
   await page.keyboard.press("Meta+k");
   await input.fill("Services");
   await expect(dialog.getByRole("option").first()).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/services$/);
+});
+
+test("the header search button opens search from any page", async ({
+  page,
+}) => {
+  for (const path of ["/", "/about", "/work"]) {
+    await page.goto(path);
+    await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("combobox")).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+  }
 });
 test("search index is public JSON without drafts", async ({ request }) => {
   const response = await request.get("/search-index.json");

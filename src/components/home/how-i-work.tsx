@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "@/components/arrows";
 import Link from "next/link";
-import { shell, site, workContent } from "@/content/site";
+import { navHref, site, workContent } from "@/content/site";
 import { SectionLabel } from "@/components/section-label";
 import { BackgroundShift, Reveal } from "@/components/motion";
 
@@ -13,7 +13,7 @@ export function HowIWork() {
           <div className="prose night-intro">
             <Reveal><h2 id="how-title">{workContent.approachTitle}</h2></Reveal>
             <Reveal><p className="night-intro__text">{workContent.approachIntro}</p></Reveal>
-            <Reveal><Link className="text-link" href={shell.nav[1].href}>{workContent.approachLink}<ArrowUpRight /></Link></Reveal>
+            <Reveal><Link className="text-link" href={navHref("/approach")}>{workContent.approachLink}<ArrowUpRight /></Link></Reveal>
           </div>
           <ol className="night-steps">{site.approach.map((step) => <li key={step.title}><Reveal><h3>{step.title}</h3></Reveal><Reveal><p>{step.text}</p></Reveal></li>)}</ol>
         </div>

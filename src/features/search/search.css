@@ -50,3 +50,10 @@
 .site-search-dialog [role="option"] span {
   font-size: 0.875rem;
 }
+
+/* The search page itself: the trigger sits above the no-JavaScript list. */
+.search-page ul {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+}

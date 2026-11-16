@@ -1,14 +1,13 @@
-import { SearchDialog } from "@/features/search/SearchDialog";
+import { SearchTrigger } from "@/features/search/SearchTrigger";
 import { searchContent as c } from "@/content/search";
 import { pageMetadata } from "@/seo/metadata";
-import "./search.css";
 export const metadata = pageMetadata(c.title, c.intro, "/search");
 export default function SearchPage() {
   return (
     <div className="container page-shell search-page">
       <h1>{c.title}</h1>
       <p className="lead">{c.intro}</p>
-      <SearchDialog />
+      <SearchTrigger className="search-trigger--page" />
       <noscript>
         <ul>
           {c.pages

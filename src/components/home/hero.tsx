@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { shell, site } from "@/content/site";
+import { navHref, shell, site } from "@/content/site";
 import { ButtonLink } from "@/components/button";
 import { HeroStripes, PhotoReveal, Reveal } from "@/components/motion";
 import { HeroSide } from "./hero-side";
@@ -16,7 +16,7 @@ export function Hero() {
         <Reveal>
           <div className="button-row">
             <ButtonLink href={shell.email.href}>{shell.email.label}</ButtonLink>
-            <ButtonLink href={shell.nav[0].href} variant="secondary">{shell.workLabel}</ButtonLink>
+            <ButtonLink href={navHref("/work")} variant="secondary">{shell.workLabel}</ButtonLink>
           </div>
         </Reveal>
         <Reveal><p className="location"><span aria-hidden="true" />{site.location}</p></Reveal>

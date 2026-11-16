@@ -14,6 +14,9 @@ export async function Footer() {
         <a href={shell.email.href}>{site.email}</a>
         <div className="footer-meta">
           <div className="social-links">{site.socials.map((link) => <a key={link.label} href={link.href}>{link.label}</a>)}</div>
+          <nav className="footer-links" aria-label={shell.footerLinksLabel}>
+            {shell.footerLinks.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
+          </nav>
           <p>{site.location}</p>
           <p>{shell.copyright(new Date().getUTCFullYear())}</p>
         </div>
