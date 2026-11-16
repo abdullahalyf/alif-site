@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
       ] },
       { source: "/images/:path*", headers: immutable },
       { source: "/fonts/:path*", headers: immutable },
-      { source: "/_next/static/media/:path*", headers: immutable },
     ];
   },
   cacheComponents: true,

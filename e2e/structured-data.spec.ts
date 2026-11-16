@@ -19,6 +19,13 @@ for (const post of getPosts({ includeDrafts: false })) {
     expect(data.headline).toBe(post.title);
     expect(data.datePublished).toBe(post.date);
     expect(data.author.name).toBe(site.fullName);
+    const code = page.locator(".post-prose pre").first();
+    await code.focus();
+    await expect(code).toBeFocused();
+    if (await code.evaluate((element) => element.scrollWidth > element.clientWidth)) {
+      await code.press("ArrowRight");
+      await expect.poll(() => code.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+    }
     expect(new URL(data.mainEntityOfPage).pathname).toBe(writingContent.postHref(post.slug));
   });
 }
