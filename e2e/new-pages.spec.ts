@@ -4,6 +4,7 @@ import { contactContent as c } from "../src/content/contact";
 import { site, shell, pageContent } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
 import { diagrams, diagramContent } from "../src/content/diagrams";
+import { waitForHydration } from "./helpers/routes";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
 }) => {
@@ -62,6 +63,7 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   page,
 }) => {
   await page.goto("/search");
+  await waitForHydration(page);
   const trigger = page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first();
   await trigger.focus();
   await page.keyboard.press("Control+k");
@@ -101,6 +103,9 @@ test("search opens from the keyboard and the header button on any page", async (
 }) => {
   for (const path of ["/", "/about", "/work", "/services", "/writing"]) {
     await page.goto(path);
+    // The shortcut is attached by a client component, so the page has to be
+    // hydrated before the key can reach it.
+    await waitForHydration(page);
 
     // Ctrl+K opens the dialog from anywhere, without touching the mouse.
     await page.keyboard.press("Control+k");

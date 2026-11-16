@@ -81,7 +81,7 @@ export function StaggerIn({
   };
 
   return (
-    <Component ref={setRefs} className={className} {...rest}>
+    <Component ref={setRefs} className={className ? `stagger-in ${className}` : "stagger-in"} {...rest}>
       {children}
     </Component>
   );

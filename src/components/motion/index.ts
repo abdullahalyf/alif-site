@@ -1,4 +1,5 @@
 export { BackgroundShift } from "./BackgroundShift";
+export { CountUp } from "./CountUp";
 export { HeroStripes } from "./HeroStripes";
 export { HoverPreview } from "./HoverPreview";
 export { IntroOverlay } from "./IntroOverlay";

@@ -18,6 +18,16 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
   const instanceRef = useRef<Lenis | null>(null);
 
+  // The client is live once this component has mounted and its effects have
+  // run. The marker lets a test wait for that moment instead of guessing with
+  // a timeout.
+  useEffect(() => {
+    document.documentElement.dataset.hydrated = "true";
+    return () => {
+      delete document.documentElement.dataset.hydrated;
+    };
+  }, []);
+
   useEffect(() => {
     // Read the preference here rather than from the render: the hook returns the
     // server snapshot until React swaps it for the real value.

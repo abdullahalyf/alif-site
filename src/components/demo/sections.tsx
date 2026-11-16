@@ -3,7 +3,7 @@ import { demoContent, seo, site, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
 import { getPosts, formatPostDate } from "@/content/posts";
 import { SectionLabel } from "@/components/section-label";
-import { Reveal, StaggerIn } from "@/components/motion";
+import { CountUp, Reveal, StaggerIn } from "@/components/motion";
 import "./demo.css";
 
 function Achievement({ entry }: { entry: Site["achievements"][number] }) {
@@ -26,7 +26,7 @@ export function AtAGlance() {
       <SectionLabel>{demoContent.statsLabel}</SectionLabel>
       <h2 id="glance-title" className="glance-notice">{demoContent.statsNotice}</h2>
     </div>
-    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value">{stat.value}</p><p className="stat-label">{stat.label}</p></div>)}</StaggerIn>
+    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value"><CountUp value={stat.value} /></p><p className="stat-label">{stat.label}</p></div>)}</StaggerIn>
   </section>;
 }
 export function Testimonials() {
