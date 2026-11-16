@@ -137,3 +137,11 @@ export const seo = {
     work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
   },
 };
+
+export const homeContent = {
+  aboutLabel: "A little about me",
+  aboutTitle: "The person behind the systems.",
+  aboutLink: "More about me",
+  servicesLabel: "What I do",
+  servicesTitle: "Software built around your business.",
+};
