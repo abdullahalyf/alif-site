@@ -41,10 +41,15 @@ it("reports invalid posts instead of silently dropping them", () => {
 it("renders readable Markdown without injecting HTML or unsafe links", () => {
   const html = renderPost('# Heading\n\n**Bold**\n\n```ts\nconst x = 1;\n```\n\n<script>alert(1)</script>\n\n[bad](javascript:alert%281%29) [good](/now)');
   expect(html).toContain("<h2>Heading</h2>"); expect(html).toContain("<strong>Bold</strong>");
+  expect(html).toContain('<pre tabindex="0">');
   expect(html).toContain('<code class="language-ts">'); expect(html).not.toContain("<script>"); expect(html).not.toContain('href="javascript:'); expect(html).toContain('href="/now"');
 });
 it("validates the repository posts and keeps the sample draft unpublished", () => {
   const posts = getPosts({ includeDrafts: true }); expect(posts.length).toBeGreaterThan(0);
   expect(posts.find((post) => post.slug === "hello-im-alif")?.draft).toBe(true);
   expect(getPosts({ includeDrafts: false }).some((post) => post.slug === "hello-im-alif")).toBe(false);
+});
+
+it("keeps editorial HTML comments out of rendered articles", () => {
+  expect(renderPost("<!-- // DEMO: editorial note -->\n\nReadable text.")).toBe("<p>Readable text.</p>\n");
 });

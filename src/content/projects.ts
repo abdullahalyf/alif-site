@@ -68,22 +68,24 @@ export const projects = [
       "role": "DEMO — System design & development",
       "category": "Client work",
       "demo": true,
-      "summary": "A shared workspace for purchasing, stock transfers and branch replenishment.",
-      "problem": "Buyers and branch teams were making decisions from different spreadsheets.",
+      "summary": "A purchasing and stock-transfer workspace designed for a distributor with six branches and a small central warehouse.",
+      "problem": "In this demo scenario, six branches reconcile stock in separate spreadsheets. A transfer can be deducted at dispatch and again at receipt, while concurrent purchase edits erase the audit trail. The warehouse has intermittent connectivity, and the owner needs a daily replenishment decision without operating a large server estate.",
       "solution": [
-          "Mapped purchasing and branch transfer workflows before designing the interface.",
-          "Built a role-based stock ledger with clear transfer and receiving states.",
-          "Added a daily replenishment view and an audit trail for every adjustment."
-      ],
+    "Modelled purchase orders, dispatches and receipts as explicit state transitions; stock changes are append-only ledger entries rather than overwritten balances.",
+    "Used PostgreSQL transactions and unique operation keys to make receipt retries safe, with branch-scoped permissions checked on the server.",
+    "Built a TypeScript reconciliation worker that compares branch movement totals against the ledger and puts discrepancies into a review queue.",
+    "Kept the interface focused on exceptions: low-stock suggestions, overdue transfers and adjustments requiring a second approval."
+],
       "stack": [
           "TypeScript",
           "React",
           "PostgreSQL"
       ],
       "results": [
-          "Demo outcome: one shared view of stock across departments.",
-          "Demo outcome: fewer manual hand-offs between buying and receiving."
-      ],
+    "DEMO benchmark: replaying 10,000 stock events produced zero duplicate ledger entries.",
+    "DEMO acceptance test: all 24 branch-to-warehouse reconciliation scenarios matched expected balances.",
+    "DEMO workflow estimate: preparing the daily replenishment list fell from 45 minutes to 12 minutes."
+],
       "link": null,
       images: [demoImage("stockroom-operations-overview", "DEMO photograph for Stockroom Operations Hub"), demoImage("stockroom-operations-detail", "DEMO detail photograph for Stockroom Operations Hub"), demoImage("stockroom-operations-context", "DEMO context photograph for Stockroom Operations Hub")],
     },
@@ -96,22 +98,24 @@ export const projects = [
       "role": "DEMO — System design & development",
       "category": "Client work",
       "demo": true,
-      "summary": "A web app for appointments, front-desk scheduling and patient follow-ups.",
-      "problem": "Reception staff needed a reliable schedule without juggling paper diaries.",
+      "summary": "A scheduling and follow-up portal designed for a four-practitioner clinic with one shared reception desk.",
+      "problem": "The demo clinic takes bookings by telephone and in person. Two receptionists can offer the same slot, cancellations do not reliably release capacity, and follow-up tasks sit in personal notebooks. The design must handle a busy morning on ordinary phones while keeping administrative notes separate from appointment data.",
       "solution": [
-          "Designed appointment states with reception and care staff.",
-          "Built a responsive booking flow and a clear daily schedule.",
-          "Added permissions, reminders and a simple record of follow-up tasks."
-      ],
+    "Defined appointment states and an immutable history before building screens; a database exclusion constraint prevents overlapping active bookings for a practitioner.",
+    "Separated scheduling, contact details and follow-up tasks into permission-scoped records; the browser never receives unrestricted patient exports.",
+    "Made booking requests idempotent so reconnecting after a slow response returns the original appointment instead of creating another.",
+    "Delivered a keyboard-friendly daily schedule, explicit cancellation reasons and a task queue with an assigned owner and due date."
+],
       "stack": [
           "Next.js",
           "TypeScript",
           "PostgreSQL"
       ],
       "results": [
-          "Demo outcome: a single appointment schedule for the whole team.",
-          "Demo outcome: clearer follow-up ownership after each visit."
-      ],
+    "DEMO concurrency test: 100 simultaneous requests for one slot resulted in one confirmed booking.",
+    "DEMO usability exercise: a repeat appointment required four interactions instead of nine in the paper-process prototype.",
+    "DEMO acceptance suite: 36 booking, cancellation and follow-up scenarios passed."
+],
       "link": null,
       images: [demoImage("clinic-booking-overview", "DEMO photograph for Clinic Booking & Care Portal"), demoImage("clinic-booking-detail", "DEMO detail photograph for Clinic Booking & Care Portal"), demoImage("clinic-booking-context", "DEMO context photograph for Clinic Booking & Care Portal")],
     },
@@ -124,22 +128,24 @@ export const projects = [
       "role": "DEMO — System design & development",
       "category": "Client work",
       "demo": true,
-      "summary": "A lightweight dashboard connecting office dispatchers and field technicians.",
-      "problem": "Job updates arrived through scattered messages, leaving dispatchers without a clear picture.",
+      "summary": "A dispatch dashboard and offline visit record designed for a maintenance team serving 120 sites.",
+      "problem": "In this demo, dispatchers coordinate eight technicians through chat messages. Job status becomes stale during travel, duplicate submissions create confusing visit records, and a photograph can upload after a job has already been marked complete. Technicians need to finish notes without reception while dispatchers need an honest picture of sync status.",
       "solution": [
-          "Mapped the journey from incoming request to completed visit.",
-          "Built job queues, technician assignments and mobile-friendly visit notes.",
-          "Added an activity log and a weekly service overview."
-      ],
+    "Stored visit notes and pending attachments in a local SQLite queue with stable operation identifiers and explicit pending, acknowledged and rejected states.",
+    "Separated job assignment from visit completion so a late upload cannot silently reassign or reopen a finished job.",
+    "Used a server-side event log and role checks to resolve assignment changes, retaining both the original visit time and the time it reached the server.",
+    "Built a dispatcher exception view for overdue jobs, unsynced visits and missing attachments instead of treating every delay as a failure."
+],
       "stack": [
           "React",
           "TypeScript",
           "SQLite"
       ],
       "results": [
-          "Demo outcome: a shared job history instead of scattered messages.",
-          "Demo outcome: a clearer daily workload for each technician."
-      ],
+    "DEMO reliability run: 500 offline visit submissions were replayed three times without duplicate visit records.",
+    "DEMO recovery test: all queued notes survived a process restart during a simulated six-hour outage.",
+    "DEMO workflow target: dispatchers can identify unacknowledged visits from one exception list rather than eight chat threads."
+],
       "link": null,
       images: [demoImage("field-service-overview", "DEMO photograph for Field Service Dispatch"), demoImage("field-service-detail", "DEMO detail photograph for Field Service Dispatch"), demoImage("field-service-context", "DEMO context photograph for Field Service Dispatch")],
     },
@@ -152,22 +158,24 @@ export const projects = [
       "role": "DEMO — System design & development",
       "category": "Personal",
       "demo": true,
-      "summary": "An approachable dashboard for courses, study sessions and weekly goals.",
-      "problem": "Learning notes and progress were spread across separate tools.",
+      "summary": "A personal learning dashboard that turns course notes and study sessions into an exportable weekly record.",
+      "problem": "The demo learner has five active courses, notes in three tools and a habit of confusing time spent with progress made. The constraint is deliberately small: a responsive web app, no social features, and ownership of the underlying records even if the application is abandoned.",
       "solution": [
-          "Designed a calm overview of current courses and study goals.",
-          "Built accessible progress views and a weekly reflection flow.",
-          "Kept the data model small and exportable."
-      ],
+    "Modelled courses, learning objectives, study sessions and evidence separately so a completed session does not automatically imply a mastered objective.",
+    "Kept durable records in PostgreSQL and derived weekly summaries from sessions; summaries can be rebuilt rather than edited as a second source of truth.",
+    "Built accessible table and text views alongside progress graphics, with plain-language empty states and an explicit unfinished-task queue.",
+    "Added versioned JSON and CSV export, deterministic date handling and tests for sessions spanning month boundaries."
+],
       "stack": [
           "Next.js",
           "TypeScript",
           "Tailwind CSS"
       ],
       "results": [
-          "Demo outcome: one place to plan a week of study.",
-          "Demo outcome: exportable notes and progress records."
-      ],
+    "DEMO round-trip test: 2,000 session records exported and re-imported without losing identifiers or timestamps.",
+    "DEMO accessibility check: the weekly workflow is usable with a keyboard and without relying on chart colours.",
+    "DEMO performance target: a five-course weekly summary stays under 100 ms in a local seeded-data benchmark."
+],
       "link": null,
       images: [demoImage("learning-dashboard-overview", "DEMO photograph for Learning Progress Dashboard"), demoImage("learning-dashboard-detail", "DEMO detail photograph for Learning Progress Dashboard"), demoImage("learning-dashboard-context", "DEMO context photograph for Learning Progress Dashboard")],
     },
@@ -180,22 +188,24 @@ export const projects = [
       "role": "DEMO — System design & development",
       "category": "Open source",
       "demo": true,
-      "summary": "A developer tool for inspecting offline queues and explaining sync failures.",
-      "problem": "Local-first apps can leave developers guessing which queued operation failed and why.",
+      "summary": "An open-source tool concept for tracing local-first operation queues and reproducing difficult synchronisation failures.",
+      "problem": "The demo tool addresses a common debugging gap: an application reports that sync failed but cannot explain which operation was retried, whether the server committed it, or how a conflict was resolved. Debugging should work from a redacted capture without needing a production database or a specific frontend framework.",
       "solution": [
-          "Designed a small event format for sync queues.",
-          "Built an inspectable timeline with retry and conflict explanations.",
-          "Added sample adapters, a CLI report and documentation for contributors."
-      ],
+    "Defined a versioned event format containing operation identity, state transitions, acknowledgements and correlation IDs, while excluding payload values by default.",
+    "Built a TypeScript state reducer shared by the CLI and timeline view so both explain an operation using the same rules.",
+    "Used small SQLite captures for reproducible fixtures, with adapters responsible for translating application-specific events into the neutral format.",
+    "Added deterministic replay, schema validation and regression fixtures for late acknowledgements, interrupted retries and out-of-order delivery."
+],
       "stack": [
           "TypeScript",
           "Node.js",
           "SQLite"
       ],
       "results": [
-          "Demo outcome: an understandable history for every queued operation.",
-          "Demo outcome: a small adapter interface for future integrations."
-      ],
+    "DEMO fixture suite: 48 retry, conflict and recovery traces reduce to their expected terminal states.",
+    "DEMO redaction test: exported captures exclude configured sensitive fields while retaining correlation IDs.",
+    "DEMO benchmark: a 10,000-event capture can be summarised in under one second on the reference development machine."
+],
       "link": null,
       images: [demoImage("sync-inspector-overview", "DEMO photograph for Sync Inspector"), demoImage("sync-inspector-detail", "DEMO detail photograph for Sync Inspector"), demoImage("sync-inspector-context", "DEMO context photograph for Sync Inspector")],
     },

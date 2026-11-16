@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import matter from "gray-matter";
-import { Marked } from "marked";
+import { Marked, Renderer } from "marked";
 import { z } from "zod";
 
 export const postSchema = z.object({
@@ -49,8 +49,10 @@ function safeHref(href: string): boolean {
   try { return ["http:", "https:", "mailto:"].includes(new URL(href, "https://markdown.invalid").protocol); }
   catch { return false; }
 }
+const codeRenderer = new Renderer();
 const markdown = new Marked({ renderer: {
-  html: ({ text }) => escapeHtml(text),
+  code: (token) => codeRenderer.code(token).replace("<pre>", '<pre tabindex="0">'),
+  html: ({ text }) => /^<!--[\s\S]*-->$/.test(text.trim()) ? "" : escapeHtml(text),
   heading({ tokens, depth }) { const level = Math.max(2, depth); return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>`; },
   link({ href, tokens }) { const text = this.parser.parseInline(tokens); return safeHref(href) ? `<a href="${escapeHtml(href)}">${text}</a>` : text; },
   image: ({ text }) => escapeHtml(text),
