@@ -7,7 +7,7 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 ## Phase A — Structure
 
-- [ ] **Task 1: Design tokens, fonts, layout shell**
+- [x] **Task 1: Design tokens, fonts, layout shell**
   - Colours, type scale and fonts from DESIGN.md (`src/fonts/` via `next/font/local`, CSS variables + Tailwind `@theme`).
   - `Header` (desktop nav + mobile menu overlay, keyboard accessible), `Footer` (night section with contact), `Button`, `SectionLabel` components.
   - Routes with placeholder content from `site`/`projects`: `/`, `/about`, `/approach`, `/work`, `/work/[slug]` (`generateStaticParams`, `notFound()`), custom `not-found`.

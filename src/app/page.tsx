@@ -1,12 +1,16 @@
-import { site } from "@/content/site";
+import { shell, site } from "@/content/site";
+import { ButtonLink } from "@/components/button";
+import { SectionLabel } from "@/components/section-label";
 
-// Temporary placeholder. Replaced in ROADMAP Task 1.
 export default function Home() {
-  return (
-    <main className="mx-auto flex min-h-dvh max-w-3xl flex-col justify-center gap-4 px-6">
-      <h1 className="text-4xl font-semibold">{site.name}</h1>
-      <p className="text-lg">{site.role}</p>
-      <p>{site.intro}</p>
-    </main>
-  );
+  return <div className="container page-shell">
+    <SectionLabel>{site.tagline}</SectionLabel>
+    <h1>{site.name}</h1>
+    <p className="lead">{site.role}</p>
+    <p>{site.intro}</p>
+    <div className="button-row">
+      <ButtonLink href={shell.email.href}>{shell.email.label}</ButtonLink>
+      <ButtonLink href={shell.nav[0].href} variant="secondary">{shell.workLabel}</ButtonLink>
+    </div>
+  </div>;
 }

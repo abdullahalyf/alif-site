@@ -94,3 +94,32 @@ export const site = {
     },
   ],
 } satisfies Site;
+
+export const shell = {
+  home: { label: "Home", href: "/" },
+  nav: [
+    { label: "Work", href: "/work" },
+    { label: "Approach", href: "/approach" },
+    { label: "About me", href: "/about" },
+    { label: "Contact", href: "#contact" },
+  ],
+  navigation: "Main navigation",
+  menu: "Menu",
+  closeMenu: "Close menu",
+  skip: "Skip to content",
+  mainHref: "#main",
+  contactId: "contact",
+  copyright: (year: number) => `© ${year} ${site.name}`,
+  footerTitle: "Let's build something that keeps working.",
+  email: { label: "Email me", href: `mailto:${site.email}` },
+  whatsappLabel: "WhatsApp",
+  workLabel: "See my work",
+  aboutTitle: "About me",
+  approachTitle: "Approach",
+  workTitle: "Work",
+  caseStudyLabel: "Case study",
+  notFoundTitle: "Page not found",
+  notFoundText: "This page isn't here. Let's get you back home.",
+  backHome: "Back home",
+  projectHref: (slug: string) => `/work/${slug}`,
+};
