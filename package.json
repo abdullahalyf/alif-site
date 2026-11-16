@@ -10,7 +10,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+    "check": "pnpm validate:content && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "validate:content": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -37,6 +38,7 @@
     "eslint-config-next": "16.4.6",
     "jsdom": "^31.0.1",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.1.0"
