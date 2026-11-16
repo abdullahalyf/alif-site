@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useRef } from "react";
 import { site } from "@/content/site";
-import { useSmoothScroll } from "@/components/motion";
+import { useSmoothScroll } from "@/components/motion/smooth-scroll-context";
 
 /**
  * The brand mark: a serif monogram in a circle beside the wordmark.

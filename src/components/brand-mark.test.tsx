@@ -7,7 +7,7 @@ const pathname = { value: "/work" };
 const scrollTo = vi.fn();
 
 vi.mock("next/navigation", () => ({ usePathname: () => pathname.value }));
-vi.mock("@/components/motion", () => ({
+vi.mock("@/components/motion/smooth-scroll-context", () => ({
   useSmoothScroll: () => ({ scrollTo }),
 }));
 

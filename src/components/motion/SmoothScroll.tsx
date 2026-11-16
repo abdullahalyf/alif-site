@@ -1,20 +1,10 @@
 "use client";
 
 import Lenis from "lenis";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { syncWithLenis } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
-
-const SmoothScrollContext = createContext<React.RefObject<Lenis | null> | null>(null);
-
-/**
- * The active Lenis instance, or `null` when smooth scrolling is off.
- * Read it during event handlers or effects, not during render.
- */
-export function useSmoothScroll(): Lenis | null {
-  const instance = useContext(SmoothScrollContext);
-  return instance?.current ?? null;
-}
+import { SmoothScrollContext } from "./smooth-scroll-context";
 
 /**
  * Enables site-wide smooth scrolling with Lenis and keeps GSAP ScrollTrigger
