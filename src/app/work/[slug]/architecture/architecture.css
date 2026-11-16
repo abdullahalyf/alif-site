@@ -1,10 +1,38 @@
-.architecture-page { gap: 2rem; }
-.architecture-diagram { min-width: 0; }
-.diagram-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 1rem; margin-bottom: 2rem; color: var(--ink); }
-.diagram-node rect { fill: var(--cream-2); stroke: var(--ink-muted); }
-.diagram-node--db rect { fill: var(--night); }
-.diagram-node--db text { fill: var(--night-text); }
-.diagram-node--external rect { stroke-dasharray: 4 3; fill: var(--cream); }
-.architecture-diagram figcaption { display: grid; gap: 1rem; }
-.architecture-diagram figcaption h2 { font-size: 1.5rem; }
-.architecture-diagram ul { list-style: disc; padding-left: 1.5rem; }
+.architecture-page {
+  gap: 2rem;
+}
+.architecture-diagram {
+  min-width: 0;
+}
+.diagram-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  color: var(--ink);
+}
+.diagram-node rect {
+  fill: var(--cream-2);
+  stroke: var(--ink-muted);
+}
+.diagram-node--db rect {
+  fill: var(--night);
+}
+.diagram-node--db text {
+  fill: var(--night-text);
+}
+.diagram-node--external rect {
+  stroke-dasharray: 4 3;
+  fill: var(--cream);
+}
+.architecture-diagram figcaption {
+  display: grid;
+  gap: 1rem;
+}
+.architecture-diagram figcaption h2 {
+  font-size: 1.5rem;
+}
+.architecture-diagram ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}

@@ -44,4 +44,5 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 - [x] Task 13: Quality pass — Lighthouse CI warnings, per-project/post share images, security/cache headers, professional demo content, JSON-LD and Playwright cache.
 
 - [x] Task 14: Template groundwork — content validator, image tool, starter kit, theme inventory and guides (non-breaking).
-- [ ] Task 15: Template refactor: move content + theme to single folder/file (runs alone).
+- [x] Task 15: Services, Contact, Resume, Uses, case-study architecture diagrams and site search.
+- [ ] Task 16: Template refactor: move content + theme to single folder/file (runs alone).
