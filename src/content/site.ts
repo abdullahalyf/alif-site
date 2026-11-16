@@ -37,8 +37,8 @@ export const site = {
   },
   aboutPhoto: {
     src: "/images/alif-about.jpg",
-    width: 1122,
-    height: 1402,
+    width: 1200,
+    height: 1500,
     alt: "Abdullah Alif in a patterned shirt, hands in pockets",
   },
   services: [
@@ -46,5 +46,57 @@ export const site = {
     "Business software (POS, inventory, dashboards)",
     "Offline-first desktop & web apps",
     "Database design & access control",
+  ],
+  tagline: "Systems first, screens second.",
+  heroCutout: {
+    src: "/images/alif-cutout.png",
+    width: 818,
+    height: 1140,
+    alt: "Abdullah Alif in a cream patterned shirt, hands in pockets",
+  },
+  approach: [
+    {
+      title: "Understand the business",
+      text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
+    },
+    {
+      title: "Design the system",
+      text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
+    },
+    {
+      title: "Build in small releases",
+      text: "I ship working pieces early so you can use them, give feedback and change direction without waste.",
+    },
+    {
+      title: "Launch and look after it",
+      text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
+    },
+  ],
+  // TODO(Alif): replace with your real story + add a photo for each chapter.
+  story: [
+    {
+      label: "Jhenaidah",
+      title: "Where it started",
+      text: "I grew up in Jhenaidah. TODO(Alif): a few lines about childhood and how you first met computers.",
+      image: null,
+    },
+    {
+      label: "School & college",
+      title: "Learning to build",
+      text: "TODO(Alif): school and college years — what you studied and what you started making.",
+      image: null,
+    },
+    {
+      label: "Daffodil International University",
+      title: "Computer Science & Engineering",
+      text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
+      image: null,
+    },
+    {
+      label: "Savar, Dhaka",
+      title: "Now",
+      text: "I live in Savar and design and build software systems for businesses as a freelancer.",
+      image: null,
+    },
   ],
 } satisfies Site;
