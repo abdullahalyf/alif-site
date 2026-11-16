@@ -1,0 +1,4 @@
+DONE: puku-1 · PR #8 · branch puku-1
+check: pass · e2e: 355 passed / 0 failed (2 skipped)
+Parts: 1 ✅ 2 ✅ 3 ✅ 4 ✅ 5 ✅
+Notes: Enterances now un-cover content with `clip-path` instead of fading it, so text contrast never dips mid-animation (fixed three axe violations). Added `prefersReducedMotion()` next to the hook: the hook returns the server snapshot during hydration, so effects that *start* an animation must read the preference directly — nine motion components were fixed. Rebased onto `origin/main` (Codex's Services/Contact/Resume/Uses/search); `src/features/` and the new routes were left alone. Lighthouse mobile: performance 93, accessibility 100, best practices 100, SEO 100 — the remaining LCP time is picsum.photos CDN latency, not code. A local `tmp-verify-main` branch exists from bisecting the search-test flake; it can be deleted.
