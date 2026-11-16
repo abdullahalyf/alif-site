@@ -82,6 +82,25 @@ export const site = {
     height: 1500,
     alt: "Abdullah Alif in a patterned shirt, hands in pockets",
   },
+  // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
+  heroSide: {
+    src: "https://picsum.photos/seed/alif-hero-side/900/1100",
+    width: 900,
+    height: 1100,
+    alt: "DEMO photograph — replace with a real portrait of Alif",
+  },
+  statusCard: {
+    availability: "Available for new projects",
+    timezone: "Asia/Dhaka",
+    timezoneLabel: "Dhaka",
+    buildingLabel: "Currently building",
+    building: "Offline-first POS & inventory platform",
+    stack: ["TypeScript", "PostgreSQL", "Next.js"],
+  },
+  systemDiagram: {
+    label: "How the system fits together",
+    steps: ["POS", "Sync", "Cloud DB", "Dashboard"],
+  },
   services: [
     "System architecture & design",
     "Business software (POS, inventory, dashboards)",

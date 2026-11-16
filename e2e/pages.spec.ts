@@ -45,3 +45,22 @@ test("all pages fit the viewport", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }
 });
+
+test("Home shows the hero side photo, status card and system diagram", async ({ page }) => {
+  await page.goto(shell.home.href);
+
+  await expect(page.getByRole("img", { name: site.heroSide.alt })).toBeVisible();
+  await expect(page.getByText(site.name, { exact: true })).toBeVisible();
+  await expect(page.getByText(site.statusCard.availability, { exact: true })).toBeVisible();
+  await expect(page.getByText(site.statusCard.building, { exact: true })).toBeVisible();
+  for (const item of site.statusCard.stack) await expect(page.getByText(item, { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: site.systemDiagram.label })).toBeVisible();
+});
+
+test("the hero status card shows a live Dhaka clock", async ({ page }) => {
+  await page.goto(shell.home.href);
+
+  const time = page.locator(".status-card__time");
+  await expect(time).toBeVisible();
+  await expect(time).toHaveText(/^\d{2}:\d{2}$/);
+});
