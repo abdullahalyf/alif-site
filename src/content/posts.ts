@@ -50,7 +50,7 @@ function safeHref(href: string): boolean {
   catch { return false; }
 }
 const markdown = new Marked({ renderer: {
-  html: ({ text }) => escapeHtml(text),
+  html: ({ text }) => /^<!--[\s\S]*-->$/.test(text.trim()) ? "" : escapeHtml(text),
   heading({ tokens, depth }) { const level = Math.max(2, depth); return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>`; },
   link({ href, tokens }) { const text = this.parser.parseInline(tokens); return safeHref(href) ? `<a href="${escapeHtml(href)}">${text}</a>` : text; },
   image: ({ text }) => escapeHtml(text),

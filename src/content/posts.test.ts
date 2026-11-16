@@ -48,3 +48,7 @@ it("validates the repository posts and keeps the sample draft unpublished", () =
   expect(posts.find((post) => post.slug === "hello-im-alif")?.draft).toBe(true);
   expect(getPosts({ includeDrafts: false }).some((post) => post.slug === "hello-im-alif")).toBe(false);
 });
+
+it("keeps editorial HTML comments out of rendered articles", () => {
+  expect(renderPost("<!-- // DEMO: editorial note -->\n\nReadable text.")).toBe("<p>Readable text.</p>\n");
+});
