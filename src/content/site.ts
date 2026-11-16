@@ -123,3 +123,53 @@ export const shell = {
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
 };
+
+
+export const seo = {
+  fallbackUrl: "http://localhost:3000",
+  schemaContext: "https://schema.org",
+  sitemapPath: "/sitemap.xml",
+  imagePath: "/opengraph-image",
+  pages: {
+    home: { title: `${site.name} — ${site.role}`, description: site.intro, path: shell.home.href },
+    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[2].href },
+    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: shell.nav[1].href },
+    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
+  },
+};
+
+export const homeContent = {
+  aboutLabel: "A little about me",
+  aboutTitle: "The person behind the systems.",
+  aboutLink: "More about me",
+  servicesLabel: "What I do",
+  servicesTitle: "Software built around your business.",
+};
+
+export const workContent = {
+  approachLabel: "How I work",
+  approachTitle: "Good systems start with good questions.",
+  approachLink: "Explore my approach",
+  selectedLabel: "Selected work",
+  selectedTitle: "Built to keep working.",
+  allWork: "View all work",
+  previous: "Previous projects",
+  next: "Next projects",
+  carouselLabel: "Selected projects",
+};
+
+export const aboutContent = {
+  storyLabel: "My story",
+  storyTitle: "A few chapters along the way.",
+};
+
+export const pageContent = {
+  approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
+  workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
+  problem: "Problem",
+  solution: "Solution",
+  stack: "Stack",
+  results: "Results",
+  nextProject: "Next project",
+  projectLink: "Visit project",
+};

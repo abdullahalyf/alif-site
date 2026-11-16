@@ -1,16 +1,17 @@
-import { shell, site } from "@/content/site";
-import { ButtonLink } from "@/components/button";
-import { SectionLabel } from "@/components/section-label";
+import { seo } from "@/content/site";
+import { pageMetadata } from "@/seo/metadata";
+import { PersonJsonLd } from "@/components/person-json-ld";
+import { Hero } from "@/components/home/hero";
+import { AboutTeaser } from "@/components/home/about-teaser";
+import { HowIWork } from "@/components/home/how-i-work";
+import { SelectedWork } from "@/components/home/selected-work";
+import { Services } from "@/components/home/services";
+
+export const metadata = {
+  ...pageMetadata(seo.pages.home.title, seo.pages.home.description, seo.pages.home.path),
+  title: { absolute: seo.pages.home.title },
+};
 
 export default function Home() {
-  return <div className="container page-shell">
-    <SectionLabel>{site.tagline}</SectionLabel>
-    <h1>{site.name}</h1>
-    <p className="lead">{site.role}</p>
-    <p>{site.intro}</p>
-    <div className="button-row">
-      <ButtonLink href={shell.email.href}>{shell.email.label}</ButtonLink>
-      <ButtonLink href={shell.nav[0].href} variant="secondary">{shell.workLabel}</ButtonLink>
-    </div>
-  </div>;
+  return <><PersonJsonLd /><Hero /><AboutTeaser /><HowIWork /><Services /><SelectedWork /></>;
 }

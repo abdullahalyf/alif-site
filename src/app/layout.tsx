@@ -1,3 +1,4 @@
+import { getBaseUrl } from "@/seo/base-url";
 import type { Metadata } from "next";
 import { shell, site } from "@/content/site";
 import localFont from "next/font/local";
@@ -15,6 +16,7 @@ const instrument = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: getBaseUrl(),
   title: { default: `${site.name} — ${site.role}`, template: `%s — ${site.name}` },
   description: site.intro,
 };

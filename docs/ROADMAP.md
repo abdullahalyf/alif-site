@@ -13,7 +13,7 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
   - Routes with placeholder content from `site`/`projects`: `/`, `/about`, `/approach`, `/work`, `/work/[slug]` (`generateStaticParams`, `notFound()`), custom `not-found`.
   - Tests: unit tests for `Header` (links, menu toggle) and `Button`; e2e: every nav link works on desktop + mobile, unknown slug → 404.
 
-- [ ] **Task 2: SEO + metadata**
+- [x] **Task 2: SEO + metadata**
   - Per-page `metadata` / `generateMetadata` (case studies use title + summary).
   - `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx` (uses `site`), JSON-LD `Person` on home.
   - Base URL: `NEXT_PUBLIC_SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `http://localhost:3000`.
@@ -26,10 +26,10 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 ## Phase B — Pages (follow DESIGN.md exactly)
 
-- [ ] Task 4: Home — hero (photo panel + stripes), about teaser, services.
-- [ ] Task 5: Home — "How I work" night section + selected work card row.
-- [ ] Task 6: About — photo + paragraphs + Atlas-style story chapters.
-- [ ] Task 7: Approach page + Work list + case study page.
+- [x] Task 4: Home — hero (photo panel + stripes), about teaser, services.
+- [x] Task 5: Home — "How I work" night section + selected work card row.
+- [x] Task 6: About — photo + paragraphs + Atlas-style story chapters.
+- [x] Task 7: Approach page + Work list + case study page.
 - [ ] Task 8: Intro animation + remaining animations from DESIGN.md (each with reduced-motion fallback). Use high reasoning.
 
 ## Phase C — Polish + launch
