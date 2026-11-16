@@ -145,3 +145,15 @@ export const homeContent = {
   servicesLabel: "What I do",
   servicesTitle: "Software built around your business.",
 };
+
+export const workContent = {
+  approachLabel: "How I work",
+  approachTitle: "Good systems start with good questions.",
+  approachLink: "Explore my approach",
+  selectedLabel: "Selected work",
+  selectedTitle: "Built to keep working.",
+  allWork: "View all work",
+  previous: "Previous projects",
+  next: "Next projects",
+  carouselLabel: "Selected projects",
+};

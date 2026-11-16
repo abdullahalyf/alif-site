@@ -27,7 +27,7 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 ## Phase B — Pages (follow DESIGN.md exactly)
 
 - [x] Task 4: Home — hero (photo panel + stripes), about teaser, services.
-- [ ] Task 5: Home — "How I work" night section + selected work card row.
+- [x] Task 5: Home — "How I work" night section + selected work card row.
 - [ ] Task 6: About — photo + paragraphs + Atlas-style story chapters.
 - [ ] Task 7: Approach page + Work list + case study page.
 - [ ] Task 8: Intro animation + remaining animations from DESIGN.md (each with reduced-motion fallback). Use high reasoning.
