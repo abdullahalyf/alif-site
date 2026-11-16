@@ -31,3 +31,5 @@
   .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
   .language-list > div { grid-template-columns: 1fr 1fr; }
 }
+/* Contain entrance transforms so staggered cards never widen the page. */
+.highlights-grid, .testimonials-grid, .skills-grid, .stats-grid { overflow-x: clip; }
