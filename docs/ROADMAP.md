@@ -40,3 +40,5 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 - [x] Task 11: Writing (Markdown posts, schema/loader, article pages, draft filtering, RSS) + Now page, navigation, sitemap and tests.
 
 - [x] Task 12: Demo content, seven complete projects, remote demo images, achievements, About details, Home stats/testimonials and latest published writing; schema and browser tests.
+
+- [x] Task 13: Quality pass — Lighthouse CI warnings, per-project/post share images, security/cache headers, professional demo content, JSON-LD and Playwright cache.
