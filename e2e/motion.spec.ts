@@ -5,7 +5,7 @@ test("home page shows its heading and footer immediately", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(site.name);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(site.role);
   await expect(page.getByRole("contentinfo")).toBeVisible();
 });
 
