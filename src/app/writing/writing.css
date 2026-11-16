@@ -1,0 +1,32 @@
+.writing-page { padding-block: clamp(3rem, 8vw, 7rem); }
+.writing-heading { display: grid; gap: 1.5rem; margin-block: 2.5rem 3rem; }
+.writing-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.writing-links a, .post-list a, .post-neighbours a { text-decoration: underline; }
+.post-list { list-style: none; padding: 0; }
+.post-list > li { display: grid; gap: 1rem; padding-block: 2.5rem; border-top: 1px solid var(--line); }
+.post-list h2 { font-size: var(--type-h3); }
+.post-date { color: var(--ink-muted); font-size: 0.875rem; }
+.post-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
+.post-tags li { border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; }
+.post-article { max-width: 65ch; margin-inline: auto; min-width: 0; overflow-wrap: anywhere; }
+.post-article h1 { font-size: clamp(3rem, 2rem + 3vw, 5rem); }
+.post-prose { line-height: 1.7; }
+.post-prose > * + * { margin-top: 1.5rem; }
+.post-prose h2, .post-prose h3, .post-prose h4 { margin-top: 2.5rem; }
+.post-prose h2 { font-size: var(--type-h3); }
+.post-prose h3, .post-prose h4 { font-size: 1.5rem; }
+.post-prose a { text-decoration: underline; }
+.post-prose ul, .post-prose ol { padding-left: 1.5rem; }
+.post-prose ul { list-style: disc; }
+.post-prose ol { list-style: decimal; }
+.post-prose li + li { margin-top: 0.5rem; }
+.post-prose pre { max-width: 100%; overflow-x: auto; border-radius: 0.75rem; padding: 1.25rem; background: var(--night); color: var(--night-text); font-size: 0.875rem; }
+.post-prose :not(pre) > code { background: var(--cream-2); border-radius: 0.25rem; padding: 0.1rem 0.3rem; }
+.post-prose blockquote { border-left: 2px solid var(--ink-muted); padding-left: 1.5rem; }
+.post-prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.post-prose td, .post-prose th { padding: 0.75rem; border: 1px solid var(--line); }
+.post-neighbours { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; border-top: 1px solid var(--line); padding-top: 2rem; margin-top: 3rem; }
+.post-neighbours a { display: grid; gap: 0.5rem; max-width: 28ch; }
+.now-list { display: grid; gap: 1.5rem; padding-left: 1.25rem; list-style: disc; }
+
+.post-prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; line-height: 1.1; }

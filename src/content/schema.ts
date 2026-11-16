@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 const image = z.object({
-  src: z.string().startsWith("/"),
+  src: z.string().refine((value) => {
+    if (value.startsWith("/") && !value.startsWith("//")) return true;
+    try { return new URL(value).protocol === "https:"; } catch { return false; }
+  }, "Use a local path or an HTTPS URL"),
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   alt: z.string().min(1),
@@ -19,6 +22,14 @@ export const siteSchema = z.object({
   role: z.string().min(1),
   location: z.string().min(1),
   intro: z.string().min(1),
+  now: z.array(z.string().min(1)).min(1),
+  achievements: z.array(z.object({ title: z.string().min(1), org: z.string().min(1), year: z.number().int(), text: z.string().min(1), demo: z.boolean().optional() })).min(1),
+  education: z.array(z.object({ title: z.string().min(1), org: z.string().min(1), years: z.string().min(1), text: z.string().min(1) })).min(1),
+  skills: z.array(z.object({ title: z.string().min(1), items: z.array(z.string().min(1)).min(1) })).min(1),
+  languages: z.array(z.object({ name: z.string().min(1), level: z.string().min(1) })).min(1),
+  interests: z.array(z.string().min(1)).min(1),
+  stats: z.array(z.object({ value: z.string().min(1), label: z.string().min(1) })).min(1),
+  testimonials: z.array(z.object({ name: z.string().min(1), role: z.string().min(1), quote: z.string().min(1) })).min(2),
   about: z.array(z.string().min(1)).min(1),
   email: z.email(),
   whatsapp: z.object({ display: z.string().min(1), href: z.url() }),
@@ -49,7 +60,8 @@ export const projectSchema = z.object({
   client: z.string().min(1),
   year: z.number().int().min(2000),
   role: z.string().min(1),
-  category: z.enum(["Client work", "Research", "Personal"]),
+  category: z.enum(["Client work", "Research", "Personal", "Open source"]),
+  demo: z.boolean().optional(),
   summary: z.string().min(1),
   problem: z.string().min(1),
   solution: z.array(z.string().min(1)).min(1),

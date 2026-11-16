@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { seo, shell, site } from "../src/content/site";
+import { getPosts } from "../src/content/posts";
+import { writingContent } from "../src/content/site";
 import { projects } from "../src/content/projects";
 
 test("sitemap lists all pages and case studies with absolute canonical URLs", async ({ request }) => {
@@ -7,7 +9,7 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
   expect(response.status()).toBe(200);
   const xml = await response.text();
   const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => new URL(match[1]));
-  const paths = [...Object.values(seo.pages).map((page) => page.path), ...projects.map((project) => shell.projectHref(project.slug))];
+  const paths = [...Object.values(seo.pages).map((page) => page.path), ...projects.map((project) => shell.projectHref(project.slug)), ...getPosts({ includeDrafts: false }).map((post) => writingContent.postHref(post.slug))];
   expect(urls.map((url) => url.pathname).sort()).toEqual(paths.sort());
   expect(new Set(urls.map((url) => url.origin)).size).toBe(1);
   const robots = await request.get("/robots.txt");

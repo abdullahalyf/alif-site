@@ -1,0 +1,52 @@
+import { expect, test } from "@playwright/test";
+import { getPosts } from "../src/content/posts";
+import { seo, site, writingContent } from "../src/content/site";
+
+const published = getPosts({ includeDrafts: false });
+const drafts = getPosts({ includeDrafts: true }).filter((post) => post.draft);
+test("Writing lists published posts and hides drafts from production", async ({ page, request }) => {
+  await page.goto(seo.pages.writing.path);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(writingContent.title);
+  for (const post of published) await expect(page.getByRole("link", { name: post.title, exact: true })).toHaveAttribute("href", writingContent.postHref(post.slug));
+  if (!published.length) await expect(page.getByText(writingContent.empty)).toBeVisible();
+  for (const post of drafts) {
+    await expect(page.getByRole("link", { name: post.title, exact: true })).toHaveCount(0);
+    const response = await request.get(writingContent.postHref(post.slug)); expect(response.status()).toBe(404);
+    expect(await response.text()).not.toContain(post.body);
+  }
+});
+test("Now renders the current factual update and is linked from Writing", async ({ page }) => {
+  await page.goto(seo.pages.writing.path);
+  await page.getByRole("link", { name: writingContent.nowLabel, exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(writingContent.nowTitle);
+  for (const item of site.now) await expect(page.getByText(item, { exact: true })).toBeVisible();
+});
+test("RSS is valid XML and includes only published posts", async ({ request, page }) => {
+  const response = await request.get(writingContent.rssPath); expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain("application/rss+xml");
+  const xml = await response.text();
+  const parsed = await page.evaluate((source) => {
+    const document = new DOMParser().parseFromString(source, "application/xml");
+    return { errors: document.querySelectorAll("parsererror").length, items: document.querySelectorAll("channel > item").length };
+  }, xml);
+  expect(parsed.errors).toBe(0);
+  expect(parsed.items).toBe(published.length);
+  for (const post of published) expect(xml).toContain(writingContent.postHref(post.slug));
+  for (const post of drafts) expect(xml).not.toContain(writingContent.postHref(post.slug));
+  expect((xml.match(/<item>/g) || []).length).toBe(published.length);
+});
+test.describe("development draft article", () => {
+  test.use({ baseURL: "http://localhost:3100" });
+  test("renders the sample Markdown article with metadata, body and a route back", async ({ page }) => {
+    const post = drafts.find((post) => post.slug === "hello-im-alif")!;
+    await page.goto(writingContent.postHref(post.slug));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(post.title);
+    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(242, 237, 227)");
+    await expect(page).toHaveTitle(`${post.title} — ${site.name}`);
+    await expect(page.locator(".post-prose")).toContainText("TODO(Alif)");
+    await expect(page.getByText(writingContent.draft, { exact: true })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+    await page.getByRole("link", { name: writingContent.back, exact: true }).click();
+    await expect(page.getByRole("link", { name: post.title, exact: true })).toBeVisible();
+  });
+});

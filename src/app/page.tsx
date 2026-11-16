@@ -1,3 +1,4 @@
+import { Highlights, AtAGlance, Testimonials, LatestWriting } from "@/components/demo/sections";
 import { seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { PersonJsonLd } from "@/components/person-json-ld";
@@ -13,5 +14,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <><PersonJsonLd /><Hero /><AboutTeaser /><HowIWork /><Services /><SelectedWork /></>;
+  return <><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><Highlights /><HowIWork /><Services /><SelectedWork /><Testimonials /><LatestWriting /></>;
 }

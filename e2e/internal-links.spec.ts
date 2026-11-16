@@ -1,7 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { pageRoutes } from "./helpers/routes";
+import { pageRoutes, previewRoutes } from "./helpers/routes";
 
-for (const path of pageRoutes) {
+for (const [mode, routes] of [["production", pageRoutes], ["preview", previewRoutes]] as const) {
+ test.describe(`${mode} links`, () => {
+  if (mode === "preview") test.use({ baseURL: "http://localhost:3100" });
+  for (const path of routes) {
   test(`every internal link on ${path} returns 200`, async ({ page, request }, testInfo) => {
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
@@ -34,4 +37,7 @@ for (const path of pageRoutes) {
     });
     expect(results.filter((result) => result.status !== 200), `Broken internal links on ${path}`).toEqual([]);
   });
+}
+
+ });
 }

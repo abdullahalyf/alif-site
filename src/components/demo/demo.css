@@ -1,0 +1,35 @@
+.highlights-grid, .testimonials-grid, .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.highlight-card { display: grid; align-content: start; gap: 1.25rem; padding: 1.75rem; border: 1px solid var(--line); border-radius: 1rem; min-width: 0; }
+.highlight-card:first-child { background: var(--cream-2); }
+.highlight-card h3 { overflow-wrap: anywhere; }
+.demo-badge { width: fit-content; font-size: 0.75rem; border: 1px solid var(--ink-muted); border-radius: 999px; padding: 0.25rem 0.65rem; }
+.demo-caption, .demo-notice { color: var(--ink-muted); font-size: 0.8125rem; }
+.demo-caption { padding-top: 0.75rem; }
+.demo-notice { margin-bottom: 2rem; }
+.glance-section { padding-block: 4rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 2rem; }
+.stat-value { font: 400 var(--type-h2)/1.1 var(--font-serif); }
+.stats-grid > div { border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; }
+.testimonial { display: grid; align-content: space-between; gap: 2rem; border-top: 1px solid var(--line); padding-top: 2rem; }
+.testimonial blockquote { font: 400 var(--type-h3)/1.25 var(--font-serif); }
+.testimonial figcaption { display: grid; gap: 0.5rem; }
+.education-timeline { border-top: 1px solid var(--line); }
+.education-timeline article { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: 2rem; border-bottom: 1px solid var(--line); }
+.education-timeline article > div { display: grid; gap: 0.75rem; }
+.skills-grid h3 { margin-bottom: 1rem; }
+.skills-grid ul { list-style: disc; padding-left: 1.25rem; }
+.skills-grid li + li { margin-top: 0.5rem; }
+.language-list > div { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: 1.25rem; border-top: 1px solid var(--line); }
+.language-list dt { font-family: var(--font-serif); font-size: var(--type-h3); }
+.interests-list { list-style: disc; padding-left: 1.25rem; display: grid; gap: 0.75rem; }
+.latest-writing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
+.latest-writing-grid article { display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-block: 2rem; }
+.latest-writing-grid a { text-decoration: underline; }
+@media (max-width: 47.999rem) {
+  .highlights-grid, .testimonials-grid, .skills-grid, .latest-writing-grid, .education-timeline article { grid-template-columns: 1fr; }
+  .stats-grid { gap: 1rem; }
+  .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
+  .language-list > div { grid-template-columns: 1fr 1fr; }
+}
+/* Contain entrance transforms so staggered cards never widen the page. */
+.highlights-grid, .testimonials-grid, .skills-grid, .stats-grid { overflow-x: clip; }

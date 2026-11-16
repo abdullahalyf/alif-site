@@ -18,7 +18,7 @@ for (const link of shell.nav) {
 test("every case study opens from Work", async ({ page }) => {
   for (const project of projects) {
     await page.goto(shell.nav[0].href);
-    await page.getByRole("link", { name: project.title, exact: true }).click();
+    await page.getByRole("link").filter({ has: page.getByRole("heading", { name: project.title, exact: true }) }).click();
     await expect(page).toHaveURL(shell.projectHref(project.slug));
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);
   }
