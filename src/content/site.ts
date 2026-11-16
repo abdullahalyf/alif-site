@@ -157,3 +157,8 @@ export const workContent = {
   next: "Next projects",
   carouselLabel: "Selected projects",
 };
+
+export const aboutContent = {
+  storyLabel: "My story",
+  storyTitle: "A few chapters along the way.",
+};
