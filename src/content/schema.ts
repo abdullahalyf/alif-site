@@ -19,6 +19,7 @@ export const siteSchema = z.object({
   role: z.string().min(1),
   location: z.string().min(1),
   intro: z.string().min(1),
+  now: z.array(z.string().min(1)).min(1),
   about: z.array(z.string().min(1)).min(1),
   email: z.email(),
   whatsapp: z.object({ display: z.string().min(1), href: z.url() }),

@@ -36,3 +36,5 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 - [ ] Task 9: Performance + accessibility pass (Lighthouse mobile ≥ 90 / ≥ 95), fix findings.
 - [ ] Task 10: Final content check, Vercel production deploy.
+
+- [x] Task 11: Writing (Markdown posts, schema/loader, article pages, draft filtering, RSS) + Now page, navigation, sitemap and tests.
