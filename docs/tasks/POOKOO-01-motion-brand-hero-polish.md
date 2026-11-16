@@ -1,8 +1,20 @@
 # Pookoo master task 1 — Motion, polish, brand mark, hero card
 
-Read this whole file first, then `AGENTS.md` and `docs/DESIGN.md` (all of it).
-Work on branch `pookoo-1` from the **latest main** (`git pull` first — other agents merge often).
-This is one long task. Do the parts in order, commit after each part, open ONE PR at the end.
+Agent: Pookoo (Opus) · Folder: `E:\Projects\alif-site` · Orchestrator: Claude (follow these instructions exactly).
+
+## Run order (do exactly this)
+1. **Sync:** `git checkout main && git pull`, then `git checkout -b pookoo-1`.
+2. **Read fully, in order:** this file → `AGENTS.md` → `docs/DESIGN.md`.
+3. **Plan first:** before writing code, write a short plan: the 5 parts, files each part touches, skills you'll use per part.
+4. **Execute Parts 1–5 in order.** After each part: run its tests, commit `Part N: <name>`, continue. Don't skip parts. Don't stop to ask unless truly blocked.
+5. **Verify + ship:** `pnpm check` and `pnpm test:e2e` must pass (paste the final result lines). Push, open ONE PR (title below).
+6. **Write your report** to `docs/reports/POOKOO-01-report.md` (commit it on your branch, in the same PR, and also paste it as the PR body). Claude reads it there — Alif does not need to copy anything. Use exactly this format:
+   ```
+   DONE: pookoo-1 · PR #<n> · branch pookoo-1
+   check: <pass/fail> · e2e: <x passed / y failed>
+   Parts: 1 ✅ 2 ✅ 3 ✅ 4 ✅ 5 ✅ (mark ❌ + reason if not)
+   Notes: <anything Claude must know, max 5 lines>
+   ```
 
 ## How to work
 Use your installed skills heavily — check your skills list first. At minimum:
