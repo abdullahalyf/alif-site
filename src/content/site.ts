@@ -1,3 +1,4 @@
+import { demoImage } from "./demo-images";
 import type { Site } from "./schema";
 
 // Single source of truth for all site copy. Edit text here, never in components.
@@ -13,7 +14,40 @@ export const site = {
     "Building client software systems.",
     "Studying Computer Science and Engineering at Daffodil International University.",
     "Researching traffic accident risk prediction with a university team.",
-    "Learning Japanese. TODO(Alif): confirm current level and study routine.",
+    "Learning basic Japanese through a DILC course.",
+  ],
+  achievements: [
+    { title: "Nominated for a semester exchange at IIT Bombay (Spring 2027) — DIU–IIT Bombay MoU", org: "Daffodil International University · IIT Bombay", year: 2027, text: "Nominated for a Spring 2027 semester exchange under the DIU–IIT Bombay MoU." },
+    // DEMO: replace this entire illustrative achievement.
+    { title: "DEMO — Student systems showcase", org: "DEMO — Campus technology forum", year: 2026, text: "Presented an offline-first software concept at an illustrative student showcase.", demo: true },
+    // DEMO: replace this entire illustrative achievement.
+    { title: "DEMO — Community project recognition", org: "DEMO — Local developer circle", year: 2025, text: "Recognised for a sample community tool and a practical approach to documentation.", demo: true },
+  ],
+  // DEMO: the entire education timeline uses illustrative dates/details; replace before publication.
+  education: [
+    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University", years: "2023–present · DEMO dates", text: "DEMO — coursework in software engineering, databases and intelligent systems." },
+    { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing." },
+    { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects." },
+  ],
+  // DEMO: all skill groups are illustrative and should be checked by Alif.
+  skills: [
+    { title: "Systems & architecture", items: ["Domain modelling", "Offline-first design", "Access control", "Data synchronisation"] },
+    { title: "Web & interfaces", items: ["TypeScript", "React", "Next.js", "Accessible UI"] },
+    { title: "Data & tooling", items: ["PostgreSQL", "SQLite", "Python", "Git & CI"] },
+  ],
+  languages: [
+    { name: "Bangla", level: "Fluent" }, { name: "English", level: "Fluent" },
+    { name: "Hindi", level: "Speaking" }, { name: "Japanese", level: "Basic · DILC course" },
+  ],
+  // DEMO: illustrative interests to replace or confirm.
+  interests: ["Travelling across Bangladesh", "Street photography", "Football", "Reading about how cities work"],
+  // DEMO: every number below is illustrative, not a claim about completed client work.
+  stats: [{ value: "12+", label: "Demo projects explored" }, { value: "4", label: "Demo systems domains" }, { value: "3", label: "Demo years of building" }],
+  // DEMO: all quotes, names and roles are fictional examples, not client endorsements.
+  testimonials: [
+    { name: "DEMO — Maya Rahman", role: "DEMO — Operations lead", quote: "The best part was seeing the messy process become a system everyone could understand." },
+    { name: "DEMO — Arif Hasan", role: "DEMO — Small-business owner", quote: "Clear questions, a thoughtful plan and a tool that made the daily work feel simpler." },
+    { name: "DEMO — Nina Chowdhury", role: "DEMO — Project collaborator", quote: "Every decision came back to the people using the software and what they needed next." },
   ],
   about: [
     "I'm a freelance developer from Bangladesh who starts every project with the system, not the screen. I map out the data, the roles, the failure cases and the costs first, then build software that keeps working when the internet doesn't.",
@@ -77,26 +111,26 @@ export const site = {
     {
       label: "Jhenaidah",
       title: "Where it started",
-      text: "I grew up in Jhenaidah. TODO(Alif): a few lines about childhood and how you first met computers.",
-      image: null,
+      text: "DEMO — Growing up in Jhenaidah, curiosity about everyday tools became a curiosity about computers and how they work.", // DEMO story copy.
+      image: demoImage("alif-story-1", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
       label: "School & college",
       title: "Learning to build",
-      text: "TODO(Alif): school and college years — what you studied and what you started making.",
-      image: null,
+      text: "DEMO — School and college were a time for small experiments: simple pages, tiny programs and a growing habit of learning by building.", // DEMO story copy.
+      image: demoImage("alif-story-2", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
       label: "Daffodil International University",
       title: "Computer Science & Engineering",
       text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: null,
+      image: demoImage("alif-story-3", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
       label: "Savar, Dhaka",
       title: "Now",
       text: "I live in Savar and design and build software systems for businesses as a freelancer.",
-      image: null,
+      image: demoImage("alif-story-4", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
   ],
 } satisfies Site;
@@ -198,4 +232,23 @@ export const writingContent = {
   next: "Next post",
   draft: "Draft preview",
   postHref: (slug: string) => `/writing/${slug}`,
+};
+
+export const demoContent = {
+  demoLabel: "DEMO",
+  imageNotice: "Demo photographs · illustrative, not project screenshots",
+  highlightsLabel: "Highlights",
+  highlightsTitle: "Milestones along the way.",
+  educationLabel: "Education",
+  skillsLabel: "Skills",
+  languagesLabel: "Languages",
+  interestsLabel: "Interests",
+  aboutDemoNotice: "Demo education details, skills and interests — to be confirmed by Alif.",
+  statsLabel: "At a glance",
+  statsNotice: "Demo figures · illustrative only",
+  testimonialsLabel: "Working together",
+  testimonialsTitle: "A little outside perspective.",
+  testimonialsNotice: "Demo quotes from fictional people · not client endorsements",
+  latestLabel: "Latest writing",
+  latestTitle: "Notes from the workbench.",
 };
