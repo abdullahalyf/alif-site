@@ -1,0 +1,18 @@
+.resume-document { max-width: 54rem; margin-inline: auto; display: grid; gap: 2.5rem; overflow-wrap: anywhere; }
+.resume-document section { display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1.5rem; }
+.resume-document section > div { display: grid; gap: .5rem; }
+.resume-document h3 { font-size: 1.5rem; }
+@media print {
+  @page { size: A4; margin: 15mm; }
+  html, body { background: white !important; color: black !important; font-size: 10pt; }
+  body > header, body > footer, .header, .footer, nav, .skip-link, .resume-print { display: none !important; }
+  .resume-page { padding: 0; width: 100%; display: block; }
+  .resume-document { max-width: none; gap: 1rem; }
+  .resume-document h1 { font-size: 26pt; }
+  .resume-document h2 { font-size: 18pt; break-after: avoid; }
+  .resume-document h3 { font-size: 12pt; break-after: avoid; }
+  .resume-document section { padding-top: .5rem; border-color: black; }
+  .resume-document section > div, .resume-document header { break-inside: avoid; }
+  .resume-document a { color: black; text-decoration: none; }
+  p { orphans: 3; widows: 3; }
+}
