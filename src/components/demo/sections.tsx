@@ -22,8 +22,11 @@ export function Highlights() {
 }
 export function AtAGlance() {
   return <section className="container glance-section" aria-labelledby="glance-title">
-    <SectionLabel>{demoContent.statsLabel}</SectionLabel><h2 id="glance-title" className="label">{demoContent.statsNotice}</h2>
-    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value">{stat.value}</p><p>{stat.label}</p></div>)}</StaggerIn>
+    <div className="glance-head">
+      <SectionLabel>{demoContent.statsLabel}</SectionLabel>
+      <h2 id="glance-title" className="glance-notice">{demoContent.statsNotice}</h2>
+    </div>
+    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value">{stat.value}</p><p className="stat-label">{stat.label}</p></div>)}</StaggerIn>
   </section>;
 }
 export function Testimonials() {

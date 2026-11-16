@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type StaggerInProps = {
   children: React.ReactNode;
@@ -41,7 +41,10 @@ export function StaggerIn({
   const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns
+    // the server snapshot until React swaps it for the real value, and an
+    // effect would otherwise start an animation the user asked not to see.
+    if (prefersReducedMotion()) return;
 
     const root = rootRef.current;
     if (!root) return;
@@ -50,19 +53,25 @@ export function StaggerIn({
     if (!targets.length) return;
 
     const gsap = getGsap();
+    // The cards slide in and are un-covered by a clip rather than fading: the
+    // text inside them stays at full opacity the whole time, so its contrast
+    // is never reduced mid-animation.
     const tween = gsap.from(targets, {
       x: distance,
-      opacity: 0,
+      clipPath: "inset(0 100% 0 0)",
       duration: 0.7,
       ease: "power3.out",
       stagger,
-      clearProps: "transform,opacity",
+      clearProps: "transform,clipPath",
       scrollTrigger: { trigger: root, start, once: true },
     });
 
     return () => {
       tween.scrollTrigger?.kill();
       tween.kill();
+      // Undo the entrance start state, so a tween that never ran cannot leave
+      // the cards clipped or shifted.
+      gsap.set(targets, { clearProps: "transform,clipPath" });
     };
   }, [reducedMotion, stagger, distance, start]);
 

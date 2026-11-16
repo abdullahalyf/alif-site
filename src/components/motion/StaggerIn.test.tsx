@@ -45,4 +45,16 @@ describe("StaggerIn", () => {
     expect(html).not.toContain("opacity: 0");
     expect(html).not.toContain("opacity:0");
   });
+
+  it("leaves the cards un-clipped under reduced motion", () => {
+    mockMatchMedia(true);
+    const { container } = render(
+      <StaggerIn>
+        <p>First</p>
+      </StaggerIn>,
+    );
+
+    // The entrance clip must never survive a run that was skipped.
+    expect(container.querySelector("p")?.getAttribute("style") ?? "").not.toContain("clip-path");
+  });
 });

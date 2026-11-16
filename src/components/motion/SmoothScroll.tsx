@@ -3,7 +3,7 @@
 import Lenis from "lenis";
 import { createContext, useContext, useEffect, useRef } from "react";
 import { syncWithLenis } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const SmoothScrollContext = createContext<React.RefObject<Lenis | null> | null>(null);
 
@@ -29,7 +29,9 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const instanceRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const instance = new Lenis({ autoRaf: false });
     instanceRef.current = instance;

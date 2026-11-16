@@ -9,8 +9,12 @@ export function HowIWork() {
     <section className="section-space" aria-labelledby="how-title">
       <div className="container">
         <SectionLabel>{workContent.approachLabel}</SectionLabel>
-        <div className="split-section">
-          <div className="prose"><Reveal><h2 id="how-title">{workContent.approachTitle}</h2></Reveal><Reveal><Link className="text-link" href={shell.nav[1].href}>{workContent.approachLink}<ArrowUpRight /></Link></Reveal></div>
+        <div className="split-section split-section--sticky">
+          <div className="prose night-intro">
+            <Reveal><h2 id="how-title">{workContent.approachTitle}</h2></Reveal>
+            <Reveal><p className="night-intro__text">{workContent.approachIntro}</p></Reveal>
+            <Reveal><Link className="text-link" href={shell.nav[1].href}>{workContent.approachLink}<ArrowUpRight /></Link></Reveal>
+          </div>
           <ol className="night-steps">{site.approach.map((step) => <li key={step.title}><Reveal><h3>{step.title}</h3></Reveal><Reveal><p>{step.text}</p></Reveal></li>)}</ol>
         </div>
       </div>

@@ -56,8 +56,21 @@ describe("Reveal", () => {
     expect(html).not.toContain("opacity:0");
   });
 
-  it("renders as a list item when asked", () => {
+  it("never fades its content, so text contrast is unaffected mid-animation", () => {
     mockMatchMedia(false);
+    const html = renderToStaticMarkup(
+      <Reveal>
+        <p>Headline</p>
+      </Reveal>,
+    );
+
+    // The entrance uses a clip, not an opacity fade — a fade would blend the
+    // text into the background and drop it below the contrast threshold.
+    expect(html).not.toContain("opacity: 0");
+    expect(html).not.toContain("opacity:0");
+  });
+
+  it("renders as a list item when asked", () => {    mockMatchMedia(false);
     const { container } = render(
       <ul>
         <Reveal as="li">

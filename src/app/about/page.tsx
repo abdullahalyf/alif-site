@@ -17,7 +17,7 @@ export default function About() {
         <PhotoReveal className="about-photo-wrap">
           <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 768px) 100vw, 50vw" preload />
         </PhotoReveal>
-        <div className="prose">{site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}</div>
+        <div className="about-intro__copy">{site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}</div>
       </div>
     </section>
     <Highlights /><AboutDetails />

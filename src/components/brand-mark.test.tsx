@@ -33,13 +33,13 @@ describe("BrandMark", () => {
   it("links home", () => {
     render(<BrandMark />);
 
-    expect(screen.getByRole("link", { name: site.name })).toHaveAttribute("href", "/");
+    expect(screen.getByRole("link", { name: site.logoText })).toHaveAttribute("href", "/");
   });
 
   it("navigates home normally on other pages", () => {
     render(<BrandMark />);
 
-    const link = screen.getByRole("link", { name: site.name });
+    const link = screen.getByRole("link", { name: site.logoText });
     const event = new MouseEvent("click", { bubbles: true, cancelable: true });
     link.dispatchEvent(event);
 
@@ -51,7 +51,7 @@ describe("BrandMark", () => {
     pathname.value = "/";
     render(<BrandMark />);
 
-    const link = screen.getByRole("link", { name: site.name });
+    const link = screen.getByRole("link", { name: site.logoText });
     const event = new MouseEvent("click", { bubbles: true, cancelable: true });
     link.dispatchEvent(event);
 

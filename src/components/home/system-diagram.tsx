@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type SystemDiagramProps = {
   /** Box labels, left to right. */
@@ -18,8 +18,10 @@ const BOX_WIDTH = 74;
 const BOX_HEIGHT = 40;
 const BOX_Y = 16;
 const GAP = 18;
-/** Width of the diagram: four boxes and the gaps between them. */
-const VIEWBOX_WIDTH = 4 * BOX_WIDTH + 3 * GAP;
+/** Padding so the box strokes and the longest label are not clipped. */
+const PAD = 6;
+/** Width of the diagram: four boxes, the gaps between them and side padding. */
+const VIEWBOX_WIDTH = 4 * BOX_WIDTH + 3 * GAP + 2 * PAD;
 const VIEWBOX_HEIGHT = BOX_Y + BOX_HEIGHT + 18;
 
 /**
@@ -36,7 +38,9 @@ export function SystemDiagram({ steps, label, float = false, className }: System
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const root = rootRef.current;
     if (!root) return;
@@ -78,12 +82,15 @@ export function SystemDiagram({ steps, label, float = false, className }: System
         tween.scrollTrigger?.kill();
         tween.kill();
       }
+      // Undo the start state, so a tween that never ran cannot leave the dots
+      // hidden.
+      gsap.set(dots, { opacity: 1 });
     };
   }, [reducedMotion, steps]);
 
   const boxes = steps.map((text, index) => ({
     text,
-    x: index * (BOX_WIDTH + GAP),
+    x: PAD + index * (BOX_WIDTH + GAP),
   }));
 
   const connectors = boxes.slice(0, -1).map((box, index) => {

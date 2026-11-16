@@ -38,14 +38,13 @@ export function BrandMark() {
       className="brand-mark"
       href="/"
       onClick={scrollHome}
-      aria-label={site.name}
     >
       <span className="brand-mark__monogram" aria-hidden="true">
         {site.logoInitial}
       </span>
-      <span className="brand-mark__text" aria-hidden="true">
-        {site.logoText}
-      </span>
+      {/* The wordmark is the visible label, so it stays in the accessible name.
+          The monogram repeats it as a picture and is hidden from assistive tech. */}
+      <span className="brand-mark__text">{site.logoText}</span>
     </Link>
   );
 }

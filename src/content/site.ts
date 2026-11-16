@@ -213,6 +213,7 @@ export const homeContent = {
 export const workContent = {
   approachLabel: "How I work",
   approachTitle: "Good systems start with good questions.",
+  approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that keeps working.",
   approachLink: "Explore my approach",
   selectedLabel: "Selected work",
   selectedTitle: "Built to keep working.",

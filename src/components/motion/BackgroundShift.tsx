@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type BackgroundShiftProps = {
   children: React.ReactNode;
@@ -42,7 +42,9 @@ export function BackgroundShift({
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const root = rootRef.current;
     if (!root) return;
@@ -59,11 +61,18 @@ export function BackgroundShift({
         ease: "none",
         scrollTrigger: {
           trigger: root,
-          start: "top 60%",
-          end: "top 20%",
+          // The dark palette owns the page for the whole height of the section:
+          // the colour ramps in as the section's top reaches the lower third of
+          // the viewport and ramps back out as its bottom leaves the upper
+          // third. `onLeaveBack` runs on the first paint when the section sits
+          // below the viewport, so it must restore the light palette.
+          start: "top 75%",
+          end: "bottom 25%",
           scrub: true,
           onLeave: () => setPageColors(from, textFrom),
-          onLeaveBack: () => setPageColors(to, textTo),
+          onLeaveBack: () => setPageColors(from, textFrom),
+          onEnter: () => setPageColors(to, textTo),
+          onEnterBack: () => setPageColors(to, textTo),
         },
       },
     );
