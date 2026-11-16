@@ -1,5 +1,9 @@
+import { seo } from "@/content/site";
+import { pageMetadata } from "@/seo/metadata";
 import { shell, site } from "@/content/site";
 import { SectionLabel } from "@/components/section-label";
+
+export const metadata = pageMetadata(seo.pages.approach.title, seo.pages.approach.description, seo.pages.approach.path);
 
 export default function Approach() {
   return <div className="container page-shell">

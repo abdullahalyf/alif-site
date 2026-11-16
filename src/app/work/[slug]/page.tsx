@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/seo/metadata";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
 import { shell } from "@/content/site";
@@ -8,6 +9,12 @@ export const ensureStatic = "navigation";
 
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/work/[slug]">) {
+  const project = getProject((await params).slug);
+  if (!project) notFound();
+  return pageMetadata(project.title, project.summary, shell.projectHref(project.slug));
 }
 
 export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {

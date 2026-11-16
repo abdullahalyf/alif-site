@@ -1,7 +1,11 @@
+import { seo } from "@/content/site";
+import { pageMetadata } from "@/seo/metadata";
 import Link from "next/link";
 import { shell, site } from "@/content/site";
 import { projects } from "@/content/projects";
 import { SectionLabel } from "@/components/section-label";
+
+export const metadata = pageMetadata(seo.pages.work.title, seo.pages.work.description, seo.pages.work.path);
 
 export default function Work() {
   return <div className="container page-shell">

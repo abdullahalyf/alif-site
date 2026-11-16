@@ -123,3 +123,17 @@ export const shell = {
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
 };
+
+
+export const seo = {
+  fallbackUrl: "http://localhost:3000",
+  schemaContext: "https://schema.org",
+  sitemapPath: "/sitemap.xml",
+  imagePath: "/opengraph-image",
+  pages: {
+    home: { title: `${site.name} — ${site.role}`, description: site.intro, path: shell.home.href },
+    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[2].href },
+    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: shell.nav[1].href },
+    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
+  },
+};
