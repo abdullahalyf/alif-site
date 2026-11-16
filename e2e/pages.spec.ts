@@ -13,12 +13,12 @@ test("Home includes every section and working selected-work links", async ({ pag
     expect(await row.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
   }
   const last = projects[projects.length - 1];
-  await row.getByRole("link", { name: last.title, exact: true }).click();
+  await row.getByRole("link").filter({ has: page.getByRole("heading", { name: last.title, exact: true }) }).click();
   await expect(page).toHaveURL(shell.projectHref(last.slug));
 });
 
 test("About includes the supplied photo and every story chapter", async ({ page }) => {
-  await page.goto(shell.nav[2].href);
+  await page.goto(shell.nav[3].href);
   await expect(page.getByRole("img", { name: site.aboutPhoto.alt })).toBeVisible();
   await expect(page.getByRole("heading", { name: aboutContent.storyTitle })).toBeVisible();
   for (const chapter of site.story) await expect(page.getByRole("heading", { name: chapter.title, exact: true })).toBeVisible();

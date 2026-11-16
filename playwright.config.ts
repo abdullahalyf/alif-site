@@ -13,10 +13,15 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"], contextOptions: { reducedMotion: "reduce" } },
     },
   ],
-  webServer: {
+  webServer: [{
     command: "pnpm build && pnpm start",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
-  },
+  }, {
+    command: "pnpm dev --port 3100",
+    url: "http://localhost:3100",
+    reuseExistingServer: !process.env.CI,
+    timeout: 180_000,
+  }],
 });

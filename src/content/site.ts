@@ -9,6 +9,12 @@ export const site = {
   location: "Dhaka, Bangladesh",
   intro:
     "I design and build reliable software systems for businesses — from architecture to launch.",
+  now: [
+    "Building client software systems.",
+    "Studying Computer Science and Engineering at Daffodil International University.",
+    "Researching traffic accident risk prediction with a university team.",
+    "Learning Japanese. TODO(Alif): confirm current level and study routine.",
+  ],
   about: [
     "I'm a freelance developer from Bangladesh who starts every project with the system, not the screen. I map out the data, the roles, the failure cases and the costs first, then build software that keeps working when the internet doesn't.",
     "I'm studying Computer Science and Engineering at Daffodil International University and do research on traffic accident risk prediction.",
@@ -100,6 +106,7 @@ export const shell = {
   nav: [
     { label: "Work", href: "/work" },
     { label: "Approach", href: "/approach" },
+    { label: "Writing", href: "/writing" },
     { label: "About me", href: "/about" },
     { label: "Contact", href: "#contact" },
   ],
@@ -132,8 +139,10 @@ export const seo = {
   imagePath: "/opengraph-image",
   pages: {
     home: { title: `${site.name} — ${site.role}`, description: site.intro, path: shell.home.href },
-    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[2].href },
+    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[3].href },
     approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: shell.nav[1].href },
+    writing: { title: "Writing", description: "Notes on software systems, research and things I'm learning.", path: "/writing" },
+    now: { title: "What I'm doing now", description: "What Abdullah Alif is building, studying and learning now.", path: "/now" },
     work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
   },
 };
@@ -172,4 +181,21 @@ export const pageContent = {
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",
+};
+
+export const writingContent = {
+  title: "Writing",
+  intro: "Notes on building software, asking questions and learning along the way.",
+  empty: "No published posts yet. Check back soon.",
+  rssLabel: "RSS feed",
+  rssPath: "/writing/rss.xml",
+  nowLabel: "Now",
+  nowPath: "/now",
+  nowTitle: "What I'm doing now",
+  nowIntro: "A short snapshot of what has my attention.",
+  back: "All writing",
+  previous: "Previous post",
+  next: "Next post",
+  draft: "Draft preview",
+  postHref: (slug: string) => `/writing/${slug}`,
 };

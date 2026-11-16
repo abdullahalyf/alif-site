@@ -10,6 +10,11 @@ describe("content", () => {
     expect(() => siteSchema.parse(site)).not.toThrow();
   });
 
+  it("requires non-empty Now content", () => {
+    expect(siteSchema.safeParse({ ...site, now: [] }).success).toBe(false);
+    expect(siteSchema.safeParse({ ...site, now: [""] }).success).toBe(false);
+  });
+
   it("projects content is valid and slugs are unique", () => {
     expect(() => projectsSchema.parse(projects)).not.toThrow();
   });
