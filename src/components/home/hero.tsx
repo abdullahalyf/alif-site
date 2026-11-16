@@ -25,7 +25,10 @@ export function Hero() {
     </div>
     <div className="hero-panel">
       <PhotoReveal className="hero-photo-wrap">
-        <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 768px) 100vw, 1216px" preload className="hero-photo" />
+        {/* This panel sits below the hero copy on a phone, so it is not the
+            largest contentful paint there. It stays lazy so it does not
+            compete with the side photo for bandwidth on load. */}
+        <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 768px) 100vw, 1216px" loading="lazy" className="hero-photo" />
       </PhotoReveal>
       <HeroStripes className="hero-stripes" />
     </div>
