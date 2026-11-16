@@ -1,0 +1,57 @@
+# Change your site content
+
+Run commands from the repository root. Install Node (CI uses 22) and the pinned pnpm version from `package.json`, then run `pnpm install --frozen-lockfile`.
+
+## Change text
+
+1. Open `src/content/site.ts`. Find the current words and replace them. Keep quotes, commas and brackets.
+2. `site` holds your profile, services, story, contact details and photos. The other exports in this file hold navigation, buttons, section headings and SEO descriptions. Search the whole file when changing your name or role.
+3. Project words live in `src/content/projects.ts`. Blog words live in `src/content/posts/*.md`. Do not put copy in page components.
+4. Run `pnpm validate:content`. Each error names the file and field. Fix errors; review warnings too. Then run `pnpm check`.
+
+## Add a project
+
+1. Copy one object inside the `projects` array in `src/content/projects.ts`.
+2. Give it a unique lowercase slug, such as `shop-dashboard`. Use letters, numbers and single hyphens. This creates `/work/shop-dashboard`.
+3. Fill title, client, year (2000 or later), role, summary, problem, solution, stack and results. Category must be `Client work`, `Research`, `Personal` or `Open source`.
+4. Set `link` to a full URL or `null`. Use `images: []` for a neutral placeholder, or add photo objects with src, width, height and alt. Remove `demo: true` only when the content is real and approved.
+5. Validate and preview the Work list and case study. Projects do not support drafts: keep unfinished projects out of the array until ready.
+
+## Add a blog post
+
+Create `src/content/posts/my-post.md` (the filename becomes the slug):
+
+```md
+---
+title: "My first post"
+date: "2026-01-15"
+summary: "One short sentence about this post."
+tags: ["Software"]
+draft: true
+---
+## My first section
+
+Write Markdown here.
+```
+
+Use a real date in YYYY-MM-DD format. Keep `draft: true` while editing: development shows it, production, RSS and sitemap hide it. Change to `false` to publish. Draft posts are still validated. Markdown images currently render as alt text; use the supported site/project photo fields for photos. Site sections have no draft switch.
+
+## Add or replace a photo
+
+1. Keep the original outside `public/images` and run `pnpm add:image /path/to/original.jpg your-photo --max 2400`.
+2. The tool rotates the image, limits its width without enlargement, removes metadata, and writes `public/images/your-photo.jpg`. Inputs with an alpha channel become PNG instead.
+3. Paste the printed object into a photo field in site.ts or the project's images array. Replace `alt: "TODO"` with a useful description.
+4. The tool refuses to overwrite a file. For replacements use a new name, then update the content path. Never re-process the existing final Alif portraits.
+5. Preview desktop and mobile crops. Keep the printed width and height; do not guess dimensions.
+
+Local paths begin `/images/` and point into `public/images/`. HTTPS images must also be permitted by `next.config.ts`; use local files to avoid requiring configuration changes. The validator checks local file existence, not remote availability.
+
+## Replace demo content
+
+Run `rg -n '// DEMO' src/content` (or search for `// DEMO` in your editor). Replace each marked example with confirmed facts, approved quotes and owned photos. Check every item in a marked group. Search for `DEMO` and `TODO(` as well, including Markdown comments. Remove markers only after replacing the content. The validator prints marker counts per file and warns about `TODO(` in non-draft sources. It cannot confirm whether a claim is true.
+
+## Preview and deploy
+
+Run `pnpm dev`, then open the local site in your normal development browser. Check Home, About, Approach, Work, Writing, Now, links, keyboard navigation and mobile layout. Run `pnpm check` and `pnpm test:e2e` (install Playwright Chromium if needed). Production preview: stop dev, run `pnpm build && pnpm start`; drafts should disappear.
+
+Review your changes in a branch/PR. Vercel auto-deploys merged changes on main. In Vercel set `NEXT_PUBLIC_SITE_URL` to the site's public HTTPS origin so canonical links and sharing metadata do not use localhost. Confirm the live pages, contact details and share images after deployment. Never put private credentials in content files.
