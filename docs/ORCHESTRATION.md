@@ -22,3 +22,10 @@ Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connect
 - CODEX-11 Writing + Now (in progress) → CODEX-12 demo content → PUKU-01 motion/brand/hero/polish → template ("plug-and-play" for other people: content folder + theme file + TEMPLATE.md) → real content from Alif (education, results, awards, projects, story photos, Alez screenshots).
 
 Live: https://alif-site-flame.vercel.app (Vercel auto-deploys main; PRs get previews).
+
+## Pending wiring (after PUKU-01 merges)
+- Nav: add /services, /resume, /uses; Contact → /contact. Header: render `SearchDialog` (+ search.css) once.
+- Case study: render `<ArchitectureDiagram diagram={diagrams[project.slug]} />` (+ architecture.css).
+
+## Future ideas (Alif)
+- About me → "Travel" section: horizontal-scroll photo-book — animated photo frames with captions/text sliding in as you scroll sideways (GSAP horizontal pin). Alif loves travelling.
