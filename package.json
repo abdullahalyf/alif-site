@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "check": "pnpm validate:content && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
-    "validate:content": "tsx scripts/validate-content.ts"
+    "validate:content": "tsx scripts/validate-content.ts",
+    "add:image": "tsx scripts/add-image.ts"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
