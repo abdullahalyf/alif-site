@@ -7,7 +7,7 @@ import { trips, travelContent as c } from "@/content/travel";
 
 const mocks = vi.hoisted(() => ({ reduced: false, desktop: false, getGsap: vi.fn(), revert: vi.fn(), timeline: vi.fn() }));
 vi.mock("@/lib/gsap", () => ({ getGsap: mocks.getGsap }));
-vi.mock("@/lib/use-reduced-motion", () => ({ useReducedMotion: () => mocks.reduced }));
+vi.mock("@/lib/use-reduced-motion", () => ({ prefersReducedMotion: () => mocks.reduced, useReducedMotion: () => mocks.reduced }));
 vi.mock("@/components/motion", () => ({ useSmoothScroll: () => null, PhotoReveal: ({ children, className }: { children: ReactNode; className?: string }) => <div className={className}>{children}</div> }));
 beforeEach(() => {
   mocks.reduced = false; mocks.desktop = false; vi.clearAllMocks();
@@ -15,7 +15,7 @@ beforeEach(() => {
   vi.stubGlobal("requestAnimationFrame", vi.fn(() => 1));
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
   HTMLElement.prototype.scrollTo = vi.fn();
-  const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
+  const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), pause: vi.fn().mockReturnThis(), paused: vi.fn().mockReturnThis(), kill: vi.fn(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
   mocks.timeline.mockReturnValue(timeline);
   mocks.getGsap.mockReturnValue({ timeline: mocks.timeline, context: (callback: () => void) => { callback(); return { revert: mocks.revert }; } });
 });
