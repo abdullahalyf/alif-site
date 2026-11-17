@@ -8,6 +8,8 @@ import { trips as defaultTrips, travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { formatTripDate, frameRotation, pageIndex } from "./book";
 import { JourneyAtmosphere } from "./JourneyAtmosphere";
+import { getGsap } from "@/lib/gsap";
+import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 import { RouteMap } from "./map/RouteMap";
 import "./travel.css";
 
@@ -20,6 +22,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
   const suppressClickUntil = useRef(0);
   const active = useRef(0);
+  const reduced = useReducedMotion();
   const [{ current, previous }, setSelection] = useState({ current: 0, previous: 0 });
 
   const updateCurrent = useCallback((index: number, progress = (index + 1) / trips.length) => {
@@ -62,6 +65,24 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       element.style.removeProperty("--book-progress");
     };
   }, []);
+
+  useEffect(() => {
+    const page = track.current?.children[current];
+    if (!page || prefersReducedMotion()) return;
+    const gsap = getGsap();
+    let observer: IntersectionObserver | undefined;
+    const context = gsap.context(() => {
+      const animation = gsap.timeline()
+        .fromTo(page.querySelectorAll("img"), { filter: "blur(6px) saturate(0.5)" }, { filter: "blur(0px) saturate(1)", duration: 0.65 }, 0)
+        .fromTo(page.querySelectorAll("[data-book-caption] > *"), { y: 12 }, { y: 0, duration: 0.4, stagger: 0.025 }, 0);
+      if (typeof IntersectionObserver !== "undefined") {
+        animation.pause();
+        observer = new IntersectionObserver(([entry]) => animation.paused(!entry.isIntersecting));
+        observer.observe(page);
+      }
+    }, page);
+    return () => { observer?.disconnect(); context.revert(); };
+  }, [current, reduced]);
 
   function navigate(index: number) {
     const next = pageIndex(index, trips.length);
@@ -111,7 +132,11 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     <h2 id={`${id}-title`}>{c.bookTitle}</h2>
     <div ref={stage} className="travel-book-stage">
       <JourneyAtmosphere trip={trips[current]} previous={trips[previous]} />
-      <RouteMap trips={trips} current={current} onNavigate={navigate} />
+      <RouteMap trips={trips} current={current} onNavigate={index => {
+        navigate(index);
+        track.current?.children[index]?.querySelector("h3")?.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
+        viewport.current?.focus({ preventScroll: true });
+      }} />
       <p id={`${id}-hint`} className="travel-book-hint"><span className="book-hint-list">{c.listHint}</span><span className="book-hint-snap">{c.swipeHint}</span><span className="book-hint-desktop">{c.desktopHint}</span></p>
       <div ref={viewport} className="travel-book-viewport" tabIndex={0} role="region" aria-label={c.bookLabel} aria-describedby={`${id}-hint`} onKeyDown={keyboard} onScroll={scroll} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd} onLostPointerCapture={dragEnd} onDragStart={(event) => event.preventDefault()} onClickCapture={(event) => { if (Date.now() < suppressClickUntil.current) { event.preventDefault(); event.stopPropagation(); } }}>
         <div ref={track} className="travel-book-track">

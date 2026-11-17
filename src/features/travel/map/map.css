@@ -35,3 +35,5 @@
   .travel-book[data-layout] .route-draw-mask { stroke-dashoffset: 0; }
   .route-pin-halo, .route-thumbnail { animation: none !important; }
 }
+
+.journey-route-backdrop { position: absolute; z-index: -1; right: 2%; top: 0; width: min(80%, 64rem); height: 100%; max-height: 64rem; opacity: 0.16; pointer-events: none; }

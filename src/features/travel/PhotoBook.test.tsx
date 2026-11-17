@@ -15,6 +15,7 @@ beforeEach(() => {
   vi.stubGlobal("requestAnimationFrame", vi.fn(() => 1));
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
   HTMLElement.prototype.scrollTo = vi.fn();
+  HTMLElement.prototype.scrollIntoView = vi.fn();
   const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), pause: vi.fn().mockReturnThis(), paused: vi.fn().mockReturnThis(), kill: vi.fn(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
   mocks.timeline.mockReturnValue(timeline);
   mocks.getGsap.mockReturnValue({ timeline: mocks.timeline, context: (callback: () => void) => { callback(); return { revert: mocks.revert }; } });

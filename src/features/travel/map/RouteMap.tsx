@@ -11,7 +11,13 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
   const active = trips[current];
   const point = project(active);
   const path = routePath(trips);
-  return <aside className="travel-route-map" aria-label={c.mapLabel}>
+  return <><svg className="journey-route-backdrop" viewBox={MAP_VIEWBOX} aria-hidden="true">
+    <BangladeshOutline />
+    <path className="route-upcoming" d={path} />
+    <defs><mask id={`${mask}-backdrop`}><path className="route-draw-mask" d={path} pathLength="1" strokeDasharray="1" strokeDashoffset="0" fill="none" stroke="white" strokeWidth="5" /></mask></defs>
+    <path className="route-visited" d={path} mask={`url(#${mask}-backdrop)`} />
+    {trips.map((trip, index) => { const point = project(trip); return <circle key={trip.slug} cx={point.x} cy={point.y} r={index === current ? 10 : 5} fill={index <= current ? "currentColor" : "none"} stroke="currentColor" />; })}
+  </svg><aside className="travel-route-map" aria-label={c.mapLabel}>
     <p className="travel-label">{c.mapLabel}</p>
     <div className="travel-map-drawing">
       <svg viewBox={MAP_VIEWBOX} className="travel-map-svg" aria-label={c.mapLabel}>
@@ -35,5 +41,5 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
     </div>
     <p className="route-current-place" aria-live="polite">{active.place}</p>
     <p className="route-map-note">{c.mapNote}</p>
-  </aside>;
+  </aside></>;
 }

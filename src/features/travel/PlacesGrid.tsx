@@ -38,8 +38,8 @@ export function PlacesGrid({ trips = defaultTrips }: { trips?: Trip[] }) {
   return <section ref={root} className="container travel-places" aria-labelledby="travel-places-title">
     <h2 id="travel-places-title">{c.placesTitle}</h2>
     <form className="travel-place-filters" aria-label={c.filtersLabel} onSubmit={event => event.preventDefault()}>
-      <label>{c.regionLabel}<select value={region} onChange={event => filter({ region: event.target.value, tag })}><option value="">{c.allRegions}</option>{regions.map(value => <option key={value}>{value}</option>)}</select></label>
-      <label>{c.tagLabel}<select value={tag} onChange={event => filter({ region, tag: event.target.value })}><option value="">{c.allTags}</option>{tags.map(value => <option key={value}>{value}</option>)}</select></label>
+      <label>{c.regionLabel}<select aria-label={c.regionLabel} value={region} onChange={event => filter({ region: event.target.value, tag })}><option value="">{c.allRegions}</option>{regions.map(value => <option key={value}>{value}</option>)}</select></label>
+      <label>{c.tagLabel}<select aria-label={c.tagLabel} value={tag} onChange={event => filter({ region, tag: event.target.value })}><option value="">{c.allTags}</option>{tags.map(value => <option key={value}>{value}</option>)}</select></label>
       <button type="button" onClick={() => filter({ region: "", tag: "" })}>{c.resetFilters}</button>
     </form>
     <p className="travel-place-count" role="status">{c.resultsCount(visible.length)}</p>
