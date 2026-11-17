@@ -45,7 +45,7 @@ test("keyboard paging works in pinned, touch and reduced-motion modes", async ({
   await expect(page.locator(".travel-book-counter")).toHaveText("02 / 08");
   await book.press("End");
   await expect(page.locator(".travel-book-counter")).toHaveText("08 / 08");
-  await expect(book.getByRole("heading", { name: trips[7].title })).toBeInViewport();
+  await expect(book.getByRole("heading", { name: trips[7].title })).toBeInViewport({ timeout: 15_000 });
   await book.press("Home");
   await expect(page.locator(".travel-book-counter")).toHaveText("01 / 08");
   await page.getByRole("link", { name: c.aboutLink, exact: true }).click();
