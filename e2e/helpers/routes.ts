@@ -1,3 +1,5 @@
+import { labRoutes } from "../../src/content/lab";
+import { estimateContent } from "../../src/content/estimate";
 import { travelContent } from "../../src/content/travel";
 import { searchContent } from "../../src/content/search";
 import { diagramContent } from "../../src/content/diagrams";
@@ -26,6 +28,7 @@ export async function waitForHydration(page: Page) {
 
 
 export const pageRoutes = [
+  ...labRoutes, estimateContent.path,
   travelContent.path,
   ...searchContent.pages.map((page) => page.href),
   ...projects.map((project) => diagramContent.path(project.slug)),

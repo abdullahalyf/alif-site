@@ -7,10 +7,10 @@
 .estimate-form h2, .estimate-result > h2 { font-size: clamp(2rem, 3vw, 3rem); margin-bottom: 2rem; }
 .estimate-form fieldset { border: 0; padding: 0; margin: 0; }
 .estimate-form > fieldset { display: grid; gap: 2rem; }
-.estimate-field { display: grid; align-content: start; gap: 0.65rem; }
+.estimate-field { min-width: 0; display: grid; align-content: start; gap: 0.65rem; }
 .estimate-field > label, .estimate-integrations legend { font-size: 0.875rem; }
-.estimate-form input[type="number"], .estimate-form select { width: 100%; min-height: 44px; padding: 0.75rem 1rem; border: 1px solid var(--ink-muted); border-radius: 0.5rem; background: var(--cream); color: var(--ink); }
-.estimate-counts { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.estimate-form input[type="number"], .estimate-form select { width: 100%; min-width: 0; min-height: 44px; padding: 0.75rem 1rem; border: 1px solid var(--ink-muted); border-radius: 0.5rem; background: var(--cream); color: var(--ink); }
+.estimate-counts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .estimate-checkbox { display: flex; align-items: center; gap: 0.75rem; min-height: 44px; font-size: 0.875rem; cursor: pointer; }
 .estimate-checkbox input { width: 1.15rem; height: 1.15rem; accent-color: var(--ink); flex-shrink: 0; }
 .estimate-integrations > div { display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem 1rem; margin-top: 0.75rem; }

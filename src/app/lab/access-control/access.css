@@ -13,10 +13,10 @@
 .access-matrix-scroll th { font-weight: 500; }
 .access-matrix-scroll td { transition: background-color 0.2s, color 0.2s; background: var(--cream-2); }
 .access-matrix-scroll td[data-allowed="true"] { background: var(--ink); color: var(--cream); }
-.access-action-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2rem; }
-.access-action-grid fieldset { padding: 0; border: 0; display: grid; align-content: start; gap: 1.5rem; }
+.access-action-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 2rem; }
+.access-action-grid fieldset { min-width: 0; padding: 0; border: 0; display: grid; align-content: start; gap: 1.5rem; }
 .access-action-grid label { display: block; margin-bottom: 0.5rem; }
-.access-decision { border: 1px solid var(--line); border-radius: 0.75rem; padding: clamp(1rem, 2vw, 2rem); background: var(--cream-2); }
+.access-decision { min-width: 0; border: 1px solid var(--line); border-radius: 0.75rem; padding: clamp(1rem, 2vw, 2rem); background: var(--cream-2); }
 .access-decision > p { margin-top: 1rem; }
 .access-decision pre { max-width: 100%; overflow-x: auto; background: var(--cream); border: 1px solid var(--line); border-radius: 0.5rem; padding: 1rem; font-size: 0.8125rem; margin-top: 1.5rem; }
 @media (max-width: 799px) { .access-action-grid { grid-template-columns: 1fr; } }

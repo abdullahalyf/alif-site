@@ -39,6 +39,7 @@ export const syncContent = {
   online: "Online",
   offline: "Offline",
   pending: "Local queue",
+  queueLabel: (branch: string) => `${branch} pending local orders`,
   noPending: "No pending orders",
   queued: "Queued",
   sending: "Sending",
@@ -54,7 +55,7 @@ export const syncContent = {
   doubleSendNote: "Replays the latest accepted order with the same ID. It must not add another sale.",
   logTitle: "Follow the events",
   reset: "Reset the demo",
-  money: (amount: number) => new Intl.NumberFormat("en-BD", { style: "currency", currency: "BDT", maximumFractionDigits: 0 }).format(amount / 100),
+  money: (amount: number) => new Intl.NumberFormat("en-BD", { style: "currency", currency: syncContent.currency, maximumFractionDigits: 0 }).format(amount / 100),
   eventText: (event: { kind: string; saleId?: string }, branch: string) => {
     const messages: Record<string, string> = {
       started: "Three counters are connected. Create a sale or take a branch offline to begin.",
@@ -118,3 +119,5 @@ export const accessContent = {
     "branch-grant": { text: "The role has this operation on this resource and the record belongs to the current branch.", expression: "has_permission(resource, operation) AND same_branch" },
   },
 };
+
+export const labRoutes = [labContent.path, ...labContent.demos.map(demo => demo.path)];

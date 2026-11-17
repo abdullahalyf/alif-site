@@ -1,6 +1,6 @@
 .sync-simulator { display: grid; gap: 2rem; }
-.sync-diagram { border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: var(--cream-2); }
-.sync-diagram-scroll { overflow-x: auto; }
+.sync-diagram { min-width: 0; border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: var(--cream-2); }
+.sync-diagram-scroll { min-width: 0; max-width: 100%; overflow-x: auto; }
 .sync-diagram svg { display: block; width: 100%; min-width: 640px; height: auto; font: 400 17px var(--font-sans); }
 .sync-diagram figcaption { font-size: 0.8125rem; color: var(--ink-muted); margin-top: 1rem; }
 .sync-diagram-node { fill: var(--cream); stroke: var(--ink-muted); }

@@ -1,3 +1,5 @@
+import { labRoutes } from "@/content/lab";
+import { estimateContent } from "@/content/estimate";
 import { travelContent } from "@/content/travel";
 import { searchContent } from "@/content/search";
 import { diagramContent } from "@/content/diagrams";
@@ -10,6 +12,7 @@ import { getBaseUrl } from "@/seo/base-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
+    ...labRoutes, estimateContent.path,
     travelContent.path,
     ...searchContent.pages.map((page) => page.href),
     ...projects.map((project) => diagramContent.path(project.slug)),

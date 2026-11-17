@@ -1,3 +1,5 @@
+import { labRoutes } from "../src/content/lab";
+import { estimateContent } from "../src/content/estimate";
 import { travelContent } from "../src/content/travel";
 import { searchContent } from "../src/content/search";
 import { diagramContent } from "../src/content/diagrams";
@@ -17,6 +19,7 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
     (match) => new URL(match[1]),
   );
   const paths = [
+    ...labRoutes, estimateContent.path,
     travelContent.path,
     ...searchContent.pages.map((page) => page.href),
     ...projects.map((project) => diagramContent.path(project.slug)),
