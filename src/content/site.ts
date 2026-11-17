@@ -177,6 +177,7 @@ export const shell = {
    * phone than on a wide screen.
    */
   menuExtra: [
+    { label: "Travel", href: "/travel" },
     { label: "Résumé", href: "/resume" },
     { label: "Uses", href: "/uses" },
     { label: "Now", href: "/now" },
@@ -207,6 +208,7 @@ export const shell = {
   /** The links column in the footer. */
   footerLinksLabel: "More",
   footerLinks: [
+    { label: "Travel", href: "/travel" },
     { label: "Résumé", href: "/resume" },
     { label: "Uses", href: "/uses" },
     { label: "Now", href: "/now" },

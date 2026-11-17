@@ -5,6 +5,7 @@ import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
 import { PhotoReveal, Reveal } from "@/components/motion";
+import { TravelTeaser } from "@/features/travel/TravelTeaser";
 
 export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.description, seo.pages.about.path);
 
@@ -25,7 +26,7 @@ export default function About() {
       <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
       <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
       <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
-      {/* TravelTeaser goes here (Codex task 16) */}
+      <TravelTeaser />
     </section>
   </>;
 }
