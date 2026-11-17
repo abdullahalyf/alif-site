@@ -120,7 +120,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
               {trip.photos.map((photo, photoIndex) => {
                 const rotation = frameRotation(trip.slug, photoIndex);
                 return <figure className="travel-frame" key={photo.src} data-rotation={rotation} style={{ "--frame-tilt": `${rotation}deg` } as CSSProperties}>
-                  <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(min-width: 900px) 30vw, 80vw" unoptimized loading={index === 0 ? "eager" : "lazy"} />
+                  <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(min-width: 900px) 30vw, 80vw" unoptimized={photo.src.startsWith("https://")} loading={index === 0 ? "eager" : "lazy"} />
                   <figcaption>{photo.caption}</figcaption>
                 </figure>;
               })}

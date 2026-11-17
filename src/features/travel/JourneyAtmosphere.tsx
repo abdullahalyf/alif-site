@@ -28,8 +28,8 @@ export function JourneyAtmosphere({ trip, previous }: { trip: Trip; previous: Tr
     return () => { observer?.disconnect(); animation.kill(); };
   }, [trip, previous, reduced]);
   return <div ref={root} className="journey-atmosphere" aria-hidden="true" style={{ backgroundColor: trip.color }}>
-    <div className="journey-ambient-photo journey-ambient-outgoing" ref={outgoing}><Image src={previous.photos[0].src} alt="" width={previous.photos[0].width} height={previous.photos[0].height} sizes="100vw" unoptimized loading="lazy" /></div>
-    <div className="journey-ambient-photo journey-ambient-incoming" ref={incoming}><Image src={trip.photos[0].src} alt="" width={trip.photos[0].width} height={trip.photos[0].height} sizes="100vw" unoptimized loading="lazy" /></div>
+    <div className="journey-ambient-photo journey-ambient-outgoing" ref={outgoing}><Image src={previous.photos[0].src} alt="" width={previous.photos[0].width} height={previous.photos[0].height} sizes="320px" unoptimized={previous.photos[0].src.startsWith("https://")} loading="lazy" /></div>
+    <div className="journey-ambient-photo journey-ambient-incoming" ref={incoming}><Image src={trip.photos[0].src} alt="" width={trip.photos[0].width} height={trip.photos[0].height} sizes="320px" unoptimized={trip.photos[0].src.startsWith("https://")} loading="lazy" /></div>
     <div className="journey-paper-grain" />
   </div>;
 }

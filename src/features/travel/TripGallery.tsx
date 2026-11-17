@@ -44,12 +44,12 @@ export function TripGallery({ trip }: { trip: Trip }) {
     <h2 id={`${id}-gallery`}>{c.galleryTitle}</h2>
     <p className="travel-label">{c.galleryHint}</p>
     <div className="trip-gallery">{trip.photos.map((image, index) => <figure key={image.src}>
-      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 900px) 45vw, 90vw" unoptimized loading="lazy" /></a>
+      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 900px) 45vw, 90vw" unoptimized={image.src.startsWith("https://")} loading="lazy" /></a>
       <figcaption>{image.caption}</figcaption>
     </figure>)}</div>
     <dialog ref={dialog} className="trip-lightbox" aria-labelledby={`${id}-lightbox`} onKeyDown={keyboard} onCancel={event => { event.preventDefault(); setActive(null); }} onClick={event => { if (event.target === event.currentTarget) setActive(null); }}>
       <div className="trip-lightbox-header"><h3 id={`${id}-lightbox`}>{trip.place}</h3><button type="button" onClick={() => setActive(null)} autoFocus>{c.closeGallery}</button></div>
-      <div className="trip-lightbox-photo" onPointerDown={swipeStart} onPointerUp={swipeEnd} onPointerCancel={() => { touch.current = null; }}><Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="90vw" unoptimized loading="lazy" /></div>
+      <div className="trip-lightbox-photo" onPointerDown={swipeStart} onPointerUp={swipeEnd} onPointerCancel={() => { touch.current = null; }}><Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="90vw" unoptimized={photo.src.startsWith("https://")} loading="lazy" /></div>
       <p className="trip-lightbox-caption" aria-live="polite">{photo.caption} · {(active ?? 0) + 1} / {trip.photos.length}</p>
       <div className="trip-lightbox-controls"><button type="button" disabled={trip.photos.length < 2} aria-label={c.previousPhoto} onClick={() => move(-1)}><ArrowLeft /></button><p>{c.lightboxHint}</p><button type="button" disabled={trip.photos.length < 2} aria-label={c.nextPhoto} onClick={() => move(1)}><ArrowRight /></button></div>
     </dialog>

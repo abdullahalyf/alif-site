@@ -30,7 +30,7 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
         })}
       </svg>
       <div className="route-thumbnail" key={active.slug} style={{ left: `${point.x / 4}%`, top: `${point.y / 5.2}%` }} aria-hidden="true">
-        <Image src={active.photos[0].src} width={active.photos[0].width} height={active.photos[0].height} sizes="72px" unoptimized alt="" loading="lazy" />
+        <Image src={active.photos[0].src} width={active.photos[0].width} height={active.photos[0].height} sizes="72px" unoptimized={active.photos[0].src.startsWith("https://")} alt="" loading="lazy" />
       </div>
     </div>
     <p className="route-current-place" aria-live="polite">{active.place}</p>

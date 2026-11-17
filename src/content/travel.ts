@@ -1,7 +1,7 @@
 import type { Trip } from "./schemas/travel";
-// DEMO: every photograph generated here is an illustrative placeholder, not a photograph of the named destination.
+// DEMO: local seeded Picsum placeholders (1200×900, JPEG quality 75), not photographs of the named destinations.
 function photo(slug: string, index: number, place: string) {
-  return { src: `https://picsum.photos/seed/${slug}-${index}/1200/900`, width: 1200, height: 900, alt: `DEMO photograph for the ${place} travel note`, caption: `DEMO · ${place} · ${String(index).padStart(2, "0")}` };
+  return { src: `/images/travel/${slug}/${index}.jpg`, width: 1200, height: 900, alt: `DEMO photograph for the ${place} travel note`, caption: `DEMO · ${place} · ${String(index).padStart(2, "0")}` };
 }
 
 export const trips = [
