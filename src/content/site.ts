@@ -83,8 +83,13 @@ export const site = {
     alt: "Abdullah Alif in a patterned shirt, hands in pockets",
   },
   // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
+  //
+  // The placeholder is served from `/public` rather than picsum.photos. It is
+  // the largest contentful paint on the home page, and a third-party host adds
+  // a DNS lookup, a redirect and a second connection to that critical path.
+  // Serving it same-origin lets the image optimiser resize it to the viewport.
   heroSide: {
-    src: "https://picsum.photos/seed/alif-hero-side/900/1100",
+    src: "/images/alif-hero-side.jpg",
     width: 900,
     height: 1100,
     alt: "DEMO photograph — replace with a real portrait of Alif",

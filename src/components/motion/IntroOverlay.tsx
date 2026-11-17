@@ -7,8 +7,14 @@ import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion
 
 const STORAGE_KEY = "alif-intro-seen";
 
-/** Total length of the intro, in seconds. Must stay under 1.4s. */
-export const INTRO_DURATION = 1.3;
+/**
+ * Total length of the intro, in seconds. Must stay under 1.4s.
+ *
+ * The overlay covers the page while it plays, so every second here is a second
+ * the largest contentful paint waits. It is kept short for that reason as well
+ * as the design's own budget.
+ */
+export const INTRO_DURATION = 0.9;
 
 type IntroOverlayProps = {
   /** The word shown in the intro. */
@@ -90,11 +96,11 @@ export function IntroOverlay({
         // full contrast the whole time, so it never dips below the threshold
         // while the overlay is on screen.
         { clipPath: "inset(0 0 100% 0)", scale: 0.92 },
-        { clipPath: "inset(0 0 0% 0)", scale: 1, duration: 0.55, ease: "power2.out" },
+        { clipPath: "inset(0 0 0% 0)", scale: 1, duration: 0.4, ease: "power2.out" },
       )
       .to(overlay, {
         yPercent: -100,
-        duration: 0.65,
+        duration: 0.5,
         ease: "power3.inOut",
       });
 
