@@ -29,3 +29,4 @@ Live: https://alif-site-flame.vercel.app (Vercel auto-deploys main; PRs get prev
 
 ## Future ideas (Alif)
 - About me → "Travel" section: horizontal-scroll photo-book — animated photo frames with captions/text sliding in as you scroll sideways (GSAP horizontal pin). Alif loves travelling.
+- Copy protection (Alif asked): disable text selection/copy site-wide (CSS `user-select: none` on body; block `copy`/`contextmenu` on images), BUT keep inputs/textarea, email/WhatsApp/contact details, code blocks in blog posts and résumé selectable. Do after PUKU-03 merges (touches globals.css/layout).
