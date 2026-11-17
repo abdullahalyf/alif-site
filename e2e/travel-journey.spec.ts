@@ -44,3 +44,20 @@ test("gallery supports keyboard, swipe, dismissal and focus restoration", async 
 test("unknown travel slugs return HTTP 404", async ({ request }) => {
   expect((await request.get(c.tripHref("missing-demo-journey"))).status()).toBe(404);
 });
+
+test("travel stats and combined filters describe the actual demo dataset", async ({ page }) => {
+  await page.goto(c.path);
+  const stats = page.getByRole("region", { name: c.statsTitle });
+  await expect(stats.getByText(String(trips.length), { exact: true })).toHaveCount(2);
+  const places = page.getByRole("region", { name: c.placesTitle });
+  await expect(places.getByRole("article")).toHaveCount(trips.length);
+  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Sylhet");
+  await expect(places.getByRole("article")).toHaveCount(2);
+  await places.getByLabel(c.tagLabel, { exact: true }).selectOption("landscape");
+  await expect(places.getByRole("article")).toHaveCount(1);
+  await expect(places.getByRole("heading", { name: trips[0].place })).toBeVisible();
+  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Khulna");
+  await expect(places.getByText(c.noPlaces)).toBeVisible();
+  await places.getByRole("button", { name: c.resetFilters }).click();
+  await expect(places.getByRole("article")).toHaveCount(trips.length);
+});
