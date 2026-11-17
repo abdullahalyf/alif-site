@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type HeroStripesProps = {
   /** Stroke colour of the diagonal lines. Defaults to the `--line` hairline token. */
@@ -55,7 +55,9 @@ export function HeroStripes({
   const dashLength = lineLength(height);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const root = rootRef.current;
     if (!root) return;

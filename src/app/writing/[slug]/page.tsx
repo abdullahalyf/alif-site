@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPost, getPosts, renderPost, formatPostDate } from "@/content/posts";
 import { writingContent, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
+import { Reveal } from "@/components/motion";
 import "../writing.css";
 
 export const ensureStatic = "navigation";
@@ -26,9 +27,9 @@ export default async function PostPage({ params }: PageProps<"/writing/[slug]">)
   const next = posts[index - 1];
   return <div className="container writing-page"><article className="post-article">
     <Link href={seo.pages.writing.path}>{writingContent.back}</Link>
-    <header className="writing-heading"><time className="post-date" dateTime={post.date}>{formatPostDate(post.date)}</time><h1>{post.title}</h1><p>{post.summary}</p>
+    <header className="writing-heading"><Reveal><time className="post-date" dateTime={post.date}>{formatPostDate(post.date)}</time></Reveal><Reveal><h1>{post.title}</h1></Reveal><Reveal><p>{post.summary}</p></Reveal>
       {post.draft && <p className="label">{writingContent.draft}</p>}
-      <ul className="post-tags">{post.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+      <Reveal><ul className="post-tags">{post.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></Reveal>
     </header>
     <div className="post-prose" dangerouslySetInnerHTML={{ __html: renderPost(post.body) }} />
     {(previous || next) && <nav className="post-neighbours" aria-label={writingContent.title}>

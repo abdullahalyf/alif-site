@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { aboutContent, homeContent, pageContent, shell, site, workContent } from "../src/content/site";
+import { aboutContent, homeContent, navHref, pageContent, shell, site, workContent } from "../src/content/site";
 import { projects } from "../src/content/projects";
 
 test("Home includes every section and working selected-work links", async ({ page, isMobile }) => {
@@ -18,14 +18,14 @@ test("Home includes every section and working selected-work links", async ({ pag
 });
 
 test("About includes the supplied photo and every story chapter", async ({ page }) => {
-  await page.goto(shell.nav[3].href);
+  await page.goto(navHref("/about"));
   await expect(page.getByRole("img", { name: site.aboutPhoto.alt })).toBeVisible();
   await expect(page.getByRole("heading", { name: aboutContent.storyTitle })).toBeVisible();
   for (const chapter of site.story) await expect(page.getByRole("heading", { name: chapter.title, exact: true })).toBeVisible();
 });
 
 test("Approach includes every step, case studies include details and next project", async ({ page }) => {
-  await page.goto(shell.nav[1].href);
+  await page.goto(navHref("/approach"));
   for (const step of site.approach) await expect(page.getByRole("heading", { name: step.title, exact: true })).toBeVisible();
   for (let index = 0; index < projects.length; index++) {
     const project = projects[index];
@@ -44,4 +44,23 @@ test("all pages fit the viewport", async ({ page }) => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }
+});
+
+test("Home shows the hero side photo, status card and system diagram", async ({ page }) => {
+  await page.goto(shell.home.href);
+
+  await expect(page.getByRole("img", { name: site.heroSide.alt })).toBeVisible();
+  await expect(page.getByText(site.name, { exact: true })).toBeVisible();
+  await expect(page.getByText(site.statusCard.availability, { exact: true })).toBeVisible();
+  await expect(page.getByText(site.statusCard.building, { exact: true })).toBeVisible();
+  for (const item of site.statusCard.stack) await expect(page.getByText(item, { exact: true })).toBeVisible();
+  await expect(page.getByRole("img", { name: site.systemDiagram.label })).toBeVisible();
+});
+
+test("the hero status card shows a live Dhaka clock", async ({ page }) => {
+  await page.goto(shell.home.href);
+
+  const time = page.locator(".status-card__time");
+  await expect(time).toBeVisible();
+  await expect(time).toHaveText(/^\d{2}:\d{2}$/);
 });

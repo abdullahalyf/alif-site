@@ -1,20 +1,10 @@
 "use client";
 
 import Lenis from "lenis";
-import { createContext, useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { syncWithLenis } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
-
-const SmoothScrollContext = createContext<React.RefObject<Lenis | null> | null>(null);
-
-/**
- * The active Lenis instance, or `null` when smooth scrolling is off.
- * Read it during event handlers or effects, not during render.
- */
-export function useSmoothScroll(): Lenis | null {
-  const instance = useContext(SmoothScrollContext);
-  return instance?.current ?? null;
-}
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
+import { SmoothScrollContext } from "./smooth-scroll-context";
 
 /**
  * Enables site-wide smooth scrolling with Lenis and keeps GSAP ScrollTrigger
@@ -28,8 +18,20 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
   const instanceRef = useRef<Lenis | null>(null);
 
+  // The client is live once this component has mounted and its effects have
+  // run. The marker lets a test wait for that moment instead of guessing with
+  // a timeout.
   useEffect(() => {
-    if (reducedMotion) return;
+    document.documentElement.dataset.hydrated = "true";
+    return () => {
+      delete document.documentElement.dataset.hydrated;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const instance = new Lenis({ autoRaf: false });
     instanceRef.current = instance;

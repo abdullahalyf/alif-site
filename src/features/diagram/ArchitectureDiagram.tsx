@@ -1,14 +1,101 @@
-import { useId } from "react";
+"use client";
+
+import { useEffect, useId, useRef } from "react";
 import type { Diagram } from "@/content/schemas/diagrams";
 import { diagramContent as c } from "@/content/diagrams";
 import { layoutDiagram } from "./layout";
-export function ArchitectureDiagram({ diagram }: { diagram: Diagram }) {
+import { getGsap } from "@/lib/gsap";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
+
+/** Renders the legend heading at the level the surrounding page needs. */
+function LegendHeading({
+  level,
+  children,
+}: {
+  level: "h2" | "h3";
+  children: React.ReactNode;
+}) {
+  return level === "h2" ? <h2>{children}</h2> : <h3>{children}</h3>;
+}
+
+export function ArchitectureDiagram({
+  diagram,
+  legendHeading = "h2",
+}: {
+  diagram: Diagram;
+  /**
+   * The heading level for the two legend headings in the caption.
+   *
+   * The diagram is used in two places: on its own page, where the diagram
+   * title is the `h1`, and inside a case study, where "System design" is
+   * already an `h2`. The legend has to sit one level below whichever it is
+   * sitting in, or the heading order breaks.
+   */
+  legendHeading?: "h2" | "h3";
+}) {
   const id = useId().replaceAll(":", "");
   const nodes = layoutDiagram(diagram);
   const width = Math.max(...nodes.map((node) => node.x)) + 250;
   const height = Math.max(...nodes.map((node) => node.y)) + 130;
+  const rootRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    // Read the preference here rather than from the render: the hook returns
+    // the server snapshot until React swaps it for the real value, and an
+    // effect would otherwise start an animation the user asked not to see.
+    if (prefersReducedMotion()) return;
+
+    const root = rootRef.current;
+    if (!root) return;
+
+    const gsap = getGsap();
+    const boxes = root.querySelectorAll<SVGGElement>(".diagram-node");
+    const edges = root.querySelectorAll<SVGPathElement>(".diagram-edge");
+    if (!boxes.length && !edges.length) return;
+
+    // Each edge is drawn in by pulling its dash back to nothing, so the line
+    // appears to grow from one node to the next. The dash has to match the
+    // real length of the path, so it is measured rather than guessed.
+    const lengths = Array.from(edges, (edge) => edge.getTotalLength());
+    edges.forEach((edge, index) => {
+      edge.style.strokeDasharray = `${lengths[index]}`;
+      edge.style.strokeDashoffset = `${lengths[index]}`;
+    });
+
+    const edgeTween = gsap.to(edges, {
+      strokeDashoffset: 0,
+      duration: 0.8,
+      ease: "power2.inOut",
+      stagger: 0.12,
+      scrollTrigger: { trigger: root, start: "top 80%", once: true },
+    });
+
+    // The boxes scale up into place, slightly after the edge that feeds them.
+    const boxTween = gsap.from(boxes, {
+      scale: 0.86,
+      opacity: 0,
+      duration: 0.6,
+      ease: "back.out(1.6)",
+      stagger: 0.09,
+      transformOrigin: "center center",
+      scrollTrigger: { trigger: root, start: "top 80%", once: true },
+    });
+
+    return () => {
+      edgeTween.scrollTrigger?.kill();
+      edgeTween.kill();
+      boxTween.scrollTrigger?.kill();
+      boxTween.kill();
+      // Undo the start states, so a tween that never ran cannot leave a
+      // diagram invisible or with undrawn edges.
+      gsap.set(edges, { clearProps: "strokeDashoffset,strokeDasharray" });
+      gsap.set(boxes, { clearProps: "transform,opacity" });
+    };
+  }, [reducedMotion]);
+
   return (
-    <figure className="architecture-diagram">
+    <figure className="architecture-diagram" ref={rootRef}>
       <div
         className="diagram-scroll"
         tabIndex={0}
@@ -43,6 +130,7 @@ export function ArchitectureDiagram({ diagram }: { diagram: Diagram }) {
             return (
               <g key={index}>
                 <path
+                  className="diagram-edge"
                   d={`M${a.x + 220},${a.y + 45} C${a.x + 270},${a.y + 45} ${b.x - 50},${b.y + 45} ${b.x},${b.y + 45}`}
                   fill="none"
                   stroke="currentColor"
@@ -85,13 +173,13 @@ export function ArchitectureDiagram({ diagram }: { diagram: Diagram }) {
       </div>
       <figcaption>
         <p>{diagram.description}</p>
-        <h2>{c.nodes}</h2>
+        <LegendHeading level={legendHeading}>{c.nodes}</LegendHeading>
         <ul>
           {diagram.nodes.map((node) => (
             <li key={node.id}>{node.label}</li>
           ))}
         </ul>
-        <h2>{c.connections}</h2>
+        <LegendHeading level={legendHeading}>{c.connections}</LegendHeading>
         <ul>
           {diagram.edges.map((edge, index) => (
             <li key={index}>

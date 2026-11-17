@@ -6,22 +6,42 @@
 .demo-caption, .demo-notice { color: var(--ink-muted); font-size: 0.8125rem; }
 .demo-caption { padding-top: 0.75rem; }
 .demo-notice { margin-bottom: 2rem; }
-.glance-section { padding-block: 4rem; }
-.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 2rem; }
-.stat-value { font: 400 var(--type-h2)/1.1 var(--font-serif); }
-.stats-grid > div { border-bottom: 1px solid var(--line); padding-bottom: 1.5rem; }
+/* Stats band: tighter than a full section so it reads as a summary strip. */
+.glance-section { padding-block: clamp(2rem, 4vw, 3rem) 0; }
+/* The band sits directly above the next section, so the gap comes from that
+   section's own padding instead of doubling up. */
+.glance-section + .section-space { padding-top: clamp(3rem, 6vw, 5rem); }
+.glance-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.75rem 2rem; }
+.glance-head .section-label { border-top: 0; padding-top: 0; }
+/* The demo notice is a quiet aside, not a second heading. */
+.glance-notice { color: var(--ink-muted); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin-top: 2.5rem; }
+/* Big serif figure, small tracked label underneath — a clear hierarchy. */
+.stat-value { font: 400 var(--type-h2)/1.1 var(--font-serif); letter-spacing: -0.02em; }
+.stat-label { margin-top: 0.35rem; color: var(--ink-muted); font-size: 0.875rem; }
+.stats-grid > div { border-top: 1px solid var(--line); padding-top: 1.5rem; transition: border-color 240ms ease; }
+.stats-grid > div:hover { border-color: var(--ink-muted); }
 .testimonial { display: grid; align-content: space-between; gap: 2rem; border-top: 1px solid var(--line); padding-top: 2rem; }
 .testimonial blockquote { font: 400 var(--type-h3)/1.25 var(--font-serif); }
 .testimonial figcaption { display: grid; gap: 0.5rem; }
-.education-timeline { border-top: 1px solid var(--line); }
-.education-timeline article { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: 2rem; border-bottom: 1px solid var(--line); }
+/* The education timeline: a rule down the side that fills in as it scrolls. */
+.education-timeline { position: relative; padding-left: 2rem; }
+/* The rule sits behind the entries. The fill is the part that grows. */
+.education-timeline__line { position: absolute; inset: 0 auto 0 0.4rem; width: 2px; background: var(--line); }
+.education-timeline__fill { display: block; width: 100%; height: 100%; background: var(--ink); transform-origin: top center; }
+.education-timeline article { position: relative; display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: 2rem; }
+/* A dot on the rule marks each entry. */
+.education-timeline article::before { content: ""; position: absolute; left: -2rem; top: 2.5rem; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: var(--cream); border: 2px solid var(--ink-muted); }
 .education-timeline article > div { display: grid; gap: 0.75rem; }
 .skills-grid h3 { margin-bottom: 1rem; }
-.skills-grid ul { list-style: disc; padding-left: 1.25rem; }
-.skills-grid li + li { margin-top: 0.5rem; }
-.language-list > div { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: 1.25rem; border-top: 1px solid var(--line); }
-.language-list dt { font-family: var(--font-serif); font-size: var(--type-h3); }
-.interests-list { list-style: disc; padding-left: 1.25rem; display: grid; gap: 0.75rem; }
+/* Skills and languages read as chips rather than bullets: a short label in a
+   rounded pill, so the list can be scanned at a glance. */
+.chip-list { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0; }
+.chip { display: inline-flex; align-items: baseline; gap: 0.5rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.4rem 0.9rem; font-size: 0.875rem; background: var(--cream-2); }
+.chip-list--languages .chip { flex-direction: column; align-items: flex-start; gap: 0.15rem; border-radius: 0.75rem; padding: 0.6rem 1rem; }
+.chip-list--languages dt { font-family: var(--font-serif); font-size: var(--type-h3); }
+.chip-list--languages dd { color: var(--ink-muted); font-size: 0.8125rem; margin: 0; }
+.chip-list--interests .chip { border-radius: 0.75rem; }
 .latest-writing-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
 .latest-writing-grid article { display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-block: 2rem; }
 .latest-writing-grid a { text-decoration: underline; }
@@ -29,7 +49,8 @@
   .highlights-grid, .testimonials-grid, .skills-grid, .latest-writing-grid, .education-timeline article { grid-template-columns: 1fr; }
   .stats-grid { gap: 1rem; }
   .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
-  .language-list > div { grid-template-columns: 1fr 1fr; }
+  .education-timeline { padding-left: 1.5rem; }
+  .education-timeline article::before { left: -1.5rem; }
 }
 /* Contain entrance transforms so staggered cards never widen the page. */
 .highlights-grid, .testimonials-grid, .skills-grid, .stats-grid { overflow-x: clip; }

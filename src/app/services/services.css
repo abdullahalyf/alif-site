@@ -49,6 +49,12 @@
 .services-page details p {
   padding-top: 1rem;
 }
+/* The FAQ rows stagger in, so they need to be a plain block of rows rather
+   than the numbered list the steps use. */
+.services-faq {
+  display: grid;
+  gap: 0;
+}
 @media (max-width: 48rem) {
   .service-block,
   .engagement-models {

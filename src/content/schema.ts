@@ -19,6 +19,7 @@ export const siteSchema = z.object({
   name: z.string().min(1),
   fullName: z.string().min(1),
   logoText: z.string().min(1),
+  logoInitial: z.string().min(1),
   role: z.string().min(1),
   location: z.string().min(1),
   intro: z.string().min(1),
@@ -37,6 +38,19 @@ export const siteSchema = z.object({
   heroPhoto: image,
   avatar: image,
   aboutPhoto: image,
+  heroSide: image,
+  statusCard: z.object({
+    availability: z.string().min(1),
+    timezone: z.string().min(1),
+    timezoneLabel: z.string().min(1),
+    buildingLabel: z.string().min(1),
+    building: z.string().min(1),
+    stack: z.array(z.string().min(1)).min(1),
+  }),
+  systemDiagram: z.object({
+    label: z.string().min(1),
+    steps: z.array(z.string().min(1)).min(2),
+  }),
   services: z.array(z.string().min(1)).min(1),
   tagline: z.string().min(1),
   approach: z

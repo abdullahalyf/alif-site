@@ -5,7 +5,8 @@ import type { Site } from "./schema";
 export const site = {
   name: "Abdullah Alif",
   fullName: "Md. Abdullah Alif",
-  logoText: "© Built by Alif",
+  logoText: "Built by Alif",
+  logoInitial: "A",
   role: "Software Systems Architect & Freelance Developer",
   location: "Dhaka, Bangladesh",
   intro:
@@ -81,6 +82,30 @@ export const site = {
     height: 1500,
     alt: "Abdullah Alif in a patterned shirt, hands in pockets",
   },
+  // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
+  //
+  // The placeholder is served from `/public` rather than picsum.photos. It is
+  // the largest contentful paint on the home page, and a third-party host adds
+  // a DNS lookup, a redirect and a second connection to that critical path.
+  // Serving it same-origin lets the image optimiser resize it to the viewport.
+  heroSide: {
+    src: "/images/alif-hero-side.jpg",
+    width: 900,
+    height: 1100,
+    alt: "DEMO photograph — replace with a real portrait of Alif",
+  },
+  statusCard: {
+    availability: "Available for new projects",
+    timezone: "Asia/Dhaka",
+    timezoneLabel: "Dhaka",
+    buildingLabel: "Currently building",
+    building: "Offline-first POS & inventory platform",
+    stack: ["TypeScript", "PostgreSQL", "Next.js"],
+  },
+  systemDiagram: {
+    label: "How the system fits together",
+    steps: ["POS", "Sync", "Cloud DB", "Dashboard"],
+  },
   services: [
     "System architecture & design",
     "Business software (POS, inventory, dashboards)",
@@ -137,12 +162,24 @@ export const site = {
 
 export const shell = {
   home: { label: "Home", href: "/" },
+  introWord: "Alif",
   nav: [
     { label: "Work", href: "/work" },
+    { label: "Services", href: "/services" },
     { label: "Approach", href: "/approach" },
     { label: "Writing", href: "/writing" },
     { label: "About me", href: "/about" },
-    { label: "Contact", href: "#contact" },
+    { label: "Contact", href: "/contact" },
+  ],
+  /**
+   * Links that only appear in the mobile menu. The desktop nav stays short;
+   * these are the quieter pages a visitor is more likely to look for on a
+   * phone than on a wide screen.
+   */
+  menuExtra: [
+    { label: "Résumé", href: "/resume" },
+    { label: "Uses", href: "/uses" },
+    { label: "Now", href: "/now" },
   ],
   navigation: "Main navigation",
   menu: "Menu",
@@ -163,7 +200,31 @@ export const shell = {
   notFoundText: "This page isn't here. Let's get you back home.",
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
+  /** The search button in the header. */
+  searchLabel: "Search",
+  /** The keyboard hint shown next to the search button. */
+  searchHint: "⌘K",
+  /** The links column in the footer. */
+  footerLinksLabel: "More",
+  footerLinks: [
+    { label: "Résumé", href: "/resume" },
+    { label: "Uses", href: "/uses" },
+    { label: "Now", href: "/now" },
+    { label: "Writing RSS", href: "/writing/rss.xml" },
+  ],
 };
+
+/**
+ * Looks a navigation link up by its path.
+ *
+ * The nav is a plain list, so its order is free to change; this keeps the
+ * handful of places that link to "the approach page" or "the about page"
+ * honest when the list is reordered.
+ */
+export function navHref(path: string): string {
+  const link = shell.nav.find((item) => item.href === path);
+  return link?.href ?? path;
+}
 
 
 export const seo = {
@@ -173,11 +234,11 @@ export const seo = {
   imagePath: "/opengraph-image",
   pages: {
     home: { title: `${site.name} — ${site.role}`, description: site.intro, path: shell.home.href },
-    about: { title: shell.aboutTitle, description: site.about[0], path: shell.nav[3].href },
-    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: shell.nav[1].href },
+    about: { title: shell.aboutTitle, description: site.about[0], path: navHref("/about") },
+    approach: { title: shell.approachTitle, description: site.tagline + " " + site.approach[0].text, path: navHref("/approach") },
     writing: { title: "Writing", description: "Notes on software systems, research and things I'm learning.", path: "/writing" },
     now: { title: "What I'm doing now", description: "What Abdullah Alif is building, studying and learning now.", path: "/now" },
-    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: shell.nav[0].href },
+    work: { title: shell.workTitle, description: "Selected software systems, client projects and research by Abdullah Alif.", path: navHref("/work") },
   },
 };
 
@@ -192,6 +253,7 @@ export const homeContent = {
 export const workContent = {
   approachLabel: "How I work",
   approachTitle: "Good systems start with good questions.",
+  approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that keeps working.",
   approachLink: "Explore my approach",
   selectedLabel: "Selected work",
   selectedTitle: "Built to keep working.",
@@ -215,6 +277,10 @@ export const pageContent = {
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",
+  /** The section heading for the architecture diagram inside a case study. */
+  systemDesign: "System design",
+  /** The link to the full-size diagram. */
+  systemDesignLink: "Open the full diagram",
 };
 
 export const writingContent = {
