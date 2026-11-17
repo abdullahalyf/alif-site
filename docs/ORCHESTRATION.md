@@ -10,7 +10,7 @@ Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connect
    - `gh api repos/abdullahalyf/alif-site/pulls?state=open` (REST only, no GraphQL) → read the report file.
    - fetch branch, merge latest main locally, `pnpm check` + `pnpm test:e2e`, skim `git diff --stat` + risky files only.
    - small issues → Claude fixes and pushes; big issues → new task file for the agent.
-   - merge (squash via REST, or push merged branch to main).
+   - **Do NOT merge yet.** Send Alif the PR's Vercel preview link. Merge to main ONLY after Alif approves the preview. (Rollback stays possible: every merge is one squash commit; Vercel keeps old deployments — 'Promote to Production' restores any of them.)
 5. **Next** — Claude writes the next task file and tells Alif (Bangla, short) which agent gets which one-liner.
 
 ## Parallel rules
