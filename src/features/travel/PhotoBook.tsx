@@ -2,16 +2,11 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "@/components/arrows";
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
-import { useSmoothScroll } from "@/components/motion";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent, type KeyboardEvent } from "react";
 import { trips as defaultTrips, travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
-import { DESKTOP_BOOK_QUERY, formatTripDate, frameRotation, pageIndex } from "./book";
+import { formatTripDate, frameRotation, pageIndex } from "./book";
 import "./travel.css";
-
-type PinNavigation = { target: (index: number) => number; update: () => void };
 
 export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const id = useId();
@@ -19,11 +14,10 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const stage = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const pin = useRef<PinNavigation | null>(null);
+  const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+  const suppressClickUntil = useRef(0);
   const active = useRef(0);
   const [current, setCurrent] = useState(0);
-  const reducedMotion = useReducedMotion();
-  const lenis = useSmoothScroll();
 
   const updateCurrent = useCallback((index: number, progress = (index + 1) / trips.length) => {
     active.current = index;
@@ -34,82 +28,59 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   useEffect(() => {
     const element = root.current;
     const view = viewport.current;
-    const row = track.current;
-    const pinned = stage.current;
-    if (!element || !view || !row || !pinned || !trips.length) return;
-    const media = window.matchMedia(DESKTOP_BOOK_QUERY);
-    let context: ReturnType<ReturnType<typeof getGsap>["context"]> | undefined;
-    let frame = 0;
-
-    const configure = () => {
-      context?.revert();
-      context = undefined;
-      pin.current = null;
-      element.dataset.layout = "snap";
-      view.scrollLeft = 0;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => updateCurrent(0));
-      if (reducedMotion || !media.matches || trips.length < 2) return;
-
-      element.dataset.layout = "pinned";
-      const distance = () => Math.max(0, row.scrollWidth - view.clientWidth);
-      if (!distance()) { element.dataset.layout = "snap"; return; }
-      const gsap = getGsap();
-      context = gsap.context(() => {
-        const timeline = gsap.timeline({ scrollTrigger: {
-          trigger: pinned,
-          start: "top 96px",
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const index = Math.round(self.progress * (trips.length - 1));
-            updateCurrent(index, (1 + self.progress * (trips.length - 1)) / trips.length);
-          },
-        } });
-        timeline.to(row, { x: () => -distance(), ease: "none", duration: 1 }, 0);
-        Array.from(row.children).forEach((page, index) => {
-          if (!index) return;
-          const position = (index - 0.85) / (trips.length - 1);
-          const duration = 0.55 / (trips.length - 1);
-          timeline.fromTo(page.querySelectorAll("img"), { filter: "blur(8px) saturate(0.5)" }, { filter: "blur(0px) saturate(1)", duration, ease: "none" }, position);
-          for (const frame of page.querySelectorAll<HTMLElement>("[data-rotation]")) {
-            timeline.fromTo(frame, { rotation: 0 }, { rotation: Number(frame.dataset.rotation), duration, ease: "none" }, position);
-          }
-          timeline.fromTo(page.querySelectorAll("[data-book-caption] > *"), { y: 18 }, { y: 0, duration: duration / 2, stagger: duration / 10, ease: "none" }, position);
-        });
-        const trigger = timeline.scrollTrigger;
-        if (trigger) pin.current = {
-          target: (index) => trigger.start + (trigger.end - trigger.start) * index / (trips.length - 1),
-          update: () => trigger.update(),
-        };
-      }, pinned);
+    const area = stage.current;
+    if (!element || !view || !area) return;
+    element.dataset.layout = "snap";
+    let settle: ReturnType<typeof setTimeout>;
+    const wheel = (event: WheelEvent) => {
+      if (event.ctrlKey || !window.matchMedia("(pointer: fine)").matches) return;
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? view.clientWidth : 1;
+      const delta = (Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY) * unit;
+      const max = view.scrollWidth - view.clientWidth;
+      if (!delta || max <= 0 || (delta < 0 && view.scrollLeft <= 1) || (delta > 0 && view.scrollLeft >= max - 1)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      view.dataset.interacting = "true";
+      view.scrollLeft = Math.max(0, Math.min(max, view.scrollLeft + delta));
+      clearTimeout(settle);
+      settle = setTimeout(() => { delete view.dataset.interacting; }, 180);
     };
-    configure();
-    media.addEventListener("change", configure);
+    area.addEventListener("wheel", wheel, { passive: false });
     return () => {
-      cancelAnimationFrame(frame);
-      media.removeEventListener("change", configure);
-      context?.revert();
-      pin.current = null;
+      clearTimeout(settle);
+      area.removeEventListener("wheel", wheel);
+      delete view.dataset.interacting;
       delete element.dataset.layout;
       element.style.removeProperty("--book-progress");
     };
-  }, [reducedMotion, trips, updateCurrent]);
+  }, []);
 
   function navigate(index: number) {
     const next = pageIndex(index, trips.length);
-    if (pin.current) {
-      const destination = pin.current.target(next);
-      if (lenis) lenis.scrollTo(destination, { immediate: true });
-      else window.scrollTo({ top: destination, behavior: "instant" });
-      pin.current.update();
-    } else {
-      const page = track.current?.children[next] as HTMLElement | undefined;
-      viewport.current?.scrollTo({ left: page?.offsetLeft ?? 0, behavior: "instant" });
-    }
+    const page = track.current?.children[next] as HTMLElement | undefined;
+    viewport.current?.scrollTo({ left: page?.offsetLeft ?? 0, behavior: "instant" });
     updateCurrent(next);
+  }
+  function dragStart(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType !== "mouse" || event.button !== 0 || (event.target as HTMLElement).closest("a,button")) return;
+    drag.current = { x: event.clientX, left: event.currentTarget.scrollLeft, moved: false };
+  }
+  function dragMove(event: PointerEvent<HTMLDivElement>) {
+    const start = drag.current;
+    if (!start) return;
+    if (Math.abs(event.clientX - start.x) < 5 && !start.moved) return;
+    start.moved = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    event.currentTarget.dataset.interacting = "true";
+    event.currentTarget.dataset.dragging = "true";
+    event.currentTarget.scrollLeft = start.left - (event.clientX - start.x);
+    suppressClickUntil.current = Date.now() + 300;
+  }
+  function dragEnd(event: PointerEvent<HTMLDivElement>) {
+    drag.current = null;
+    delete event.currentTarget.dataset.interacting;
+    delete event.currentTarget.dataset.dragging;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   }
   function keyboard(event: KeyboardEvent<HTMLDivElement>) {
     if ((event.target as HTMLElement).closest("a,button,input,textarea,select")) return;
@@ -119,7 +90,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     navigate(index);
   }
   function scroll() {
-    if (pin.current || !viewport.current || !track.current) return;
+    if (!viewport.current || !track.current) return;
     const position = viewport.current.scrollLeft;
     const pages = Array.from(track.current.children) as HTMLElement[];
     const nearest = pages.reduce((best, page, index) => Math.abs(page.offsetLeft - position) < Math.abs(pages[best].offsetLeft - position) ? index : best, 0);
@@ -129,8 +100,8 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   return <section ref={root} className="travel-book" aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`}>{c.bookTitle}</h2>
     <div ref={stage} className="travel-book-stage">
-      <p id={`${id}-hint`} className="travel-book-hint"><span className="book-hint-list">{c.listHint}</span><span className="book-hint-snap">{c.swipeHint}</span><span className="book-hint-pinned">{c.desktopHint}</span></p>
-      <div ref={viewport} className="travel-book-viewport" tabIndex={0} role="region" aria-label={c.bookLabel} aria-describedby={`${id}-hint`} onKeyDown={keyboard} onScroll={scroll}>
+      <p id={`${id}-hint`} className="travel-book-hint"><span className="book-hint-list">{c.listHint}</span><span className="book-hint-snap">{c.swipeHint}</span><span className="book-hint-desktop">{c.desktopHint}</span></p>
+      <div ref={viewport} className="travel-book-viewport" tabIndex={0} role="region" aria-label={c.bookLabel} aria-describedby={`${id}-hint`} onKeyDown={keyboard} onScroll={scroll} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd} onLostPointerCapture={dragEnd} onDragStart={(event) => event.preventDefault()} onClickCapture={(event) => { if (Date.now() < suppressClickUntil.current) { event.preventDefault(); event.stopPropagation(); } }}>
         <div ref={track} className="travel-book-track">
           {trips.map((trip, index) => <article className="travel-book-page" key={trip.slug} aria-labelledby={`${id}-${trip.slug}`}>
             <div className={`travel-photo-grid travel-photo-grid--${trip.photos.length}`}>

@@ -55,14 +55,24 @@ it("supports arrow keys, Home/End and bounded previous/next controls", () => {
   expect(screen.getByText("01 / 08")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: c.previous })).toBeDisabled();
 });
-it("creates a scoped scrubbed pin on eligible desktops and reverts it on unmount", () => {
+it("consumes wheel events only while the book can move, and passes both edges through", () => {
   mocks.desktop = true;
   vi.spyOn(HTMLElement.prototype, "scrollWidth", "get").mockReturnValue(8000);
   vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(1000);
-  const { unmount, container } = render(<PhotoBook />);
-  expect(container.querySelector(".travel-book")).toHaveAttribute("data-layout", "pinned");
-  expect(mocks.timeline).toHaveBeenCalledWith(expect.objectContaining({ scrollTrigger: expect.objectContaining({ pin: true, scrub: true }) }));
-  unmount(); expect(mocks.revert).toHaveBeenCalledOnce();
+  const { unmount } = render(<PhotoBook />);
+  const book = screen.getByRole("region", { name: c.bookLabel });
+  const wheel = (deltaY: number) => {
+    const event = new WheelEvent("wheel", { deltaY, bubbles: true, cancelable: true });
+    book.dispatchEvent(event); return event;
+  };
+  expect(wheel(-100).defaultPrevented).toBe(false);
+  expect(wheel(400).defaultPrevented).toBe(true);
+  expect(book.scrollLeft).toBe(400);
+  book.scrollLeft = 7000;
+  expect(wheel(100).defaultPrevented).toBe(false);
+  unmount();
+  book.scrollLeft = 200;
+  expect(wheel(100).defaultPrevented).toBe(false);
 });
 it("provides an unwired teaser for exactly the three latest journeys", () => {
   render(<TravelTeaser />);

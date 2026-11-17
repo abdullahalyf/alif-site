@@ -1,7 +1,7 @@
-.travel-book { width: min(100% - 3rem, 76rem); margin-inline: auto; padding-block: 2rem 4rem; --book-progress: 0.125; }
+.travel-book { width: min(100% - 2rem, 96rem); margin-inline: auto; padding-block: 2rem 4rem; --book-progress: 0.125; }
 .travel-book > h2 { margin-bottom: 2rem; max-width: 20ch; }
 .travel-book-hint { font-size: 0.8125rem; color: var(--ink-muted); padding-block: 0.75rem; }
-.book-hint-snap, .book-hint-pinned { display: none; }
+.book-hint-snap, .book-hint-desktop { display: none; }
 .travel-book-track { display: grid; gap: 3rem; position: relative; }
 .travel-book-page { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); padding: 2rem 1.25rem; min-width: 0; border-bottom: 1px solid var(--line); }
 .travel-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; padding: 1rem; min-width: 0; align-items: center; }
@@ -26,14 +26,9 @@
 .travel-book-counter { font-size: 0.8125rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .travel-book[data-layout] .travel-book-controls { display: flex; }
 .travel-book[data-layout] .book-hint-list { display: none; }
-.travel-book[data-layout="snap"] .book-hint-snap, .travel-book[data-layout="pinned"] .book-hint-pinned { display: inline; }
 .travel-book[data-layout] .travel-book-track { display: flex; gap: 2rem; }
 .travel-book[data-layout] .travel-book-page { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
 .travel-book[data-layout="snap"] .travel-book-viewport { overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
-.travel-book[data-layout="pinned"] .travel-book-viewport { overflow-x: hidden; overflow-y: auto; max-height: calc(100svh - 250px); }
-.travel-book[data-layout="pinned"] .travel-book-page { padding-block: 1rem; }
-.travel-book[data-layout="pinned"] .travel-frame img { max-height: clamp(64px, 14svh, 140px); }
-.travel-book[data-layout="pinned"] .travel-photo-grid--1 .travel-frame img { max-height: 30svh; }
 @media (max-width: 899px), (pointer: coarse) {
   .travel-book-page { grid-template-columns: 1fr; align-content: start; padding: 1.25rem 0.75rem; }
   .travel-photo-grid { width: min(100%, 30rem); justify-self: center; }
@@ -45,3 +40,20 @@
 }
 
 .travel-book-controls button { display: inline-flex; align-items: center; justify-content: center; }
+.travel-book-stage { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(0.75rem, 2vw, 2rem); }
+.travel-book[data-layout] .travel-book-viewport { overflow-x: auto; scroll-snap-type: x mandatory; }
+.travel-book-viewport[data-interacting] { scroll-snap-type: none !important; }
+.travel-book-viewport[data-dragging] { cursor: grabbing; user-select: none; }
+.travel-book[data-layout] .travel-book-viewport { cursor: grab; }
+.travel-frame img { max-height: 38svh; }
+.travel-photo-grid--1 .travel-frame img { max-height: 56svh; }
+.travel-book[data-layout] .book-hint-snap { display: inline; }
+@media (min-width: 900px) and (pointer: fine) {
+  .travel-book[data-layout] .book-hint-desktop { display: inline; }
+  .travel-book[data-layout] .book-hint-snap { display: none; }
+}
+@media (max-width: 899px), (pointer: coarse) {
+  .travel-book .travel-frame img { max-height: 28svh; }
+  .travel-book .travel-photo-grid--1 .travel-frame img { max-height: 40svh; }
+}
+

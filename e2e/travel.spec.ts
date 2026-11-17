@@ -1,6 +1,5 @@
 import { expect, test } from "@playwright/test";
 import { trips, travelContent as c } from "../src/content/travel";
-import { DESKTOP_BOOK_QUERY } from "../src/features/travel/book";
 
 test("travel loads with all journeys and its places grid", async ({ page, request }) => {
   const response = await page.goto(c.path); expect(response?.status()).toBe(200);
@@ -15,31 +14,38 @@ test("travel loads with all journeys and its places grid", async ({ page, reques
   expect((await request.get(`${c.path}/opengraph-image`)).headers()["content-type"]).toContain("image/png");
   expect(await (await request.get("/sitemap.xml")).text()).toContain(`${c.path}</loc>`);
 });
-test("desktop pin responds to vertical scrolling and releases at the touch breakpoint", async ({ page }) => {
-  test.skip(test.info().project.name !== "desktop", "Desktop pin behavior only");
-  await page.setViewportSize({ width: 1280, height: 720 });
+test("wheel is scoped to the book, edges pass through and the page never pins", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Mouse wheel behavior");
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "pinned");
-  const geometry = await page.locator(".travel-book-stage").evaluate(element => ({
-    start: element.getBoundingClientRect().top + scrollY - 96,
-    distance: element.querySelector(".travel-book-track")!.scrollWidth - element.querySelector(".travel-book-viewport")!.clientWidth,
-  }));
-  await page.evaluate(({ start, distance }) => scrollTo({ top: start + distance * 3 / 7, behavior: "instant" }), geometry);
-  await expect(page.locator(".travel-book-counter")).toHaveText("04 / 08");
-  await expect(page.getByRole("heading", { name: trips[3].title })).toBeInViewport();
-  const controls = await page.locator(".travel-book-controls").boundingBox();
-  expect(controls!.y + controls!.height).toBeLessThanOrEqual(720);
-  await page.setViewportSize({ width: 800, height: 720 });
+  const book = page.getByRole("region", { name: c.bookLabel });
   await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await book.scrollIntoViewIfNeeded();
+  const hover = async () => {
+    const box = (await book.boundingBox())!;
+    await page.mouse.move(box.x + 80, Math.max(100, Math.min(box.y + 80, page.viewportSize()!.height - 80)));
+  };
+  await hover();
+  const initialY = await page.evaluate(() => scrollY);
+  await page.mouse.wheel(0, 1000);
+  await expect.poll(() => book.evaluate(element => element.scrollLeft)).toBeGreaterThan(100);
+  expect(Math.abs(await page.evaluate(() => scrollY) - initialY)).toBeLessThan(3);
+  await page.mouse.move(3, 300);
+  await page.mouse.wheel(0, 300);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(initialY + 50);
+  await book.focus(); await book.press("End"); await book.scrollIntoViewIfNeeded(); await hover();
+  const endY = await page.evaluate(() => scrollY);
+  await page.mouse.wheel(0, 300);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(endY + 50);
+  await book.focus(); await book.press("Home"); await book.scrollIntoViewIfNeeded(); await hover();
+  const startY = await page.evaluate(() => scrollY);
+  await page.mouse.wheel(0, -250);
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(startY - 30);
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
 });
-test("keyboard paging works in pinned, touch and reduced-motion modes", async ({ page }) => {
+test("keyboard paging works in desktop, touch and reduced-motion modes", async ({ page }) => {
   await page.goto(c.path);
-  const pinned = await page.evaluate((query) => matchMedia(query).matches && !matchMedia("(prefers-reduced-motion: reduce)").matches, DESKTOP_BOOK_QUERY);
-  const root = page.locator(".travel-book");
-  await expect(root).toHaveAttribute("data-layout", pinned ? "pinned" : "snap");
-  if (pinned) await expect(page.locator(".pin-spacer .travel-book-stage")).toHaveCount(1);
-  else await expect(page.locator(".pin-spacer")).toHaveCount(0);
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".pin-spacer")).toHaveCount(0);
   const book = page.getByRole("region", { name: c.bookLabel });
   await book.focus(); await book.press("ArrowRight");
   await expect(page.locator(".travel-book-counter")).toHaveText("02 / 08");
