@@ -18,6 +18,14 @@ Alif's feedback on `/travel`: "The photo-book is fine, but the background is too
 ## Do NOT edit
 Puku is changing global styles and shared pages right now. Only touch: `src/features/travel/**`, `src/content/travel.ts`, `src/content/schemas/travel.ts`, `src/app/travel/**`, `public/images/travel/**`, `src/app/sitemap.ts`, `e2e/**` (travel specs + route lists), `docs/**`.
 
+## Part 0 — Change the scroll model (Alif's feedback, do first)
+Today the book **pins the page and hijacks all vertical scroll** — even with the cursor far right of the book the page won't move down. Alif doesn't want that. New model:
+- **No page pinning.** The page always scrolls vertically normally.
+- The book is a **wide, clearly bounded horizontal area** (make it wider — near full content width, taller frames). Only when the pointer is **inside the book** does the mouse wheel / trackpad move it **sideways**. At the first/last page, extra wheel passes through to normal page scroll (no trap).
+- Outside the book (margins, page sides) wheel = normal vertical scroll, always.
+- Keep: drag-to-scroll with mouse, touch swipe with snap, ←/→ keys, arrow buttons, progress bar + counter. The route map/colours (Parts 2–3) follow the book's horizontal progress instead of pinned scroll.
+- Update unit + e2e tests: wheel over the book moves it sideways; wheel beside the book scrolls the page; page never pins.
+
 ## Part 1 — Map data
 - Add `lat`/`lng` + `color` (hex, AA-checked against text) to every trip in the schema/content.
 - Create a simplified **Bangladesh outline SVG** (country border + optional major rivers as thin lines) as a React component in `src/features/travel/map/`. If you can't download public-domain boundary data (Natural Earth is public domain), hand-build a simplified outline from known coordinates — accuracy at "recognisable shape" level is enough. Include a projection helper (lat/lng → SVG x/y) with unit tests.

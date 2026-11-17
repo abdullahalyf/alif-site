@@ -23,8 +23,11 @@ Recreate Steno's hero feel on Home:
 ## Part 2 — Fix the dark transition (bug)
 Now the whole page turns night and earlier content (Highlights) becomes unreadable — first Highlights card is cream with near-invisible text. Replace the page-wide `BackgroundShift` with a Steno-style approach: the "How I work" section is its own **dark rounded panel that grows from inset to full-bleed** as it enters (clip-path/scale), while sections outside it keep their own colours. Every card must keep AA contrast in every state. Add an e2e/axe check for Highlights while the dark section is in view.
 
-## Part 3 — Horizontal scroll for Selected work
-Desktop (pointer: fine, ≥ 900px): when the Selected work section reaches the top, **pin it and convert vertical scroll into sideways movement of the cards** (scrubbed), then release. Cards: slight scale/tilt as they pass centre, image hover zoom. Progress indicator. Touch/mobile: native horizontal swipe with snap. Reduced motion: plain row with arrows. Keyboard: ←/→.
+## Part 3 — Horizontal scroll for Selected work (NO page pinning — Alif's rule)
+Do NOT pin the page or hijack vertical scroll. The card row is a **wide, clearly bounded horizontal area**: only when the pointer is **inside** it does the wheel/trackpad move the cards **sideways**; at the first/last card the wheel passes through to normal page scroll. Anywhere else on the page the wheel scrolls vertically as normal. Also: drag-to-scroll with the mouse. Cards: slight scale/tilt as they pass centre, image hover zoom. Progress indicator. Touch/mobile: native horizontal swipe with snap. Reduced motion: plain row with arrows. Keyboard: ←/→.
+
+## Part 3b — Header always visible
+Remove hide-on-scroll: the header/navbar stays fixed and visible at all times (it may get a subtle background blur + hairline after scrolling a bit). Update tests that expect it to hide.
 
 ## Part 4 — Less whitespace, everywhere
 - Global section rhythm: reduce vertical spacing ~35–40% (e.g. 128px → 80px desktop, 64px mobile); headings closer to their content; no empty tails at section ends.
