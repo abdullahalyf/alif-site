@@ -12,6 +12,7 @@ export default function OpenGraphImage() {
   return new ImageResponse(
     <div style={{ display: "flex", width: "100%", height: "100%" }}>
       {/* ImageResponse requires a native image to render into the generated PNG. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={`data:image/jpeg;base64,${photo}`} alt={site.heroPhoto.alt} width={size.width} height={size.height} style={{ objectFit: "cover" }} />
     </div>, size,
   );
