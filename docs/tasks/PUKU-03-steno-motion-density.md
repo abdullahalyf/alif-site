@@ -45,3 +45,6 @@ Wherever there's an empty box, placeholder or text-only area that would look bet
 
 ## Part 7 — Consistency pass
 Same motion vocabulary on every page (Home, About, Services, Approach, Work, case study, Writing, Travel, Contact, Résumé screen view, Uses, Now). Nothing should appear "just sitting there" — but keep it calm, not flashy. Re-check Lighthouse and fix regressions.
+
+## Part 8 — Copy protection (Alif's request)
+Disable casual text selection/copy site-wide: `user-select: none` on body; block `copy` and `contextmenu` on images (`draggable={false}` too). KEEP selectable/copyable: form inputs/textarea, email + phone + WhatsApp + address text (add a small "Copy email" button with "Copied" feedback in contact areas), code blocks in blog posts, the résumé page, and search input. Must not break keyboard navigation, screen readers, or Lighthouse accessibility. Add a short note in `docs/CONTENT-GUIDE.md` on how to make an element copyable (`data-allow-copy`).
