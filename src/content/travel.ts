@@ -137,6 +137,20 @@ export const trips = [
 export const travelContent = {
   path: "/travel",
   title: "Travel",
+  tripHref: (slug: string) => `/travel/${slug}`,
+  readTrip: "Read this travel note",
+  backToTravel: "Back to Travel",
+  storyTitle: "A note from the road",
+  galleryTitle: "Pages from the camera roll",
+  galleryHint: "Select a photograph to see it larger.",
+  openPhoto: (index: number, place: string) => `Open photograph ${index} from ${place}`,
+  closeGallery: "Close",
+  previousPhoto: "Previous photograph",
+  nextPhoto: "Next photograph",
+  lightboxHint: "Use arrow keys or swipe to browse. Escape closes the gallery.",
+  journeyNavigation: "More travel notes",
+  placeMapLabel: (place: string) => `${place} on a map of Bangladesh`,
+  locationNote: "DEMO — an approximate location, not a recorded travel track.",
   // DEMO: replace the travel-page introduction and closing with Alif’s own words.
   intro: "Across Bangladesh, I travel to see how people live, hear their stories and come home with better questions.",
   closing: "Some journeys take me somewhere new. Others help me see home a little more clearly.", // DEMO
@@ -161,3 +175,5 @@ export const travelContent = {
   aboutLink: "More about me",
   aboutPath: "/about",
 };
+
+export function getTrip(slug: string): Trip | undefined { return trips.find(trip => trip.slug === slug); }

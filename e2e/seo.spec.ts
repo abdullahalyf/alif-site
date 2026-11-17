@@ -1,4 +1,4 @@
-import { travelContent } from "../src/content/travel";
+import { trips, travelContent } from "../src/content/travel";
 import { searchContent } from "../src/content/search";
 import { diagramContent } from "../src/content/diagrams";
 import { expect, test } from "@playwright/test";
@@ -18,6 +18,7 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
   );
   const paths = [
     travelContent.path,
+    ...trips.map(trip => travelContent.tripHref(trip.slug)),
     ...searchContent.pages.map((page) => page.href),
     ...projects.map((project) => diagramContent.path(project.slug)),
     ...Object.values(seo.pages).map((page) => page.path),

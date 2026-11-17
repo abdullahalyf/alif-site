@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "@/components/arrows";
 import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent, type KeyboardEvent } from "react";
 import { trips as defaultTrips, travelContent as c } from "@/content/travel";
@@ -129,6 +130,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
               <h3 id={`${id}-${trip.slug}`}>{trip.title}</h3>
               <p>{trip.story}</p>
               {trip.people && <p className="travel-people"><span>{c.peopleLabel}</span>{trip.people}</p>}
+              <Link className="text-link" href={c.tripHref(trip.slug)}>{c.readTrip}</Link>
               <ul className="travel-tags">{trip.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
             </div>
           </article>)}
