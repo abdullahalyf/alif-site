@@ -3,7 +3,7 @@ import Link from "next/link";
 import { trips, travelContent as c } from "@/content/travel";
 import { PhotoBook } from "@/features/travel/PhotoBook";
 import { formatTripDate } from "@/features/travel/book";
-import { PhotoReveal, Reveal } from "@/components/motion";
+import { PhotoReveal } from "@/components/motion";
 import { pageMetadata } from "@/seo/metadata";
 import "./travel.css";
 
@@ -12,7 +12,7 @@ export const metadata = pageMetadata(c.title, c.description, c.path);
 export default function TravelPage() {
   return <div className="travel-page">
     <header className="container travel-page-hero">
-      <Reveal><h1>{c.title}</h1><p className="travel-page-intro">{c.intro}</p></Reveal>
+      <h1>{c.title}</h1><p className="travel-page-intro">{c.intro}</p>
       <p className="travel-demo-notice">{c.demoNotice}</p>
     </header>
     <PhotoBook />

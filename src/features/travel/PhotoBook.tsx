@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
+import { ArrowLeft, ArrowRight } from "@/components/arrows";
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { useSmoothScroll } from "@/components/motion";
@@ -24,11 +25,11 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const reducedMotion = useReducedMotion();
   const lenis = useSmoothScroll();
 
-  function updateCurrent(index: number, progress = (index + 1) / trips.length) {
+  const updateCurrent = useCallback((index: number, progress = (index + 1) / trips.length) => {
     active.current = index;
     setCurrent(index);
     root.current?.style.setProperty("--book-progress", String(progress));
-  }
+  }, [trips.length]);
 
   useEffect(() => {
     const element = root.current;
@@ -95,9 +96,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       delete element.dataset.layout;
       element.style.removeProperty("--book-progress");
     };
-    // The collection is content data; a changed collection resets its scroll scene.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reducedMotion, trips]);
+  }, [reducedMotion, trips, updateCurrent]);
 
   function navigate(index: number) {
     const next = pageIndex(index, trips.length);
@@ -154,10 +153,10 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
         </div>
       </div>
       <div className="travel-book-controls">
-        <button type="button" onClick={() => navigate(active.current - 1)} disabled={current === 0} aria-label={c.previous}>←</button>
+        <button type="button" onClick={() => navigate(active.current - 1)} disabled={current === 0} aria-label={c.previous}><ArrowLeft /></button>
         <div className="travel-book-progress" role="progressbar" aria-label={c.progress} aria-valuemin={1} aria-valuemax={trips.length} aria-valuenow={current + 1}><span /></div>
         <span className="travel-book-counter" aria-live="polite" aria-atomic="true">{String(current + 1).padStart(2, "0")} / {String(trips.length).padStart(2, "0")}</span>
-        <button type="button" onClick={() => navigate(active.current + 1)} disabled={current === trips.length - 1} aria-label={c.next}>→</button>
+        <button type="button" onClick={() => navigate(active.current + 1)} disabled={current === trips.length - 1} aria-label={c.next}><ArrowRight /></button>
       </div>
     </div>
   </section>;

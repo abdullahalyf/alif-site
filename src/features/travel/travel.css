@@ -30,9 +30,10 @@
 .travel-book[data-layout] .travel-book-track { display: flex; gap: 2rem; }
 .travel-book[data-layout] .travel-book-page { flex: 0 0 100%; width: 100%; scroll-snap-align: start; }
 .travel-book[data-layout="snap"] .travel-book-viewport { overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
-.travel-book[data-layout="pinned"] .travel-book-viewport { overflow: hidden; }
-.travel-book[data-layout="pinned"] .travel-frame img { max-height: clamp(110px, 22svh, 180px); }
-.travel-book[data-layout="pinned"] .travel-photo-grid--1 .travel-frame img { max-height: 40svh; }
+.travel-book[data-layout="pinned"] .travel-book-viewport { overflow-x: hidden; overflow-y: auto; max-height: calc(100svh - 250px); }
+.travel-book[data-layout="pinned"] .travel-book-page { padding-block: 1rem; }
+.travel-book[data-layout="pinned"] .travel-frame img { max-height: clamp(64px, 14svh, 140px); }
+.travel-book[data-layout="pinned"] .travel-photo-grid--1 .travel-frame img { max-height: 30svh; }
 @media (max-width: 899px), (pointer: coarse) {
   .travel-book-page { grid-template-columns: 1fr; align-content: start; padding: 1.25rem 0.75rem; }
   .travel-photo-grid { width: min(100%, 30rem); justify-self: center; }
@@ -42,3 +43,5 @@
 @media (prefers-reduced-motion: reduce) {
   .travel-book-track, .travel-book-page, .travel-frame, .travel-frame img, .travel-book-text > * { animation: none !important; transition: none !important; }
 }
+
+.travel-book-controls button { display: inline-flex; align-items: center; justify-content: center; }

@@ -1,3 +1,4 @@
+import { travelContent } from "../../src/content/travel";
 import { searchContent } from "../../src/content/search";
 import { diagramContent } from "../../src/content/diagrams";
 import { projects } from "../../src/content/projects";
@@ -6,6 +7,7 @@ import { writingContent } from "../../src/content/site";
 import { shell } from "../../src/content/site";
 
 export const pageRoutes = [
+  travelContent.path,
   ...searchContent.pages.map((page) => page.href),
   ...projects.map((project) => diagramContent.path(project.slug)),
   "/",

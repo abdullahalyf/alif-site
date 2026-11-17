@@ -45,4 +45,4 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 - [x] Task 14: Template groundwork — content validator, image tool, starter kit, theme inventory and guides (non-breaking).
 - [x] Task 15: Services, Contact, Resume, Uses, case-study architecture diagrams and site search.
-- [ ] Task 16: Template refactor: move content + theme to single folder/file (runs alone).
+- [x] Task 16: Travel photo-book, typed demo journeys, accessible horizontal scroll/pinning, /travel page and unwired About teaser; tests and sitemap.
