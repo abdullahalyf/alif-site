@@ -1,4 +1,5 @@
-.writing-page { padding-block: clamp(3rem, 8vw, 7rem); }
+/* The same vertical rhythm as every other page. */
+.writing-page { padding-block: clamp(4rem, 9vw, 8rem); }
 .writing-heading { display: grid; gap: 1.5rem; margin-block: 2.5rem 3rem; }
 .writing-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
 .writing-links a, .post-list a, .post-neighbours a { text-decoration: underline; }
@@ -9,7 +10,9 @@
 .post-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }
 .post-tags li { border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.75rem; }
 .post-article { max-width: 65ch; margin-inline: auto; min-width: 0; overflow-wrap: anywhere; }
-.post-article h1 { font-size: clamp(3rem, 2rem + 3vw, 5rem); }
+/* The heading keeps the site-wide scale — the 65ch measure belongs to the
+   prose, not to the title. */
+.post-article h1 { font-size: var(--type-h1); max-width: 18ch; }
 .post-prose { line-height: 1.7; }
 .post-prose > * + * { margin-top: 1.5rem; }
 .post-prose h2, .post-prose h3, .post-prose h4 { margin-top: 2.5rem; }

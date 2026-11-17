@@ -29,10 +29,23 @@
   display: grid;
   gap: 1rem;
 }
-.architecture-diagram figcaption h2 {
+.architecture-diagram figcaption h2,
+.architecture-diagram figcaption h3 {
   font-size: 1.5rem;
 }
 .architecture-diagram ul {
   list-style: disc;
   padding-left: 1.5rem;
+}
+
+/* Inside a case study the diagram sits in a two-column section, so it needs
+   to span the full width of the row rather than the narrow text column. */
+.case-section--diagram {
+  display: block;
+}
+.case-section--diagram .architecture-diagram {
+  margin-block: 2rem;
+}
+.case-section--diagram .diagram-scroll {
+  margin-bottom: 1rem;
 }

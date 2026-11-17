@@ -17,7 +17,9 @@ test("Writing lists published posts and hides drafts from production", async ({ 
 });
 test("Now renders the current factual update and is linked from Writing", async ({ page }) => {
   await page.goto(seo.pages.writing.path);
-  await page.getByRole("link", { name: writingContent.nowLabel, exact: true }).click();
+  // The footer also links to Now, so the link in the page body is the one
+  // that should be followed.
+  await page.locator("main").getByRole("link", { name: writingContent.nowLabel, exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(writingContent.nowTitle);
   for (const item of site.now) await expect(page.getByText(item, { exact: true })).toBeVisible();
 });

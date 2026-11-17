@@ -1,14 +1,14 @@
-import { SearchDialog } from "@/features/search/SearchDialog";
+import { SearchTrigger } from "@/features/search/SearchTrigger";
 import { searchContent as c } from "@/content/search";
 import { pageMetadata } from "@/seo/metadata";
-import "./search.css";
+import { Reveal, StaggerIn } from "@/components/motion";
 export const metadata = pageMetadata(c.title, c.intro, "/search");
 export default function SearchPage() {
   return (
     <div className="container page-shell search-page">
-      <h1>{c.title}</h1>
-      <p className="lead">{c.intro}</p>
-      <SearchDialog />
+      <Reveal><h1>{c.title}</h1></Reveal>
+      <Reveal><p className="lead">{c.intro}</p></Reveal>
+      <Reveal><SearchTrigger className="search-trigger--page" /></Reveal>
       <noscript>
         <ul>
           {c.pages
@@ -20,6 +20,18 @@ export default function SearchPage() {
             ))}
         </ul>
       </noscript>
+      {/* The list of pages is always there, so a visitor without JavaScript can
+          still find their way around from here. */}
+      <StaggerIn className="search-page-list">
+        {c.pages
+          .filter((page) => page.href !== "/search")
+          .map((page) => (
+            <article key={page.href}>
+              <h2><a href={page.href}>{page.title}</a></h2>
+              <p>{page.description}</p>
+            </article>
+          ))}
+      </StaggerIn>
     </div>
   );
 }

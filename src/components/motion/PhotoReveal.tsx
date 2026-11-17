@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const FROM = {
   filter: "blur(12px) saturate(0.4)",
@@ -36,7 +36,9 @@ export function PhotoReveal({ children, className }: PhotoRevealProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    // Read the preference here rather than from the render: the hook returns the
+    // server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
 
     const root = rootRef.current;
     if (!root) return;
@@ -63,6 +65,9 @@ export function PhotoReveal({ children, className }: PhotoRevealProps) {
     return () => {
       tween.scrollTrigger?.kill();
       tween.kill();
+      // Undo the start state, so a tween that never ran cannot leave the photo
+      // blurred or faded.
+      gsap.set(image, { clearProps: "filter,opacity,transform" });
     };
   }, [reducedMotion]);
 

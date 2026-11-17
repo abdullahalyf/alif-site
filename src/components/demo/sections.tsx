@@ -3,7 +3,8 @@ import { demoContent, seo, site, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
 import { getPosts, formatPostDate } from "@/content/posts";
 import { SectionLabel } from "@/components/section-label";
-import { Reveal, StaggerIn } from "@/components/motion";
+import { EducationTimeline } from "@/components/education-timeline";
+import { CountUp, Reveal, StaggerIn } from "@/components/motion";
 import "./demo.css";
 
 function Achievement({ entry }: { entry: Site["achievements"][number] }) {
@@ -22,8 +23,11 @@ export function Highlights() {
 }
 export function AtAGlance() {
   return <section className="container glance-section" aria-labelledby="glance-title">
-    <SectionLabel>{demoContent.statsLabel}</SectionLabel><h2 id="glance-title" className="label">{demoContent.statsNotice}</h2>
-    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value">{stat.value}</p><p>{stat.label}</p></div>)}</StaggerIn>
+    <div className="glance-head">
+      <SectionLabel>{demoContent.statsLabel}</SectionLabel>
+      <h2 id="glance-title" className="glance-notice">{demoContent.statsNotice}</h2>
+    </div>
+    <StaggerIn className="stats-grid">{site.stats.map((stat) => <div key={stat.label}><p className="stat-value"><CountUp value={stat.value} /></p><p className="stat-label">{stat.label}</p></div>)}</StaggerIn>
   </section>;
 }
 export function Testimonials() {
@@ -48,19 +52,19 @@ export function AboutDetails() {
   return <div className="container">
     <section className="section-space" aria-labelledby="education-title">
       <SectionLabel>{demoContent.educationLabel}</SectionLabel><Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
-      <div className="education-timeline">{site.education.map((item) => <article key={item.org}><p className="label">{item.years}</p><div><h3>{item.title}</h3><p>{item.org}</p><p>{item.text}</p></div></article>)}</div>
+      <EducationTimeline items={site.education} />
     </section>
     <section className="section-space" aria-labelledby="skills-title">
       <SectionLabel>{demoContent.skillsLabel}</SectionLabel><Reveal><h2 id="skills-title" className="section-title">{demoContent.skillsLabel}</h2></Reveal>
-      <StaggerIn className="skills-grid">{site.skills.map((group) => <div key={group.title}><h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul></div>)}</StaggerIn>
+      <StaggerIn className="skills-grid">{site.skills.map((group) => <div key={group.title}><h3>{group.title}</h3><ul className="chip-list">{group.items.map((item) => <li key={item} className="chip">{item}</li>)}</ul></div>)}</StaggerIn>
     </section>
     <section className="section-space" aria-labelledby="languages-title">
       <SectionLabel>{demoContent.languagesLabel}</SectionLabel><Reveal><h2 id="languages-title" className="section-title">{demoContent.languagesLabel}</h2></Reveal>
-      <dl className="language-list">{site.languages.map((language) => <div key={language.name}><dt>{language.name}</dt><dd>{language.level}</dd></div>)}</dl>
+      <StaggerIn as="dl" className="chip-list chip-list--languages">{site.languages.map((language) => <div key={language.name} className="chip"><dt>{language.name}</dt><dd>{language.level}</dd></div>)}</StaggerIn>
     </section>
     <section className="section-space" aria-labelledby="interests-title">
       <SectionLabel>{demoContent.interestsLabel}</SectionLabel><Reveal><h2 id="interests-title" className="section-title">{demoContent.interestsLabel}</h2></Reveal>
-      <ul className="interests-list">{site.interests.map((interest) => <li key={interest}>{interest}</li>)}</ul>
+      <StaggerIn as="ul" className="chip-list chip-list--interests">{site.interests.map((interest) => <li key={interest} className="chip">{interest}</li>)}</StaggerIn>
     </section>
   </div>;
 }

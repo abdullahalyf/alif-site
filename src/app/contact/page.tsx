@@ -2,17 +2,18 @@ import { contactContent as c } from "@/content/contact";
 import { site } from "@/content/site";
 import { BriefForm } from "@/features/contact/BriefForm";
 import { pageMetadata } from "@/seo/metadata";
+import { Reveal } from "@/components/motion";
 import "./contact.css";
 export const metadata = pageMetadata(c.title, c.intro, "/contact");
 export default function ContactPage() {
   return (
     <div className="container page-shell contact-page">
       <header>
-        <h1>{c.title}</h1>
-        <p className="lead">{c.intro}</p>
+        <Reveal><h1>{c.title}</h1></Reveal>
+        <Reveal><p className="lead">{c.intro}</p></Reveal>
       </header>
       <div className="contact-columns">
-        <aside>
+        <Reveal as="aside">
           <p>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
@@ -23,11 +24,13 @@ export default function ContactPage() {
           <p>{c.response}</p>
           <p>{c.availability}</p>
           <a href={`mailto:${site.email}`}>{c.fallback}</a>
-        </aside>
+        </Reveal>
         <noscript>
           <style>{`.brief-form { display: none; }`}</style>
         </noscript>
-        <BriefForm />
+        <Reveal>
+          <BriefForm />
+        </Reveal>
       </div>
     </div>
   );

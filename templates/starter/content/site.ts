@@ -5,6 +5,7 @@ export const site = {
   "name": "Your Name", // REPLACE
   "fullName": "Your Full Name", // REPLACE
   "logoText": "Your Name", // REPLACE
+  "logoInitial": "Y", // REPLACE
   "role": "Your Role", // REPLACE
   "location": "Your City, Country", // REPLACE
   "intro": "Introduce yourself and your work.", // REPLACE
@@ -93,6 +94,29 @@ export const site = {
     "width": 1200, // REPLACE
     "height": 1500, // REPLACE
     "alt": "Your portrait description" // REPLACE
+  }, // REPLACE
+  "heroSide": { // REPLACE
+    "src": "/images/your-portrait.jpg", // REPLACE
+    "width": 900, // REPLACE
+    "height": 1100, // REPLACE
+    "alt": "Your portrait description" // REPLACE
+  }, // REPLACE
+  "statusCard": { // REPLACE
+    "availability": "Available for new projects", // REPLACE
+    "timezone": "Asia/Dhaka", // REPLACE
+    "timezoneLabel": "Your City", // REPLACE
+    "buildingLabel": "Currently building", // REPLACE
+    "building": "What you are working on", // REPLACE
+    "stack": [ // REPLACE
+      "Your technology" // REPLACE
+    ], // REPLACE
+  }, // REPLACE
+  "systemDiagram": { // REPLACE
+    "label": "How the system fits together", // REPLACE
+    "steps": [ // REPLACE
+      "First", // REPLACE
+      "Second" // REPLACE
+    ], // REPLACE
   }, // REPLACE
   "services": [ // REPLACE
     "Your service" // REPLACE

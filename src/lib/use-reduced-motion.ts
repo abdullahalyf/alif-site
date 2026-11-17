@@ -17,6 +17,19 @@ function subscribe(onChange: () => void) {
 }
 
 /**
+ * Reads `prefers-reduced-motion: reduce` straight from the browser.
+ *
+ * `useReducedMotion` returns `false` during hydration — the server snapshot —
+ * so it is only safe to branch on while rendering. Effects run before React
+ * swaps that snapshot for the real value, so anything that *starts* an
+ * animation must ask this function instead, or it will start an animation the
+ * user asked not to see.
+ */
+export function prefersReducedMotion(): boolean {
+  return getMediaQueryList()?.matches ?? false;
+}
+
+/**
  * Tracks `prefers-reduced-motion: reduce`.
  *
  * Returns `false` while rendering on the server, so the markup is identical to

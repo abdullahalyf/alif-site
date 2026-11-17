@@ -3,12 +3,18 @@
 import { useEffect, useRef, useState } from "react";
 import { getGsap } from "@/lib/gsap";
 import { useHydrated } from "@/lib/use-hydrated";
-import { useReducedMotion } from "@/lib/use-reduced-motion";
+import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 const STORAGE_KEY = "alif-intro-seen";
 
-/** Total length of the intro, in seconds. Must stay under 1.4s. */
-export const INTRO_DURATION = 1.3;
+/**
+ * Total length of the intro, in seconds. Must stay under 1.4s.
+ *
+ * The overlay covers the page while it plays, so every second here is a second
+ * the largest contentful paint waits. It is kept short for that reason as well
+ * as the design's own budget.
+ */
+export const INTRO_DURATION = 0.9;
 
 type IntroOverlayProps = {
   /** The word shown in the intro. */
@@ -60,7 +66,10 @@ export function IntroOverlay({
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!hydrated || reducedMotion) return;
+    if (!hydrated) return;
+    // Read the preference here rather than from the render: the hook returns
+    // the server snapshot until React swaps it for the real value.
+    if (prefersReducedMotion()) return;
     if (!shouldPlayIntro()) return;
 
     // Start on the next frame so the overlay never flashes during hydration.
@@ -83,12 +92,15 @@ export function IntroOverlay({
     timeline
       .fromTo(
         word,
-        { opacity: 0, scale: 0.92 },
-        { opacity: 1, scale: 1, duration: 0.55, ease: "power2.out" },
+        // The word is un-covered by a clip rather than faded: the text stays at
+        // full contrast the whole time, so it never dips below the threshold
+        // while the overlay is on screen.
+        { clipPath: "inset(0 0 100% 0)", scale: 0.92 },
+        { clipPath: "inset(0 0 0% 0)", scale: 1, duration: 0.4, ease: "power2.out" },
       )
       .to(overlay, {
         yPercent: -100,
-        duration: 0.65,
+        duration: 0.5,
         ease: "power3.inOut",
       });
 

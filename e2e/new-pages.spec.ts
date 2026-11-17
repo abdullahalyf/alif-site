@@ -1,9 +1,10 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { contactContent as c } from "../src/content/contact";
-import { site } from "../src/content/site";
+import { site, shell, pageContent } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
-import { diagrams } from "../src/content/diagrams";
+import { diagrams, diagramContent } from "../src/content/diagrams";
+import { waitForHydration } from "./helpers/routes";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
 }) => {
@@ -62,7 +63,9 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   page,
 }) => {
   await page.goto("/search");
-  await page.getByRole("button", { name: search.open, exact: true }).focus();
+  await waitForHydration(page);
+  const trigger = page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first();
+  await trigger.focus();
   await page.keyboard.press("Control+k");
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
@@ -87,14 +90,45 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   await input.focus();
   await page.keyboard.press("Escape");
   await expect(dialog).not.toBeVisible();
-  await expect(
-    page.getByRole("button", { name: search.open, exact: true }),
-  ).toBeFocused();
+  await expect(trigger).toBeFocused();
   await page.keyboard.press("Meta+k");
   await input.fill("Services");
   await expect(dialog.getByRole("option").first()).toBeVisible();
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/services$/);
+});
+
+test("search opens from the keyboard and the header button on any page", async ({
+  page,
+}) => {
+  for (const path of ["/", "/about", "/work", "/services", "/writing"]) {
+    await page.goto(path);
+    // The shortcut is attached by a client component, so the page has to be
+    // hydrated before the key can reach it.
+    await waitForHydration(page);
+
+    // Ctrl+K opens the dialog from anywhere, without touching the mouse.
+    await page.keyboard.press("Control+k");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("combobox")).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+
+    // The header button opens the same dialog.
+    await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("combobox")).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).not.toBeVisible();
+  }
+});
+
+test("the /search route still works on its own", async ({ page }) => {
+  await page.goto("/search");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(search.title);
+  await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByRole("combobox")).toBeFocused();
 });
 test("search index is public JSON without drafts", async ({ request }) => {
   const response = await request.get("/search-index.json");
@@ -133,6 +167,61 @@ test("diagram exposes its graph as an accessible image and text", async ({
   await expect(
     page.getByRole("heading", { name: "Page not found", exact: true }),
   ).toBeVisible();
+});
+
+test("a case study carries its system design diagram", async ({ page }) => {
+  await page.goto("/work/multi-branch-pos");
+  const diagram = diagrams["multi-branch-pos"];
+
+  const section = page.locator(".case-section--diagram");
+  await expect(section).toBeVisible();
+  await expect(
+    section.getByRole("heading", { name: pageContent.systemDesign }),
+  ).toBeVisible();
+  await expect(
+    section.getByRole("img", { name: new RegExp(diagram.title) }),
+  ).toBeVisible();
+
+  // The legend headings sit one level below the section heading.
+  await expect(
+    section.getByRole("heading", { name: diagramContent.nodes, level: 3 }),
+  ).toBeVisible();
+  await expect(
+    section.getByRole("heading", { name: diagramContent.connections, level: 3 }),
+  ).toBeVisible();
+
+  // The full-size diagram is one click away.
+  await section.getByRole("link", { name: pageContent.systemDesignLink }).click();
+  await expect(page).toHaveURL(
+    new RegExp(`${diagramContent.path("multi-branch-pos")}$`),
+  );
+});
+
+test("the diagram stays static under reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/work/multi-branch-pos");
+  await page.locator(".case-section--diagram").scrollIntoViewIfNeeded();
+
+  const state = await page.evaluate(() => {
+    const edges = [
+      ...document.querySelectorAll<SVGPathElement>(
+        ".case-section--diagram .diagram-edge",
+      ),
+    ];
+    const nodes = [
+      ...document.querySelectorAll<SVGGElement>(
+        ".case-section--diagram .diagram-node",
+      ),
+    ];
+    return {
+      offsets: edges.map((edge) => getComputedStyle(edge).strokeDashoffset),
+      opacities: nodes.map((node) => getComputedStyle(node).opacity),
+    };
+  });
+
+  // Nothing is hidden and no edge is left half-drawn.
+  expect(state.offsets.every((offset) => offset === "0px")).toBe(true);
+  expect(state.opacities.every((opacity) => opacity === "1")).toBe(true);
 });
 
 test("new pages fit the viewport with a single main heading", async ({

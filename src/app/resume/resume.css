@@ -11,7 +11,15 @@
   border-top: 1px solid var(--line);
   padding-top: 1.5rem;
 }
+/* The grouped entries sit inside the stagger wrapper, so they are addressed
+   through it rather than as direct children of the section. The wrapper holds
+   either a single heading or the list of entries, and only the entries need
+   to be spaced apart. */
 .resume-document section > div {
+  display: grid;
+  gap: 0.5rem;
+}
+.resume-document section > div > div {
   display: grid;
   gap: 0.5rem;
 }
@@ -28,6 +36,16 @@
     background: white !important;
     color: black !important;
     font-size: 10pt;
+  }
+  /* The entrance animation clips and shifts its content. A printed page has
+     no animation, so the clip is cleared and everything sits still. */
+  *,
+  *::before,
+  *::after {
+    clip-path: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
   }
   body > header,
   body > footer,

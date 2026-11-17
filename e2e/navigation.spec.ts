@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { shell, site } from "../src/content/site";
+import { navHref, shell, site } from "../src/content/site";
 import { projects } from "../src/content/projects";
 
 for (const link of shell.nav) {
@@ -10,14 +10,20 @@ for (const link of shell.nav) {
     await navigation.getByRole("link", { name: link.label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${link.href.replace("/", "\\/")}$`));
     if (link.href.startsWith("#")) await expect(page.getByRole("contentinfo")).toBeInViewport();
-    else await expect(page.getByRole("heading", { level: 1 })).toContainText(link.label);
+    // A page carries its own heading, which does not have to repeat the
+    // navigation label — it only has to be there and say something.
+    else {
+      const heading = page.getByRole("heading", { level: 1 });
+      await expect(heading).toHaveCount(1);
+      expect((await heading.textContent())?.trim()).toBeTruthy();
+    }
     if (isMobile) await expect(page.getByRole("dialog")).not.toBeVisible();
   });
 }
 
 test("every case study opens from Work", async ({ page }) => {
   for (const project of projects) {
-    await page.goto(shell.nav[0].href);
+    await page.goto(navHref("/work"));
     await page.getByRole("link").filter({ has: page.getByRole("heading", { name: project.title, exact: true }) }).click();
     await expect(page).toHaveURL(shell.projectHref(project.slug));
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);

@@ -1,9 +1,18 @@
-import { render, screen } from "@testing-library/react";
-import { expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import { afterEach, expect, it } from "vitest";
 import { Resume } from "./Resume";
 import { resumeContent as c } from "@/content/resume";
 import { site } from "@/content/site";
+import { mockMatchMedia } from "@/lib/test-match-media";
+
+afterEach(() => {
+  cleanup();
+});
+
 it("renders identity and every CV section", () => {
+  // The entrance animations read the motion preference, and GSAP's
+  // ScrollTrigger needs `matchMedia`, which jsdom does not implement.
+  mockMatchMedia(false);
   render(<Resume />);
   expect(
     screen.getByRole("heading", { level: 1, name: site.fullName }),
