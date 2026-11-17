@@ -81,3 +81,12 @@ it("provides an unwired teaser for exactly the three latest journeys", () => {
   expect(screen.getAllByRole("img")).toHaveLength(3);
   expect(screen.getByRole("link", { name: c.allTravels })).toHaveAttribute("href", c.path);
 });
+
+it("turns the book to a selected map pin and marks that location current", () => {
+  render(<PhotoBook />);
+  const pin = screen.getByRole("link", { name: c.mapPinLabel(trips[5].place) });
+  fireEvent.click(pin);
+  expect(screen.getByText("06 / 08")).toBeInTheDocument();
+  expect(pin).toHaveAttribute("aria-current", "location");
+  expect(screen.getByRole("progressbar", { name: c.progress })).toHaveAttribute("aria-valuenow", "6");
+});

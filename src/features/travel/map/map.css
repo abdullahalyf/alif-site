@@ -1,0 +1,37 @@
+.travel-route-map { position: sticky; top: 6rem; align-self: start; min-width: 0; padding: 1rem 0.25rem; }
+.travel-map-drawing { position: relative; width: min(100%, 22rem); margin-inline: auto; }
+.travel-map-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.bangladesh-outline { fill: var(--cream); fill-opacity: 0.55; stroke: var(--ink-muted); stroke-width: 1; stroke-opacity: 0.45; }
+.route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; stroke-dasharray: 3 6; }
+.route-upcoming { opacity: 0.25; }
+.route-visited { stroke: var(--ink); }
+.travel-book[data-layout] .route-draw-mask { stroke-dashoffset: var(--route-offset, 1); }
+.route-pin-target { fill: transparent; }
+.route-pin-dot { stroke: var(--ink); stroke-width: 1.5; fill: var(--cream); }
+.route-pin[data-state="visited"] .route-pin-dot, .route-pin[data-state="active"] .route-pin-dot { fill: var(--ink); }
+.route-pin-halo { fill: var(--accent); opacity: 0; transform-box: fill-box; transform-origin: center; }
+.route-pin[data-state="active"] .route-pin-halo { opacity: 0.35; }
+.travel-book[data-layout] .route-pin[data-state="active"] .route-pin-halo { animation: travel-pin-pulse 2.8s ease-in-out infinite; animation-play-state: paused; }
+.travel-book[data-in-view="true"] .route-pin[data-state="active"] .route-pin-halo { animation-play-state: running; }
+.route-pin:focus-visible { outline: none; }
+.route-pin:focus-visible .route-pin-target { stroke: var(--ink); stroke-width: 2; fill: var(--accent); fill-opacity: 0.35; }
+.route-thumbnail { position: absolute; width: 4.5rem; aspect-ratio: 4 / 3; padding: 0.2rem; background: white; box-shadow: 0 3px 14px #1e1c1926; transform: translate(-50%, calc(-100% - 1.25rem)) rotate(-3deg); pointer-events: none; }
+.route-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.travel-book[data-in-view="true"] .route-thumbnail { animation: travel-map-photo 0.35s ease-out both; }
+.route-current-place { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.1; margin-top: 0.75rem; }
+.route-map-note { color: var(--ink-muted); font-size: 0.75rem; margin-top: 0.75rem; }
+@keyframes travel-pin-pulse { 50% { opacity: 0.12; transform: scale(1.5); } }
+@keyframes travel-map-photo { from { translate: 0 0.4rem; } to { translate: 0 0; } }
+@media (min-width: 1100px) {
+  .travel-book-stage { display: grid; grid-template-columns: minmax(11rem, 22%) minmax(0, 1fr); column-gap: clamp(1rem, 3vw, 3rem); }
+  .travel-route-map { grid-column: 1; grid-row: 1 / 4; }
+  .travel-book-hint, .travel-book-viewport, .travel-book-controls { grid-column: 2; min-width: 0; }
+}
+@media (max-width: 1099px) {
+  .travel-route-map { position: relative; top: auto; width: min(100%, 18rem); margin-inline: auto; }
+  .travel-map-drawing { max-width: 13rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .travel-book[data-layout] .route-draw-mask { stroke-dashoffset: 0; }
+  .route-pin-halo, .route-thumbnail { animation: none !important; }
+}

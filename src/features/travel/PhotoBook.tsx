@@ -6,6 +6,7 @@ import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, ty
 import { trips as defaultTrips, travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { formatTripDate, frameRotation, pageIndex } from "./book";
+import { RouteMap } from "./map/RouteMap";
 import "./travel.css";
 
 export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
@@ -23,6 +24,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     active.current = index;
     setCurrent(index);
     root.current?.style.setProperty("--book-progress", String(progress));
+    root.current?.style.setProperty("--route-offset", String(1 - (progress * trips.length - 1) / Math.max(1, trips.length - 1)));
   }, [trips.length]);
 
   useEffect(() => {
@@ -46,8 +48,12 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       settle = setTimeout(() => { delete view.dataset.interacting; }, 180);
     };
     area.addEventListener("wheel", wheel, { passive: false });
+    const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver(([entry]) => { element.dataset.inView = String(entry.isIntersecting); });
+    observer?.observe(element);
     return () => {
       clearTimeout(settle);
+      observer?.disconnect();
+      delete element.dataset.inView;
       area.removeEventListener("wheel", wheel);
       delete view.dataset.interacting;
       delete element.dataset.layout;
@@ -94,16 +100,19 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     const position = viewport.current.scrollLeft;
     const pages = Array.from(track.current.children) as HTMLElement[];
     const nearest = pages.reduce((best, page, index) => Math.abs(page.offsetLeft - position) < Math.abs(pages[best].offsetLeft - position) ? index : best, 0);
-    updateCurrent(nearest);
+    const max = viewport.current.scrollWidth - viewport.current.clientWidth;
+    const fraction = max > 0 ? Math.max(0, Math.min(1, position / max)) : 0;
+    updateCurrent(nearest, window.matchMedia("(pointer: fine)").matches ? (1 + fraction * (trips.length - 1)) / trips.length : (nearest + 1) / trips.length);
   }
   if (!trips.length) return null;
   return <section ref={root} className="travel-book" aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`}>{c.bookTitle}</h2>
     <div ref={stage} className="travel-book-stage">
+      <RouteMap trips={trips} current={current} onNavigate={navigate} />
       <p id={`${id}-hint`} className="travel-book-hint"><span className="book-hint-list">{c.listHint}</span><span className="book-hint-snap">{c.swipeHint}</span><span className="book-hint-desktop">{c.desktopHint}</span></p>
       <div ref={viewport} className="travel-book-viewport" tabIndex={0} role="region" aria-label={c.bookLabel} aria-describedby={`${id}-hint`} onKeyDown={keyboard} onScroll={scroll} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd} onLostPointerCapture={dragEnd} onDragStart={(event) => event.preventDefault()} onClickCapture={(event) => { if (Date.now() < suppressClickUntil.current) { event.preventDefault(); event.stopPropagation(); } }}>
         <div ref={track} className="travel-book-track">
-          {trips.map((trip, index) => <article className="travel-book-page" key={trip.slug} aria-labelledby={`${id}-${trip.slug}`}>
+          {trips.map((trip, index) => <article className="travel-book-page" id={`trip-${trip.slug}`} key={trip.slug} aria-labelledby={`${id}-${trip.slug}`}>
             <div className={`travel-photo-grid travel-photo-grid--${trip.photos.length}`}>
               {trip.photos.map((photo, photoIndex) => {
                 const rotation = frameRotation(trip.slug, photoIndex);
