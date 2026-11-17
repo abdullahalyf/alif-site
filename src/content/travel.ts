@@ -8,6 +8,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "sylhet-tea",
+    lat: 24.918, lng: 91.921, color: "#e4ead5", district: "Sylhet",
     "place": "Sylhet tea gardens",
     "region": "Sylhet",
     "date": "2026-10",
@@ -23,6 +24,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "sundarbans",
+    lat: 22.08, lng: 89.55, color: "#dfe7db", district: "Khulna",
     "place": "Sundarbans",
     "region": "Khulna",
     "date": "2026-08",
@@ -38,6 +40,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "coxs-bazar",
+    lat: 21.427, lng: 92.005, color: "#dce9ed", district: "Cox’s Bazar",
     "place": "Cox’s Bazar",
     "region": "Chattogram",
     "date": "2026-06",
@@ -53,6 +56,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "bandarban",
+    lat: 22.195, lng: 92.218, color: "#e1e6e8", district: "Bandarban",
     "place": "Bandarban hills",
     "region": "Chattogram",
     "date": "2026-03",
@@ -68,6 +72,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "sreemangal",
+    lat: 24.306, lng: 91.729, color: "#e4ebd7", district: "Moulvibazar",
     "place": "Sreemangal",
     "region": "Sylhet",
     "date": "2025-12",
@@ -83,6 +88,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "rajshahi",
+    lat: 24.374, lng: 88.603, color: "#efe5c8", district: "Rajshahi",
     "place": "Rajshahi",
     "region": "Rajshahi",
     "date": "2025-10",
@@ -98,6 +104,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "kuakata",
+    lat: 21.816, lng: 90.12, color: "#f4dfcf", district: "Patuakhali",
     "place": "Kuakata",
     "region": "Barishal",
     "date": "2025-08",
@@ -113,6 +120,7 @@ export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
     "slug": "jhenaidah-home",
+    lat: 23.544, lng: 89.153, color: "#eee3d2", district: "Jhenaidah",
     "place": "Jhenaidah",
     "region": "Khulna",
     "date": "2025-06",
