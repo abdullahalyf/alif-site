@@ -1,6 +1,6 @@
-.travel-teaser { padding-block: 3rem; border-top: 1px solid var(--line); }
+.travel-teaser { padding-block: 2.25rem; border-top: 1px solid var(--line); }
 .travel-teaser-label { font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.travel-teaser h2 { max-width: 22ch; margin-block: 1.5rem; }
+.travel-teaser h2 { max-width: 22ch; margin-block: 1rem; }
 .travel-teaser-notice { font-size: 0.8125rem; color: var(--ink-muted); }
 .travel-teaser-strip { display: flex; gap: 1.5rem; overflow-x: auto; padding: 0.85rem 0.25rem; margin-block: 0.5rem; }
 .travel-teaser-card { flex: 0 0 38%; min-width: 0; padding: 0.65rem; background: #fff; box-shadow: 0 5px 18px #1e1c1914; }
