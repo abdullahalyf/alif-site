@@ -110,18 +110,20 @@ test("search opens from the keyboard and the header button on any page", async (
     await waitForHydration(page);
 
     // Ctrl+K opens the dialog from anywhere, without touching the mouse.
+    const dialog = page.getByRole("dialog", { name: search.open });
+    const combobox = dialog.getByRole("combobox");
     await page.keyboard.press("Control+k");
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("combobox")).toBeFocused();
+    await expect(dialog).toBeVisible();
+    await expect(combobox).toBeFocused();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(dialog).not.toBeVisible();
 
     // The header button opens the same dialog.
     await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("combobox")).toBeFocused();
+    await expect(dialog).toBeVisible();
+    await expect(combobox).toBeFocused();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(dialog).not.toBeVisible();
   }
 });
 
