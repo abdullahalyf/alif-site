@@ -178,6 +178,8 @@ export const shell = {
    */
   menuExtra: [
     { label: "Travel", href: "/travel" },
+    { label: "Lab", href: "/lab" },
+    { label: "Estimate a project", href: "/estimate" },
     { label: "Résumé", href: "/resume" },
     { label: "Uses", href: "/uses" },
     { label: "Now", href: "/now" },
@@ -201,6 +203,10 @@ export const shell = {
   notFoundText: "This page isn't here. Let's get you back home.",
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
+  /** Interactive demos linked from a case study, keyed by project slug. */
+  liveDemos: {
+    "multi-branch-pos": { label: "Try the live demo", href: "/lab/offline-sync" },
+  } as Record<string, { label: string; href: string }>,
   /** The search button in the header. */
   searchLabel: "Search",
   /** The keyboard hint shown next to the search button. */
@@ -209,6 +215,8 @@ export const shell = {
   footerLinksLabel: "More",
   footerLinks: [
     { label: "Travel", href: "/travel" },
+    { label: "Lab", href: "/lab" },
+    { label: "Estimate a project", href: "/estimate" },
     { label: "Résumé", href: "/resume" },
     { label: "Uses", href: "/uses" },
     { label: "Now", href: "/now" },

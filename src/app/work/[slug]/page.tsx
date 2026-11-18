@@ -37,6 +37,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
       <Reveal><h1>{project.title}</h1></Reveal>
       <Reveal><p className="lead">{project.summary}</p></Reveal>
       {project.link && <div><ButtonLink href={project.link}>{pageContent.projectLink}</ButtonLink></div>}
+      {shell.liveDemos[project.slug] && <div><ButtonLink href={shell.liveDemos[project.slug].href} variant="secondary">{shell.liveDemos[project.slug].label}</ButtonLink></div>}
     </header>
     <div className="case-cover"><ProjectMedia image={project.images[0]} sizes="(max-width: 768px) 100vw, 1216px" /></div>
     <div className="case-sections">
