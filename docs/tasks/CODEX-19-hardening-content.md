@@ -10,7 +10,7 @@ Alif may be away — don't stop to ask; decide sensibly and note decisions in th
 3. **Plan:** Parts 1–7 + files; check "Do NOT edit".
 4. **Execute Parts 1–7 in order**, commit after each (`Part N: <name>`).
 5. **Verify:** `pnpm check` with **zero warnings**; full `pnpm test:e2e` **3 times in a row with 0 failures** (paste all three summaries); Lighthouse mobile on `/`, `/about`, `/lab`, `/estimate`, `/travel` (paste numbers).
-6. **Report** to `docs/reports/CODEX-19-report.md` (commit; also final message): `DONE / check / e2e ×3 / Lighthouse table / Parts / Decisions / Issues found but not fixed (file + why) / Notes`.
+6. **Report:** write `docs/reports/CODEX-19-report.md`, commit and push it; final chat message only `DONE codex-19 — report at docs/reports/CODEX-19-report.md`. Report content: `DONE / check / e2e ×3 / Lighthouse table / Parts / Decisions / Issues found but not fixed (file + why) / Notes`.
 
 ## Do NOT edit
 Puku (another agent) may be changing: `src/app/globals.css`, `src/app/layout.tsx`, `src/components/**`, `src/lib/**`, home/about/approach/services/work page files. Leave them alone. If a fix needs one of them, don't do it — list it under "Issues found but not fixed" with the exact change needed.
