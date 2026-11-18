@@ -4,6 +4,7 @@ import { getPost, getPosts, renderPost, formatPostDate } from "@/content/posts";
 import { writingContent, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal } from "@/components/motion";
+import { PostProse } from "./PostProse";
 import "../writing.css";
 
 export const ensureStatic = "navigation";
@@ -31,7 +32,7 @@ export default async function PostPage({ params }: PageProps<"/writing/[slug]">)
       {post.draft && <p className="label">{writingContent.draft}</p>}
       <Reveal><ul className="post-tags">{post.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></Reveal>
     </header>
-    <div className="post-prose" dangerouslySetInnerHTML={{ __html: renderPost(post.body) }} />
+    <PostProse html={renderPost(post.body)} />
     {(previous || next) && <nav className="post-neighbours" aria-label={writingContent.title}>
       {previous && <Link href={writingContent.postHref(previous.slug)}><span className="label">{writingContent.previous}</span>{previous.title}</Link>}
       {next && <Link href={writingContent.postHref(next.slug)}><span className="label">{writingContent.next}</span>{next.title}</Link>}

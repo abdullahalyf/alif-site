@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import { projects } from "../src/content/projects";
 import { getPosts } from "../src/content/posts";
 import { shell, site, writingContent } from "../src/content/site";
+import { waitForHydration } from "./helpers/routes";
 
 test("case studies expose CreativeWork JSON-LD", async ({ page }) => {
   const project = projects[0];
@@ -19,13 +20,22 @@ for (const post of getPosts({ includeDrafts: false })) {
     expect(data.headline).toBe(post.title);
     expect(data.datePublished).toBe(post.date);
     expect(data.author.name).toBe(site.fullName);
-    const code = page.locator(".post-prose pre").first();
-    await code.focus();
-    await expect(code).toBeFocused();
-    if (await code.evaluate((element) => element.scrollWidth > element.clientWidth)) {
-      await code.press("ArrowRight");
-      await expect.poll(() => code.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
-    }
     expect(new URL(data.mainEntityOfPage).pathname).toBe(writingContent.postHref(post.slug));
   });
 }
+
+// The old check could pass without exercising scrolling on a wide code block.
+test("Writing scrolls a focused overflowing code block by keyboard", async ({ page }) => {
+  await page.goto(writingContent.postHref("offline-first-shops"));
+  await waitForHydration(page);
+  await page.evaluate(() => document.fonts.ready);
+  const code = page.locator(".post-prose pre").first();
+  await code.evaluate((element) => { element.style.maxWidth = "15rem"; });
+  await expect.poll(() => code.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeGreaterThan(0);
+  await code.focus();
+  await expect(code).toBeFocused();
+  await page.keyboard.press("ArrowRight");
+  await expect.poll(() => code.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  await page.keyboard.press("ArrowLeft");
+  await expect.poll(() => code.evaluate((element) => element.scrollLeft)).toBe(0);
+});
