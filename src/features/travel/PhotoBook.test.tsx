@@ -14,7 +14,7 @@ beforeEach(() => {
   vi.stubGlobal("matchMedia", () => ({ matches: mocks.desktop, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
   vi.stubGlobal("requestAnimationFrame", vi.fn(() => 1));
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
-  HTMLElement.prototype.scrollTo = vi.fn(function (this: HTMLElement, options: ScrollToOptions) { this.scrollLeft = options.left ?? 0; });
+  HTMLElement.prototype.scrollTo = vi.fn(function (this: HTMLElement, options?: ScrollToOptions | number) { this.scrollLeft = typeof options === "number" ? options : options?.left ?? 0; });
   HTMLElement.prototype.scrollIntoView = vi.fn();
   const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), pause: vi.fn().mockReturnThis(), paused: vi.fn().mockReturnThis(), kill: vi.fn(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
   mocks.timeline.mockReturnValue(timeline);

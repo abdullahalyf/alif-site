@@ -23,9 +23,10 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const fill = useRef<HTMLSpanElement>(null);
   const controller = useRef<ReturnType<typeof connectBook>>(null);
   const position = useRef(0);
-  const selection = useRef({ current: 0, atStart: true, atEnd: trips.length === 1 });
+  const initialSelection = { current: 0, atStart: true, atEnd: trips.length === 1 };
+  const selection = useRef(initialSelection);
   const reduced = useReducedMotion();
-  const [{ current, atStart, atEnd }, setSelection] = useState(selection.current);
+  const [{ current, atStart, atEnd }, setSelection] = useState(initialSelection);
 
   useEffect(() => {
     const element = root.current;
@@ -59,9 +60,12 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       const offset = skipMotion ? 0 : 1 - length / (lengths.at(-1) || 1);
       masks.forEach(mask => { mask.style.strokeDashoffset = String(offset); });
 
-      const next = { current: Math.round(value), atStart: value < 0.002, atEnd: value > trips.length - 1.002 };
-      const previous = selection.current;
-      if (next.current !== previous.current || next.atStart !== previous.atStart || next.atEnd !== previous.atEnd) {
+      const nearest = Math.round(value);
+      const atStart = value < 0.002;
+      const atEnd = value > trips.length - 1.002;
+      const selected = selection.current;
+      if (nearest !== selected.current || atStart !== selected.atStart || atEnd !== selected.atEnd) {
+        const next = { current: nearest, atStart, atEnd };
         selection.current = next;
         setSelection(next);
       }
