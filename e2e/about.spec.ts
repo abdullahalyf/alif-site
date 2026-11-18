@@ -150,7 +150,7 @@ test("the achievements are cards", async ({ page }) => {
 test("the travel strip and its scrubber stay in sync", async ({ page, isMobile }) => {
   await page.goto("/about");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
-  const strip = page.getByRole("region", { name: travelContent.teaserTitle });
+  const strip = page.getByRole("region", { name: travelContent.teaserStripLabel });
   const scrubber = page.getByRole("slider", { name: travelContent.teaserProgress });
   const offset = () => strip.evaluate((element) => element.scrollLeft);
   await expect(scrubber).toHaveValue("0");
