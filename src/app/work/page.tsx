@@ -18,7 +18,7 @@ export default function Work() {
       category: project.category,
       row: <Link className="work-row" href={shell.projectHref(project.slug)}>
         <span className="work-thumbnail">
-          {image && <Image {...image} alt="" sizes="(max-width: 768px) 64px, 144px" />}
+          {image && <Image src={image.src} width={image.width} height={image.height} alt="" sizes="(max-width: 768px) 64px, 144px" />}
         </span>
         <div className="work-row__copy">
           <p className="label">{project.category} · {project.year}{project.demo && ` · ${demoContent.demoLabel}`}</p>

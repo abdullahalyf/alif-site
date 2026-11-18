@@ -8,6 +8,7 @@ const image = z.object({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   alt: z.string().min(1),
+  demo: z.boolean().optional(),
 });
 
 const link = z.object({

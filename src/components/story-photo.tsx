@@ -66,8 +66,9 @@ export function StoryPhoto({ chapter }: StoryPhotoProps) {
       <div ref={frameRef} className="story-photo">
         {chapter.image ? (
           <Image
-            {...chapter.image}
-            unoptimized={chapter.image.src.startsWith("https://picsum.photos/")}
+            src={chapter.image.src}
+            width={chapter.image.width}
+            height={chapter.image.height}
             alt={chapter.image.alt}
             sizes="(max-width: 768px) 100vw, 50vw"
           />
@@ -85,7 +86,7 @@ export function StoryCaption({ chapter }: { chapter: Site["story"][number] }) {
     <figcaption>
       <span className="label">{chapter.label}</span>
       <span>{chapter.title}</span>
-      {chapter.image?.src.startsWith("https://picsum.photos/") && (
+      {chapter.image?.demo && (
         <span className="demo-caption">{demoContent.imageNotice}</span>
       )}
     </figcaption>
