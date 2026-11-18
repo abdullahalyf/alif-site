@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/motion";
 import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
+import { themeBootstrap } from "@/lib/theme";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
@@ -26,7 +27,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${instrument.variable}`}>
+      <head>
+        {/* A parser-blocking inline script sets the root theme before first paint. */}
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
       <body>
         <SmoothScroll>
           <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>

@@ -188,6 +188,8 @@ const navigationLinks = {
 };
 
 export const shell = {
+  useDarkTheme: "Use dark theme",
+  useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   introWord: "Alif",
   nav: [

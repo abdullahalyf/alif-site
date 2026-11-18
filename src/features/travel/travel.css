@@ -7,8 +7,8 @@
 .travel-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; padding: 1rem; min-width: 0; align-items: center; }
 .travel-photo-grid--1 { grid-template-columns: 1fr; }
 .travel-photo-grid--3 .travel-frame:first-child { grid-column: 1 / -1; width: 70%; justify-self: center; }
-.travel-frame { position: relative; background: #fff; padding: 0.65rem 0.65rem 1rem; transform: rotate(var(--frame-tilt)); box-shadow: 0 7px 24px #1e1c191a; min-width: 0; }
-.travel-frame::before { content: ""; position: absolute; z-index: 1; top: -0.5rem; left: 35%; width: 30%; height: 1.15rem; transform: rotate(-7deg); background: #d6cebf9c; }
+.travel-frame { position: relative; background: var(--cream-2); padding: 0.65rem 0.65rem 1rem; transform: rotate(var(--frame-tilt)); box-shadow: 0 7px 24px color-mix(in srgb, var(--shadow) 15%, transparent); min-width: 0; }
+.travel-frame::before { content: ""; position: absolute; z-index: 1; top: -0.5rem; left: 35%; width: 30%; height: 1.15rem; transform: rotate(-7deg); background: color-mix(in srgb, var(--line) 75%, transparent); }
 .travel-frame img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 .travel-frame figcaption { font-size: 0.75rem; margin-top: 0.65rem; color: var(--ink-muted); overflow-wrap: anywhere; }
 .travel-book-text { display: grid; gap: 1.15rem; min-width: 0; }
