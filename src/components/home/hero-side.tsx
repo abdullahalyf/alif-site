@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
-import { PhotoReveal } from "@/components/motion";
 import { StatusCard } from "./status-card";
 import { SystemDiagram } from "./system-diagram";
 
@@ -13,8 +12,7 @@ import { SystemDiagram } from "./system-diagram";
  * The hero's right column: a large photo with the status card floating over
  * its bottom-left corner and the system diagram over its top-right.
  *
- * The card and the diagram float in shortly after the headline appears. The
- * photo itself is revealed by `PhotoReveal`, which sharpens it on scroll.
+ * The card and the diagram float in shortly after the headline appears.
  */
 export function HeroSide() {
   const reducedMotion = useReducedMotion();
@@ -53,7 +51,7 @@ export function HeroSide() {
 
   return (
     <div ref={rootRef} className="hero-side">
-      <PhotoReveal className="hero-side__photo-wrap">
+      <div className="hero-side__photo-wrap">
         <Image
           {...site.heroSide}
           alt={site.heroSide.alt}
@@ -66,7 +64,7 @@ export function HeroSide() {
           fetchPriority="high"
           className="hero-side__photo"
         />
-      </PhotoReveal>
+      </div>
       <SystemDiagram
         className="hero-side__diagram"
         steps={site.systemDiagram.steps}

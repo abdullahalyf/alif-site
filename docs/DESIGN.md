@@ -68,7 +68,7 @@ All text/background pairs must pass WCAG AA.
 Every animation: skipped when `prefers-reduced-motion: reduce` (final state shown immediately) and never hides content without JS (set initial states from JS, not CSS).
 1. **Smooth scroll** — Lenis site-wide.
 2. **Intro** — see Home 1.
-3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies to the hero photo, About photos, project images.
+3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies only to the Home hero photo in the wide panel.
 4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).
 6. **Card row** — cards slide in from the right with a small stagger when the section enters.

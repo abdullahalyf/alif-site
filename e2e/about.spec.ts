@@ -42,47 +42,16 @@ test("the story chapters alternate sides and carry a bracketed label", async ({ 
   }
 });
 
-test("the story photographs drift with the scroll", async ({ page }) => {
-  // The photographs stay still when the reader has asked for less motion, and
-  // that is covered by the next test.
-  test.skip(
-    test.info().project.name === "reduced-motion",
-    "the photographs stay still when motion is reduced",
-  );
+test("About photos display without a blur or scroll transform", async ({ page }) => {
   await page.goto("/about");
-  await page.locator(".story-photo-frame").first().scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const before = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  await page.mouse.wheel(0, 600);
-  await page.waitForTimeout(400);
-
-  const after = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  // The photograph moved, and it moved up rather than down.
-  expect(after).not.toBe(before);
-  expect(after).toBeLessThan(before);
-});
-
-test("the story photographs stay still under reduced motion", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/about");
-  await page.locator(".story-photo-frame").first().scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const drift = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  expect(drift).toBe(0);
+  const photos = page.locator(".about-photo-wrap img, .education-timeline__photo img, .story-photo-frame img");
+  expect(await photos.count()).toBeGreaterThan(1);
+  for (const photo of await photos.all()) {
+    await photo.scrollIntoViewIfNeeded();
+    await expect(photo).toBeVisible();
+    await expect(photo).toHaveCSS("filter", "brightness(1)");
+    await expect(photo).toHaveCSS("transform", "none");
+  }
 });
 
 test("the education timeline has a rule that fills as it scrolls", async ({ page }) => {

@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { PhotoBook } from "./PhotoBook";
@@ -8,7 +7,7 @@ import { trips, travelContent as c } from "@/content/travel";
 const mocks = vi.hoisted(() => ({ reduced: false, desktop: false, getGsap: vi.fn(), revert: vi.fn(), timeline: vi.fn() }));
 vi.mock("@/lib/gsap", () => ({ getGsap: mocks.getGsap }));
 vi.mock("@/lib/use-reduced-motion", () => ({ prefersReducedMotion: () => mocks.reduced, useReducedMotion: () => mocks.reduced }));
-vi.mock("@/components/motion", () => ({ useSmoothScroll: () => null, PhotoReveal: ({ children, className }: { children: ReactNode; className?: string }) => <div className={className}>{children}</div> }));
+vi.mock("@/components/motion", () => ({ useSmoothScroll: () => null }));
 beforeEach(() => {
   mocks.reduced = false; mocks.desktop = false; vi.clearAllMocks();
   vi.stubGlobal("matchMedia", () => ({ matches: mocks.desktop, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
