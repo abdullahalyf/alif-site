@@ -1,5 +1,7 @@
 import { pageIndex } from "./book";
 
+export const BOOK_EDGE_TOLERANCE = 0.002;
+
 export function connectBook(
   area: HTMLElement,
   viewport: HTMLElement,
@@ -84,7 +86,7 @@ export function connectBook(
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? (horizontal ? width : height) : 1;
     const delta = (horizontal ? event.deltaX : event.deltaY) * unit / width;
     const edge = delta < 0 ? 0 : count - 1;
-    if (!delta || Math.abs(edge - position) * width < 0.5) return;
+    if (!delta || Math.abs(edge - position) <= BOOK_EDGE_TOLERANCE) return;
     event.preventDefault();
     event.stopPropagation();
     navigate(target + delta);

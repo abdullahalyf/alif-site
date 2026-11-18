@@ -7,7 +7,7 @@ import { useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEv
 import { trips as defaultTrips, travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { formatTripDate, frameRotation } from "./book";
-import { connectBook } from "./book-scroll";
+import { BOOK_EDGE_TOLERANCE, connectBook } from "./book-scroll";
 import { project } from "./map/geo";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 import { RouteMap } from "./map/RouteMap";
@@ -75,8 +75,8 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       overlay.style.opacity = String(fraction);
       route.style.strokeDashoffset = String(skipMotion ? 0 : 1 - length / (lengths.at(-1) || 1));
 
-      const atStart = value < 0.002;
-      const atEnd = value > trips.length - 1.002;
+      const atStart = value <= BOOK_EDGE_TOLERANCE;
+      const atEnd = trips.length - 1 - value <= BOOK_EDGE_TOLERANCE;
       const selected = selection.current;
       if (nearest !== selected.current || atStart !== selected.atStart || atEnd !== selected.atEnd) {
         const next = { current: nearest, atStart, atEnd };
