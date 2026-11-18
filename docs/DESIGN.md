@@ -44,7 +44,7 @@ All text/background pairs must pass WCAG AA.
 ## Pages
 
 ### Home `/` (more info than raw.london — a visitor should understand Alif without clicking)
-1. **Intro** (RAW-style, first visit per session only): cream screen, "Alif" in huge serif fades/scales in, then slides up to reveal the page. ≤ 1.4s total. Content is in the HTML underneath (no JS needed to see it).
+1. **Intro**: multilingual greetings and versions of “Alif,” followed by an upward exit within 1.6s. Plays on arrival at Home and skips reloads within 10 seconds. Click or Escape dismisses it, and the page underneath is available without JavaScript.
 2. **Hero** (Steno hero): quote pill (`site.tagline`, small avatar dot) → serif h1 (`site.role`) → intro paragraph (`site.intro`) → buttons "Email me" / "See my work" → location line (`site.location`).
    Below it: wide rounded panel (radius ~24px) showing `site.heroPhoto` (grey-wall portrait, `object-fit: cover`, keep his face in frame on mobile), with 3–4 thin diagonal lines (`--line`) crossing over the top edge of the panel (like steno's hero stripes). Subtle bottom gradient into cream.
 3. **About teaser**: two columns — short paragraph (`site.about[0]`) + "More about me" link → `/about`.
@@ -67,7 +67,7 @@ All text/background pairs must pass WCAG AA.
 ## Animations (GSAP + ScrollTrigger + Lenis)
 Every animation: skipped when `prefers-reduced-motion: reduce` (final state shown immediately) and never hides content without JS (set initial states from JS, not CSS).
 1. **Smooth scroll** — Lenis site-wide.
-2. **Intro** — see Home 1. Once per session (`sessionStorage`).
+2. **Intro** — see Home 1.
 3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies to the hero photo, About photos, project images.
 4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).

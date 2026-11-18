@@ -30,7 +30,6 @@ test("no animation overlay blocks the page", async ({ page }) => {
 });
 
 test("the dark panel enters below a compact, readable header", async ({ page }, testInfo) => {
-  await page.addInitScript(() => sessionStorage.setItem("alif-intro-seen", "1"));
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   const header = page.locator(".header");
@@ -43,9 +42,9 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
   await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(50);
   expect((await header.boundingBox())!.y).toBe(0);
   expect((await section.boundingBox())!.y).toBeGreaterThan(50);
-  await expect(header).toHaveCSS("background-color", "rgb(242, 237, 227)");
+  await expect(header).toHaveCSS("background-color", "rgb(241, 233, 220)");
   await expect(header).toHaveCSS("color", "rgb(30, 28, 25)");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(242, 237, 227)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(241, 233, 220)");
   await expect(section.getByRole("heading", { level: 2 })).toHaveCSS("opacity", "1");
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   const { violations } = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
@@ -74,7 +73,6 @@ for (const width of [360, 390, 430]) {
 }
 
 test("the Home photo sharpens without changing the inset frame", async ({ page, isMobile }) => {
-  await page.addInitScript(() => sessionStorage.setItem("alif-intro-seen", "1"));
   await page.goto("/");
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
   const panel = page.locator(".hero-panel");

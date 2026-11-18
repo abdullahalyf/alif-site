@@ -1,5 +1,5 @@
 import { Highlights, AtAGlance, Testimonials, LatestWriting } from "@/components/demo/sections";
-import { seo, shell } from "@/content/site";
+import { seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { PersonJsonLd } from "@/components/person-json-ld";
 import { Hero } from "@/components/home/hero";
@@ -15,5 +15,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <><IntroOverlay word={shell.introWord} /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><Highlights /><HowIWork /><Services /><SelectedWork /><Testimonials /><LatestWriting /></>;
+  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><Highlights /><HowIWork /><Services /><SelectedWork /><Testimonials /><LatestWriting /></>;
 }

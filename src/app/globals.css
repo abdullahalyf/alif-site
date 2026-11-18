@@ -103,9 +103,13 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .button--primary:hover { background: var(--cream); color: var(--ink); }
   .button--secondary:hover { background: var(--ink); color: var(--cream); }
 }
-/* Intro overlay — created by JS only, so the page is visible without it. */
-.intro-overlay { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; overflow: hidden; }
-.intro-word { font-family: var(--font-serif); font-size: clamp(4rem, 18vw, 14rem); line-height: 1; letter-spacing: -0.03em; }
+/* SVG lettering keeps the decorative sequence out of text LCP candidates. */
+.intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--cream); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+.intro-words { display: block; fill: var(--ink); }
+.intro-word { visibility: hidden; font-family: var(--font-instrument), "Noto Serif Bengali", "Noto Serif CJK JP", "Noto Serif CJK SC", serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
+@keyframes intro-show { from { visibility: visible; } }
+@keyframes intro-exit { to { transform: translateY(-100%); } }
+@media (prefers-reduced-motion: reduce) { .intro-overlay { display: none; } }
 
 .header { position: fixed; inset: 0 0 auto; z-index: 40; color: var(--ink); background: var(--cream); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: calc(var(--header-height) - 1px); gap: clamp(0.5rem, 2vw, 1rem); transition: min-height 220ms ease; }

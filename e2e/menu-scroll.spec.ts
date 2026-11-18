@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 import { footerGroups, shell } from "../src/content/site";
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => sessionStorage.setItem("alif-intro-seen", "1"));
 });
 
 test("the menu traps focus, includes every footer link, and forwards a search", async ({ page }) => {

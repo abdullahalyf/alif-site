@@ -187,11 +187,26 @@ const navigationLinks = {
   now: { label: "Now", href: "/now" },
 };
 
+export const greetingIntro = [
+  { word: "Hello", lang: "en" },
+  { word: "হ্যালো", lang: "bn" },
+  { word: "Hola", lang: "es" },
+  { word: "Bonjour", lang: "fr" },
+  { word: "こんにちは", lang: "ja" },
+  { word: "你好", lang: "zh" },
+  { word: "مرحبا", lang: "ar" },
+  { word: "Hallo", lang: "de" },
+  { word: "Alif", lang: "en" },
+  { word: "আলিফ", lang: "bn" },
+  { word: "アリフ", lang: "ja" },
+  { word: "阿利夫", lang: "zh" },
+  { word: "ألف", lang: "ar" },
+] as const;
+
 export const shell = {
   useDarkTheme: "Use dark theme",
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
-  introWord: "Alif",
   nav: [
     navigationLinks.work, navigationLinks.services, navigationLinks.approach,
     navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
