@@ -1,5 +1,7 @@
 # Orchestration workflow (Claude)
 
+**Current (2026-11-18): Puku is on another project — use Codex web only. PUKU-03 cancelled; its work moved to CODEX-20.**
+
 Roles: **Claude** = orchestrator/reviewer/merger. **Codex** (cloud, repo-connected) and **Puku** (Opus, Alif's PC at `E:\Projects\alif-site`) = builders. **Alif** = starts agents, says "done", gives real info.
 
 ## Loop
