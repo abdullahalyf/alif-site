@@ -27,12 +27,12 @@ export function SearchDialog() {
   const results = groups.flatMap((type) =>
     matched.filter((entry) => entry.type === type),
   );
-  const open = useCallback(() => {
+  const open = useCallback((initialQuery = "") => {
     if (dialog.current?.open) return;
     previous.current = document.activeElement as HTMLElement;
     dialog.current?.showModal();
     input.current?.focus();
-    setQuery("");
+    setQuery(initialQuery);
     setActive(0);
     setStatus(c.loading);
     controller.current?.abort();
@@ -82,6 +82,7 @@ export function SearchDialog() {
   return (
     <dialog
       className="site-search-dialog"
+      data-lenis-prevent
       ref={dialog}
       aria-labelledby={`${id}-title`}
       onCancel={(event) => {

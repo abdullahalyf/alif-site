@@ -1,5 +1,5 @@
-.lab-shell { padding-block: clamp(3rem, 8vw, 7rem); }
-.lab-intro { display: grid; gap: 1.5rem; margin-bottom: clamp(2.5rem, 6vw, 5rem); }
+.lab-shell { padding-block: var(--section-space); }
+.lab-intro { display: grid; gap: 1.5rem; margin-bottom: clamp(1.5rem, 3.6vw, 3rem); }
 .lab-intro h1 { max-width: 18ch; }
 .lab-intro .lead { max-width: 60ch; }
 .lab-intro > a { justify-self: start; }
@@ -9,7 +9,7 @@
 .lab-demo-card h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
 .lab-demo-card a { justify-self: start; margin-top: 1rem; }
 .lab-demo-card:hover { border-color: var(--ink-muted); }
-.lab-next { display: grid; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 2rem; margin-top: 4rem; }
+.lab-next { display: grid; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 2rem; margin-top: 2.5rem; }
 .lab-next a { justify-self: start; }
 .lab-panel { padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--line); border-radius: 1rem; min-width: 0; }
 .lab-panel h2 { font-size: clamp(2rem, 3vw, 2.75rem); margin-bottom: 1.5rem; }

@@ -14,7 +14,7 @@ export function SearchTrigger({ className = "" }: { className?: string }) {
     <button
       type="button"
       className={`search-trigger ${className}`.trim()}
-      onClick={openSearch}
+      onClick={() => openSearch()}
     >
       <svg
         aria-hidden="true"

@@ -1,4 +1,3 @@
-export const DESKTOP_BOOK_QUERY = "(min-width: 900px) and (pointer: fine)";
 export function frameRotation(slug: string, index: number): number {
   let hash = index;
   for (const character of slug) hash = (hash * 31 + character.charCodeAt(0)) >>> 0;

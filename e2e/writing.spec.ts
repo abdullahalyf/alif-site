@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { getPosts } from "../src/content/posts";
 import { seo, site, writingContent } from "../src/content/site";
+import { waitForHydration } from "./helpers/routes";
 
 const published = getPosts({ includeDrafts: false });
 const drafts = getPosts({ includeDrafts: true }).filter((post) => post.draft);
@@ -17,6 +18,7 @@ test("Writing lists published posts and hides drafts from production", async ({ 
 });
 test("Now renders the current factual update and is linked from Writing", async ({ page }) => {
   await page.goto(seo.pages.writing.path);
+  await waitForHydration(page);
   // The footer also links to Now, so the link in the page body is the one
   // that should be followed.
   await page.locator("main").getByRole("link", { name: writingContent.nowLabel, exact: true }).click();

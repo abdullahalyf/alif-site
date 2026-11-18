@@ -30,7 +30,7 @@ All text/background pairs must pass WCAG AA.
 - Scale (fluid with `clamp`): h1 48→96px, h2 36→64px, h3 24→32px.
 
 ## Global elements
-- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. Header hides on scroll down, shows on scroll up.
+- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. The header stays fixed and becomes compact after 40px of scroll.
 - **Buttons**: pill shape, `--ink` bg + cream text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.
@@ -66,7 +66,7 @@ Every animation: skipped when `prefers-reduced-motion: reduce` (final state show
 4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).
 6. **Card row** — cards slide in from the right with a small stagger when the section enters.
-7. **Dark section** — background colour transitions cream → night as the "How I work" section enters.
+7. **Dark section** — the dark “How I work” panel grows from inset to full width as it enters.
 8. **Hover** — buttons lift; project rows show image preview; links underline from left.
 
 ## Images

@@ -7,6 +7,7 @@ function photo(slug: string, index: number, place: string) {
 export const trips = [
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "sylhet-tea",
     lat: 24.918, lng: 91.921, color: "#e4ead5", district: "Sylhet",
     "place": "Sylhet tea gardens",
@@ -23,6 +24,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "sundarbans",
     lat: 22.08, lng: 89.55, color: "#dfe7db", district: "Khulna",
     "place": "Sundarbans",
@@ -39,6 +41,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "coxs-bazar",
     lat: 21.427, lng: 92.005, color: "#dce9ed", district: "Cox’s Bazar",
     "place": "Cox’s Bazar",
@@ -55,6 +58,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "bandarban",
     lat: 22.195, lng: 92.218, color: "#e1e6e8", district: "Bandarban",
     "place": "Bandarban hills",
@@ -71,6 +75,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "sreemangal",
     lat: 24.306, lng: 91.729, color: "#e4ebd7", district: "Moulvibazar",
     "place": "Sreemangal",
@@ -87,6 +92,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "rajshahi",
     lat: 24.374, lng: 88.603, color: "#efe5c8", district: "Rajshahi",
     "place": "Rajshahi",
@@ -103,6 +109,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "kuakata",
     lat: 21.816, lng: 90.12, color: "#f4dfcf", district: "Patuakhali",
     "place": "Kuakata",
@@ -119,6 +126,7 @@ export const trips = [
   },
   // DEMO: this entire journey is illustrative copy for Alif to replace.
   {
+    scope: "national", country: "Bangladesh",
     "slug": "jhenaidah-home",
     lat: 23.544, lng: 89.153, color: "#eee3d2", district: "Jhenaidah",
     "place": "Jhenaidah",
@@ -133,6 +141,24 @@ export const trips = [
     photos: [photo("jhenaidah-home", 1, "Jhenaidah"), photo("jhenaidah-home", 2, "Jhenaidah")],
   },
 ] satisfies Trip[];
+
+export const internationalTrips = [
+  // DEMO: imagined story and generated photographs for Kuala Lumpur.
+  {
+    scope: "international", country: "Malaysia", slug: "kuala-lumpur",
+    lat: 3.1579, lng: 101.7123, color: "#e7e9d7", district: "Kuala Lumpur",
+    place: "Kuala Lumpur", region: "Kuala Lumpur", date: "2026-04",
+    title: "A morning in Kuala Lumpur",
+    story: "DEMO — In this imagined visit, the towers come into view across the park before the city gets busy. Later, I follow the covered market lanes past the old shophouses and stop for breakfast.",
+    tags: ["city", "walking"],
+    photos: [
+      { ...photo("kuala-lumpur", 1, "Kuala Lumpur"), alt: "Illustrated view of the Petronas Twin Towers from KLCC Park", caption: "DEMO · KLCC Park · generated image" },
+      { ...photo("kuala-lumpur", 2, "Kuala Lumpur"), alt: "Illustration of a quiet covered market lane in Kuala Lumpur", caption: "DEMO · Market lane · generated image" },
+    ],
+  },
+] satisfies Trip[];
+
+export const allTrips: Trip[] = [...trips, ...internationalTrips];
 
 export const travelContent = {
   path: "/travel",
@@ -149,16 +175,21 @@ export const travelContent = {
   nextPhoto: "Next photograph",
   lightboxHint: "Use arrow keys or swipe to browse. Escape closes the gallery.",
   journeyNavigation: "More travel notes",
+  internationalTitle: "International",
+  internationalIntro: "Travel notes from beyond Bangladesh.",
+  internationalOrigin: { place: "Dhaka", lat: 23.8103, lng: 90.4125 },
+  internationalMapLabel: "International routes from Dhaka",
+  internationalRouteLabel: (destinations: string[]) => `Illustrative route from Dhaka to ${destinations.join(", ")}`,
   placeMapLabel: (place: string) => `${place} on a map of Bangladesh`,
   locationNote: "DEMO — an approximate location, not a recorded travel track.",
   // DEMO: replace the travel-page introduction and closing with Alif’s own words.
   intro: "Across Bangladesh, I travel to see how people live, hear their stories and come home with better questions.",
   closing: "Some journeys take me somewhere new. Others help me see home a little more clearly.", // DEMO
-  description: "A photo-book of travel notes, people and places across Bangladesh.", // DEMO
+  description: "A photo-book of travel notes, people and places across Bangladesh and beyond.", // DEMO
   demoNotice: "DEMO travel notes and illustrative photographs.",
   bookTitle: "A few pages from the road",
   bookLabel: "Travel photo-book",
-  desktopHint: "Scroll over the book or drag to turn the pages. At either end, keep scrolling to continue down the page. Arrow keys work when the book is focused.",
+  desktopHint: "Scroll or drag to browse. At either end, keep scrolling to move down or up the page. Use the arrow keys when the book is focused.",
   swipeHint: "Swipe through the pages, or use the left and right arrow keys.",
   listHint: "Eight journeys, one page at a time.",
   previous: "Previous journey",
@@ -192,4 +223,4 @@ export const travelContent = {
   aboutPath: "/about",
 };
 
-export function getTrip(slug: string): Trip | undefined { return trips.find(trip => trip.slug === slug); }
+export function getTrip(slug: string): Trip | undefined { return allTrips.find(trip => trip.slug === slug); }

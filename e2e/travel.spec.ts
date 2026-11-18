@@ -18,7 +18,7 @@ test("wheel is scoped to the book, edges pass through and the page never pins", 
   test.skip(isMobile, "Mouse wheel behavior");
   await page.goto(c.path);
   const book = page.getByRole("region", { name: c.bookLabel });
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   await book.scrollIntoViewIfNeeded();
   const hover = async () => {
     const box = (await book.boundingBox())!;
@@ -27,24 +27,60 @@ test("wheel is scoped to the book, edges pass through and the page never pins", 
   await hover();
   const initialY = await page.evaluate(() => scrollY);
   await page.mouse.wheel(0, 1000);
-  await expect.poll(() => book.evaluate(element => element.scrollLeft)).toBeGreaterThan(100);
+  const offset = () => book.evaluate(element => {
+    const transform = getComputedStyle(element.firstElementChild!).transform;
+    return transform === "none" ? element.scrollLeft : -new DOMMatrixReadOnly(transform).m41;
+  });
+  await expect.poll(offset).toBeGreaterThan(100);
   expect(Math.abs(await page.evaluate(() => scrollY) - initialY)).toBeLessThan(3);
   await page.mouse.move(3, 300);
   await page.mouse.wheel(0, 300);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(initialY + 50);
   await book.focus(); await book.press("End"); await book.scrollIntoViewIfNeeded(); await hover();
+  await expect(page.getByRole("button", { name: c.next })).toBeDisabled();
   const endY = await page.evaluate(() => scrollY);
   await page.mouse.wheel(0, 300);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(endY + 50);
   await book.focus(); await book.press("Home"); await book.scrollIntoViewIfNeeded(); await hover();
+  await expect(page.getByRole("button", { name: c.previous })).toBeDisabled();
   const startY = await page.evaluate(() => scrollY);
   await page.mouse.wheel(0, -250);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(startY - 30);
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
 });
+test("free travel scroll can stop between trips with interpolated progress", async ({ page, isMobile }) => {
+  await page.goto(c.path);
+  const book = page.getByRole("region", { name: c.bookLabel });
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
+  await book.evaluate(element => element.scrollIntoView({ block: "start" }));
+  await expect(book).toHaveCSS("scroll-snap-type", "none");
+  const width = await book.evaluate(element => element.clientWidth);
+  const halfway = Math.round(width * 0.45);
+  if (isMobile) {
+    await book.evaluate((element, left) => element.scrollTo({ left, behavior: "instant" }), halfway);
+  } else {
+    const box = (await book.boundingBox())!;
+    await page.mouse.move(box.x + 50, box.y + 60);
+    await page.mouse.wheel(halfway, 0);
+  }
+  const renderedOffset = () => book.evaluate(element => {
+    const transform = getComputedStyle(element.firstElementChild!).transform;
+    return transform === "none" ? element.scrollLeft : -new DOMMatrixReadOnly(transform).m41;
+  });
+  await expect.poll(renderedOffset).toBeCloseTo(halfway, 0);
+  await expect.poll(() => page.locator(".travel-book-progress span").evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).a)).toBeCloseTo(1.45 / trips.length, 2);
+  await expect.poll(() => page.locator(".journey-atmosphere__tint").evaluate(element => Number(getComputedStyle(element).opacity))).toBeCloseTo(0.45, 2);
+  const counter = page.locator(".travel-book-counter-number");
+  const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
+  await expect(counter).toHaveText(reduced ? "01" : /^01\.[45]$/);
+  await expect(page.locator(".travel-book-counter")).toHaveText("01 / 08");
+  await expect(page.getByRole("button", { name: c.previous })).toBeEnabled();
+  await book.press("ArrowRight");
+  await expect.poll(renderedOffset).toBeCloseTo(width, 0);
+});
 test("keyboard paging works in desktop, touch and reduced-motion modes", async ({ page }) => {
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   const book = page.getByRole("region", { name: c.bookLabel });
   await book.focus(); await book.press("ArrowRight");
@@ -61,7 +97,7 @@ test("keyboard paging works in desktop, touch and reduced-motion modes", async (
 test("reduced motion reveals every page without pinning or hidden text", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   const book = page.getByRole("region", { name: c.bookLabel });
   for (const trip of trips) {

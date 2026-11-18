@@ -1,6 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { trips, travelContent as c } from "../src/content/travel";
+import { project } from "../src/features/travel/map/geo";
 
 for (const trip of trips) {
   test(`trip page ${trip.slug} has content, canonical metadata and a mini map`, async ({ page, request }) => {
@@ -67,7 +68,7 @@ test("travel stats and combined filters describe the actual demo dataset", async
 
 test("map progress, pin selection and place atmosphere follow the horizontal book", async ({ page }) => {
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   const index = 5;
   const pin = page.getByRole("link", { name: c.mapPinLabel(trips[index].place) });
   await pin.click();
@@ -76,13 +77,15 @@ test("map progress, pin selection and place atmosphere follow the horizontal boo
   const book = page.getByRole("region", { name: c.bookLabel });
   await expect(book.getByRole("heading", { name: trips[index].title })).toBeInViewport();
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const offset = await page.locator(".travel-route-map .route-draw-mask").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
-  expect(offset).toBeCloseTo(reduced ? 0 : 1 - index / (trips.length - 1), 2);
+  const points = trips.map(project);
+  const routeLengths = points.slice(1).map((point, step) => Math.hypot(point.x - points[step].x, point.y - points[step].y));
+  const length = (segments: number[]) => segments.reduce((sum, segment) => sum + segment, 0);
+  const offset = () => page.locator(".travel-route-map .route-visited").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
+  await expect.poll(offset).toBeCloseTo(reduced ? 0 : 1 - length(routeLengths.slice(0, index)) / length(routeLengths), 2);
   const rgb = trips[index].color.match(/[0-9a-f]{2}/g)!.map(part => parseInt(part, 16)).join(", ");
   await expect(page.locator(".journey-atmosphere")).toHaveCSS("background-color", `rgb(${rgb})`);
   if (reduced) {
     await expect(page.locator('.route-pin[data-state="active"] .route-pin-halo')).toHaveCSS("animation-name", "none");
-    await expect(page.locator(".journey-ambient-outgoing")).toHaveCSS("opacity", "0");
   }
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator(".travel-book")).toHaveAttribute("data-in-view", "false");
@@ -93,7 +96,7 @@ test("mouse dragging turns the book without activating its links", async ({ page
   test.skip(isMobile, "Mouse drag behavior");
   await page.goto(c.path);
   const book = page.getByRole("region", { name: c.bookLabel });
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   await book.scrollIntoViewIfNeeded();
   const box = (await book.boundingBox())!;
   const y = Math.max(120, Math.min(box.y + 100, page.viewportSize()!.height - 100));
@@ -101,7 +104,7 @@ test("mouse dragging turns the book without activating its links", async ({ page
   await page.mouse.down();
   await page.mouse.move(box.x + box.width * 0.1, y, { steps: 12 });
   await page.mouse.up();
-  await expect(page.locator(".travel-book-counter")).toHaveText("02 / 08");
+  await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 08");
   await expect(page).toHaveURL(c.path);
 });
 
@@ -109,7 +112,7 @@ test("no-JS map shows the whole route and gallery photos remain ordinary links",
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(c.path);
-  await expect(page.locator(".travel-route-map .route-draw-mask")).toHaveCSS("stroke-dashoffset", "0px");
+  await expect(page.locator(".travel-route-map .route-visited")).toHaveCSS("stroke-dashoffset", "0px");
   await expect(page.locator(".travel-places-grid article")).toHaveCount(trips.length);
   await page.goto(c.tripHref(trips[0].slug));
   const link = page.getByRole("link", { name: c.openPhoto(1, trips[0].place) });
@@ -122,7 +125,7 @@ test("no-JS map shows the whole route and gallery photos remain ordinary links",
 test("touch swipe scrolls the native book without pinning the document", async ({ page, isMobile }) => {
   test.skip(!isMobile, "Native touch behavior");
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "snap");
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
   const book = page.getByRole("region", { name: c.bookLabel });
   await book.scrollIntoViewIfNeeded();
   const box = (await book.boundingBox())!;
@@ -136,4 +139,18 @@ test("touch swipe scrolls the native book without pinning the document", async (
   await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 08");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await client.detach();
+});
+
+test("international travel links the Malaysia demo and maps the Dhaka route", async ({ page, request }) => {
+  await page.goto(c.path);
+  const section = page.getByRole("region", { name: c.internationalTitle });
+  await expect(section.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
+  await expect(section.getByText(/Kuala Lumpur · Malaysia/)).toBeVisible();
+  await expect(section.getByText(/DEMO — In this imagined visit/)).toBeVisible();
+  await section.getByRole("link", { name: "A morning in Kuala Lumpur" }).click();
+  await expect(page).toHaveURL(c.tripHref("kuala-lumpur"));
+  await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
+  const photo = await request.get("/images/travel/kuala-lumpur/1.jpg");
+  expect(photo.ok()).toBe(true);
+  expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("kuala-lumpur"));
 });

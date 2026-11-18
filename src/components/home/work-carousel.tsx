@@ -21,7 +21,7 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
     <StaggerIn
       as="ul"
       id="selected-projects"
-      className="project-carousel"
+      className="project-carousel" data-horizontal-scroll
       distance={64}
       start="top 90%"
       listRef={row}

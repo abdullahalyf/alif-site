@@ -2,6 +2,7 @@
 
 import Lenis from "lenis";
 import { useEffect, useRef } from "react";
+import { connectNativeHorizontalAreas } from "@/lib/horizontal-wheel";
 import { syncWithLenis } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 import { SmoothScrollContext } from "./smooth-scroll-context";
@@ -27,6 +28,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       delete document.documentElement.dataset.hydrated;
     };
   }, []);
+
+  useEffect(connectNativeHorizontalAreas, []);
 
   useEffect(() => {
     // Read the preference here rather than from the render: the hook returns the

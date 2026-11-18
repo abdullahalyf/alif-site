@@ -1,4 +1,4 @@
-import { trips, travelContent } from "../../src/content/travel";
+import { allTrips, travelContent } from "../../src/content/travel";
 import { labRoutes } from "../../src/content/lab";
 import { estimateContent } from "../../src/content/estimate";
 import { searchContent } from "../../src/content/search";
@@ -30,7 +30,7 @@ export async function waitForHydration(page: Page) {
 export const pageRoutes = [
   ...labRoutes, estimateContent.path,
   travelContent.path,
-  ...trips.map(trip => travelContent.tripHref(trip.slug)),
+  ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
   ...searchContent.pages.map((page) => page.href),
   ...projects.map((project) => diagramContent.path(project.slug)),
   "/",

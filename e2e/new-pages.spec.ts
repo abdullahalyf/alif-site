@@ -16,6 +16,7 @@ test("contact validates inline errors and prepares both external destinations", 
     }) as typeof window.open;
   });
   await page.goto("/contact");
+  await waitForHydration(page);
   await page.getByRole("button", { name: c.emailButton }).click();
   await expect(page.locator(".brief-form").getByRole("alert")).toBeVisible();
   await expect(page.getByLabel("Name", { exact: true })).toBeFocused();

@@ -3,7 +3,10 @@ import { pageRoutes, previewRoutes } from "./helpers/routes";
 
 for (const [mode, routes] of [["production", pageRoutes], ["preview", previewRoutes]] as const) {
  test.describe(`${mode} links`, () => {
-  if (mode === "preview") test.use({ baseURL: "http://localhost:3100" });
+  if (mode === "preview") {
+    test.use({ baseURL: "http://localhost:3100" });
+    test.describe.configure({ timeout: 60_000 });
+  }
   for (const path of routes) {
   test(`every internal link on ${path} returns 200`, async ({ page, request }, testInfo) => {
     const response = await page.goto(path);

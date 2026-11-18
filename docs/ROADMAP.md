@@ -49,3 +49,7 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 - [x] Task 17: Unpinned travel journey with scoped wheel/drag scrolling, Bangladesh route map, place colours, trip pages and accessible galleries, computed stats, filters and local demo photos.
 - [x] Task 18: Interactive Lab index, offline-sync simulator and scoped access explorer, editable project estimator, contact summaries, reduced-motion/no-JS fallbacks and tests. Full regression has an existing pinned Travel blocker; see `docs/reports/CODEX-18-report.md`.
+
+- [x] Task 20: Free-scroll travel book, detailed maps and Malaysia demo, fixed header, local dark transition, mobile hero, grouped footer, and Home photo motion. See [the report](reports/CODEX-20-report.md).
+
+- [x] Task 21: Full menu and search, direction-aware navbar, inset hero portrait and floating photo strip, shared horizontal wheel scrolling, denser layouts, and responsive footer. See [the report](reports/CODEX-21-report.md).
