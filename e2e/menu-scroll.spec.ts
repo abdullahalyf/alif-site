@@ -107,3 +107,21 @@ test("desktop wheel scrolls the hovered card row and releases the page at both e
   await page.mouse.wheel(0, -180);
   await expect.poll(pageOffset).toBeLessThan(beforeUp - 30);
 });
+
+test("the drawer takes the mobile width and leaves a dismissible backdrop on desktop", async ({ page, isMobile }) => {
+  await page.goto("/about");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const trigger = page.getByRole("button", { name: shell.menu, exact: true });
+  await trigger.click();
+  const drawer = page.getByRole("dialog", { name: shell.menu });
+  const width = page.viewportSize()!.width;
+  await expect.poll(async () => Math.round((await drawer.boundingBox())!.x)).toBe(isMobile ? 0 : width - 416);
+  await expect.poll(async () => Math.round((await drawer.boundingBox())!.width)).toBe(isMobile ? width : 416);
+  if (isMobile) {
+    await drawer.getByRole("button", { name: shell.closeMenu }).click();
+  } else {
+    await page.mouse.click(12, 100);
+  }
+  await expect(drawer).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
