@@ -3,8 +3,8 @@
 .travel-map-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .bangladesh-outline { fill: var(--cream); fill-opacity: 0.55; stroke: var(--ink-muted); stroke-width: 1; stroke-opacity: 0.45; }
 .bangladesh-divisions { fill: none; stroke: var(--ink-muted); stroke-width: 0.65; stroke-opacity: 0.58; }
-.route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; stroke-dasharray: 3 6; }
-.route-upcoming { opacity: 0.25; }
+.route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; }
+.route-upcoming { opacity: 0.25; stroke-dasharray: 3 6; }
 .route-visited { stroke: var(--ink); }
 .route-pin-target { fill: transparent; }
 .route-pin-dot { stroke: var(--ink); stroke-width: 1.5; fill: var(--cream); }

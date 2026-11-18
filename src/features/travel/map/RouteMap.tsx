@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useId } from "react";
 import { travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { BangladeshOutline } from "./BangladeshOutline";
@@ -7,24 +6,18 @@ import { MAP_VIEWBOX, project, routePath } from "./geo";
 import "./map.css";
 
 export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; current: number; onNavigate: (index: number) => void }) {
-  const mask = useId();
   const active = trips[current];
   const point = project(active);
   const path = routePath(trips);
   return <><svg className="journey-route-backdrop" viewBox={MAP_VIEWBOX} aria-hidden="true">
     <BangladeshOutline />
-    <path className="route-upcoming" d={path} />
-    <defs><mask id={`${mask}-backdrop`}><path className="route-draw-mask" d={path} pathLength="1" strokeDasharray="1" strokeDashoffset="0" fill="none" stroke="white" strokeWidth="5" /></mask></defs>
-    <path className="route-visited" d={path} mask={`url(#${mask}-backdrop)`} />
-    {trips.map((trip, index) => { const point = project(trip); return <circle key={trip.slug} cx={point.x} cy={point.y} r={index === current ? 10 : 5} fill={index <= current ? "currentColor" : "none"} stroke="currentColor" />; })}
   </svg><aside className="travel-route-map" aria-label={c.mapLabel}>
     <p className="travel-label">{c.mapLabel}</p>
     <div className="travel-map-drawing">
       <svg viewBox={MAP_VIEWBOX} className="travel-map-svg" aria-label={c.mapLabel}>
         <BangladeshOutline />
         <path className="route-upcoming" d={path} />
-        <defs><mask id={mask}><path className="route-draw-mask" d={path} pathLength="1" strokeDasharray="1" strokeDashoffset="0" fill="none" stroke="white" strokeWidth="5" /></mask></defs>
-        <path className="route-visited" d={path} mask={`url(#${mask})`} />
+        <path className="route-visited" d={path} pathLength="1" strokeDasharray="1" />
         {trips.map((trip, index) => {
           const position = project(trip);
           const state = index === current ? "active" : index < current ? "visited" : "upcoming";

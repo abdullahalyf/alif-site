@@ -20,7 +20,9 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const atmosphere = useRef<HTMLDivElement>(null);
+  const blend = useRef<HTMLDivElement>(null);
   const fill = useRef<HTMLSpanElement>(null);
+  const numbers = useRef<HTMLSpanElement>(null);
   const controller = useRef<ReturnType<typeof connectBook>>(null);
   const position = useRef(0);
   const initialSelection = { current: 0, atStart: true, atEnd: trips.length === 1 };
@@ -34,11 +36,12 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     const area = stage.current;
     const pages = track.current;
     const tint = atmosphere.current;
+    const overlay = blend.current;
+    const route = element?.querySelector<SVGPathElement>(".route-visited");
     const bar = fill.current;
-    if (!element || !view || !area || !pages || !tint || !bar) return;
+    const counter = numbers.current;
+    if (!element || !view || !area || !pages || !tint || !overlay || !route || !bar || !counter) return;
 
-    const masks = element.querySelectorAll<SVGPathElement>(".route-draw-mask");
-    const colors = trips.map(trip => [1, 3, 5].map(index => parseInt(trip.color.slice(index, index + 2), 16)));
     const points = trips.map(project);
     const lengths = [0];
     for (let index = 1; index < points.length; index++) {
@@ -46,6 +49,8 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     }
 
     const skipMotion = prefersReducedMotion();
+    let tintedSegment = -1;
+    let displayedTenths = -1;
     element.dataset.layout = "free";
     const hashIndex = trips.findIndex(trip => location.hash === `#trip-${trip.slug}`);
     const book = connectBook(area, view, pages, trips.length, skipMotion, hashIndex < 0 ? position.current : hashIndex, value => {
@@ -53,14 +58,23 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       const lower = Math.floor(value);
       const upper = Math.min(lower + 1, trips.length - 1);
       const fraction = value - lower;
-      const color = colors[lower].map((channel, index) => channel + (colors[upper][index] - channel) * fraction);
       const length = lengths[lower] + (lengths[upper] - lengths[lower]) * fraction;
       bar.style.transform = `scaleX(${(value + 1) / trips.length})`;
-      tint.style.backgroundColor = `rgb(${color.join(",")})`;
-      const offset = skipMotion ? 0 : 1 - length / (lengths.at(-1) || 1);
-      masks.forEach(mask => { mask.style.strokeDashoffset = String(offset); });
-
       const nearest = Math.round(value);
+      const tenths = skipMotion ? (nearest + 1) * 10 : Math.round((value + 1) * 10);
+      if (tenths !== displayedTenths) {
+        const whole = String(Math.floor(tenths / 10)).padStart(2, "0");
+        counter.textContent = tenths % 10 ? `${whole}.${tenths % 10}` : whole;
+        displayedTenths = tenths;
+      }
+      if (lower !== tintedSegment) {
+        tint.style.backgroundColor = trips[lower].color;
+        overlay.style.backgroundColor = trips[upper].color;
+        tintedSegment = lower;
+      }
+      overlay.style.opacity = String(fraction);
+      route.style.strokeDashoffset = String(skipMotion ? 0 : 1 - length / (lengths.at(-1) || 1));
+
       const atStart = value < 0.002;
       const atEnd = value > trips.length - 1.002;
       const selected = selection.current;
@@ -101,6 +115,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     <h2 id={`${id}-title`}>{c.bookTitle}</h2>
     <div ref={stage} className="travel-book-stage">
       <div ref={atmosphere} className="journey-atmosphere" aria-hidden="true" style={{ backgroundColor: trips[0].color }}>
+        <div ref={blend} className="journey-atmosphere__tint" />
         <div className="journey-paper-grain" />
       </div>
       <RouteMap trips={trips} current={current} onNavigate={index => {
@@ -111,7 +126,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       <p id={`${id}-hint`} className="travel-book-hint"><span className="book-hint-list">{c.listHint}</span><span className="book-hint-snap">{c.swipeHint}</span><span className="book-hint-desktop">{c.desktopHint}</span></p>
       <div ref={viewport} className="travel-book-viewport" tabIndex={0} role="region" aria-label={c.bookLabel} aria-describedby={`${id}-hint`} onKeyDown={keyboard} onDragStart={event => event.preventDefault()} onFocus={event => {
         const page = (event.target as HTMLElement).closest<HTMLElement>("[data-book-page]");
-        if (page) controller.current?.focus(Number(page.dataset.bookPage));
+        if (page && event.target.matches(":focus-visible")) controller.current?.focus(Number(page.dataset.bookPage));
       }}>
         <div ref={track} className="travel-book-track">
           {trips.map((trip, index) => <article className="travel-book-page" data-book-page={index} id={`trip-${trip.slug}`} key={trip.slug} aria-labelledby={`${id}-${trip.slug}`}>
@@ -138,7 +153,11 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
       <div className="travel-book-controls">
         <button type="button" onClick={() => controller.current?.step(-1)} disabled={atStart} aria-label={c.previous}><ArrowLeft /></button>
         <div className="travel-book-progress" role="progressbar" aria-label={c.progress} aria-valuemin={1} aria-valuemax={trips.length} aria-valuenow={current + 1}><span ref={fill} style={{ transform: `scaleX(${1 / trips.length})` }} /></div>
-        <span className="travel-book-counter" aria-live="polite" aria-atomic="true">{String(current + 1).padStart(2, "0")} / {String(trips.length).padStart(2, "0")}</span>
+        <span className="travel-book-counter-display" aria-hidden="true">
+          <span ref={numbers} className="travel-book-counter-number">01</span>
+          / {String(trips.length).padStart(2, "0")}
+        </span>
+        <span className="travel-book-counter sr-only" aria-live="polite" aria-atomic="true">{String(current + 1).padStart(2, "0")} / {String(trips.length).padStart(2, "0")}</span>
         <button type="button" onClick={() => controller.current?.step(1)} disabled={atEnd} aria-label={c.next}><ArrowRight /></button>
       </div>
     </div>

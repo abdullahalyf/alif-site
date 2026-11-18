@@ -69,6 +69,10 @@ test("free travel scroll can stop between trips with interpolated progress", asy
   });
   await expect.poll(renderedOffset).toBeCloseTo(halfway, 0);
   await expect.poll(() => page.locator(".travel-book-progress span").evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).a)).toBeCloseTo(1.45 / trips.length, 2);
+  await expect.poll(() => page.locator(".journey-atmosphere__tint").evaluate(element => Number(getComputedStyle(element).opacity))).toBeCloseTo(0.45, 2);
+  const counter = page.locator(".travel-book-counter-number");
+  const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
+  await expect(counter).toHaveText(reduced ? "01" : /^01\.[45]$/);
   await expect(page.locator(".travel-book-counter")).toHaveText("01 / 08");
   await expect(page.getByRole("button", { name: c.previous })).toBeEnabled();
   await book.press("ArrowRight");

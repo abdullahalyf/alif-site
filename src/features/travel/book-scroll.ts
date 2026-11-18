@@ -92,13 +92,16 @@ export function connectBook(
 
   function scroll() {
     if (transformed || !width) return;
-    render(viewport.scrollLeft / width);
+    const value = viewport.scrollLeft / width;
+    const nearest = Math.round(value);
+    render(Math.abs(value - nearest) * width <= 0.5 ? nearest : value);
     target = position;
   }
 
   function pointerDown(event: PointerEvent) {
     if (!width || event.pointerType !== "mouse" || event.button !== 0 || (event.target as Element).closest("a,button")) return;
     stop();
+    target = position;
     drag = { id: event.pointerId, x: event.clientX, start: position, time: event.timeStamp, velocity: 0 };
   }
 

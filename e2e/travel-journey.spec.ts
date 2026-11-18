@@ -80,7 +80,7 @@ test("map progress, pin selection and place atmosphere follow the horizontal boo
   const points = trips.map(project);
   const routeLengths = points.slice(1).map((point, step) => Math.hypot(point.x - points[step].x, point.y - points[step].y));
   const length = (segments: number[]) => segments.reduce((sum, segment) => sum + segment, 0);
-  const offset = () => page.locator(".travel-route-map .route-draw-mask").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
+  const offset = () => page.locator(".travel-route-map .route-visited").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
   await expect.poll(offset).toBeCloseTo(reduced ? 0 : 1 - length(routeLengths.slice(0, index)) / length(routeLengths), 2);
   const rgb = trips[index].color.match(/[0-9a-f]{2}/g)!.map(part => parseInt(part, 16)).join(", ");
   await expect(page.locator(".journey-atmosphere")).toHaveCSS("background-color", `rgb(${rgb})`);
@@ -112,7 +112,7 @@ test("no-JS map shows the whole route and gallery photos remain ordinary links",
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(c.path);
-  await expect(page.locator(".travel-route-map .route-draw-mask")).toHaveCSS("stroke-dashoffset", "0px");
+  await expect(page.locator(".travel-route-map .route-visited")).toHaveCSS("stroke-dashoffset", "0px");
   await expect(page.locator(".travel-places-grid article")).toHaveCount(trips.length);
   await page.goto(c.tripHref(trips[0].slug));
   const link = page.getByRole("link", { name: c.openPhoto(1, trips[0].place) });
