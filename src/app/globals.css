@@ -85,13 +85,13 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 
 .header { position: fixed; inset: 0 0 auto; z-index: 40; color: var(--ink); background: var(--cream); border-bottom: 1px solid var(--line); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: calc(var(--header-height) - 1px); gap: clamp(0.5rem, 2vw, 1rem); transition: min-height 220ms ease; }
-.header[data-compact] { backdrop-filter: blur(6px); }
-.header[data-compact] .header-inner { min-height: calc(3.5rem - 1px); }
+.header[data-compact] .header-inner { min-height: calc(3.125rem - 1px); }
 .header .brand-mark { min-height: 2.75rem; }
 .header[data-compact] .brand-mark__text { font-size: 0.8125rem; }
 .header[data-compact] .brand-mark__monogram { width: 1.875rem; height: 1.875rem; font-size: 1rem; }
 .header[data-compact] .desktop-nav { font-size: 0.875rem; }
 .header[data-compact] .menu-trigger { padding-block: 0.5rem; font-size: 0.875rem; }
+.header[data-compact] .search-trigger { padding-block: 0.25rem; }
 body:has(.fallback-nav) { padding-top: 0; }
 .header:has(.fallback-nav) { position: sticky; top: 0; }
 .header:has(.fallback-nav) .header-inner { flex-wrap: wrap; }

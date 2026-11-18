@@ -60,7 +60,7 @@ it("shows a search trigger with the keyboard shortcut", () => {
   expect(screen.getByText(shell.searchHint)).toBeInTheDocument();
 });
 
-it("compacts the fixed header after 40px and expands again at the top", () => {
+it("compacts on descent and expands while scrolling up mid-page", () => {
   const offset = vi.spyOn(window, "scrollY", "get").mockReturnValue(0);
   render(<Header />);
   const header = screen.getByRole("banner");
@@ -68,7 +68,10 @@ it("compacts the fixed header after 40px and expands again at the top", () => {
   offset.mockReturnValue(41);
   fireEvent.scroll(window);
   expect(header).toHaveAttribute("data-compact");
-  offset.mockReturnValue(0);
+  offset.mockReturnValue(240);
+  fireEvent.scroll(window);
+  expect(header).toHaveAttribute("data-compact");
+  offset.mockReturnValue(200);
   fireEvent.scroll(window);
   expect(header).not.toHaveAttribute("data-compact");
   offset.mockRestore();

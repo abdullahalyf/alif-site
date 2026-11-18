@@ -39,9 +39,9 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
     behavior: "instant",
   }));
   await expect(header).toHaveAttribute("data-compact", "");
-  await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(56);
+  await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(50);
   expect((await header.boundingBox())!.y).toBe(0);
-  expect((await section.boundingBox())!.y).toBeGreaterThan(56);
+  expect((await section.boundingBox())!.y).toBeGreaterThan(50);
   await expect(header).toHaveCSS("background-color", "rgb(242, 237, 227)");
   await expect(header).toHaveCSS("color", "rgb(30, 28, 25)");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(242, 237, 227)");

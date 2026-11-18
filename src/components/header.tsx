@@ -21,8 +21,15 @@ export function Header() {
   useEffect(() => {
     const element = header.current;
     if (!element) return;
-    const sync = () => element.toggleAttribute("data-compact", window.scrollY > COMPACT_THRESHOLD);
-    sync();
+    let previous = Math.max(0, window.scrollY);
+    const sync = () => {
+      const offset = Math.max(0, window.scrollY);
+      const delta = offset - previous;
+      if (offset <= 4) element.removeAttribute("data-compact");
+      else if (delta <= -4) element.removeAttribute("data-compact");
+      else if (delta >= 4 && offset > COMPACT_THRESHOLD) element.setAttribute("data-compact", "");
+      if (Math.abs(delta) >= 4 || offset <= 4) previous = offset;
+    };
     window.addEventListener("scroll", sync, { passive: true });
     return () => window.removeEventListener("scroll", sync);
   }, []);
