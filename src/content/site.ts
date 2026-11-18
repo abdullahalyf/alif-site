@@ -324,3 +324,14 @@ export const demoContent = {
   latestLabel: "Latest writing",
   latestTitle: "Notes from the workbench.",
 };
+
+export const heroPhotos = {
+  label: "A few photos",
+  images: [
+    site.aboutPhoto,
+    // DEMO: existing local travel placeholders, to be replaced with personal photos.
+    { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900, alt: "Demo landscape photograph" },
+    { src: "/images/travel/sylhet-tea/1.jpg", width: 1200, height: 900, alt: "Demo travel photograph" },
+    { src: "/images/travel/bandarban/1.jpg", width: 1200, height: 900, alt: "Demo outdoor photograph" },
+  ],
+};

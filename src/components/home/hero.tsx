@@ -1,10 +1,12 @@
 import Image from "next/image";
-import { navHref, shell, site } from "@/content/site";
+import { heroPhotos, navHref, shell, site } from "@/content/site";
 import { ButtonLink } from "@/components/button";
 import { Reveal } from "@/components/motion";
 import { HeroHeadline } from "./hero-headline";
 import { HeroPhotoPanel } from "./hero-photo-panel";
 import { HeroSide } from "./hero-side";
+
+const photoCardSizes = "(max-width: 48rem) 64vw, (max-width: 80rem) 26vw, 22rem";
 
 export function Hero() {
   return <section className="hero" aria-labelledby="hero-title">
@@ -25,8 +27,14 @@ export function Hero() {
       </div>
       <HeroSide />
     </div>
-    <HeroPhotoPanel>
-      <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 96rem) 100vw, 96rem" loading="lazy" className="hero-photo" />
+    <HeroPhotoPanel
+      label={heroPhotos.label}
+      floatingPhoto={<Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} draggable={false} />}
+      photoStrip={heroPhotos.images.map((photo) => <li key={photo.src}>
+        <Image {...photo} alt={photo.alt} sizes={photoCardSizes} draggable={false} />
+      </li>)}
+    >
+      <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" className="hero-photo" />
     </HeroPhotoPanel>
   </section>;
 }
