@@ -28,6 +28,7 @@ Keep the top nav links, and add a **"Menu" button** (right side, next to Search)
 - At the top of the page → full size. Always readable (AA) over light and dark sections. Smooth (transform/height via CSS transition, no jank).
 
 ## Part 3 — The Steno hero scroll (Alif's favourite animation — do it properly)
+**IMPORTANT correction from Alif (overrides task 20 Part 7 and the bullet about growing below):** the big hero photo must NOT grow / go full-bleed on scroll. Keep the hero photo panel exactly at its original size — inset with page margins and rounded corners, as before task 20. Remove the expansion. Keep only: blur/desaturate → sharp, stripes drifting, gentle parallax (≤ 40px). The "travel and grow" motion applies only to the small floating photo card, never to the hero photo.
 Reference: https://www.steno.ai first screen. Behaviour Alif describes and wants:
 - As you scroll down from the hero, the **hero image travels to the left side and grows large** (scrubbed, smooth).
 - A **photo card that sits on top** (floating card in the hero) **moves down and joins a horizontal row of other photo cards**, becoming the first card of that row.
