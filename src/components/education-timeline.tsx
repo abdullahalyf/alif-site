@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import { PhotoReveal } from "@/components/motion/PhotoReveal";
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
@@ -61,8 +63,11 @@ export function EducationTimeline({ items }: { items: Site["education"] }) {
       </span>
       {items.map((item) => (
         <article key={item.title}>
-          <p className="label">{item.years}</p>
-          <div>
+          <PhotoReveal className="education-timeline__photo">
+            <Image {...item.image} sizes="(max-width: 768px) 90vw, 18rem" />
+          </PhotoReveal>
+          <div className="education-timeline__copy">
+            <p className="label">{item.years}</p>
             <h3>{item.title}</h3>
             <p>{item.org}</p>
             <p>{item.text}</p>

@@ -92,8 +92,16 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   await expect(timeline.locator("article")).toHaveCount(site.education.length);
 
   for (const item of site.education) {
-    await expect(timeline.getByRole("heading", { name: item.title, exact: true })).toBeVisible();
+    const entry = timeline.getByRole("article").filter({ has: page.getByRole("heading", { name: item.title, exact: true }) });
+    const image = entry.getByRole("img", { name: item.image.alt });
+    await expect(image).toBeVisible();
+    const photo = (await image.boundingBox())!;
+    const heading = (await entry.getByRole("heading").boundingBox())!;
+    expect(page.viewportSize()!.width < 768 ? photo.y < heading.y : photo.x > heading.x).toBe(true);
   }
+
+  expect((await page.getByRole("heading", { name: "Milestones along the way." }).boundingBox())!.y)
+    .toBeGreaterThan((await timeline.boundingBox())!.y + (await timeline.boundingBox())!.height);
 
   // The rule is drawn beside the entries, and it grows as they scroll past.
   const line = timeline.locator(".education-timeline__line");

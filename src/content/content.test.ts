@@ -15,6 +15,12 @@ describe("content", () => {
     expect(siteSchema.safeParse({ ...site, now: [""] }).success).toBe(false);
   });
 
+  it("requires a valid image for every education entry", () => {
+    const [first, ...others] = site.education;
+    expect(siteSchema.safeParse({ ...site, education: [{ ...first, image: undefined }, ...others] }).success).toBe(false);
+    expect(siteSchema.safeParse({ ...site, education: [{ ...first, image: { ...first.image, width: 0 } }, ...others] }).success).toBe(false);
+  });
+
   it("projects content is valid and slugs are unique", () => {
     expect(() => projectsSchema.parse(projects)).not.toThrow();
   });
@@ -25,6 +31,7 @@ describe("content", () => {
       site.avatar,
       site.aboutPhoto,
       site.heroSide,
+      ...site.education.map((item) => item.image),
       ...site.story.map((c) => c.image),
       ...projects.flatMap((p) => p.images),
     ]
