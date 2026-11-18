@@ -33,6 +33,20 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   await expect(results.getByRole("option").first()).toBeVisible();
 });
 
+test("the navbar expands when the visitor scrolls up mid-page", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const header = page.getByRole("banner");
+  const height = async () => Math.round((await header.boundingBox())!.height);
+  const full = await height();
+
+  await page.evaluate(() => scrollTo({ top: 420, behavior: "instant" }));
+  await expect.poll(height).toBe(50);
+  await page.evaluate(() => scrollTo({ top: 340, behavior: "instant" }));
+  await expect.poll(height).toBe(full);
+  expect(await page.evaluate(() => scrollY)).toBeGreaterThan(100);
+});
+
 test("the hero card grows and docks into the first slot", async ({ page, isMobile }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");

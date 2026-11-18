@@ -82,6 +82,7 @@ export function SearchDialog() {
   return (
     <dialog
       className="site-search-dialog"
+      data-lenis-prevent
       ref={dialog}
       aria-labelledby={`${id}-title`}
       onCancel={(event) => {

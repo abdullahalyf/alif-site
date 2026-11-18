@@ -32,7 +32,7 @@ export function connectNativeHorizontalAreas() {
   let suppressClick: HTMLElement | undefined;
 
   function findArea(event: Event) {
-    return (event.target as Element | null)?.closest<HTMLElement>(nativeAreas);
+    return event.target instanceof Element ? event.target.closest<HTMLElement>(nativeAreas) : null;
   }
 
   function stop() {
