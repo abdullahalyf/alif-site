@@ -9,7 +9,7 @@
 .lab-demo-card h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
 .lab-demo-card a { justify-self: start; margin-top: 1rem; }
 .lab-demo-card:hover { border-color: var(--ink-muted); }
-.lab-next { display: grid; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 2rem; margin-top: 2.5rem; }
+.lab-next { display: grid; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 1.875rem; }
 .lab-next a { justify-self: start; }
 .lab-panel { padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--line); border-radius: 1rem; min-width: 0; }
 .lab-panel h2 { font-size: clamp(2rem, 3vw, 2.75rem); margin-bottom: 1.5rem; }

@@ -1,14 +1,15 @@
 import { z } from "zod";
+import { estimateLimits, integrations, projectTypes, urgencyLevels } from "../estimate-options";
 
-export const projectTypeSchema = z.enum(["pos", "dashboard", "web", "mobile"]);
-export const integrationSchema = z.enum(["payments", "sms", "email", "accounting"]);
-export const urgencySchema = z.enum(["flexible", "standard", "urgent"]);
+export const projectTypeSchema = z.enum(projectTypes);
+export const integrationSchema = z.enum(integrations);
+export const urgencySchema = z.enum(urgencyLevels);
 export const estimateInputSchema = z.object({
   projectType: projectTypeSchema,
-  branches: z.number().int().min(1).max(100),
-  roles: z.number().int().min(1).max(20),
+  branches: z.number().int().min(1).max(estimateLimits.branches),
+  roles: z.number().int().min(1).max(estimateLimits.roles),
   offline: z.boolean(),
-  integrations: z.array(integrationSchema).max(4).refine(values => new Set(values).size === values.length, "Integrations must be unique"),
+  integrations: z.array(integrationSchema).max(integrations.length).refine(values => new Set(values).size === values.length, "Integrations must be unique"),
   migration: z.boolean(),
   urgency: urgencySchema,
 });

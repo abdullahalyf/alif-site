@@ -25,14 +25,16 @@ export const site = {
       "title": "Your qualification", // REPLACE
       "org": "Your school", // REPLACE
       "years": "Your study years", // REPLACE
-      "text": "Describe your studies." // REPLACE
+      "text": "Describe your studies.", // REPLACE
+      "image": { "src": "/images/alif-portrait.jpg", "width": 2400, "height": 1350, "alt": "Your school photo" } // REPLACE
     }
   ], // REPLACE
   "skills": [ // REPLACE
     {
       "title": "Your skill group", // REPLACE
+      "icon": "systems", // REPLACE
       "items": [ // REPLACE
-        "Your skill" // REPLACE
+        { "name": "Your skill", "level": 3, "note": "Where you used it" } // REPLACE
       ] // REPLACE
     }
   ], // REPLACE

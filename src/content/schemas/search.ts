@@ -29,3 +29,4 @@ export const searchContentSchema = z.object({
     }),
   ),
 });
+export type SearchContent = z.infer<typeof searchContentSchema>;

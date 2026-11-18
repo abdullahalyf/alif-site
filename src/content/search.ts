@@ -1,5 +1,5 @@
-import { searchContentSchema } from "./schemas/search";
-export const searchContent = searchContentSchema.parse({
+import type { SearchContent } from "./schemas/search";
+export const searchContent = {
   title: "Find your way around.",
   intro:
     "Search pages, projects and published writing. Use ⌘K or Ctrl+K to open search.",
@@ -41,4 +41,4 @@ export const searchContent = searchContentSchema.parse({
       href: "/search",
     },
   ],
-});
+} satisfies SearchContent;

@@ -1,4 +1,4 @@
-// DEMO: seeded placeholder photographs, not screenshots or personal story photographs.
-export function demoImage(seed: string, alt: string) {
-  return { src: `https://picsum.photos/seed/${seed}/1600/1000`, width: 1600, height: 1000, alt };
+// DEMO: generated placeholder photographs for the case studies and About chapters.
+export function demoImage(name: string, alt: string) {
+  return { src: `/images/demo/${name}.jpg`, width: 440, height: 330, alt, demo: true };
 }

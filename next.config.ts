@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  images: { remotePatterns: [{ protocol: "https", hostname: "picsum.photos", pathname: "/seed/**", search: "" }] },
   async headers() {
     const immutable = [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }];
     return [

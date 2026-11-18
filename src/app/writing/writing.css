@@ -1,10 +1,10 @@
 /* The same vertical rhythm as every other page. */
 .writing-page { padding-block: var(--section-space); }
-.writing-heading { display: grid; gap: 1rem; margin-block: 1.5rem 1.8rem; }
+.writing-heading { display: grid; gap: 1rem; margin-block: 1.125rem 1.35rem; }
 .writing-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
 .writing-links a, .post-list a, .post-neighbours a { text-decoration: underline; }
 .post-list { list-style: none; padding: 0; }
-.post-list > li { display: grid; gap: 1rem; padding-block: 1.5rem; border-top: 1px solid var(--line); }
+.post-list > li { display: grid; gap: 1rem; padding-block: 1.125rem; border-top: 1px solid var(--line); }
 .post-list h2 { font-size: var(--type-h3); }
 .post-date { color: var(--ink-muted); font-size: 0.875rem; }
 .post-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0; list-style: none; }

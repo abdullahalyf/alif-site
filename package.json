@@ -13,7 +13,8 @@
     "check": "pnpm validate:content && pnpm lint && pnpm typecheck && pnpm test && pnpm build",
     "validate:content": "tsx scripts/validate-content.ts",
     "audit:layout": "tsx scripts/audit-layout.ts",
-    "add:image": "tsx scripts/add-image.ts"
+    "add:image": "tsx scripts/add-image.ts",
+    "demo:list": "tsx scripts/list-demo.ts"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -42,7 +43,6 @@
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^5",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.1.0"
   },
   "packageManager": "pnpm@10.28.0"

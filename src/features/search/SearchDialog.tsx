@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { searchContent as c } from "@/content/search";
-import { searchIndexSchema, type SearchEntry } from "@/content/schemas/search";
+import type { SearchEntry } from "@/content/schemas/search";
 import { searchEntries } from "./score";
 import { useOpenSearch } from "./search-context";
 
@@ -38,12 +38,15 @@ export function SearchDialog() {
     controller.current?.abort();
     const abort = new AbortController();
     controller.current = abort;
-    fetch(c.indexPath, { signal: abort.signal })
-      .then((response) => {
+    Promise.all([
+      fetch(c.indexPath, { signal: abort.signal }).then((response) => {
         if (!response.ok) throw new Error();
         return response.json();
-      })
-      .then((data) => {
+      }),
+      import("@/content/schemas/search"),
+    ])
+      .then(([data, { searchIndexSchema }]) => {
+        if (abort.signal.aborted) return;
         setEntries(searchIndexSchema.parse(data));
         setStatus("");
       })

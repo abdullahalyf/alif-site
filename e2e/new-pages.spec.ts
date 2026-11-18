@@ -1,3 +1,4 @@
+import { getPosts } from "../src/content/posts";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { contactContent as c } from "../src/content/contact";
@@ -109,18 +110,20 @@ test("search opens from the keyboard and the header button on any page", async (
     await waitForHydration(page);
 
     // Ctrl+K opens the dialog from anywhere, without touching the mouse.
+    const dialog = page.getByRole("dialog", { name: search.open });
+    const combobox = dialog.getByRole("combobox");
     await page.keyboard.press("Control+k");
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("combobox")).toBeFocused();
+    await expect(dialog).toBeVisible();
+    await expect(combobox).toBeFocused();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(dialog).not.toBeVisible();
 
     // The header button opens the same dialog.
     await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
-    await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(page.getByRole("combobox")).toBeFocused();
+    await expect(dialog).toBeVisible();
+    await expect(combobox).toBeFocused();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("dialog")).not.toBeVisible();
+    await expect(dialog).not.toBeVisible();
   }
 });
 
@@ -135,6 +138,10 @@ test("search index is public JSON without drafts", async ({ request }) => {
   const response = await request.get("/search-index.json");
   expect(response.status()).toBe(200);
   const entries = await response.json();
+  const hrefs = entries.map((entry: { href: string }) => entry.href);
+  for (const post of getPosts({ includeDrafts: false })) {
+    expect(hrefs).toContain(`/writing/${post.slug}`);
+  }
   expect(
     entries.some((entry: { href: string }) => entry.href === "/contact"),
   ).toBe(true);
@@ -243,5 +250,29 @@ test("new pages fit the viewport with a single main heading", async ({
       ),
     ).toBe(true);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  }
+});
+
+test("Work filters its project rows by category", async ({ page }) => {
+  await page.goto("/work");
+  const filter = page.getByRole("combobox", { name: "Filter by category" });
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const rows = page.locator(".work-row");
+  const count = await rows.count();
+  await filter.selectOption("Research");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText("Traffic Accident Risk Prediction");
+  await expect(rows.first().locator("img")).toBeVisible();
+  await filter.selectOption("");
+  await expect(rows).toHaveCount(count);
+});
+
+test("each service offers a timeline and a link to the estimator", async ({ page }) => {
+  await page.goto("/services");
+  const blocks = page.locator(".service-block");
+  await expect(blocks).toHaveCount(4);
+  for (const block of await blocks.all()) {
+    await expect(block.getByText("Typical timeline")).toBeVisible();
+    await expect(block.getByRole("link", { name: "Estimate this service" })).toHaveAttribute("href", "/estimate");
   }
 });

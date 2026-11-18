@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { footerGroups, shell } from "@/content/site";
 import { Button } from "./button";
@@ -15,6 +15,7 @@ export function Header() {
   const pathname = usePathname();
   const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const pressedBackdrop = useRef(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState<string | null>(null);
@@ -92,6 +93,11 @@ export function Header() {
           className="site-menu"
           aria-label={shell.menu}
           data-lenis-prevent
+          onPointerDown={(event) => { pressedBackdrop.current = event.target === event.currentTarget; }}
+          onClick={(event) => {
+            if (pressedBackdrop.current && event.target === event.currentTarget) close();
+            pressedBackdrop.current = false;
+          }}
           onCancel={(event) => { event.preventDefault(); close(); }}
           onClose={() => { setOpen(false); setOpenedAt(null); }}
           onKeyDown={(event) => {
@@ -108,8 +114,9 @@ export function Header() {
             }
           }}
         >
-          <div className="container site-menu__content">
+          <div className="site-menu__content">
             <div className="site-menu__top">
+              <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
               <form role="search" onSubmit={(event) => {
                 event.preventDefault();
                 const query = new FormData(event.currentTarget).get("query");
@@ -120,14 +127,13 @@ export function Header() {
                 <input type="search" name="query" aria-label={shell.searchLabel} placeholder={shell.searchLabel} />
                 <Button type="submit" variant="secondary">{shell.searchLabel}</Button>
               </form>
-              <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
             </div>
             <nav aria-label={shell.navigation}>
               <div className="site-menu__groups">
-                {footerGroups.map((group, index) => <div key={group.label} style={{ "--menu-group": index } as CSSProperties}>
+                {footerGroups.map((group) => <div key={group.label}>
                   <h2 className="label">{group.label}</h2>
                   <ul>
-                    {group.links.map((link, item) => <li key={link.href} style={{ "--menu-item": item } as CSSProperties}>{linkItem(link)}</li>)}
+                    {group.links.map((link) => <li key={link.href}>{linkItem(link)}</li>)}
                   </ul>
                 </div>)}
               </div>

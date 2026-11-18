@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { aboutContent, site } from "../src/content/site";
+import { travelContent } from "../src/content/travel";
+import { aboutContent, demoContent, site } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
@@ -92,8 +93,16 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   await expect(timeline.locator("article")).toHaveCount(site.education.length);
 
   for (const item of site.education) {
-    await expect(timeline.getByRole("heading", { name: item.title, exact: true })).toBeVisible();
+    const entry = timeline.getByRole("article").filter({ has: page.getByRole("heading", { name: item.title, exact: true }) });
+    const image = entry.getByRole("img", { name: item.image.alt });
+    await expect(image).toBeVisible();
+    const photo = (await image.boundingBox())!;
+    const heading = (await entry.getByRole("heading").boundingBox())!;
+    expect(page.viewportSize()!.width < 768 ? photo.y < heading.y : photo.x > heading.x).toBe(true);
   }
+
+  expect((await page.getByRole("heading", { name: "Milestones along the way." }).boundingBox())!.y)
+    .toBeGreaterThan((await timeline.boundingBox())!.y + (await timeline.boundingBox())!.height);
 
   // The rule is drawn beside the entries, and it grows as they scroll past.
   const line = timeline.locator(".education-timeline__line");
@@ -108,12 +117,14 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   expect(filled).toBeGreaterThan(0);
 });
 
-test("the skills and the languages read as chips", async ({ page }) => {
+test("skills show notes and demo levels alongside language chips", async ({ page }) => {
   await page.goto("/about");
 
   for (const group of site.skills) {
     for (const item of group.items) {
-      await expect(page.locator(".chip", { hasText: item }).first()).toBeVisible();
+      const row = page.locator(".skill-card li").filter({ hasText: item.name });
+      await expect(row.getByText(item.note)).toBeVisible();
+      await expect(row.getByRole("meter", { name: demoContent.skillLevel(item.level) })).toHaveAttribute("value", String(item.level));
     }
   }
 
@@ -134,4 +145,24 @@ test("the achievements are cards", async ({ page }) => {
     viewport: document.documentElement.clientWidth,
   }));
   expect(dimensions.page).toBe(dimensions.viewport);
+});
+
+test("the travel strip and its scrubber stay in sync", async ({ page, isMobile }) => {
+  await page.goto("/about");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const strip = page.getByRole("region", { name: travelContent.teaserStripLabel });
+  const scrubber = page.getByRole("slider", { name: travelContent.teaserProgress });
+  const offset = () => strip.evaluate((element) => element.scrollLeft);
+  await expect(scrubber).toHaveValue("0");
+  await scrubber.focus();
+  await scrubber.press("End");
+  await expect(scrubber).toHaveValue("100");
+  await expect.poll(offset).toBeGreaterThan(0);
+  await scrubber.press("Home");
+  await expect.poll(offset).toBe(0);
+  if (!isMobile) {
+    await strip.hover();
+    await page.mouse.wheel(0, 150);
+    await expect.poll(async () => Number(await scrubber.inputValue())).toBeGreaterThan(0);
+  }
 });

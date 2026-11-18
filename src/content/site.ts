@@ -26,15 +26,30 @@ export const site = {
   ],
   // DEMO: the entire education timeline uses illustrative dates/details; replace before publication.
   education: [
-    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University", years: "2023–present · DEMO dates", text: "DEMO — coursework in software engineering, databases and intelligent systems." },
-    { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing." },
-    { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects." },
+    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University", years: "2023–present · DEMO dates", text: "DEMO — coursework in software engineering, databases and intelligent systems.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
+    { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
+    { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
   ],
   // DEMO: all skill groups are illustrative and should be checked by Alif.
   skills: [
-    { title: "Systems & architecture", items: ["Domain modelling", "Offline-first design", "Access control", "Data synchronisation"] },
-    { title: "Web & interfaces", items: ["TypeScript", "React", "Next.js", "Accessible UI"] },
-    { title: "Data & tooling", items: ["PostgreSQL", "SQLite", "Python", "Git & CI"] },
+    { title: "Systems & architecture", icon: "systems", items: [
+      { name: "Domain modelling", level: 4, note: "Map branches, roles and stock movements." },
+      { name: "Offline-first design", level: 4, note: "Keep a checkout usable during outages." },
+      { name: "Access control", level: 4, note: "Model branch-specific permissions." },
+      { name: "Data synchronisation", level: 4, note: "Retry queued POS changes safely." },
+    ] },
+    { title: "Web & interfaces", icon: "web", items: [
+      { name: "TypeScript", level: 5, note: "Share types across UI and server code." },
+      { name: "React", level: 4, note: "Build reusable dashboard controls." },
+      { name: "Next.js", level: 4, note: "Ship server-rendered portfolio pages." },
+      { name: "Accessible UI", level: 4, note: "Test keyboard navigation and focus." },
+    ] },
+    { title: "Data & tooling", icon: "data", items: [
+      { name: "PostgreSQL", level: 4, note: "Reconcile inventory across branches." },
+      { name: "SQLite", level: 4, note: "Store POS transactions on the device." },
+      { name: "Python", level: 3, note: "Explore traffic-risk datasets." },
+      { name: "Git & CI", level: 4, note: "Automate checks before merging." },
+    ] },
   ],
   languages: [
     { name: "Bangla", level: "Fluent" }, { name: "English", level: "Fluent" },
@@ -84,10 +99,7 @@ export const site = {
   },
   // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
   //
-  // The placeholder is served from `/public` rather than picsum.photos. It is
-  // the largest contentful paint on the home page, and a third-party host adds
-  // a DNS lookup, a redirect and a second connection to that critical path.
-  // Serving it same-origin lets the image optimiser resize it to the viewport.
+  // Keep this same-origin so the image optimiser can resize it to the viewport.
   heroSide: {
     src: "/images/alif-hero-side.jpg",
     width: 900,
@@ -131,7 +143,7 @@ export const site = {
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
-  // TODO(Alif): replace with your real story + add a photo for each chapter.
+  // DEMO: review the story copy and replace each chapter photo.
   story: [
     {
       label: "Jhenaidah",
@@ -270,12 +282,25 @@ export const workContent = {
 };
 
 export const aboutContent = {
+  intro: "I build business software and study how systems work in the real world.",
+  facts: [
+    { label: "Based in", value: "Savar, Dhaka" },
+    { label: "From", value: "Jhenaidah, Bangladesh" },
+    { label: "Studying", value: "CSE at Daffodil International University" },
+    { label: "Languages", value: site.languages.map(({ name }) => name).join(" · ") },
+    { label: site.statusCard.buildingLabel, value: site.statusCard.building },
+  ],
+  email: { ...shell.email, label: "Email" },
+  resume: navigationLinks.resume,
+  signature: site.name,
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
 };
 
 export const pageContent = {
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
+  workFilter: "Filter by category",
+  allWorkCategories: "All categories",
   workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
   problem: "Problem",
   solution: "Solution",
@@ -313,6 +338,8 @@ export const demoContent = {
   highlightsTitle: "Milestones along the way.",
   educationLabel: "Education",
   skillsLabel: "Skills",
+  skillsNotice: "Illustrative skill levels and notes",
+  skillLevel: (level: number) => `Demo skill level ${level} of 5`,
   languagesLabel: "Languages",
   interestsLabel: "Interests",
   interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO

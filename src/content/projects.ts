@@ -45,16 +45,16 @@ export const projects = [
     title: "Traffic Accident Risk Prediction",
     client: "Research — Daffodil International University",
     year: 2026,
-    role: "Researcher (team project)", // TODO(Alif): confirm exact role
+    role: "Researcher (team project)", // DEMO: confirm exact role
     category: "Research",
     summary:
       "Research on predicting traffic accident risk to support intelligent transportation systems.",
     problem:
       "Road accidents are a major cost in lives and money. Predicting where and when risk is high lets planners and traffic systems act before accidents happen.",
     solution: [
-      "Built and evaluated models that estimate accident risk from traffic and road data.", // TODO(Alif): confirm method/data
+      "Built and evaluated models that estimate accident risk from traffic and road data.", // DEMO: confirm method/data
     ],
-    stack: ["Python", "Machine Learning"], // TODO(Alif): confirm
+    stack: ["Python", "Machine Learning"], // DEMO: confirm
     results: ["Paper submitted for publication"],
     link: null,
     images: [demoImage("research-overview", "DEMO photograph for the research case study"), demoImage("research-detail", "DEMO detail photograph for the research case study")], // DEMO images only; project copy is unchanged.

@@ -46,9 +46,33 @@ Use a real date in YYYY-MM-DD format. Keep `draft: true` while editing: developm
 
 Local paths begin `/images/` and point into `public/images/`. HTTPS images must also be permitted by `next.config.ts`; use local files to avoid requiring configuration changes. The validator checks local file existence, not remote availability.
 
+## ছবি বদলাবেন কীভাবে
+
+1. নতুন নামে ছবিটি `public/images/…`-এ রাখুন। চাইলে `pnpm add:image <file> <name>` চালান। টুলটি সঠিক মাপসহ ছবির তথ্য দেখাবে।
+2. নিচের ফিল্ডে `src` বদলান। যেমন `public/images/my-campus.jpg` হলে লিখুন `/images/my-campus.jpg`। ছবির আসল `width`, `height` ও ছবিতে কী দেখা যাচ্ছে তার ছোট বর্ণনা `alt`-এ দিন।
+3. যে ছবি DEMO helper দিয়ে বসানো আছে, সেখানে পুরো helper কলের জায়গায় নতুন `{ src, width, height, alt }` বসান। Travel-এ `caption`-ও দিন। `pnpm validate:content` চালিয়ে মোবাইল ও ডেস্কটপে কাটছাঁট দেখুন।
+
+| পেজ ও ছবির জায়গা | ফাইল ও ফিল্ড | প্রস্তাবিত মাপ |
+| --- | --- | --- |
+| Home মূল পোর্ট্রেট ও সাইট শেয়ার কার্ড | `site.ts → site.heroPhoto` | 2400×1350, JPG বা PNG |
+| Home ট্যাগলাইনের গোল ছবি | `site.ts → site.avatar` | 400×400 |
+| Home ডান পাশের পোর্ট্রেট | `site.ts → site.heroSide` | 900×1100 |
+| Home ছবির স্ট্রিপ ও ভাসমান প্রথম ছবি | `site.ts → heroPhotos.images[]` (প্রথমটি `site.aboutPhoto`) | প্রথমটি 1200×1500, বাকিগুলো 1200×900 |
+| About পোর্ট্রেট | `site.ts → site.aboutPhoto` | 1200×1500, মুখ মাঝের ওপরের দিকে রাখুন |
+| About বিশ্ববিদ্যালয়, কলেজ ও স্কুল | `site.ts → site.education[].image` | 1200×900, 4:3 |
+| About চারটি জীবনের অধ্যায় | `site.ts → site.story[].image` | 1600×1200, মাঝ বরাবর বিষয় রাখুন |
+| About Interests | `site.ts → demoContent.interestsPhoto` | 800×1000, পোর্ট্রেট |
+| Home Selected Work ও Work তালিকার থাম্বনেইল | `projects.ts → projects[].images[0]` | 1600×1000, ল্যান্ডস্কেপ |
+| Work কেস স্টাডির কভার ও গ্যালারি | `projects.ts → projects[].images[]` (প্রথমটি কভার) | 1600×1000, ল্যান্ডস্কেপ |
+| About ভ্রমণ স্ট্রিপ, Travel বই, ম্যাপ, তালিকা, ট্রিপ কভার ও গ্যালারি | `travel.ts → trips[].photos[]` ও `internationalTrips[].photos[]` (প্রথমটি কভার ও থাম্বনেইল) | 1200×900, 4:3, সঙ্গে `caption` |
+| ব্রাউজার ট্যাবের আইকন | `site.ts → site.logoInitial` থেকে 64×64 আইকন তৈরি হয় | আলাদা ছবি লাগে না |
+| Work, Writing ও Travel শেয়ার কার্ড | `projects.ts`, `posts/*.md` ও `travel.ts`-এর শিরোনাম এবং মেটাডেটা থেকে 1200×630 কার্ড তৈরি হয় | আলাদা ছবি লাগে না |
+
+সব কনটেন্ট ফাইলের শুরুতে `src/content/` যোগ করুন। Writing, Services, Approach, Contact, Lab, Estimate, Résumé, Uses ও Now-এর মূল পাতায় বদলানোর আলাদা ছবি নেই।
+
 ## Replace demo content
 
-Run `rg -n '// DEMO' src/content` (or search for `// DEMO` in your editor). Replace each marked example with confirmed facts, approved quotes and owned photos. Check every item in a marked group. Search for `DEMO` and `TODO(` as well, including Markdown comments. Remove markers only after replacing the content. The validator prints marker counts per file and warns about `TODO(` in non-draft sources. It cannot confirm whether a claim is true.
+Run `pnpm demo:list` for file-and-line locations, and use [the Bangla questionnaire](CONTENT-INTAKE-bn.md) to collect replacements. Replace each marked example with confirmed facts, approved quotes and owned photos. Check every item in a marked group. Search for `DEMO` and `TODO(` as well, including Markdown comments. Remove markers only after replacing the content. The validator prints marker counts per file and warns about `TODO(` in non-draft sources. It cannot confirm whether a claim is true.
 
 ## Preview and deploy
 
