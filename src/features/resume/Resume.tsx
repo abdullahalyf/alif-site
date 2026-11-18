@@ -10,6 +10,7 @@ export function Resume() {
           every line sits still. */}
       <Reveal>
         <header>
+          <p className="label">{c.title}</p>
           <h1>{site.fullName}</h1>
           <p className="lead">{site.role}</p>
           <p>{site.location}</p>

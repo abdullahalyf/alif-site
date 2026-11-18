@@ -194,7 +194,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 @keyframes menu-slide-in { from { transform: translateX(100%); } }
 @keyframes menu-dim-in { from { opacity: 0; } }
 @media (max-width: 35rem) { .site-menu { width: 100%; } }
-@media (max-width: 55.999rem) { .desktop-nav { display: none; } }
+@media (max-width: 63.999rem) { .desktop-nav { display: none; } }
 .fallback-nav { display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
 .footer { background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
 .footer-inner { display: grid; gap: 1.25rem; padding-block: var(--section-space); }

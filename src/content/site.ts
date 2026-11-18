@@ -172,6 +172,8 @@ export const site = {
   ],
 } satisfies Site;
 
+export const resumeLink = { label: "Resume / CV", href: "/resume" };
+
 const navigationLinks = {
   work: { label: "Work", href: "/work" },
   services: { label: "Services", href: "/services" },
@@ -182,7 +184,7 @@ const navigationLinks = {
   travel: { label: "Travel", href: "/travel" },
   lab: { label: "Lab", href: "/lab" },
   estimate: { label: "Estimate a project", href: "/estimate" },
-  resume: { label: "Résumé", href: "/resume" },
+  resume: resumeLink,
   uses: { label: "Uses", href: "/uses" },
   now: { label: "Now", href: "/now" },
 };
@@ -209,7 +211,7 @@ export const shell = {
   home: { label: "Home", href: "/" },
   nav: [
     navigationLinks.work, navigationLinks.services, navigationLinks.approach,
-    navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    navigationLinks.writing, navigationLinks.about, navigationLinks.resume, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
