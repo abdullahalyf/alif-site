@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { travelContent } from "../src/content/travel";
 import { aboutContent, demoContent, site } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
@@ -144,4 +145,24 @@ test("the achievements are cards", async ({ page }) => {
     viewport: document.documentElement.clientWidth,
   }));
   expect(dimensions.page).toBe(dimensions.viewport);
+});
+
+test("the travel strip and its scrubber stay in sync", async ({ page, isMobile }) => {
+  await page.goto("/about");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const strip = page.getByRole("region", { name: travelContent.teaserTitle });
+  const scrubber = page.getByRole("slider", { name: travelContent.teaserProgress });
+  const offset = () => strip.evaluate((element) => element.scrollLeft);
+  await expect(scrubber).toHaveValue("0");
+  await scrubber.focus();
+  await scrubber.press("End");
+  await expect(scrubber).toHaveValue("100");
+  await expect.poll(offset).toBeGreaterThan(0);
+  await scrubber.press("Home");
+  await expect.poll(offset).toBe(0);
+  if (!isMobile) {
+    await strip.hover();
+    await page.mouse.wheel(0, 150);
+    await expect.poll(async () => Number(await scrubber.inputValue())).toBeGreaterThan(0);
+  }
 });

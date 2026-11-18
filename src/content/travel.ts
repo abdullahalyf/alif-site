@@ -218,6 +218,7 @@ export const travelContent = {
   placesTitle: "Places I've been",
   teaserLabel: "Away from the desk",
   teaserTitle: "A few notes from the road",
+  teaserProgress: "Travel photo strip position",
   allTravels: "See all travels",
   aboutLink: "More about me",
   aboutPath: "/about",
