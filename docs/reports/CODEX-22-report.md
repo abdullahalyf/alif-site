@@ -1,6 +1,9 @@
-DONE: codex-22 · branch codex-22  
-check: pass, 159 unit tests and zero warnings · e2e: run1 652/666, run2 652/666, 14 configured skips and zero failures per run · Lighthouse: mobile results below  
-Parts: 1–8 ✅ · A ✅ B ✅ C ❌ D ✅ E ✅  
+DONE: codex-22 · branch codex-22
+
+check: pass, 159 unit tests and zero warnings · e2e: run1 652/666, run2 652/666, 14 configured skips and zero failures per run · Lighthouse: mobile results below
+
+Parts: 1–8 ✅ · A ✅ B ✅ C ❌ D ✅ E ✅
+
 Screenshots: [docs/reports/codex-22/](codex-22/) · 52 at 390px and 52 at 1440px
 
 | Route | Performance | Accessibility | Best practices | SEO | TBT | LCP |
