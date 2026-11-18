@@ -5,7 +5,6 @@
 .route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; stroke-dasharray: 3 6; }
 .route-upcoming { opacity: 0.25; }
 .route-visited { stroke: var(--ink); }
-.travel-book[data-layout] .route-draw-mask { stroke-dashoffset: var(--route-offset, 1); }
 .route-pin-target { fill: transparent; }
 .route-pin-dot { stroke: var(--ink); stroke-width: 1.5; fill: var(--cream); }
 .route-pin[data-state="visited"] .route-pin-dot, .route-pin[data-state="active"] .route-pin-dot { fill: var(--ink); }
@@ -32,7 +31,6 @@
   .travel-map-drawing { max-width: 13rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .travel-book[data-layout] .route-draw-mask { stroke-dashoffset: 0; }
   .route-pin-halo, .route-thumbnail { animation: none !important; }
 }
 

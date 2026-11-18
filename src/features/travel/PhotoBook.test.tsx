@@ -14,7 +14,7 @@ beforeEach(() => {
   vi.stubGlobal("matchMedia", () => ({ matches: mocks.desktop, addEventListener: vi.fn(), removeEventListener: vi.fn() }));
   vi.stubGlobal("requestAnimationFrame", vi.fn(() => 1));
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
-  HTMLElement.prototype.scrollTo = vi.fn();
+  HTMLElement.prototype.scrollTo = vi.fn(function (this: HTMLElement, options: ScrollToOptions) { this.scrollLeft = options.left ?? 0; });
   HTMLElement.prototype.scrollIntoView = vi.fn();
   const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), pause: vi.fn().mockReturnThis(), paused: vi.fn().mockReturnThis(), kill: vi.fn(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
   mocks.timeline.mockReturnValue(timeline);
@@ -36,7 +36,7 @@ it("renders every article, story, caption and lazy-loads all but the first page"
 it("never initializes a pin under reduced motion even on a desktop pointer", () => {
   mocks.reduced = true; mocks.desktop = true;
   const { container } = render(<PhotoBook />);
-  expect(container.querySelector(".travel-book")).toHaveAttribute("data-layout", "snap");
+  expect(container.querySelector(".travel-book-stage")).toHaveAttribute("data-book-scroll", "native");
   expect(mocks.getGsap).not.toHaveBeenCalled();
 });
 it("supports arrow keys, Home/End and bounded previous/next controls", () => {
@@ -58,6 +58,7 @@ it("supports arrow keys, Home/End and bounded previous/next controls", () => {
 });
 it("consumes wheel events only while the book can move, and passes both edges through", () => {
   mocks.desktop = true;
+  mocks.reduced = true;
   vi.spyOn(HTMLElement.prototype, "scrollWidth", "get").mockReturnValue(8000);
   vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(1000);
   const { unmount } = render(<PhotoBook />);
@@ -70,6 +71,7 @@ it("consumes wheel events only while the book can move, and passes both edges th
   expect(wheel(400).defaultPrevented).toBe(true);
   expect(book.scrollLeft).toBe(400);
   book.scrollLeft = 7000;
+  fireEvent.scroll(book);
   expect(wheel(100).defaultPrevented).toBe(false);
   unmount();
   book.scrollLeft = 200;

@@ -158,7 +158,7 @@ export const travelContent = {
   demoNotice: "DEMO travel notes and illustrative photographs.",
   bookTitle: "A few pages from the road",
   bookLabel: "Travel photo-book",
-  desktopHint: "Scroll over the book or drag to turn the pages. At either end, keep scrolling to continue down the page. Arrow keys work when the book is focused.",
+  desktopHint: "Scroll or drag to browse. At either end, keep scrolling to move down or up the page. Use the arrow keys when the book is focused.",
   swipeHint: "Swipe through the pages, or use the left and right arrow keys.",
   listHint: "Eight journeys, one page at a time.",
   previous: "Previous journey",
