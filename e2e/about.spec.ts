@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { travelContent } from "../src/content/travel";
-import { aboutContent, demoContent, site } from "../src/content/site";
+import { aboutContent, site, skillProfile } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
@@ -86,14 +86,17 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   expect(filled).toBeGreaterThan(0);
 });
 
-test("skills show notes and demo levels alongside language chips", async ({ page }) => {
+test("skills show the workflow and honest levels alongside language chips", async ({ page }) => {
   await page.goto("/about");
+
+  await expect(page.getByText(skillProfile.intro)).toBeVisible();
+  for (const step of skillProfile.workflow) await expect(page.getByText(step, { exact: true })).toBeVisible();
 
   for (const group of site.skills) {
     for (const item of group.items) {
       const row = page.locator(".skill-card li").filter({ hasText: item.name });
       await expect(row.getByText(item.note)).toBeVisible();
-      await expect(row.getByRole("meter", { name: demoContent.skillLevel(item.level) })).toHaveAttribute("value", String(item.level));
+      await expect(row.getByRole("meter", { name: item.name })).toHaveAttribute("value", String(item.level));
     }
   }
 

@@ -1,4 +1,4 @@
-import { site, shell } from "@/content/site";
+import { site, shell, skillProfile } from "@/content/site";
 import { projects } from "@/content/projects";
 import { resumeContent as c } from "@/content/resume";
 import { Reveal, StaggerIn } from "@/components/motion";
@@ -84,12 +84,25 @@ export function Resume() {
           <h2>{c.skillsTitle}</h2>
         </Reveal>
         <StaggerIn>
-          {site.skills.map((item) => (
-            <p key={item.title}>
-              <strong>{item.title}: </strong>
-              {item.items.map(({ name }) => name).join(", ")}
-            </p>
+          <div>
+            <h3>{skillProfile.coreTitle}</h3>
+            <p>{skillProfile.intro}</p>
+            <p>{skillProfile.strengths.map(({ name }) => name).join(" · ")}</p>
+          </div>
+          <div>
+            <h3>{skillProfile.workflowTitle}</h3>
+            <p>{skillProfile.workflow.join(" → ")}</p>
+          </div>
+          {site.skills.map((group) => (
+            <div key={group.title}>
+              <h3>{group.title}</h3>
+              {group.items.map(({ name, note }) => <p key={name}>{name} · {note}</p>)}
+            </div>
           ))}
+          <div>
+            <h3>{skillProfile.toolsTitle}</h3>
+            <p>{skillProfile.tools.map(({ name }) => name).join(" · ")}</p>
+          </div>
         </StaggerIn>
       </section>
       <section>
