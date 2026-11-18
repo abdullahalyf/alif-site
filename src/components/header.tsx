@@ -122,15 +122,17 @@ export function Header() {
               </form>
               <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
             </div>
-            <nav className="site-menu__groups" aria-label={shell.navigation}>
-              {footerGroups.map((group, index) => <div key={group.label} style={{ "--menu-group": index } as CSSProperties}>
-                <h2 className="label">{group.label}</h2>
-                <ul>
-                  {group.links.map((link, item) => <li key={link.href} style={{ "--menu-item": item } as CSSProperties}>{linkItem(link)}</li>)}
-                </ul>
-              </div>)}
+            <nav aria-label={shell.navigation}>
+              <div className="site-menu__groups">
+                {footerGroups.map((group, index) => <div key={group.label} style={{ "--menu-group": index } as CSSProperties}>
+                  <h2 className="label">{group.label}</h2>
+                  <ul>
+                    {group.links.map((link, item) => <li key={link.href} style={{ "--menu-item": item } as CSSProperties}>{linkItem(link)}</li>)}
+                  </ul>
+                </div>)}
+              </div>
+              <div className="site-menu__contact">{linkItem(shell.contact)}</div>
             </nav>
-            <div className="site-menu__contact">{linkItem(shell.contact)}</div>
           </div>
         </dialog>
         <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}{footerGroups.flatMap((group) => group.links).filter((link) => !shell.nav.some((item) => item.href === link.href)).map(linkItem)}</nav><style>{`.header-actions { display: none; }`}</style></noscript>
