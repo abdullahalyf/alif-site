@@ -57,7 +57,7 @@
 .latest-writing-grid a { text-decoration: underline; }
 @media (max-width: 47.999rem) {
   .highlights-grid, .testimonials-grid { grid-auto-columns: min(88%, 23rem); }
-  .about-milestones, .about-bento, .latest-writing-grid, .education-timeline article { grid-template-columns: 1fr; }
+  .about-milestones, .about-bento, .latest-writing-grid, .education-timeline article { grid-template-columns: minmax(0, 1fr); }
   .stats-grid { gap: 1rem; }
   .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
   .education-timeline { padding-left: 1.5rem; }

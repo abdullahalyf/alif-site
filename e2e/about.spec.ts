@@ -129,4 +129,9 @@ test("the achievements are cards", async ({ page }) => {
   const cards = page.locator(".highlight-card");
   await expect(cards).toHaveCount(site.achievements.length);
   await expect(cards.first()).toContainText(site.achievements[0].title);
+  const dimensions = await page.evaluate(() => ({
+    page: document.documentElement.scrollWidth,
+    viewport: document.documentElement.clientWidth,
+  }));
+  expect(dimensions.page).toBe(dimensions.viewport);
 });
