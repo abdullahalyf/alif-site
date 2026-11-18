@@ -7,7 +7,7 @@ import { trips, travelContent as c } from "@/content/travel";
 
 const mocks = vi.hoisted(() => ({ reduced: false, desktop: false, getGsap: vi.fn(), revert: vi.fn(), timeline: vi.fn() }));
 vi.mock("@/lib/gsap", () => ({ getGsap: mocks.getGsap }));
-vi.mock("@/lib/use-reduced-motion", () => ({ useReducedMotion: () => mocks.reduced }));
+vi.mock("@/lib/use-reduced-motion", () => ({ prefersReducedMotion: () => mocks.reduced, useReducedMotion: () => mocks.reduced }));
 vi.mock("@/components/motion", () => ({ useSmoothScroll: () => null, PhotoReveal: ({ children, className }: { children: ReactNode; className?: string }) => <div className={className}>{children}</div> }));
 beforeEach(() => {
   mocks.reduced = false; mocks.desktop = false; vi.clearAllMocks();
@@ -15,7 +15,8 @@ beforeEach(() => {
   vi.stubGlobal("requestAnimationFrame", vi.fn(() => 1));
   vi.stubGlobal("cancelAnimationFrame", vi.fn());
   HTMLElement.prototype.scrollTo = vi.fn();
-  const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
+  HTMLElement.prototype.scrollIntoView = vi.fn();
+  const timeline = { to: vi.fn().mockReturnThis(), fromTo: vi.fn().mockReturnThis(), pause: vi.fn().mockReturnThis(), paused: vi.fn().mockReturnThis(), kill: vi.fn(), scrollTrigger: { start: 100, end: 8100, update: vi.fn() } };
   mocks.timeline.mockReturnValue(timeline);
   mocks.getGsap.mockReturnValue({ timeline: mocks.timeline, context: (callback: () => void) => { callback(); return { revert: mocks.revert }; } });
 });
@@ -55,14 +56,24 @@ it("supports arrow keys, Home/End and bounded previous/next controls", () => {
   expect(screen.getByText("01 / 08")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: c.previous })).toBeDisabled();
 });
-it("creates a scoped scrubbed pin on eligible desktops and reverts it on unmount", () => {
+it("consumes wheel events only while the book can move, and passes both edges through", () => {
   mocks.desktop = true;
   vi.spyOn(HTMLElement.prototype, "scrollWidth", "get").mockReturnValue(8000);
   vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(1000);
-  const { unmount, container } = render(<PhotoBook />);
-  expect(container.querySelector(".travel-book")).toHaveAttribute("data-layout", "pinned");
-  expect(mocks.timeline).toHaveBeenCalledWith(expect.objectContaining({ scrollTrigger: expect.objectContaining({ pin: true, scrub: true }) }));
-  unmount(); expect(mocks.revert).toHaveBeenCalledOnce();
+  const { unmount } = render(<PhotoBook />);
+  const book = screen.getByRole("region", { name: c.bookLabel });
+  const wheel = (deltaY: number) => {
+    const event = new WheelEvent("wheel", { deltaY, bubbles: true, cancelable: true });
+    book.dispatchEvent(event); return event;
+  };
+  expect(wheel(-100).defaultPrevented).toBe(false);
+  expect(wheel(400).defaultPrevented).toBe(true);
+  expect(book.scrollLeft).toBe(400);
+  book.scrollLeft = 7000;
+  expect(wheel(100).defaultPrevented).toBe(false);
+  unmount();
+  book.scrollLeft = 200;
+  expect(wheel(100).defaultPrevented).toBe(false);
 });
 it("provides an unwired teaser for exactly the three latest journeys", () => {
   render(<TravelTeaser />);
@@ -70,4 +81,13 @@ it("provides an unwired teaser for exactly the three latest journeys", () => {
   for (const trip of latest) expect(screen.getByRole("heading", { name: trip.title })).toBeInTheDocument();
   expect(screen.getAllByRole("img")).toHaveLength(3);
   expect(screen.getByRole("link", { name: c.allTravels })).toHaveAttribute("href", c.path);
+});
+
+it("turns the book to a selected map pin and marks that location current", () => {
+  render(<PhotoBook />);
+  const pin = screen.getByRole("link", { name: c.mapPinLabel(trips[5].place) });
+  fireEvent.click(pin);
+  expect(screen.getByText("06 / 08")).toBeInTheDocument();
+  expect(pin).toHaveAttribute("aria-current", "location");
+  expect(screen.getByRole("progressbar", { name: c.progress })).toHaveAttribute("aria-valuenow", "6");
 });

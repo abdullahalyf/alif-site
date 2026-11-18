@@ -13,3 +13,18 @@
 .travel-closing > p { font-family: var(--font-serif); font-size: var(--type-h2); line-height: 1.1; max-width: 25ch; }
 @media (max-width: 899px) { .travel-places-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 420px) { .travel-places-grid { grid-template-columns: 1fr; } }
+.travel-stats { padding-block: 1rem 3rem; }
+.travel-stats h2 { font-family: var(--font-sans); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.travel-stats dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-block: 1.5rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.travel-stats dl > div { padding: 1.5rem 1rem 1.5rem 0; }
+.travel-stats dt { font-size: 0.8125rem; color: var(--ink-muted); }
+.travel-stats dd { font-family: var(--font-serif); font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; margin-top: 0.75rem; }
+.travel-stats > p { font-size: 0.8125rem; color: var(--ink-muted); max-width: 65ch; }
+.travel-place-filters { display: none; flex-wrap: wrap; align-items: end; gap: 1rem; margin-block: 1.5rem; }
+.travel-places[data-enhanced] .travel-place-filters { display: flex; }
+.travel-place-filters label { display: grid; gap: 0.5rem; font-size: 0.875rem; flex: 1 1 12rem; }
+.travel-place-filters select, .travel-place-filters button { min-height: 44px; border: 1px solid var(--ink-muted); padding: 0.65rem 1rem; background: var(--cream); color: var(--ink); border-radius: 0.5rem; }
+.travel-place-count { font-size: 0.8125rem; color: var(--ink-muted); margin-bottom: 2rem; }
+.travel-places-grid a { text-decoration: none; }
+.travel-places-grid a:hover h3 { text-decoration: underline; text-underline-offset: 0.2em; }
+@media (max-width: 599px) { .travel-stats dl { grid-template-columns: 1fr 1fr; } }
