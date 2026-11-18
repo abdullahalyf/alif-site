@@ -76,12 +76,12 @@ it("consumes wheel events only while the book can move, and passes both edges th
   book.scrollLeft = 200;
   expect(wheel(100).defaultPrevented).toBe(false);
 });
-it("provides an unwired teaser for exactly the three latest journeys", () => {
+it("provides a teaser for exactly the three latest journeys", () => {
   render(<TravelTeaser />);
   const latest = [...trips].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   for (const trip of latest) expect(screen.getByRole("heading", { name: trip.title })).toBeInTheDocument();
   expect(screen.getAllByRole("img")).toHaveLength(3);
-  expect(screen.getByRole("link", { name: c.allTravels })).toHaveAttribute("href", c.path);
+  expect(screen.getByRole("link", { name: c.openJournal })).toHaveAttribute("href", c.path);
 });
 
 it("turns the book to a selected map pin and marks that location current", () => {

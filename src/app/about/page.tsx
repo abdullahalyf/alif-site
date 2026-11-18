@@ -43,11 +43,11 @@ export default function About() {
     <div className="tint-sage"><AboutDetails /></div>
     <section className="tint-sand section-space" aria-labelledby="story-title">
       <div className="container">
-      <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
-      <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
-      <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
-      <TravelTeaser />
+        <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
+        <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
+        <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
       </div>
     </section>
+    <TravelTeaser />
   </>;
 }
