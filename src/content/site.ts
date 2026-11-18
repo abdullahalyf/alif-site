@@ -270,6 +270,17 @@ export const workContent = {
 };
 
 export const aboutContent = {
+  intro: "I build business software and study how systems work in the real world.",
+  facts: [
+    { label: "Based in", value: "Savar, Dhaka" },
+    { label: "From", value: "Jhenaidah, Bangladesh" },
+    { label: "Studying", value: "CSE at Daffodil International University" },
+    { label: "Languages", value: site.languages.map(({ name }) => name).join(" · ") },
+    { label: site.statusCard.buildingLabel, value: site.statusCard.building },
+  ],
+  email: { ...shell.email, label: "Email" },
+  resume: navigationLinks.resume,
+  signature: site.name,
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
 };

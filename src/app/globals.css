@@ -325,10 +325,21 @@ body:has(.fallback-nav) { padding-top: 0; }
   .carousel-controls { display: none; }
 }
 
-.about-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: start; }
+.about-opening { padding-top: clamp(1rem, 2vw, 1.75rem); }
+.about-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 1rem clamp(1.5rem, 4vw, 4rem); margin-block: 0.75rem 1.5rem; }
+.about-heading .section-title { margin: 0; }
+.about-heading__intro { font-size: 1.125rem; }
+.about-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem 1rem; margin-block: 0.75rem 1rem; }
+.about-facts > div { border-top: 1px solid var(--line); padding-top: 0.35rem; }
+.about-facts dd { margin: 0; font-size: 0.875rem; }
+.about-signature { margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--line); }
+.about-signature p { font: 400 var(--type-h3)/1.1 var(--font-serif); }
+.about-signature ul { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.35rem; font-size: 0.875rem; }
+@media (max-width: 47.999rem) { .about-heading { grid-template-columns: 1fr; } }
+.about-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 4vw, 4rem); align-items: stretch; }
 /* The copy sits near the top of the photo rather than centred against it, so the
    split reads as an asymmetric editorial spread instead of two equal columns. */
-.about-intro__copy { display: grid; gap: 1.5rem; align-content: start; padding-top: clamp(0rem, 2.5vw, 2.5rem); }
+.about-intro__copy { display: flex; flex-direction: column; gap: 1rem; }
 .about-photo-wrap { border-radius: 1.5rem; overflow: hidden; }
 .about-photo-wrap img { width: 100%; height: auto; border-radius: 1.5rem; }
 .story-chapters { display: grid; gap: clamp(2rem, 7vw, 6rem); }
