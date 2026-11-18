@@ -4,16 +4,19 @@ export const servicesContent = servicesSchema.parse({
   intro:
     "Start with the decisions that matter: how work flows, who needs access, and what must keep working when things go wrong.",
   deliverablesLabel: "Typical deliverables",
-  timelineLabel: "Indicative timeline",
+  timelineLabel: "Typical timeline",
   processTitle: "How an engagement works",
   modelsTitle: "Ways to work together",
   faqTitle: "Before we begin",
   cta: "Tell me about your project",
   contactPath: "/contact",
+  estimatePath: "/estimate",
+  estimateLabel: "Estimate this service",
   // DEMO: indicative scope, timelines and engagement terms; confirm before offering.
   blocks: [
     {
       title: "System architecture",
+      icon: "architecture",
       description: "A practical blueprint before committing to a build.",
       deliverables: [
         "Domain and data model",
@@ -24,6 +27,7 @@ export const servicesContent = servicesSchema.parse({
     },
     {
       title: "Business software",
+      icon: "operations",
       description: "Make daily operations clear, traceable and easier to run.",
       deliverables: [
         "POS, inventory or operations workflows",
@@ -34,6 +38,7 @@ export const servicesContent = servicesSchema.parse({
     },
     {
       title: "Offline-first apps",
+      icon: "offline",
       description:
         "Keep essential work moving through unreliable connectivity.",
       deliverables: [
@@ -45,6 +50,7 @@ export const servicesContent = servicesSchema.parse({
     },
     {
       title: "Database & access control",
+      icon: "access",
       description:
         "Design the rules that protect the system beneath the interface.",
       deliverables: [

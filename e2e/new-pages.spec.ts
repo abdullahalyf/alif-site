@@ -245,3 +245,27 @@ test("new pages fit the viewport with a single main heading", async ({
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }
 });
+
+test("Work filters its project rows by category", async ({ page }) => {
+  await page.goto("/work");
+  const filter = page.getByRole("combobox", { name: "Filter by category" });
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const rows = page.locator(".work-row");
+  const count = await rows.count();
+  await filter.selectOption("Research");
+  await expect(rows).toHaveCount(1);
+  await expect(rows.first()).toContainText("Traffic Accident Risk Prediction");
+  await expect(rows.first().locator("img")).toBeVisible();
+  await filter.selectOption("");
+  await expect(rows).toHaveCount(count);
+});
+
+test("each service offers a timeline and a link to the estimator", async ({ page }) => {
+  await page.goto("/services");
+  const blocks = page.locator(".service-block");
+  await expect(blocks).toHaveCount(4);
+  for (const block of await blocks.all()) {
+    await expect(block.getByText("Typical timeline")).toBeVisible();
+    await expect(block.getByRole("link", { name: "Estimate this service" })).toHaveAttribute("href", "/estimate");
+  }
+});

@@ -10,10 +10,13 @@ export const servicesSchema = z.object({
   faqTitle: text,
   cta: text,
   contactPath: text,
+  estimatePath: text,
+  estimateLabel: text,
   blocks: z
     .array(
       z.object({
         title: text,
+        icon: z.enum(["architecture", "operations", "offline", "access"]),
         description: text,
         deliverables: z.array(text).min(1),
         timeline: text,

@@ -302,6 +302,8 @@ export const aboutContent = {
 
 export const pageContent = {
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
+  workFilter: "Filter by category",
+  allWorkCategories: "All categories",
   workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
   problem: "Problem",
   solution: "Solution",
