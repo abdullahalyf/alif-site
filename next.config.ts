@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
       { source: "/fonts/:path*", headers: immutable },
     ];
   },
+  images: {
+    deviceSizes: [360, 384, 512, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    qualities: [68, 75],
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

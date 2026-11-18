@@ -5,7 +5,7 @@
   --cream: light-dark(#f1e9dc, #1a1815);
   --cream-2: light-dark(#e9dfce, #24211d);
   --ink: light-dark(#1e1c19, #ede6da);
-  --ink-muted: light-dark(#6a645a, #a79f92);
+  --ink-muted: light-dark(#62594f, #a79f92);
   --line: light-dark(#d6cebf, #3a3530);
   --sage: light-dark(#e4e8d8, #252820);
   --sand: light-dark(#ebdfcb, #29241d);
@@ -20,15 +20,15 @@
   --map-water: light-dark(#e2e8e4, #252e2a);
   --map-route: light-dark(#4c602c, #b7c67a);
   --scrim: #171411;
-  --photo-brightness: 1;
+  --photo-filter: none;
   --type-h1: clamp(3rem, 1.8rem + 5vw, 6rem);
   --type-h2: clamp(2.25rem, 1.5rem + 3vw, 4rem);
   --type-h3: clamp(1.5rem, 1.2rem + 1vw, 2rem);
 }
 
-html[data-theme="dark"] { color-scheme: dark; --photo-brightness: 0.88; }
+html[data-theme="dark"] { color-scheme: dark; --photo-filter: brightness(0.88); }
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme]) { color-scheme: dark; --photo-brightness: 0.88; }
+  html:not([data-theme]) { color-scheme: dark; --photo-filter: brightness(0.88); }
 }
 @media (prefers-reduced-motion: no-preference) {
   html[data-theme-switching] :where(body, header, footer, section, article, a, button, input, select, dialog, div, li) {
@@ -36,7 +36,7 @@ html[data-theme="dark"] { color-scheme: dark; --photo-brightness: 0.88; }
   }
   html[data-theme-switching] img { transition: filter 300ms ease; }
 }
-img:where(:not(.hero-photo)), .hero-panel__image { filter: brightness(var(--photo-brightness)); }
+img:where(:not(.hero-photo)), .hero-panel__image { filter: var(--photo-filter); }
 
 @theme inline {
   --color-cream: var(--cream);
@@ -106,7 +106,11 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 /* SVG lettering keeps the decorative sequence out of text LCP candidates. */
 .intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--cream); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
 .intro-words { display: block; fill: var(--ink); }
-.intro-word { visibility: hidden; font-family: var(--font-instrument), "Noto Serif Bengali", "Noto Serif CJK JP", "Noto Serif CJK SC", serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
+.intro-word { visibility: hidden; font-family: var(--font-instrument), serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
+.intro-word:lang(bn) { font-family: "Noto Serif Bengali", "Nirmala UI", serif; }
+.intro-word:lang(ja) { font-family: "Noto Serif CJK JP", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+.intro-word:lang(zh) { font-family: "Noto Serif CJK SC", "Songti SC", SimSun, serif; }
+.intro-word:lang(ar) { font-family: "Noto Naskh Arabic", "Geeza Pro", serif; }
 @keyframes intro-show { from { visibility: visible; } }
 @keyframes intro-exit { to { transform: translateY(-100%); } }
 @media (prefers-reduced-motion: reduce) { .intro-overlay { display: none; } }
@@ -194,7 +198,8 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 @keyframes menu-slide-in { from { transform: translateX(100%); } }
 @keyframes menu-dim-in { from { opacity: 0; } }
 @media (max-width: 35rem) { .site-menu { width: 100%; } }
-@media (max-width: 63.999rem) { .desktop-nav { display: none; } }
+@media (max-width: 74.999rem) { .desktop-nav { display: none; } }
+@media (max-width: 22rem) { .header-inner { width: calc(100% - 2rem); } }
 .fallback-nav { display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
 .footer { background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
 .footer-inner { display: grid; gap: 1.25rem; padding-block: var(--section-space); }
@@ -254,8 +259,6 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
 .hero-copy { display: grid; gap: 1.75rem; }
 .hero h1 { max-width: 18ch; }
-.hero-word { display: inline-block; overflow: clip; overflow-clip-margin: 0.07em; vertical-align: bottom; }
-.hero-word > span { display: block; }
 .tagline { display: flex; align-items: center; gap: 0.65rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.35rem 0.9rem 0.35rem 0.4rem; width: fit-content; font-size: 0.8rem; }
 .tagline img { border-radius: 50%; }
 .hero-intro { max-width: 48ch; font-size: clamp(1.125rem, 1rem + 0.4vw, 1.375rem); }

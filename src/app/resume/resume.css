@@ -36,6 +36,7 @@
     background: white !important;
     color: black !important;
     font-size: 10pt;
+    color-scheme: light !important;
   }
   /* The entrance animation clips and shifts its content. A printed page has
      no animation, so the clip is cleared and everything sits still. */

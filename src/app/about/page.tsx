@@ -15,7 +15,7 @@ export default function About() {
     <section className="container section-space about-opening" aria-labelledby="about-title">
       <SectionLabel>{site.name}</SectionLabel>
       <div className="about-heading">
-        <Reveal><h1 id="about-title" className="section-title">{shell.aboutTitle}</h1></Reveal>
+        <h1 id="about-title" className="section-title">{shell.aboutTitle}</h1>
         <div>
           <p className="about-heading__intro">{aboutContent.intro}</p>
           <dl className="about-facts">
@@ -29,7 +29,7 @@ export default function About() {
       </div>
       <div className="about-intro">
         <div className="about-photo-wrap">
-          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 768px) 100vw, 50vw" preload />
+          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" loading="eager" fetchPriority="high" />
         </div>
         <div className="about-intro__copy">
           {site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}

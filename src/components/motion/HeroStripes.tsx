@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type HeroStripesProps = {
@@ -62,39 +63,41 @@ export function HeroStripes({
     const root = rootRef.current;
     if (!root) return;
 
-    const lines = Array.from(root.querySelectorAll<SVGLineElement>("line"));
-    if (!lines.length) return;
+    return whenNearViewport(root, () => {
+      const lines = Array.from(root.querySelectorAll<SVGLineElement>("line"));
+      if (!lines.length) return;
 
-    const gsap = getGsap();
+      const gsap = getGsap();
 
-    const draw = gsap.fromTo(
-      lines,
-      { strokeDashoffset: dashLength },
-      {
-        strokeDashoffset: 0,
-        duration: 1.1,
-        ease: "power2.out",
-        stagger: 0.09,
-      },
-    );
+      const draw = gsap.fromTo(
+        lines,
+        { strokeDashoffset: dashLength },
+        {
+          strokeDashoffset: 0,
+          duration: 1.1,
+          ease: "power2.out",
+          stagger: 0.09,
+        },
+      );
 
-    const parallax = gsap.to(lines, {
-      y: drift,
-      ease: "none",
-      scrollTrigger: {
-        trigger: root,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-      },
+      const parallax = gsap.to(lines, {
+        y: drift,
+        ease: "none",
+        scrollTrigger: {
+          trigger: root,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      return () => {
+        draw.scrollTrigger?.kill();
+        parallax.scrollTrigger?.kill();
+        draw.kill();
+        parallax.kill();
+      };
     });
-
-    return () => {
-      draw.scrollTrigger?.kill();
-      parallax.scrollTrigger?.kill();
-      draw.kill();
-      parallax.kill();
-    };
   }, [reducedMotion, drift, dashLength]);
 
   return (

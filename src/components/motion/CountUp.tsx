@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getGsap } from "@/lib/gsap";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type CountUpProps = {
@@ -44,25 +45,27 @@ export function CountUp({ value, duration = 1.2, className }: CountUpProps) {
     if (!target) return;
     const suffix = match[2];
 
-    const gsap = getGsap();
-    const counter = { value: 0 };
-    const tween = gsap.to(counter, {
-      value: target,
-      duration,
-      ease: "power2.out",
-      onUpdate: () => {
-        root.textContent = `${Math.round(counter.value)}${suffix}`;
-      },
-      scrollTrigger: { trigger: root, start: "top 90%", once: true },
-    });
+    return whenNearViewport(root, () => {
+      const gsap = getGsap();
+      const counter = { value: 0 };
+      const tween = gsap.to(counter, {
+        value: target,
+        duration,
+        ease: "power2.out",
+        onUpdate: () => {
+          root.textContent = `${Math.round(counter.value)}${suffix}`;
+        },
+        scrollTrigger: { trigger: root, start: "top 90%", once: true },
+      });
 
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-      // Put the final number back, so a tween that never ran cannot leave a
-      // half-counted figure behind.
-      root.textContent = value;
-    };
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+        // Put the final number back, so a tween that never ran cannot leave a
+        // half-counted figure behind.
+        root.textContent = value;
+      };
+    });
   }, [reducedMotion, value, duration]);
 
   return (

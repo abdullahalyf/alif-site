@@ -16,7 +16,7 @@ Feel: warm, calm, editorial. A personal site people actually read — who Alif i
 | `--cream` | `#F1E9DC` | `#1A1815` | page background |
 | `--cream-2` | `#E9DFCE` | `#24211D` | cards and image placeholders |
 | `--ink` | `#1E1C19` | `#EDE6DA` | text and primary buttons |
-| `--ink-muted` | `#6A645A` | `#A79F92` | secondary text and captions |
+| `--ink-muted` | `#62594F` | `#A79F92` | secondary text and captions |
 | `--line` | `#D6CEBF` | `#3A3530` | hairline dividers and diagonal lines |
 | `--sage` | `#E4E8D8` | `#252820` | tinted sections and tags |
 | `--sand` | `#EBDFCB` | `#29241D` | tinted sections and tags |
@@ -36,7 +36,7 @@ All text/background pairs must pass WCAG AA.
 - Scale (fluid with `clamp`): h1 48→96px, h2 36→64px, h3 24→32px.
 
 ## Global elements
-- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. The header stays fixed and becomes compact after 40px of scroll.
+- **Header**: wordmark on the left and navigation on wide screens. The Menu button opens a side drawer that fills small screens. Both the header and drawer offer a theme control. The site follows the system theme until a visitor makes a choice. The header stays fixed, compacts as visitors scroll down, and expands as they scroll up.
 - **Buttons**: pill shape, `--ink` bg + cream text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.

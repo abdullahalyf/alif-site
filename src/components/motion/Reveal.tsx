@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { getGsap } from "@/lib/gsap";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type RevealProps = {
@@ -48,29 +49,31 @@ export function Reveal({
     if (!root) return;
 
     const gsap = getGsap();
-    const targets = Array.from(root.children);
-    if (!targets.length) return;
+    return whenNearViewport(root, () => {
+      const targets = Array.from(root.children);
+      if (!targets.length) return;
 
-    // The entrance moves and un-covers the content rather than fading it: the
-    // text itself stays at full opacity the whole time, so contrast is never
-    // reduced mid-animation. `clip-path` is animated instead of `opacity`.
-    const tween = gsap.from(targets, {
-      y: 24,
-      clipPath: "inset(0 0 100% 0)",
-      duration: 0.8,
-      ease: "power3.out",
-      stagger: lines ? stagger : 0,
-      clearProps: "transform,clipPath",
-      scrollTrigger: { trigger: root, start, once: true },
+      // The entrance moves and un-covers the content rather than fading it: the
+      // text itself stays at full opacity the whole time, so contrast is never
+      // reduced mid-animation. `clip-path` is animated instead of `opacity`.
+      const tween = gsap.from(targets, {
+        y: 24,
+        clipPath: "inset(0 0 100% 0)",
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: lines ? stagger : 0,
+        clearProps: "transform,clipPath",
+        scrollTrigger: { trigger: root, start, once: true },
+      });
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+        // Undo the entrance start state, so a tween that never ran cannot leave
+        // the content clipped or shifted.
+        gsap.set(targets, { clearProps: "transform,clipPath" });
+      };
     });
-
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-      // Undo the entrance start state, so a tween that never ran cannot leave
-      // the content clipped or shifted.
-      gsap.set(targets, { clearProps: "transform,clipPath" });
-    };
   }, [reducedMotion, lines, stagger, start]);
 
   return (

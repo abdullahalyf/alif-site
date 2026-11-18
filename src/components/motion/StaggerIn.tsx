@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
 import { getGsap } from "@/lib/gsap";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type StaggerInProps = {
@@ -49,30 +50,32 @@ export function StaggerIn({
     const root = rootRef.current;
     if (!root) return;
 
-    const targets = Array.from(root.children);
-    if (!targets.length) return;
+    return whenNearViewport(root, () => {
+      const targets = Array.from(root.children);
+      if (!targets.length) return;
 
-    const gsap = getGsap();
-    // The cards slide in and are un-covered by a clip rather than fading: the
-    // text inside them stays at full opacity the whole time, so its contrast
-    // is never reduced mid-animation.
-    const tween = gsap.from(targets, {
-      x: distance,
-      clipPath: "inset(0 100% 0 0)",
-      duration: 0.7,
-      ease: "power3.out",
-      stagger,
-      clearProps: "transform,clipPath",
-      scrollTrigger: { trigger: root, start, once: true },
+      const gsap = getGsap();
+      // The cards slide in and are un-covered by a clip rather than fading: the
+      // text inside them stays at full opacity the whole time, so its contrast
+      // is never reduced mid-animation.
+      const tween = gsap.from(targets, {
+        x: distance,
+        clipPath: "inset(0 100% 0 0)",
+        duration: 0.7,
+        ease: "power3.out",
+        stagger,
+        clearProps: "transform,clipPath",
+        scrollTrigger: { trigger: root, start, once: true },
+      });
+
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+        // Undo the entrance start state, so a tween that never ran cannot leave
+        // the cards clipped or shifted.
+        gsap.set(targets, { clearProps: "transform,clipPath" });
+      };
     });
-
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-      // Undo the entrance start state, so a tween that never ran cannot leave
-      // the cards clipped or shifted.
-      gsap.set(targets, { clearProps: "transform,clipPath" });
-    };
   }, [reducedMotion, stagger, distance, start]);
 
   const setRefs = (element: HTMLElement | null) => {

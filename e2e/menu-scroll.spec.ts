@@ -1,9 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { footerGroups, shell } from "../src/content/site";
 
-test.beforeEach(async ({ page }) => {
-});
-
 test("the menu traps focus, includes every footer link, and forwards a search", async ({ page }) => {
   await page.goto("/about");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
@@ -22,6 +19,8 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   await expect(menu.getByRole("link", { name: shell.contact.label, exact: true })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(menu.getByRole("button", { name: shell.useDarkTheme })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(search).toBeFocused();
   await page.keyboard.press("Escape");

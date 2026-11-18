@@ -49,7 +49,7 @@ test("About photos display without a blur or scroll transform", async ({ page })
   for (const photo of await photos.all()) {
     await photo.scrollIntoViewIfNeeded();
     await expect(photo).toBeVisible();
-    await expect(photo).toHaveCSS("filter", "brightness(1)");
+    await expect(photo).toHaveCSS("filter", "none");
     await expect(photo).toHaveCSS("transform", "none");
   }
 });
