@@ -51,3 +51,23 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
   expect(violations).toEqual([]);
   await testInfo.attach("dark-panel-mid-transition", { body: await page.screenshot(), contentType: "image/png" });
 });
+
+for (const width of [360, 390, 430]) {
+  test(`the mobile hero overlaps its photo with the card and diagram at ${width}px`, async ({ page, isMobile }) => {
+    test.skip(!isMobile, "Mobile viewport composition");
+    await page.setViewportSize({ width, height: 844 });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    const position = async (selector: string) => (await page.locator(selector).boundingBox())!;
+    const headline = await position("#hero-title");
+    const photo = await position(".hero-side__photo");
+    const card = await position(".hero-side__card");
+    const diagram = await position(".hero-side__diagram");
+    expect(photo.y).toBeGreaterThan(headline.y + headline.height);
+    expect(card.y).toBeLessThan(photo.y + photo.height);
+    expect(card.y + card.height).toBeGreaterThan(photo.y + photo.height);
+    expect(diagram.y + diagram.height).toBeGreaterThan(photo.y);
+    expect(diagram.x + diagram.width).toBeLessThanOrEqual(width);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+}

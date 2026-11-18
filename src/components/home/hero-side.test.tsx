@@ -34,7 +34,7 @@ describe("HeroSide", () => {
 
     const photo = container.querySelector<HTMLImageElement>(".hero-side__photo");
     // `100vw` would ask for a wider candidate than the photo is ever drawn at.
-    expect(photo?.getAttribute("sizes")).toBe("(max-width: 768px) calc(100vw - 3rem), 34vw");
+    expect(photo?.getAttribute("sizes")).toBe("(max-width: 35rem) calc(100vw - 4rem), (max-width: 47.999rem) 31rem, (max-width: 63.999rem) 32rem, 34vw");
   });
 
   it("renders the card and the diagram over the photo", () => {

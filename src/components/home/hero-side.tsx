@@ -57,7 +57,7 @@ export function HeroSide() {
         <Image
           {...site.heroSide}
           alt={site.heroSide.alt}
-          sizes="(max-width: 768px) calc(100vw - 3rem), 34vw"
+          sizes="(max-width: 35rem) calc(100vw - 4rem), (max-width: 47.999rem) 31rem, (max-width: 63.999rem) 32rem, 34vw"
           // On a phone this photo is the largest element on screen, so it is
           // the largest contentful paint: it must load eagerly and be asked
           // for first, or the hero renders as an empty box while the image

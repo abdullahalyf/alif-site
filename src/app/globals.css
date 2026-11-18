@@ -251,10 +251,19 @@ body:has(.fallback-nav) { padding-top: 0; }
   .split-section { grid-template-columns: 1fr; }
   .hero-photo { aspect-ratio: 4 / 5; object-position: 52% center; }
   .service-list li { grid-template-columns: 1.5rem 1fr auto; gap: 0.5rem; }
-  /* On mobile the photo comes first and the card sits below it. */
-  .hero-side { display: grid; gap: 1rem; }
-  .hero-side__diagram { position: static; width: 100%; order: 3; }
-  .hero-side__card { position: static; width: 100%; order: 2; }
+  .hero { padding-top: 2.75rem; }
+  .hero-layout { gap: 2rem; }
+  .hero-copy { gap: 1.35rem; }
+  .hero-copy .button-row { gap: 0.75rem; }
+  .hero-side { display: grid; padding-top: 1.65rem; }
+  .hero-side__photo-wrap { margin-inline: 0.5rem; }
+  .hero-side__photo { aspect-ratio: 1 / 1; }
+  .hero-side__diagram { top: 0; right: 0; width: min(80%, 18rem); padding: 0.25rem 0.45rem; background: var(--cream); }
+  .hero-side__card { position: relative; left: auto; bottom: auto; width: min(94%, 20rem); margin-top: -3.25rem; background: var(--cream); }
+  .status-card__zone, .status-card__building-label, .status-card__stack li { font-size: 0.75rem; }
+  .section-space { padding-block: 3.5rem; }
+  .section-heading { gap: 1rem; }
+  .night-section .night-intro { position: static; }
 }
 
 .night-section { position: relative; isolation: isolate; overflow: clip; color: var(--night-text); }
