@@ -32,8 +32,9 @@ export const site = {
   "skills": [ // REPLACE
     {
       "title": "Your skill group", // REPLACE
+      "icon": "systems", // REPLACE
       "items": [ // REPLACE
-        "Your skill" // REPLACE
+        { "name": "Your skill", "level": 3, "note": "Where you used it" } // REPLACE
       ] // REPLACE
     }
   ], // REPLACE

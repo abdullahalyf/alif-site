@@ -86,7 +86,7 @@ export function Resume() {
           {site.skills.map((item) => (
             <p key={item.title}>
               <strong>{item.title}: </strong>
-              {item.items.join(", ")}
+              {item.items.map(({ name }) => name).join(", ")}
             </p>
           ))}
         </StaggerIn>

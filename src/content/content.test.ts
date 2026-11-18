@@ -21,6 +21,14 @@ describe("content", () => {
     expect(siteSchema.safeParse({ ...site, education: [{ ...first, image: { ...first.image, width: 0 } }, ...others] }).success).toBe(false);
   });
 
+  it("limits illustrative skill levels to the five-point scale", () => {
+    const [group, ...groups] = site.skills;
+    for (const level of [0, 1.5, 6]) {
+      const skills = [{ ...group, items: [{ ...group.items[0], level }] }, ...groups];
+      expect(siteSchema.safeParse({ ...site, skills }).success).toBe(false);
+    }
+  });
+
   it("projects content is valid and slugs are unique", () => {
     expect(() => projectsSchema.parse(projects)).not.toThrow();
   });

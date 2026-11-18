@@ -49,6 +49,12 @@ export function LatestWriting() {
     <Link className="text-link" href={seo.pages.writing.path}>{writingContent.back}</Link>
   </section>;
 }
+const skillIcons = {
+  systems: "M9 3h6v5H9zM3 16h6v5H3zm12 0h6v5h-6zM12 8v4m-6 4v-4h12v4",
+  web: "M3 5h18v14H3zm0 4h18m-11 3-2 2 2 2m4-4 2 2-2 2",
+  data: "M4 7c0-2 3.6-4 8-4s8 2 8 4-3.6 4-8 4-8-2-8-4zm0 0v10c0 2 3.6 4 8 4s8-2 8-4V7M4 12c0 2 3.6 4 8 4s8-2 8-4",
+};
+
 export function AboutDetails() {
   const interestsPhoto = demoContent.interestsPhoto;
 
@@ -64,7 +70,24 @@ export function AboutDetails() {
     <div className="about-bento">
       <section className="about-bento__skills" aria-labelledby="skills-title">
         <h2 id="skills-title">{demoContent.skillsLabel}</h2>
-        <div className="skills-grid">{site.skills.map((group) => <div key={group.title}><h3>{group.title}</h3><ul className="chip-list">{group.items.map((item) => <li key={item} className="chip">{item}</li>)}</ul></div>)}</div>
+        <p className="demo-notice">{demoContent.skillsNotice}</p>
+        <div className="skills-grid">
+          {site.skills.map((group) => <article className="skill-card" key={group.title}>
+            <h3>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                <path d={skillIcons[group.icon]} />
+              </svg>
+              {group.title}
+            </h3>
+            <ul>{group.items.map((item) => <li key={item.name}>
+              <div className="skill-row">
+                <strong>{item.name}</strong>
+                <meter min={0} max={5} value={item.level} aria-label={demoContent.skillLevel(item.level)} />
+              </div>
+              <p>{item.note}</p>
+            </li>)}</ul>
+          </article>)}
+        </div>
       </section>
       <section aria-labelledby="languages-title">
         <h2 id="languages-title">{demoContent.languagesLabel}</h2>

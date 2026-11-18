@@ -32,9 +32,24 @@ export const site = {
   ],
   // DEMO: all skill groups are illustrative and should be checked by Alif.
   skills: [
-    { title: "Systems & architecture", items: ["Domain modelling", "Offline-first design", "Access control", "Data synchronisation"] },
-    { title: "Web & interfaces", items: ["TypeScript", "React", "Next.js", "Accessible UI"] },
-    { title: "Data & tooling", items: ["PostgreSQL", "SQLite", "Python", "Git & CI"] },
+    { title: "Systems & architecture", icon: "systems", items: [
+      { name: "Domain modelling", level: 4, note: "Map branches, roles and stock movements." },
+      { name: "Offline-first design", level: 4, note: "Keep a checkout usable during outages." },
+      { name: "Access control", level: 4, note: "Model branch-specific permissions." },
+      { name: "Data synchronisation", level: 4, note: "Retry queued POS changes safely." },
+    ] },
+    { title: "Web & interfaces", icon: "web", items: [
+      { name: "TypeScript", level: 5, note: "Share types across UI and server code." },
+      { name: "React", level: 4, note: "Build reusable dashboard controls." },
+      { name: "Next.js", level: 4, note: "Ship server-rendered portfolio pages." },
+      { name: "Accessible UI", level: 4, note: "Test keyboard navigation and focus." },
+    ] },
+    { title: "Data & tooling", icon: "data", items: [
+      { name: "PostgreSQL", level: 4, note: "Reconcile inventory across branches." },
+      { name: "SQLite", level: 4, note: "Store POS transactions on the device." },
+      { name: "Python", level: 3, note: "Explore traffic-risk datasets." },
+      { name: "Git & CI", level: 4, note: "Automate checks before merging." },
+    ] },
   ],
   languages: [
     { name: "Bangla", level: "Fluent" }, { name: "English", level: "Fluent" },
@@ -324,6 +339,8 @@ export const demoContent = {
   highlightsTitle: "Milestones along the way.",
   educationLabel: "Education",
   skillsLabel: "Skills",
+  skillsNotice: "Illustrative skill levels and notes",
+  skillLevel: (level: number) => `Demo skill level ${level} of 5`,
   languagesLabel: "Languages",
   interestsLabel: "Interests",
   interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO

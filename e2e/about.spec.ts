@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { aboutContent, site } from "../src/content/site";
+import { aboutContent, demoContent, site } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
@@ -116,12 +116,14 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   expect(filled).toBeGreaterThan(0);
 });
 
-test("the skills and the languages read as chips", async ({ page }) => {
+test("skills show notes and demo levels alongside language chips", async ({ page }) => {
   await page.goto("/about");
 
   for (const group of site.skills) {
     for (const item of group.items) {
-      await expect(page.locator(".chip", { hasText: item }).first()).toBeVisible();
+      const row = page.locator(".skill-card li").filter({ hasText: item.name });
+      await expect(row.getByText(item.note)).toBeVisible();
+      await expect(row.getByRole("meter", { name: demoContent.skillLevel(item.level) })).toHaveAttribute("value", String(item.level));
     }
   }
 
