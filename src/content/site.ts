@@ -315,6 +315,7 @@ export const demoContent = {
   skillsLabel: "Skills",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
+  interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
   aboutDemoNotice: "Demo education details, skills and interests — to be confirmed by Alif.",
   statsLabel: "At a glance",
   statsNotice: "Demo figures · illustrative only",

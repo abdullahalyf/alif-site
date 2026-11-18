@@ -1,4 +1,4 @@
-import { Highlights, AboutDetails } from "@/components/demo/sections";
+import { AboutDetails } from "@/components/demo/sections";
 import Image from "next/image";
 import { aboutContent, shell, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
@@ -21,7 +21,7 @@ export default function About() {
         <div className="about-intro__copy">{site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}</div>
       </div>
     </section>
-    <Highlights /><AboutDetails />
+    <AboutDetails />
     <section className="container section-space" aria-labelledby="story-title">
       <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
       <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>

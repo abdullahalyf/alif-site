@@ -30,10 +30,9 @@
   --text-h3: var(--type-h3);
 }
 
-html { --header-height: 5.5rem; scroll-padding-top: calc(var(--header-height) + 0.75rem); }
+html { --section-space: clamp(2.125rem, 5.4vw, 4.8rem); --header-height: 5.5rem; scroll-padding-top: calc(var(--header-height) + 0.75rem); }
 @media (max-width: 47.999rem) { html { --header-height: 4.5rem; } }
 body { margin: 0; padding-top: var(--header-height); background: var(--cream); color: var(--ink); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; }
-main { min-height: 60dvh; }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; }
 h1 { font-size: var(--type-h1); max-width: 18ch; }
 h2 { font-size: var(--type-h2); }
@@ -65,7 +64,7 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
    the page and showing a horizontal scrollbar. `clip` rather than `hidden`,
    because `hidden` would turn the group into a scroll container. */
 .stagger-in { overflow-x: clip; }
-.page-shell { display: grid; gap: 1.75rem; padding-block: clamp(4rem, 9vw, 8rem); }
+.page-shell { display: grid; gap: 1.75rem; padding-block: var(--section-space); }
 .lead { font-size: 1.25rem; }
 .label, .section-label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
 .section-label { border-top: 1px solid var(--line); padding-top: 1rem; max-width: none; }
@@ -193,13 +192,13 @@ body:has(.fallback-nav) { padding-top: 0; }
 
 
 /* Static page layouts. */
-.section-space { padding-block: clamp(4rem, 9vw, 8rem); }
-.section-title { max-width: 20ch; margin-block: 2rem 3rem; }
-.split-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); margin-top: 2.5rem; align-items: start; }
+.section-space { padding-block: var(--section-space); }
+.section-title { max-width: 20ch; margin-block: 1.15rem 1.65rem; }
+.split-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); margin-top: 1.5rem; align-items: start; }
 .prose { display: grid; gap: 1.5rem; }
 .text-link { width: fit-content; padding-block: 0.5rem; text-decoration: underline; }
 .text-link:hover { text-decoration-thickness: 2px; }
-.hero { padding-top: clamp(3rem, 6vw, 6rem); }
+.hero { padding-top: var(--section-space); }
 .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
 .hero-copy { display: grid; gap: 1.75rem; }
 .hero h1 { max-width: 18ch; }
@@ -233,7 +232,7 @@ body:has(.fallback-nav) { padding-top: 0; }
 .status-card__stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; list-style: none; padding: 0; }
 .status-card__stack li { border: 1px solid var(--line); border-radius: 999px; padding: 0.2rem 0.55rem; color: var(--ink-muted); font-size: 0.6875rem; }
 .hero-photo-story { position: relative; --hero-card-size: clamp(18rem, 26vw, 22rem); }
-.hero-panel { margin-top: clamp(3rem, 8vw, 7rem); }
+.hero-panel { margin-top: clamp(2rem, 4.8vw, 4.2rem); }
 .hero-panel__frame { position: relative; isolation: isolate; overflow: clip; border-radius: 24px; background: var(--cream-2); }
 .hero-panel__image { overflow: clip; }
 .hero-photo { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 35%; }
@@ -270,7 +269,6 @@ body:has(.fallback-nav) { padding-top: 0; }
   .hero-panel__frame { border-radius: 1rem; }
   .hero-photo { aspect-ratio: 4 / 5; object-position: 52% center; }
   .service-list li { grid-template-columns: 1.5rem 1fr auto; gap: 0.5rem; }
-  .hero { padding-top: 2.75rem; }
   .hero-layout { gap: 2rem; }
   .hero-copy { gap: 1.35rem; }
   .hero-copy .button-row { gap: 0.75rem; }
@@ -280,7 +278,6 @@ body:has(.fallback-nav) { padding-top: 0; }
   .hero-side__diagram { top: 0; right: 0; width: min(80%, 18rem); padding: 0.25rem 0.45rem; background: var(--cream); }
   .hero-side__card { position: relative; left: auto; bottom: auto; width: min(94%, 20rem); margin-top: -3.25rem; background: var(--cream); }
   .status-card__zone, .status-card__building-label, .status-card__stack li { font-size: 0.75rem; }
-  .section-space { padding-block: 3.5rem; }
   .section-heading { gap: 1rem; }
   .night-section .night-intro { position: static; }
 }
@@ -299,7 +296,7 @@ body:has(.fallback-nav) { padding-top: 0; }
 .night-steps p { color: var(--night-text); opacity: 0.82; }
 .night-steps h3 { transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1); }
 .night-steps li:hover h3 { transform: translateX(0.4rem); }
-.section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-block: 2rem; flex-wrap: wrap; }
+.section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1.25rem; margin-block: 1.25rem; flex-wrap: wrap; }
 .project-carousel { display: flex; overflow-x: auto; gap: 1.5rem; scroll-snap-type: x mandatory; padding: 0.5rem 0.25rem 1.5rem; list-style: none; scrollbar-color: var(--ink-muted) var(--cream-2); }
 .project-card { flex: 0 0 42%; scroll-snap-align: start; min-width: 0; }
 .project-card a { display: grid; gap: 1rem; height: 100%; }
@@ -318,10 +315,10 @@ body:has(.fallback-nav) { padding-top: 0; }
 .about-intro { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: start; }
 /* The copy sits near the top of the photo rather than centred against it, so the
    split reads as an asymmetric editorial spread instead of two equal columns. */
-.about-intro__copy { display: grid; gap: 1.5rem; align-content: start; padding-top: clamp(2rem, 6vw, 5rem); }
+.about-intro__copy { display: grid; gap: 1.5rem; align-content: start; padding-top: clamp(0rem, 2.5vw, 2.5rem); }
 .about-photo-wrap { border-radius: 1.5rem; overflow: hidden; }
 .about-photo-wrap img { width: 100%; height: auto; border-radius: 1.5rem; }
-.story-chapters { display: grid; gap: clamp(4rem, 12vw, 10rem); }
+.story-chapters { display: grid; gap: clamp(2rem, 7vw, 6rem); }
 .story-chapter { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 7vw, 7rem); align-items: center; }
 .story-chapter:nth-child(even) figure { order: 2; }
 /* The frame sets the shape of the photograph; the photograph inside is taller
@@ -331,29 +328,28 @@ body:has(.fallback-nav) { padding-top: 0; }
 .story-photo { position: absolute; inset: -7% 0; }
 .story-photo img { width: 100%; height: 100%; object-fit: cover; }
 .story-chapter figcaption { display: grid; gap: 0.35rem; margin-top: 1rem; font-size: 0.875rem; }
-.story-chapter--1 figure { width: 80%; justify-self: end; padding-top: 4rem; }
+.story-chapter--1 figure { width: 80%; justify-self: end; }
 .story-chapter--1 .story-photo-frame { aspect-ratio: 1; }
 .story-chapter--2 figure { width: 90%; }
 .story-chapter--2 .story-photo-frame { aspect-ratio: 5 / 4; }
 @media (max-width: 47.999rem) {
   .about-intro, .story-chapter { grid-template-columns: 1fr; }
   .story-chapter:nth-child(even) figure { order: 0; }
-  .story-chapter--1 figure { padding-top: 0; }
 }
 
-.page-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; padding-block: 0 4rem; }
+.page-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: end; padding-block: 0 2.4rem; }
 .page-intro p { max-width: 45ch; color: var(--ink-muted); }
 /* The intro sits inside `.section-space`, so it must not add its own top padding. */
 .page-intro:first-child { padding-top: 0; }
 .approach-steps { list-style: none; padding: 0; }
-.approach-steps li { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: clamp(2.5rem, 5vw, 5rem); border-top: 1px solid var(--line); }
+.approach-steps li { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-block: clamp(1.5rem, 3vw, 3rem); border-top: 1px solid var(--line); }
 .step-number { font: 400 var(--type-h1)/1 var(--font-serif); color: var(--ink-muted); }
 .approach-steps p { max-width: 50ch; }
 .work-list { list-style: none; padding: 0; }
 .work-list li { border-top: 1px solid var(--line); }
 .work-list li:last-child { border-bottom: 1px solid var(--line); }
 .work-row-wrap { display: block; }
-.work-row { display: grid; grid-template-columns: 12rem 1fr auto; gap: 2rem; align-items: center; position: relative; padding-block: 3rem; }
+.work-row { display: grid; grid-template-columns: 12rem 1fr auto; gap: 2rem; align-items: center; position: relative; padding-block: 1.85rem; }
 .work-row h2 { font-size: var(--type-h3); max-width: 28ch; }
 .work-row:hover { text-decoration: none; }
 .work-row:hover h2, .work-row:focus-visible h2 { text-decoration: underline; text-underline-offset: 0.2em; }
@@ -361,22 +357,22 @@ body:has(.fallback-nav) { padding-top: 0; }
 .hover-preview { overflow: hidden; border-radius: 1rem; border: 1px solid var(--line); background: var(--cream-2); box-shadow: 0 24px 48px -20px rgb(30 28 25 / 0.45); }
 .work-arrow { font-size: 2rem; transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1); }
 .work-row:hover .work-arrow, .work-row:focus-visible .work-arrow { transform: translate(0.25rem, -0.25rem); }
-.case-intro { display: grid; gap: 1.75rem; padding-block: 3rem; }
+.case-intro { display: grid; gap: 1.25rem; padding-block: 0 1.8rem; }
 .case-intro h1 { max-width: 22ch; }
 .case-cover .project-media { aspect-ratio: 16 / 9; }
-.case-sections { padding-block: 3rem; }
-.case-section { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; border-top: 1px solid var(--line); padding-block: 3rem; }
+.case-sections { padding-top: 1.8rem; }
+.case-section { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; border-top: 1px solid var(--line); padding-block: 1.8rem; }
 .detail-list { display: grid; gap: 1rem; list-style: disc; padding-left: 1.25rem; max-width: 65ch; }
 .stack-pills { display: flex; flex-wrap: wrap; align-content: start; gap: 0.75rem; list-style: none; padding: 0; }
 .stack-pills li { border: 1px solid var(--line); border-radius: 999px; padding: 0.5rem 1rem; font-size: 0.875rem; }
-.next-project { padding-block: 3rem 1rem; }
+.next-project { padding-block: 1.8rem 0; }
 .next-project > a { display: flex; justify-content: space-between; align-items: center; gap: 2rem; margin-top: 2rem; font: 400 var(--type-h2)/1.1 var(--font-serif); }
 @media (max-width: 47.999rem) {
   .page-intro, .case-section { grid-template-columns: 1fr; }
   .approach-steps li { grid-template-columns: 3rem 1fr; gap: 1.25rem; }
   .step-number { font-size: var(--type-h3); }
   .approach-steps h2 { font-size: var(--type-h3); }
-  .work-row { grid-template-columns: 1fr auto; gap: 1rem; padding-block: 2rem; }
+  .work-row { grid-template-columns: 1fr auto; gap: 1rem; padding-block: 1.25rem; }
   .work-row .label { grid-column: 1 / -1; }
   .case-cover .project-media { aspect-ratio: 4 / 3; }
 }

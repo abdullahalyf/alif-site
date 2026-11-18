@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { demoContent, seo, site, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
@@ -14,8 +15,8 @@ function Achievement({ entry }: { entry: Site["achievements"][number] }) {
     {entry.demo && <span className="demo-badge">{demoContent.demoLabel}</span>}
   </article>;
 }
-export function Highlights() {
-  return <section className="container section-space" aria-labelledby="highlights-title">
+export function Highlights({ standalone = true }: { standalone?: boolean }) {
+  return <section className={standalone ? "container section-space" : undefined} aria-labelledby="highlights-title">
     <SectionLabel>{demoContent.highlightsLabel}</SectionLabel>
     <Reveal><h2 id="highlights-title" className="section-title">{demoContent.highlightsTitle}</h2></Reveal>
     <StaggerIn className="highlights-grid" data-horizontal-scroll tabIndex={0} role="region" aria-labelledby="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
@@ -49,22 +50,33 @@ export function LatestWriting() {
   </section>;
 }
 export function AboutDetails() {
+  const interestsPhoto = demoContent.interestsPhoto;
+
   return <div className="container">
-    <section className="section-space" aria-labelledby="education-title">
-      <SectionLabel>{demoContent.educationLabel}</SectionLabel><Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
-      <EducationTimeline items={site.education} />
-    </section>
-    <section className="section-space" aria-labelledby="skills-title">
-      <SectionLabel>{demoContent.skillsLabel}</SectionLabel><Reveal><h2 id="skills-title" className="section-title">{demoContent.skillsLabel}</h2></Reveal>
-      <StaggerIn className="skills-grid">{site.skills.map((group) => <div key={group.title}><h3>{group.title}</h3><ul className="chip-list">{group.items.map((item) => <li key={item} className="chip">{item}</li>)}</ul></div>)}</StaggerIn>
-    </section>
-    <section className="section-space" aria-labelledby="languages-title">
-      <SectionLabel>{demoContent.languagesLabel}</SectionLabel><Reveal><h2 id="languages-title" className="section-title">{demoContent.languagesLabel}</h2></Reveal>
-      <StaggerIn as="dl" className="chip-list chip-list--languages">{site.languages.map((language) => <div key={language.name} className="chip"><dt>{language.name}</dt><dd>{language.level}</dd></div>)}</StaggerIn>
-    </section>
-    <section className="section-space" aria-labelledby="interests-title">
-      <SectionLabel>{demoContent.interestsLabel}</SectionLabel><Reveal><h2 id="interests-title" className="section-title">{demoContent.interestsLabel}</h2></Reveal>
-      <StaggerIn as="ul" className="chip-list chip-list--interests">{site.interests.map((interest) => <li key={interest} className="chip">{interest}</li>)}</StaggerIn>
-    </section>
+    <div className="about-milestones section-space">
+      <section aria-labelledby="education-title">
+        <SectionLabel>{demoContent.educationLabel}</SectionLabel>
+        <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
+        <EducationTimeline items={site.education} />
+      </section>
+      <Highlights standalone={false} />
+    </div>
+    <div className="about-bento">
+      <section className="about-bento__skills" aria-labelledby="skills-title">
+        <h2 id="skills-title">{demoContent.skillsLabel}</h2>
+        <div className="skills-grid">{site.skills.map((group) => <div key={group.title}><h3>{group.title}</h3><ul className="chip-list">{group.items.map((item) => <li key={item} className="chip">{item}</li>)}</ul></div>)}</div>
+      </section>
+      <section aria-labelledby="languages-title">
+        <h2 id="languages-title">{demoContent.languagesLabel}</h2>
+        <dl className="chip-list chip-list--languages">{site.languages.map((language) => <div key={language.name} className="chip"><dt>{language.name}</dt><dd>{language.level}</dd></div>)}</dl>
+      </section>
+      <section className="about-bento__interests" aria-labelledby="interests-title">
+        <div>
+          <h2 id="interests-title">{demoContent.interestsLabel}</h2>
+          <ul className="chip-list chip-list--interests">{site.interests.map((interest) => <li key={interest} className="chip">{interest}</li>)}</ul>
+        </div>
+        <Image {...interestsPhoto} alt="" sizes="(max-width: 35rem) 80vw, 8rem" />
+      </section>
+    </div>
   </div>;
 }
