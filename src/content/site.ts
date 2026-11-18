@@ -143,7 +143,7 @@ export const site = {
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
-  // TODO(Alif): replace with your real story + add a photo for each chapter.
+  // DEMO: review the story copy and replace each chapter photo.
   story: [
     {
       label: "Jhenaidah",

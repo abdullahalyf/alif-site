@@ -1,7 +1,8 @@
 import { existsSync, statSync, readFileSync, readdirSync } from 'node:fs';
 import { resolve, relative, sep } from 'node:path';
 import { z } from 'zod';
-import { site } from '../src/content/site';
+import { demoContent, heroPhotos, site } from '../src/content/site';
+import { allTrips } from '../src/content/travel';
 import { projects } from '../src/content/projects';
 import { siteSchema, projectsSchema } from '../src/content/schema';
 import { parsePost } from '../src/content/posts';
@@ -30,7 +31,8 @@ function inspectSource(file: string, draft = false) {
 }
 validate('src/content/site.ts', siteSchema, site);
 validate('src/content/projects.ts', projectsSchema, projects);
-images(site, 'src/content/site.ts');
+images({ site, heroPhotos, demoContent }, 'src/content/site.ts');
+images({ allTrips }, 'src/content/travel.ts');
 images(projects, 'src/content/projects.ts');
 for (const file of readdirSync('src/content').filter(name => name.endsWith('.ts') && !name.endsWith('.test.ts'))) inspectSource(`src/content/${file}`);
 const slugs = new Set<string>();

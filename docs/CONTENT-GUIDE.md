@@ -72,7 +72,7 @@ Local paths begin `/images/` and point into `public/images/`. HTTPS images must 
 
 ## Replace demo content
 
-Run `rg -n '// DEMO' src/content` (or search for `// DEMO` in your editor). Replace each marked example with confirmed facts, approved quotes and owned photos. Check every item in a marked group. Search for `DEMO` and `TODO(` as well, including Markdown comments. Remove markers only after replacing the content. The validator prints marker counts per file and warns about `TODO(` in non-draft sources. It cannot confirm whether a claim is true.
+Run `pnpm demo:list` for file-and-line locations, and use [the Bangla questionnaire](CONTENT-INTAKE-bn.md) to collect replacements. Replace each marked example with confirmed facts, approved quotes and owned photos. Check every item in a marked group. Search for `DEMO` and `TODO(` as well, including Markdown comments. Remove markers only after replacing the content. The validator prints marker counts per file and warns about `TODO(` in non-draft sources. It cannot confirm whether a claim is true.
 
 ## Preview and deploy
 
