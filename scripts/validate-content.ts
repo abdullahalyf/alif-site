@@ -3,6 +3,8 @@ import { resolve, relative, sep } from 'node:path';
 import { z } from 'zod';
 import { demoContent, heroPhotos, site } from '../src/content/site';
 import { allTrips } from '../src/content/travel';
+import { searchContent } from '../src/content/search';
+import { searchContentSchema } from '../src/content/schemas/search';
 import { projects } from '../src/content/projects';
 import { siteSchema, projectsSchema } from '../src/content/schema';
 import { parsePost } from '../src/content/posts';
@@ -31,6 +33,7 @@ function inspectSource(file: string, draft = false) {
 }
 validate('src/content/site.ts', siteSchema, site);
 validate('src/content/projects.ts', projectsSchema, projects);
+validate('src/content/search.ts', searchContentSchema, searchContent);
 images({ site, heroPhotos, demoContent }, 'src/content/site.ts');
 images({ allTrips }, 'src/content/travel.ts');
 images(projects, 'src/content/projects.ts');

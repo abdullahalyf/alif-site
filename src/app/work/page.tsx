@@ -33,6 +33,7 @@ export default function Work() {
   return <div className="container section-space">
     <SectionLabel>{site.name}</SectionLabel>
     <div className="page-intro"><Reveal><h1>{shell.workTitle}</h1></Reveal><Reveal><p>{pageContent.workIntro}</p></Reveal></div>
+    <noscript><style>{".work-filter { display: none; }"}</style></noscript>
     <ProjectFilter label={pageContent.workFilter} allLabel={pageContent.allWorkCategories} entries={entries} />
   </div>;
 }
