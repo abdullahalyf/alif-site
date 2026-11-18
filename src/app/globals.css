@@ -145,7 +145,7 @@ body:has(.fallback-nav) { padding-top: 0; }
 }
 .fallback-nav { display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
 .footer { background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
-.footer-inner { display: grid; gap: 2rem; padding-block: clamp(3rem, 8vw, 7rem); }
+.footer-inner { display: grid; gap: 1.25rem; padding-block: var(--section-space); }
 .footer h2 { max-width: 23ch; }
 .footer .button { border-color: var(--night-text); }
 .footer .button--primary { background: var(--night-text); color: var(--night); }
@@ -153,14 +153,14 @@ body:has(.fallback-nav) { padding-top: 0; }
 .footer .button--primary:hover { background: var(--night); color: var(--night-text); }
 .footer .button--secondary:hover { background: var(--night-text); color: var(--night); }
 .footer :focus-visible { outline-color: var(--night-text); }
-.footer-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; padding-block: 2rem; border-top: 1px solid var(--ink-muted); }
-.footer-links__group h3 { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; color: #cfc5b3; }
-.footer-links__group ul { display: grid; gap: 0.125rem; margin-top: 0.75rem; padding: 0; list-style: none; }
-.footer-links__group a { display: inline-flex; align-items: center; min-height: 2rem; font-size: 1rem; }
+.footer-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(1rem, 4vw, 3rem); row-gap: 1.75rem; align-items: start; padding-block: 1.75rem 0.75rem; margin-top: 0.65rem; border-top: 1px solid var(--ink-muted); }
+.footer-links__group h3 { font: 400 clamp(1.5rem, 2vw, 1.9rem)/1.15 var(--font-serif); color: var(--night-text); letter-spacing: 0; }
+.footer-links__group ul { display: grid; gap: 0.2rem; margin-top: 0.85rem; padding: 0; list-style: none; }
+.footer-links__group a { display: inline-flex; align-items: center; min-height: 2.25rem; font-size: 1rem; color: #cfc5b3; }
 .footer-links__group a:hover { color: #fff; }
-.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; border-top: 1px solid var(--ink-muted); padding-top: 1.5rem; font-size: 0.875rem; color: #cfc5b3; }
+.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; border-top: 1px solid var(--ink-muted); padding-top: 1.25rem; font-size: 0.875rem; color: #cfc5b3; }
 @media (max-width: 47.999rem) {
-  .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1rem; padding-block: 1.5rem 0; }
+  .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-links__group a { min-height: 2.5rem; }
 }
 /* The skip link is off-screen until it is focused. When it appears it sits
