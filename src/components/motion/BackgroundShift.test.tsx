@@ -1,75 +1,37 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, expect, it, vi } from "vitest";
 import { mockMatchMedia } from "@/lib/test-match-media";
 import { BackgroundShift } from "./BackgroundShift";
 
+const { fromTo, revert } = vi.hoisted(() => ({ fromTo: vi.fn(), revert: vi.fn() }));
+vi.mock("@/lib/gsap", () => ({
+  getGsap: () => ({ fromTo, context: (setup: () => void) => { setup(); return { revert }; } }),
+}));
+
 afterEach(() => {
   cleanup();
-  document.documentElement.style.removeProperty("--page-bg");
-  document.documentElement.style.removeProperty("--page-fg");
+  vi.clearAllMocks();
 });
 
-describe("BackgroundShift", () => {
-  it("renders its children", () => {
-    mockMatchMedia(false);
-    render(
-      <BackgroundShift>
-        <p>Section</p>
-      </BackgroundShift>,
-    );
+it("animates only the section backdrop and restores it on unmount", () => {
+  mockMatchMedia(false);
+  const { container, unmount } = render(<BackgroundShift><p>Section</p></BackgroundShift>);
+  expect(screen.getByText("Section")).toBeInTheDocument();
+  const panel = container.querySelector(".night-section__panel");
+  expect(panel).toHaveAttribute("aria-hidden", "true");
+  expect(fromTo).toHaveBeenCalledWith(panel, expect.objectContaining({ scaleX: expect.any(Number) }), expect.objectContaining({ scaleX: 1 }));
+  unmount();
+  expect(revert).toHaveBeenCalled();
+});
 
-    expect(screen.getByText("Section")).toBeInTheDocument();
-  });
-
-  it("does nothing under reduced motion", () => {
-    mockMatchMedia(true);
-    render(
-      <BackgroundShift>
-        <p>Section</p>
-      </BackgroundShift>,
-    );
-
-    expect(document.documentElement.style.getPropertyValue("--page-bg")).toBe("");
-    expect(screen.getByText("Section").getAttribute("style")).toBeNull();
-  });
-
-  it("writes the page colours to the document root", () => {
-    mockMatchMedia(false);
-    render(
-      <BackgroundShift>
-        <p>Section</p>
-      </BackgroundShift>,
-    );
-
-    const style = document.documentElement.style;
-    expect(style.getPropertyValue("--page-bg")).toBe("var(--cream)");
-    expect(style.getPropertyValue("--page-fg")).toBe("var(--ink)");
-  });
-
-  it("renders visible content on the server, with no inline colour overrides", () => {
-    mockMatchMedia(false);
-    const html = renderToStaticMarkup(
-      <BackgroundShift>
-        <p>Section</p>
-      </BackgroundShift>,
-    );
-
-    expect(html).toContain("Section");
-    expect(html).not.toContain("--page-bg");
-  });
-
-  it("cleans up the page colours on unmount", () => {
-    mockMatchMedia(false);
-    const { unmount } = render(
-      <BackgroundShift>
-        <p>Section</p>
-      </BackgroundShift>,
-    );
-
-    unmount();
-
-    expect(document.documentElement.style.getPropertyValue("--page-bg")).toBe("");
-    expect(document.documentElement.style.getPropertyValue("--page-fg")).toBe("");
-  });
+it("renders a static panel under reduced motion and without hydration", () => {
+  mockMatchMedia(true);
+  const element = <BackgroundShift><p>Section</p></BackgroundShift>;
+  render(element);
+  expect(fromTo).not.toHaveBeenCalled();
+  const html = renderToStaticMarkup(element);
+  expect(html).toContain("night-section__panel");
+  expect(html).toContain("<p>Section</p>");
+  expect(html).not.toContain('style="');
 });

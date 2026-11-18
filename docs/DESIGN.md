@@ -66,7 +66,7 @@ Every animation: skipped when `prefers-reduced-motion: reduce` (final state show
 4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).
 6. **Card row** — cards slide in from the right with a small stagger when the section enters.
-7. **Dark section** — background colour transitions cream → night as the "How I work" section enters.
+7. **Dark section** — the dark “How I work” panel grows from inset to full width as it enters.
 8. **Hover** — buttons lift; project rows show image preview; links underline from left.
 
 ## Images

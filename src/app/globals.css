@@ -12,9 +12,6 @@
   --type-h1: clamp(3rem, 1.8rem + 5vw, 6rem);
   --type-h2: clamp(2.25rem, 1.5rem + 3vw, 4rem);
   --type-h3: clamp(1.5rem, 1.2rem + 1vw, 2rem);
-  /* Page colours. `BackgroundShift` overrides these while a dark section is in view. */
-  --page-bg: var(--cream);
-  --page-fg: var(--ink);
 }
 
 @theme inline {
@@ -35,7 +32,7 @@
 
 html { --header-height: 5.5rem; scroll-padding-top: calc(var(--header-height) + 0.75rem); }
 @media (max-width: 47.999rem) { html { --header-height: 4.5rem; } }
-body { margin: 0; padding-top: var(--header-height); background: var(--page-bg); color: var(--page-fg); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; transition: background-color 400ms ease, color 400ms ease; }
+body { margin: 0; padding-top: var(--header-height); background: var(--cream); color: var(--ink); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; }
 main { min-height: 60dvh; }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; }
 h1 { font-size: var(--type-h1); max-width: 18ch; }
@@ -260,7 +257,8 @@ body:has(.fallback-nav) { padding-top: 0; }
   .hero-side__card { position: static; width: 100%; order: 2; }
 }
 
-.night-section { background: var(--night); color: var(--night-text); }
+.night-section { position: relative; isolation: isolate; overflow: clip; color: var(--night-text); }
+.night-section__panel { position: absolute; z-index: -1; inset: 0; background: var(--night); }
 .night-section .section-label { color: var(--night-text); border-color: var(--ink-muted); }
 .night-section :focus-visible { outline-color: var(--night-text); }
 /* The intro column sticks so it does not leave a dead zone beside the tall step list. */
