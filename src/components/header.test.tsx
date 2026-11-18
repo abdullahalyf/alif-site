@@ -63,3 +63,17 @@ it("shows a search trigger with the keyboard shortcut", () => {
   expect(trigger).toBeInTheDocument();
   expect(screen.getByText(shell.searchHint)).toBeInTheDocument();
 });
+
+it("compacts the fixed header after 40px and expands again at the top", () => {
+  const offset = vi.spyOn(window, "scrollY", "get").mockReturnValue(0);
+  render(<Header />);
+  const header = screen.getByRole("banner");
+  expect(header).not.toHaveAttribute("data-compact");
+  offset.mockReturnValue(41);
+  fireEvent.scroll(window);
+  expect(header).toHaveAttribute("data-compact");
+  offset.mockReturnValue(0);
+  fireEvent.scroll(window);
+  expect(header).not.toHaveAttribute("data-compact");
+  offset.mockRestore();
+});

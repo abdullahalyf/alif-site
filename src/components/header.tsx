@@ -6,18 +6,25 @@ import { usePathname } from "next/navigation";
 import { shell } from "@/content/site";
 import { Button } from "./button";
 import { BrandMark } from "./brand-mark";
-import { useHideOnScroll } from "@/lib/use-hide-on-scroll";
 import { SearchTrigger } from "@/features/search/SearchTrigger";
 
-const HIDE_THRESHOLD = 100;
+const COMPACT_THRESHOLD = 40;
 
 export function Header() {
   const pathname = usePathname();
+  const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState<string | null>(null);
-  const hidden = useHideOnScroll(HIDE_THRESHOLD);
+  useEffect(() => {
+    const element = header.current;
+    if (!element) return;
+    const sync = () => element.toggleAttribute("data-compact", window.scrollY > COMPACT_THRESHOLD);
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    return () => window.removeEventListener("scroll", sync);
+  }, []);
 
   function close() {
     dialog.current?.close();
@@ -81,7 +88,7 @@ export function Header() {
   }
 
   return (
-    <header className={`header ${hidden && !open ? "header--hidden" : ""}`}>
+    <header ref={header} className="header">
       <div className="container header-inner">
         <BrandMark />
         <nav className="desktop-nav" aria-label={shell.navigation}>{links()}</nav>

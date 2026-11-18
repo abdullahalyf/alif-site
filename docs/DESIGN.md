@@ -30,7 +30,7 @@ All text/background pairs must pass WCAG AA.
 - Scale (fluid with `clamp`): h1 48→96px, h2 36→64px, h3 24→32px.
 
 ## Global elements
-- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. Header hides on scroll down, shows on scroll up.
+- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. The header stays fixed and becomes compact after 40px of scroll.
 - **Buttons**: pill shape, `--ink` bg + cream text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.
