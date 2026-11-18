@@ -1,17 +1,19 @@
 import Image from "next/image";
 import { navHref, shell, site } from "@/content/site";
 import { ButtonLink } from "@/components/button";
-import { HeroStripes, PhotoReveal, Reveal } from "@/components/motion";
+import { Reveal } from "@/components/motion";
+import { HeroHeadline } from "./hero-headline";
+import { HeroPhotoPanel } from "./hero-photo-panel";
 import { HeroSide } from "./hero-side";
 
 export function Hero() {
-  return <section className="container hero" aria-labelledby="hero-title">
-    <div className="hero-layout">
+  return <section className="hero" aria-labelledby="hero-title">
+    <div className="container hero-layout">
       <div className="hero-copy">
         <Reveal>
           <p className="tagline"><Image {...site.avatar} width={32} height={32} sizes="32px" alt="" />{site.tagline}</p>
         </Reveal>
-        <Reveal><h1 id="hero-title">{site.role}</h1></Reveal>
+        <HeroHeadline title={site.role} />
         <Reveal><p className="hero-intro">{site.intro}</p></Reveal>
         <Reveal>
           <div className="button-row">
@@ -23,14 +25,8 @@ export function Hero() {
       </div>
       <HeroSide />
     </div>
-    <div className="hero-panel">
-      <PhotoReveal className="hero-photo-wrap">
-        {/* This panel sits below the hero copy on a phone, so it is not the
-            largest contentful paint there. It stays lazy so it does not
-            compete with the side photo for bandwidth on load. */}
-        <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 768px) 100vw, 1216px" loading="lazy" className="hero-photo" />
-      </PhotoReveal>
-      <HeroStripes className="hero-stripes" />
-    </div>
+    <HeroPhotoPanel>
+      <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 96rem) 100vw, 96rem" loading="lazy" className="hero-photo" />
+    </HeroPhotoPanel>
   </section>;
 }
