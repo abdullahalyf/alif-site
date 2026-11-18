@@ -22,6 +22,7 @@ export function Header() {
     const element = header.current;
     if (!element) return;
     let previous = Math.max(0, window.scrollY);
+    element.toggleAttribute("data-compact", previous > COMPACT_THRESHOLD);
     const sync = () => {
       const offset = Math.max(0, window.scrollY);
       const delta = offset - previous;

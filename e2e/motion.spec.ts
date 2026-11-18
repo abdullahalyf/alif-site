@@ -32,6 +32,7 @@ test("no animation overlay blocks the page", async ({ page }) => {
 test("the dark panel enters below a compact, readable header", async ({ page }, testInfo) => {
   await page.addInitScript(() => sessionStorage.setItem("alif-intro-seen", "1"));
   await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   const header = page.locator(".header");
   const section = page.locator(".night-section");
   await section.evaluate(element => scrollTo({
