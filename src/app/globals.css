@@ -156,10 +156,16 @@ body:has(.fallback-nav) { padding-top: 0; }
 .footer .button--primary:hover { background: var(--night); color: var(--night-text); }
 .footer .button--secondary:hover { background: var(--night-text); color: var(--night); }
 .footer :focus-visible { outline-color: var(--night-text); }
-.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; border-top: 1px solid var(--ink-muted); padding-top: 2rem; font-size: 0.875rem; }
-.social-links { display: flex; gap: 1.5rem; }
-/* The footer links column: the quieter pages, one after another. */
-.footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.footer-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem; padding-block: 2rem; border-top: 1px solid var(--ink-muted); }
+.footer-links__group h3 { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; color: #cfc5b3; }
+.footer-links__group ul { display: grid; gap: 0.125rem; margin-top: 0.75rem; padding: 0; list-style: none; }
+.footer-links__group a { display: inline-flex; align-items: center; min-height: 2rem; font-size: 1rem; }
+.footer-links__group a:hover { color: #fff; }
+.footer-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; border-top: 1px solid var(--ink-muted); padding-top: 1.5rem; font-size: 0.875rem; color: #cfc5b3; }
+@media (max-width: 47.999rem) {
+  .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1rem; padding-block: 1.5rem 0; }
+  .footer-links__group a { min-height: 2.5rem; }
+}
 /* The skip link is off-screen until it is focused. When it appears it sits
    below the header bar rather than on top of it: overlapping the brand mark
    would put two targets in the same spot, which fails the WCAG 2.2 target

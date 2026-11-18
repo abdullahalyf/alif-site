@@ -1,4 +1,4 @@
-import { shell, site } from "@/content/site";
+import { footerGroups, shell, site } from "@/content/site";
 import { ButtonLink } from "./button";
 
 export async function Footer() {
@@ -12,11 +12,15 @@ export async function Footer() {
           <ButtonLink href={site.whatsapp.href} variant="secondary">{shell.whatsappLabel}</ButtonLink>
         </div>
         <a href={shell.email.href}>{site.email}</a>
+        <nav className="footer-links" aria-label={shell.footerNavigation}>
+          {footerGroups.map(group => <div className="footer-links__group" key={group.label}>
+            <h3>{group.label}</h3>
+            <ul>
+              {group.links.map(link => <li key={link.href}><a href={link.href}>{link.label}</a></li>)}
+            </ul>
+          </div>)}
+        </nav>
         <div className="footer-meta">
-          <div className="social-links">{site.socials.map((link) => <a key={link.label} href={link.href}>{link.label}</a>)}</div>
-          <nav className="footer-links" aria-label={shell.footerLinksLabel}>
-            {shell.footerLinks.map((link) => <a key={link.href} href={link.href}>{link.label}</a>)}
-          </nav>
           <p>{site.location}</p>
           <p>{shell.copyright(new Date().getUTCFullYear())}</p>
         </div>

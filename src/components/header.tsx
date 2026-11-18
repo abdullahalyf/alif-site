@@ -101,7 +101,7 @@ export function Header() {
         <dialog ref={dialog} id="mobile-menu" className="mobile-menu" aria-label={shell.navigation} onCancel={(event) => { event.preventDefault(); close(); }} onClose={() => { setOpen(false); setOpenedAt(null); }}>
           <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
           <nav aria-label={shell.navigation}>{links()}</nav>
-          <nav className="mobile-menu__extra" aria-label={shell.footerLinksLabel}>{extraLinks()}</nav>
+          <nav className="mobile-menu__extra" aria-label={shell.menuExtraLabel}>{extraLinks()}</nav>
         </dialog>
         <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{links()}{extraLinks()}</nav><style>{`.menu-trigger { display: none; }`}</style></noscript>
       </div>

@@ -160,30 +160,33 @@ export const site = {
   ],
 } satisfies Site;
 
+const navigationLinks = {
+  work: { label: "Work", href: "/work" },
+  services: { label: "Services", href: "/services" },
+  approach: { label: "Approach", href: "/approach" },
+  writing: { label: "Writing", href: "/writing" },
+  about: { label: "About me", href: "/about" },
+  contact: { label: "Contact", href: "/contact" },
+  travel: { label: "Travel", href: "/travel" },
+  lab: { label: "Lab", href: "/lab" },
+  estimate: { label: "Estimate a project", href: "/estimate" },
+  resume: { label: "Résumé", href: "/resume" },
+  uses: { label: "Uses", href: "/uses" },
+  now: { label: "Now", href: "/now" },
+};
+
 export const shell = {
   home: { label: "Home", href: "/" },
   introWord: "Alif",
   nav: [
-    { label: "Work", href: "/work" },
-    { label: "Services", href: "/services" },
-    { label: "Approach", href: "/approach" },
-    { label: "Writing", href: "/writing" },
-    { label: "About me", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    navigationLinks.work, navigationLinks.services, navigationLinks.approach,
+    navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
-  /**
-   * Links that only appear in the mobile menu. The desktop nav stays short;
-   * these are the quieter pages a visitor is more likely to look for on a
-   * phone than on a wide screen.
-   */
   menuExtra: [
-    { label: "Travel", href: "/travel" },
-    { label: "Lab", href: "/lab" },
-    { label: "Estimate a project", href: "/estimate" },
-    { label: "Résumé", href: "/resume" },
-    { label: "Uses", href: "/uses" },
-    { label: "Now", href: "/now" },
+    navigationLinks.travel, navigationLinks.lab, navigationLinks.estimate,
+    navigationLinks.resume, navigationLinks.uses, navigationLinks.now,
   ],
+  menuExtraLabel: "More",
   navigation: "Main navigation",
   menu: "Menu",
   closeMenu: "Close menu",
@@ -211,18 +214,15 @@ export const shell = {
   searchLabel: "Search",
   /** The keyboard hint shown next to the search button. */
   searchHint: "⌘K",
-  /** The links column in the footer. */
-  footerLinksLabel: "More",
-  footerLinks: [
-    { label: "Travel", href: "/travel" },
-    { label: "Lab", href: "/lab" },
-    { label: "Estimate a project", href: "/estimate" },
-    { label: "Résumé", href: "/resume" },
-    { label: "Uses", href: "/uses" },
-    { label: "Now", href: "/now" },
-    { label: "Writing RSS", href: "/writing/rss.xml" },
-  ],
+  footerNavigation: "Footer navigation",
 };
+
+export const footerGroups = [
+  { label: "Explore", links: [navigationLinks.work, navigationLinks.services, navigationLinks.approach, navigationLinks.about, navigationLinks.travel] },
+  { label: "Resources", links: [navigationLinks.writing, navigationLinks.resume, navigationLinks.uses, navigationLinks.now, { label: "Writing RSS", href: "/writing/rss.xml" }] },
+  { label: "Try", links: [{ ...navigationLinks.lab, label: "Lab demos" }, navigationLinks.estimate] },
+  { label: "Connect", links: [{ ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
+];
 
 /**
  * Looks a navigation link up by its path.
