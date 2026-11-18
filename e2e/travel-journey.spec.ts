@@ -140,3 +140,17 @@ test("touch swipe scrolls the native book without pinning the document", async (
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await client.detach();
 });
+
+test("international travel links the Malaysia demo and maps the Dhaka route", async ({ page, request }) => {
+  await page.goto(c.path);
+  const section = page.getByRole("region", { name: c.internationalTitle });
+  await expect(section.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
+  await expect(section.getByText(/Kuala Lumpur · Malaysia/)).toBeVisible();
+  await expect(section.getByText(/DEMO — In this imagined visit/)).toBeVisible();
+  await section.getByRole("link", { name: "A morning in Kuala Lumpur" }).click();
+  await expect(page).toHaveURL(c.tripHref("kuala-lumpur"));
+  await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
+  const photo = await request.get("/images/travel/kuala-lumpur/1.jpg");
+  expect(photo.ok()).toBe(true);
+  expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("kuala-lumpur"));
+});

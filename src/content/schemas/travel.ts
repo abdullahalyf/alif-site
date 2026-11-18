@@ -11,6 +11,8 @@ export const travelPhotoSchema = z.object({
   caption: z.string().min(1),
 });
 export const tripSchema = z.object({
+  scope: z.enum(["national", "international"]).default("national"),
+  country: z.string().trim().min(1).default("Bangladesh"),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
@@ -27,6 +29,9 @@ export const tripSchema = z.object({
   photos: z.array(travelPhotoSchema).min(1).max(3),
   people: z.string().min(1).optional(),
   tags: z.array(z.string().min(1)).min(1),
+}).refine(trip => trip.scope === "national" || trip.country !== "Bangladesh", {
+  path: ["country"],
+  message: "An international trip needs a destination country outside Bangladesh",
 });
 export const tripsSchema = z.array(tripSchema).min(1).refine((trips) => new Set(trips.map((trip) => trip.slug)).size === trips.length, "Trip slugs must be unique");
 export type Trip = z.infer<typeof tripSchema>;

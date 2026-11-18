@@ -2,6 +2,7 @@ import Link from "next/link";
 import { travelContent as c } from "@/content/travel";
 import { PhotoBook } from "@/features/travel/PhotoBook";
 import { pageMetadata } from "@/seo/metadata";
+import { InternationalTrips } from "@/features/travel/InternationalTrips";
 import { TravelStats } from "@/features/travel/TravelStats";
 import { PlacesGrid } from "@/features/travel/PlacesGrid";
 import "./travel.css";
@@ -16,6 +17,7 @@ export default function TravelPage() {
     </header>
     <TravelStats />
     <PhotoBook />
+    <InternationalTrips />
     <PlacesGrid />
     <div className="container travel-closing"><p>{c.closing}</p><Link className="text-link" href={c.aboutPath}>{c.aboutLink}</Link></div>
   </div>;
