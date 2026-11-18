@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test("the menu traps focus, includes every footer link, and forwards a search", async ({ page }) => {
   await page.goto("/about");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   const trigger = page.getByRole("button", { name: shell.menu, exact: true });
   await trigger.click();
   const menu = page.getByRole("dialog", { name: shell.menu });
@@ -25,12 +26,12 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   await expect(trigger).toBeFocused();
 
   await trigger.click();
-  await search.fill("travel");
+  await search.fill("about");
   await search.press("Enter");
   await expect(menu).toBeHidden();
   const results = page.getByRole("dialog", { name: shell.searchLabel });
-  await expect(results.getByRole("combobox")).toHaveValue("travel");
-  await expect(results.getByRole("option").first()).toBeVisible();
+  await expect(results.getByRole("combobox")).toHaveValue("about");
+  await expect(results.getByRole("option", { name: /About me/ }).first()).toBeVisible();
 });
 
 test("the navbar expands when the visitor scrolls up mid-page", async ({ page }) => {
