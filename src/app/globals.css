@@ -2,11 +2,15 @@
 
 :root {
   color-scheme: light;
-  --cream: light-dark(#f2ede3, #1a1815);
-  --cream-2: light-dark(#e8e1d3, #24211d);
+  --cream: light-dark(#f1e9dc, #1a1815);
+  --cream-2: light-dark(#e9dfce, #24211d);
   --ink: light-dark(#1e1c19, #ede6da);
   --ink-muted: light-dark(#6a645a, #a79f92);
   --line: light-dark(#d6cebf, #3a3530);
+  --sage: light-dark(#e4e8d8, #252820);
+  --sand: light-dark(#ebdfcb, #29241d);
+  --clay: light-dark(#eeded5, #2b2320);
+  --link-accent: light-dark(#495923, #bacd80);
   --night: light-dark(#22201c, #28241f);
   --night-text: light-dark(#ede7db, #ede6da);
   --night-muted: light-dark(#cfc5b3, #c7bbaa);
@@ -58,12 +62,13 @@ h1 { font-size: var(--type-h1); max-width: 18ch; }
 h2 { font-size: var(--type-h2); }
 h3 { font-size: var(--type-h3); }
 p { max-width: 65ch; }
-a { text-underline-offset: 0.25em; }
+a { text-underline-offset: 0.25em; text-decoration-color: var(--link-accent); }
+.footer a, .night-section a { --link-accent: var(--accent); }
 a:hover { text-decoration: underline; }
 /* Links underline from the left on hover (DESIGN.md animation 8). */
 @media (hover: hover) {
   a:not(.button):not(.work-row):not(.tagline):not(.brand-mark) {
-    background-image: linear-gradient(currentColor, currentColor);
+    background-image: linear-gradient(var(--link-accent), var(--link-accent));
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 1px;
@@ -439,3 +444,10 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
   [data-horizontal-scroll].project-carousel, [data-horizontal-scroll].travel-teaser-strip { scroll-snap-type: none; }
 }
 [data-horizontal-dragging] { cursor: grabbing; user-select: none; }
+
+.tint-sage { background: var(--sage); }
+.tint-sand { background: var(--sand); }
+.tint-clay { background: var(--clay); }
+.category-tag { width: fit-content; padding: 0.25rem 0.6rem; border-radius: 999px; color: var(--ink); background: var(--sand); }
+.category-tag[data-category="Client work"] { background: var(--clay); }
+.category-tag[data-category="Research"] { background: var(--sage); }

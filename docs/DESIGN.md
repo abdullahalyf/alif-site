@@ -11,16 +11,22 @@ This is a multi-page **personal website + portfolio**, not a single landing page
 Feel: warm, calm, editorial. A personal site people actually read — who Alif is, what he does, where he lives, how he got here. Premium through typography, space and soft motion, not effects. No 3D/WebGL/video.
 
 ## Colours (CSS variables in `globals.css`, exposed to Tailwind via `@theme`)
-| Token | Value | Use |
-|---|---|---|
-| `--cream` | `#F2EDE3` | page background |
-| `--cream-2` | `#E8E1D3` | cards, image placeholders |
-| `--ink` | `#1E1C19` | text, primary buttons |
-| `--ink-muted` | `#6A645A` | secondary text, captions |
-| `--line` | `#D6CEBF` | hairline dividers, diagonal lines |
-| `--night` | `#22201C` | dark sections background |
-| `--night-text` | `#EDE7DB` | text on dark sections |
-| `--accent` | `#9DB34A` | tiny accents only (status dot, focus ring) |
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--cream` | `#F1E9DC` | `#1A1815` | page background |
+| `--cream-2` | `#E9DFCE` | `#24211D` | cards and image placeholders |
+| `--ink` | `#1E1C19` | `#EDE6DA` | text and primary buttons |
+| `--ink-muted` | `#6A645A` | `#A79F92` | secondary text and captions |
+| `--line` | `#D6CEBF` | `#3A3530` | hairline dividers and diagonal lines |
+| `--sage` | `#E4E8D8` | `#252820` | tinted sections and tags |
+| `--sand` | `#EBDFCB` | `#29241D` | tinted sections and tags |
+| `--clay` | `#EEDED5` | `#2B2320` | tinted sections and tags |
+| `--night` | `#22201C` | `#28241F` | How I work and footer surface |
+| `--night-text` | `#EDE7DB` | `#EDE6DA` | text on night surfaces |
+| `--night-muted` | `#CFC5B3` | `#C7BBAA` | secondary text on night surfaces |
+| `--night-line` | `#6A645A` | `#5B5044` | outlines on night surfaces |
+| `--accent` | `#9DB34A` | `#9DB34A` | status marks and focus rings |
+| `--link-accent` | `#495923` | `#BACD80` | link underlines |
 All text/background pairs must pass WCAG AA.
 
 ## Typography (local fonts in `src/fonts/`, `next/font/local`)
