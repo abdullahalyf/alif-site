@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 import { estimateContent as c } from "@/content/estimate";
 import type { EstimateInput } from "@/content/schemas/estimate";
-import type { EstimateResult } from "./calculate";
+import type { EstimateResult } from "./calculate-range";
 
 export function estimateSummary(input: EstimateInput, result: EstimateResult): string[] {
   const fields: [string, string][] = [

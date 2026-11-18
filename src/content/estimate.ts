@@ -1,7 +1,7 @@
-import { estimateInputSchema, estimateModelSchema } from "./schemas/estimate";
+import type { EstimateInput, EstimateModel } from "./schemas/estimate";
 
 // DEMO: every rate, weighting and planning assumption here is editable sample data. Alif must set the real numbers.
-export const estimateModel = estimateModelSchema.parse({
+export const estimateModel: EstimateModel = {
   currency: "USD",
   weeklyRate: 650,
   baseBuildWeeks: { pos: 4.5, dashboard: 2.5, web: 3.5, mobile: 4 },
@@ -12,8 +12,9 @@ export const estimateModel = estimateModelSchema.parse({
   integrationWeeks: { payments: 1.2, sms: 0.35, email: 0.35, accounting: 1.4 },
   range: { low: 0.8, high: 1.3 },
   urgency: { flexible: { calendarFactor: 1.15, priceFactor: 0.95 }, standard: { calendarFactor: 1, priceFactor: 1 }, urgent: { calendarFactor: 0.85, priceFactor: 1.25 } },
-});
-export const estimateDefaults = estimateInputSchema.parse({ projectType: "pos", branches: 1, roles: 3, offline: false, integrations: [], migration: false, urgency: "standard" });
+};
+export const estimateDefaults: EstimateInput = { projectType: "pos", branches: 1, roles: 3, offline: false, integrations: [], migration: false, urgency: "standard" };
+const currencyFormat = new Intl.NumberFormat("en-US", { style: "currency", currency: estimateModel.currency, maximumFractionDigits: 0 });
 export const estimateContent = {
   path: "/estimate",
   title: "A first shape for your project",
@@ -41,7 +42,7 @@ export const estimateContent = {
   phaseNote: "Relative effort across the four phases. Calendar weeks depend on scope, feedback and rollout needs.",
   phaseWeeks: (weeks: number) => `${weeks.toFixed(1)} effort weeks`,
   weeksRange: (range: { low: number; high: number }) => `${range.low}–${range.high} weeks`,
-  money: (amount: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: estimateModel.currency, maximumFractionDigits: 0 }).format(amount),
+  money: (amount: number) => currencyFormat.format(amount),
   priceRange: (range: { low: number; high: number }) => `${estimateContent.money(range.low)}–${estimateContent.money(range.high)}`,
   phaseChartLabel: "Relative effort allocation: discovery, architecture, build and rollout. Exact values are listed below.",
   sendTitle: "Send this to Alif",
