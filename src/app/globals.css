@@ -383,3 +383,8 @@ body:has(.fallback-nav) { padding-top: 0; }
 
 .text-link { display: inline-flex; align-items: center; gap: 0.5rem; }
 .text-link svg, .service-list svg, .work-arrow, .next-project svg { flex-shrink: 0; }
+
+@media (pointer: fine) {
+  [data-horizontal-scroll].project-carousel, [data-horizontal-scroll].travel-teaser-strip { scroll-snap-type: none; }
+}
+[data-horizontal-dragging] { cursor: grabbing; user-select: none; }

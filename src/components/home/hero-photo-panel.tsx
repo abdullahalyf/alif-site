@@ -93,7 +93,7 @@ export function HeroPhotoPanel({
     <div className="container hero-photo-story__gallery">
       <ul
         ref={strip}
-        className="hero-photo-story__strip"
+        className="hero-photo-story__strip" data-horizontal-scroll
         tabIndex={0}
         aria-label={label}
         onScroll={(event) => root.current?.toggleAttribute("data-row-scrolled", event.currentTarget.scrollLeft > 1)}

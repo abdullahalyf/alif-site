@@ -1,3 +1,4 @@
+import { connectHorizontalWheel } from "@/lib/horizontal-wheel";
 import { pageIndex } from "./book";
 
 export const BOOK_EDGE_TOLERANCE = 0.002;
@@ -80,17 +81,6 @@ export function connectBook(
     measure();
   }
 
-  function wheel(event: WheelEvent) {
-    if (event.ctrlKey || !event.cancelable || !finePointer.matches || !width) return;
-    const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
-    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? (horizontal ? width : height) : 1;
-    const delta = (horizontal ? event.deltaX : event.deltaY) * unit / width;
-    const edge = delta < 0 ? 0 : count - 1;
-    if (!delta || Math.abs(edge - position) <= BOOK_EDGE_TOLERANCE) return;
-    event.preventDefault();
-    event.stopPropagation();
-    navigate(target + delta);
-  }
 
   function scroll() {
     if (transformed || !width) return;
@@ -140,7 +130,13 @@ export function connectBook(
   const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
   resize?.observe(viewport);
   finePointer.addEventListener("change", syncMode);
-  area.addEventListener("wheel", wheel, { passive: false });
+  const disconnectWheel = connectHorizontalWheel(area, (delta, event) => {
+    if (!width || !finePointer.matches && Math.abs(event.deltaX) > Math.abs(event.deltaY)) return false;
+    const edge = delta < 0 ? 0 : count - 1;
+    if (Math.abs(edge - position) <= BOOK_EDGE_TOLERANCE) return false;
+    navigate(target + delta / width, !transformed);
+    return true;
+  }, (_event, horizontal) => horizontal ? width : height, true);
   viewport.addEventListener("scroll", scroll, { passive: true });
   viewport.addEventListener("pointerdown", pointerDown);
   viewport.addEventListener("pointermove", pointerMove);
@@ -161,7 +157,7 @@ export function connectBook(
       stop();
       resize?.disconnect();
       finePointer.removeEventListener("change", syncMode);
-      area.removeEventListener("wheel", wheel);
+      disconnectWheel();
       viewport.removeEventListener("scroll", scroll);
       viewport.removeEventListener("pointerdown", pointerDown);
       viewport.removeEventListener("pointermove", pointerMove);

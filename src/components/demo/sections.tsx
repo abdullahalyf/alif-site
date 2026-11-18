@@ -18,7 +18,7 @@ export function Highlights() {
   return <section className="container section-space" aria-labelledby="highlights-title">
     <SectionLabel>{demoContent.highlightsLabel}</SectionLabel>
     <Reveal><h2 id="highlights-title" className="section-title">{demoContent.highlightsTitle}</h2></Reveal>
-    <StaggerIn className="highlights-grid">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
+    <StaggerIn className="highlights-grid" data-horizontal-scroll tabIndex={0} role="region" aria-labelledby="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
   </section>;
 }
 export function AtAGlance() {
@@ -34,7 +34,7 @@ export function Testimonials() {
   return <section className="container section-space" aria-labelledby="testimonials-title">
     <SectionLabel>{demoContent.testimonialsLabel}</SectionLabel>
     <Reveal><h2 id="testimonials-title" className="section-title">{demoContent.testimonialsTitle}</h2><p className="demo-notice">{demoContent.testimonialsNotice}</p></Reveal>
-    <StaggerIn className="testimonials-grid">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
+    <StaggerIn className="testimonials-grid" data-horizontal-scroll tabIndex={0} role="region" aria-labelledby="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
       <blockquote><p>{item.quote}</p></blockquote><figcaption><p>{item.name}</p><p className="label">{item.role}</p></figcaption>
     </figure>)}</StaggerIn>
   </section>;

@@ -1,4 +1,5 @@
-.highlights-grid, .testimonials-grid, .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+.stagger-in.highlights-grid, .stagger-in.testimonials-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(18rem, 38%); gap: 1rem; overflow-x: auto; padding-bottom: 0.75rem; scrollbar-color: var(--ink-muted) var(--cream-2); }
 .highlight-card { display: grid; align-content: start; gap: 1.25rem; padding: 1.75rem; border: 1px solid var(--line); border-radius: 1rem; min-width: 0; }
 .highlight-card:first-child { background: var(--cream-2); }
 .highlight-card h3 { overflow-wrap: anywhere; }
@@ -46,11 +47,12 @@
 .latest-writing-grid article { display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-block: 2rem; }
 .latest-writing-grid a { text-decoration: underline; }
 @media (max-width: 47.999rem) {
-  .highlights-grid, .testimonials-grid, .skills-grid, .latest-writing-grid, .education-timeline article { grid-template-columns: 1fr; }
+  .highlights-grid, .testimonials-grid { grid-auto-columns: min(88%, 23rem); }
+  .skills-grid, .latest-writing-grid, .education-timeline article { grid-template-columns: 1fr; }
   .stats-grid { gap: 1rem; }
   .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
   .education-timeline { padding-left: 1.5rem; }
   .education-timeline article::before { left: -1.5rem; }
 }
 /* Contain entrance transforms so staggered cards never widen the page. */
-.highlights-grid, .testimonials-grid, .skills-grid, .stats-grid { overflow-x: clip; }
+.skills-grid, .stats-grid { overflow-x: clip; }

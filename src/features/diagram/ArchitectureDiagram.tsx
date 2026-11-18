@@ -98,6 +98,7 @@ export function ArchitectureDiagram({
     <figure className="architecture-diagram" ref={rootRef}>
       <div
         className="diagram-scroll"
+        data-horizontal-scroll
         tabIndex={0}
         role="region"
         aria-label={diagram.title}
