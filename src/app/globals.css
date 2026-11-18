@@ -126,7 +126,7 @@ body:has(.fallback-nav) { padding-top: 0; }
 .site-menu::backdrop { background: var(--cream); }
 .site-menu__content { padding-block: clamp(1.25rem, 4vw, 3rem); }
 .site-menu__top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.site-menu__top form { display: flex; flex: 1 1 18rem; gap: 0.5rem; max-width: 32rem; }
+.site-menu__top form { display: flex; flex: 1 1 18rem; gap: 0.5rem; min-width: 0; max-width: 32rem; }
 .site-menu__top input { min-width: 0; flex: 1; padding: 0.65rem 1rem; border: 1px solid var(--ink-muted); border-radius: 999px; background: var(--cream-2); }
 .site-menu__top input::placeholder { color: var(--ink-muted); opacity: 1; }
 .site-menu__groups { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; margin-block: clamp(1.5rem, 5vw, 4.5rem) 1.5rem; }

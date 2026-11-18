@@ -11,6 +11,7 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   const trigger = page.getByRole("button", { name: shell.menu, exact: true });
   await trigger.click();
   const menu = page.getByRole("dialog", { name: shell.menu });
+  expect(await menu.evaluate(element => element.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
   for (const link of footerGroups.flatMap((group) => group.links)) {
     await expect(menu.getByRole("link", { name: link.label, exact: true })).toHaveAttribute("href", link.href);
   }
