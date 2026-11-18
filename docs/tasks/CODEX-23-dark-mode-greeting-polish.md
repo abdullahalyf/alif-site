@@ -39,8 +39,15 @@ Rename "Résumé" everywhere in UI to **"Resume / CV"** (nav, menu, footer, page
 ## Part 6 — "A few notes from the road" (About → travel teaser)
 Its purpose is unclear now. Make it a proper section: heading + one-line intro ("Places I've been and people I've met"), **larger cards** (photo ≥ 320px tall, place, date, 2-line note), horizontal wheel-scroll with progress bar (keep), and a clear "Open the travel journal →" link to `/travel`.
 
-## Part 7 — Skills: add one more group
-Add a 4th skills card so the grid is balanced, e.g. **"AI-assisted development & tooling"** (Codex, Claude, prompt-driven workflows, code review, testing) — DEMO levels/notes. Keep it compact.
+## Part 7 — Skills: rewrite honestly (Alif's real profile — IMPORTANT)
+Alif does NOT hand-code and is not an expert in React/Next.js/PostgreSQL. His real strength: he understands systems deeply, makes architecture decisions **with clear reasons and trade-offs**, and **builds by orchestrating AI agents** (Codex, Claude) — directing, reviewing, testing. The skills section must say exactly this, so a client thinks "I can ask him about my system and get real value."
+Replace the current skill groups with:
+1. **Core strengths** (large card, top of the bento): System architecture & design · Trade-off decisions with clear reasons ("why this, not that") · AI-orchestrated development (plans, directs and reviews AI agents to build production software) · Turning business processes into systems (data, roles, failure cases, costs).
+   Short intro line: "I don't hand-write every line. I design the system, make the decisions, and direct AI to build it — then test and review everything."
+2. **How I build** (card): Write the spec → break into tasks → AI agents implement → automated tests + review → ship small releases. (Small step visual.)
+3. **Working knowledge** (honest levels, small card): Git & CI — comfortable · SQLite — working knowledge · Python — basic · PostgreSQL — learning · React / Next.js — reads and reviews (built with AI). Use the level indicator honestly.
+4. **Tools**: Codex, Claude, GitHub Actions, Vercel, Supabase, Playwright.
+Keep Languages + Interests cards. Make the same honest framing consistent in `/resume` (skills), `/uses`, and any copy that claims hand-coding expertise (search content for React/Next.js/TypeScript expertise claims and soften to "built with AI, reviewed by me"). All copy in `src/content/`.
 
 ## Part 8 — Home performance ≥ 90
 Home was 88 (LCP 3.5s). Fix LCP: correct `priority`/`fetchPriority` + `sizes` on the hero image, smaller hero source size for mobile, avoid render-blocking work before LCP, make sure the intro overlay doesn't delay LCP. Prove with 3 Lighthouse runs (median ≥ 90).
