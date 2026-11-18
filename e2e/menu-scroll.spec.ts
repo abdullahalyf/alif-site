@@ -76,6 +76,9 @@ test("the hero card grows and docks into the first slot", async ({ page, isMobil
 test("desktop wheel scrolls the hovered card row and releases the page at both ends", async ({ page, isMobile }) => {
   test.skip(isMobile, "Desktop wheel and drag");
   await page.goto("/");
+  for (const selector of [".hero-photo-story__strip", ".highlights-grid", ".testimonials-grid"]) {
+    await expect.poll(() => page.locator(selector).evaluate(element => element.scrollWidth - element.clientWidth)).toBeGreaterThan(0);
+  }
   const row = page.locator(".project-carousel");
   await row.evaluate((element) => element.scrollIntoView({ block: "center" }));
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");

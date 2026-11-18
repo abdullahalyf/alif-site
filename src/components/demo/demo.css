@@ -1,5 +1,4 @@
 .about-milestones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 4rem); }
-.about-milestones .highlights-grid { grid-auto-columns: min(88%, 23rem); }
 .about-bento { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 0.85rem; }
 .about-bento section { align-content: start; padding: clamp(1rem, 2.4vw, 2rem); border: 1px solid var(--line); border-radius: 1rem; }
 .about-bento h2 { font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 0.85rem; }
@@ -8,7 +7,8 @@
 .skills-grid .chip { background: var(--cream); }
 .about-bento__interests { display: grid; grid-template-columns: minmax(0, 1fr) min(28%, 8rem); gap: 0.85rem; }
 .about-bento__interests img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 0.65rem; }
-.stagger-in.highlights-grid, .stagger-in.testimonials-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(18rem, 38%); gap: 1rem; overflow-x: auto; padding-bottom: 0.75rem; scrollbar-color: var(--ink-muted) var(--cream-2); }
+.stagger-in.highlights-grid, .stagger-in.testimonials-grid { display: grid; grid-auto-flow: column; grid-auto-columns: max(18rem, 38%); gap: 1rem; overflow-x: auto; padding-bottom: 0.75rem; scrollbar-color: var(--ink-muted) var(--cream-2); }
+.about-milestones .highlights-grid { grid-auto-columns: min(88%, 23rem); }
 .highlight-card { display: grid; align-content: start; gap: 1.25rem; padding: 1.75rem; border: 1px solid var(--line); border-radius: 1rem; min-width: 0; }
 .highlight-card:first-child { background: var(--cream-2); }
 .highlight-card h3 { overflow-wrap: anywhere; }
@@ -56,7 +56,7 @@
 .latest-writing-grid article { display: grid; gap: 1rem; border-top: 1px solid var(--line); padding-block: 1.25rem; }
 .latest-writing-grid a { text-decoration: underline; }
 @media (max-width: 47.999rem) {
-  .highlights-grid, .testimonials-grid { grid-auto-columns: min(88%, 23rem); }
+  .stagger-in.highlights-grid, .stagger-in.testimonials-grid { grid-auto-columns: min(88%, 23rem); }
   .about-milestones, .about-bento, .latest-writing-grid, .education-timeline article { grid-template-columns: minmax(0, 1fr); }
   .stats-grid { gap: 1rem; }
   .stats-grid p:not(.stat-value) { font-size: 0.8125rem; }
