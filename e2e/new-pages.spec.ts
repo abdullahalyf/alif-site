@@ -1,3 +1,4 @@
+import { getPosts } from "../src/content/posts";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { contactContent as c } from "../src/content/contact";
@@ -135,6 +136,10 @@ test("search index is public JSON without drafts", async ({ request }) => {
   const response = await request.get("/search-index.json");
   expect(response.status()).toBe(200);
   const entries = await response.json();
+  const hrefs = entries.map((entry: { href: string }) => entry.href);
+  for (const post of getPosts({ includeDrafts: false })) {
+    expect(hrefs).toContain(`/writing/${post.slug}`);
+  }
   expect(
     entries.some((entry: { href: string }) => entry.href === "/contact"),
   ).toBe(true);

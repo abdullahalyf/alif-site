@@ -13,7 +13,7 @@ test("case studies expose CreativeWork JSON-LD", async ({ page }) => {
   expect(data.creator.name).toBe(site.fullName);
 });
 for (const post of getPosts({ includeDrafts: false })) {
-  test(`${post.slug} exposes BlogPosting JSON-LD`, async ({ page }) => {
+  test(`${post.slug} exposes BlogPosting JSON-LD and a share image`, async ({ page, request }) => {
     await page.goto(writingContent.postHref(post.slug));
     const data = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent() || "{}");
     expect(data["@type"]).toBe("BlogPosting");
@@ -21,6 +21,10 @@ for (const post of getPosts({ includeDrafts: false })) {
     expect(data.datePublished).toBe(post.date);
     expect(data.author.name).toBe(site.fullName);
     expect(new URL(data.mainEntityOfPage).pathname).toBe(writingContent.postHref(post.slug));
+    const og = await page.locator('meta[property="og:image"]').getAttribute("content");
+    const image = await request.get(new URL(og!).pathname);
+    expect(image.status()).toBe(200);
+    expect(image.headers()["content-type"]).toContain("image/png");
   });
 }
 

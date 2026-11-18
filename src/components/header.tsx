@@ -116,6 +116,7 @@ export function Header() {
         >
           <div className="site-menu__content">
             <div className="site-menu__top">
+              <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
               <form role="search" onSubmit={(event) => {
                 event.preventDefault();
                 const query = new FormData(event.currentTarget).get("query");
@@ -126,7 +127,6 @@ export function Header() {
                 <input type="search" name="query" aria-label={shell.searchLabel} placeholder={shell.searchLabel} />
                 <Button type="submit" variant="secondary">{shell.searchLabel}</Button>
               </form>
-              <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
             </div>
             <nav aria-label={shell.navigation}>
               <div className="site-menu__groups">

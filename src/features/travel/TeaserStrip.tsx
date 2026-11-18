@@ -22,12 +22,12 @@ export function TeaserStrip({ title, progressLabel, children }: {
       range.value = max > 0 ? String(area.scrollLeft / max * 100) : "0";
     }
 
-    const resize = new ResizeObserver(sync);
-    resize.observe(area);
+    const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(sync);
+    resize?.observe(area);
     area.addEventListener("scroll", sync, { passive: true });
     sync();
     return () => {
-      resize.disconnect();
+      resize?.disconnect();
       area.removeEventListener("scroll", sync);
     };
   }, []);

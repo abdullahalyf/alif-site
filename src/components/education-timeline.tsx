@@ -64,7 +64,7 @@ export function EducationTimeline({ items }: { items: Site["education"] }) {
       {items.map((item) => (
         <article key={item.title}>
           <PhotoReveal className="education-timeline__photo">
-            <Image {...item.image} sizes="(max-width: 768px) 90vw, 18rem" />
+            <Image src={item.image.src} width={item.image.width} height={item.image.height} alt={item.image.alt} sizes="(max-width: 768px) 90vw, 18rem" />
           </PhotoReveal>
           <div className="education-timeline__copy">
             <p className="label">{item.years}</p>
