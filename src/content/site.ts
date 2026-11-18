@@ -182,11 +182,7 @@ export const shell = {
     navigationLinks.work, navigationLinks.services, navigationLinks.approach,
     navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
-  menuExtra: [
-    navigationLinks.travel, navigationLinks.lab, navigationLinks.estimate,
-    navigationLinks.resume, navigationLinks.uses, navigationLinks.now,
-  ],
-  menuExtraLabel: "More",
+  contact: navigationLinks.contact,
   navigation: "Main navigation",
   menu: "Menu",
   closeMenu: "Close menu",

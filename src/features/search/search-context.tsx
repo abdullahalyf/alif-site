@@ -13,8 +13,8 @@ import { useEffect } from "react";
  */
 export const OPEN_SEARCH_EVENT = "site:open-search";
 
-export function openSearch() {
-  document.dispatchEvent(new Event(OPEN_SEARCH_EVENT));
+export function openSearch(query = "") {
+  document.dispatchEvent(new CustomEvent(OPEN_SEARCH_EVENT, { detail: query }));
 }
 
 /**
@@ -23,9 +23,10 @@ export function openSearch() {
  * The listener is attached on the document, so it works from any route and
  * survives client-side navigation.
  */
-export function useOpenSearch(onOpen: () => void) {
+export function useOpenSearch(onOpen: (query?: string) => void) {
   useEffect(() => {
-    document.addEventListener(OPEN_SEARCH_EVENT, onOpen);
-    return () => document.removeEventListener(OPEN_SEARCH_EVENT, onOpen);
+    const listener = (event: Event) => onOpen((event as CustomEvent<string>).detail);
+    document.addEventListener(OPEN_SEARCH_EVENT, listener);
+    return () => document.removeEventListener(OPEN_SEARCH_EVENT, listener);
   }, [onOpen]);
 }
