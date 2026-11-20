@@ -543,3 +543,13 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .horizontal-row__progress::-webkit-slider-thumb { appearance: none; width: 1.25rem; height: 0.5rem; margin-top: -2.5px; border-radius: 999px; background: var(--ink-muted); }
 .horizontal-row__progress::-moz-range-track { height: 3px; background: var(--line); border-radius: 999px; }
 .horizontal-row__progress::-moz-range-thumb { width: 1.25rem; height: 0.5rem; border: none; border-radius: 999px; background: var(--ink-muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-side [data-travel] { animation: hero-signal 2.8s linear infinite; }
+}
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .hero-side [data-float] { animation: hero-float 760ms 160ms cubic-bezier(0.25, 0.7, 0.3, 1) both; }
+  .hero-side__diagram[data-float] { animation-delay: 260ms; }
+}
+@keyframes hero-float { from { transform: translateY(1.25rem); } }
+@keyframes hero-signal { 0% { opacity: 0; } 15% { opacity: 1; } 85%, 100% { transform: translateX(18px); } 100% { opacity: 0; } }

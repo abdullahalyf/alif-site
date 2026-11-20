@@ -1,7 +1,5 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { StatusClock } from "./status-clock";
 import { site } from "@/content/site";
 
 type StatusCardProps = {
@@ -19,23 +17,6 @@ type StatusCardProps = {
  */
 export function StatusCard({ className, float = false }: StatusCardProps) {
   const { statusCard } = site;
-  const [time, setTime] = useState<string>("");
-
-  useEffect(() => {
-    const format = new Intl.DateTimeFormat("en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-      timeZone: statusCard.timezone,
-    });
-
-    const update = () => setTime(format.format(new Date()));
-    update();
-
-    const id = window.setInterval(update, 30_000);
-    return () => window.clearInterval(id);
-  }, [statusCard.timezone]);
-
   return (
     <div className={className} data-float={float ? "true" : undefined}>
       <div className="status-card__top">
@@ -55,7 +36,7 @@ export function StatusCard({ className, float = false }: StatusCardProps) {
           </p>
         </div>
         <p className="status-card__clock">
-          <span className="status-card__time">{time}</span>
+          <StatusClock timezone={statusCard.timezone} />
           <span className="status-card__zone">{statusCard.timezoneLabel}</span>
         </p>
       </div>

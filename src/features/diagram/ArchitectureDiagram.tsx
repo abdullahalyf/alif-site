@@ -5,6 +5,7 @@ import type { Diagram } from "@/content/schemas/diagrams";
 import { pageContent } from "@/content/site";
 import { diagramContent as c } from "@/content/diagrams";
 import { layoutDiagram } from "./layout";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
@@ -50,131 +51,133 @@ export function ArchitectureDiagram({
     const root = rootRef.current;
     if (!root) return;
 
-    const gsap = getGsap();
-    const boxes = root.querySelectorAll<SVGGElement>(".diagram-node");
-    const edges = root.querySelectorAll<SVGPathElement>(".diagram-edge");
-    if (!boxes.length && !edges.length) return;
+    return whenNearViewport(root, () => {
+      const gsap = getGsap();
+      const boxes = root.querySelectorAll<SVGGElement>(".diagram-node");
+      const edges = root.querySelectorAll<SVGPathElement>(".diagram-edge");
+      if (!boxes.length && !edges.length) return;
 
-    // Each edge is drawn in by pulling its dash back to nothing, so the line
-    // appears to grow from one node to the next. The dash has to match the
-    // real length of the path, so it is measured rather than guessed.
-    const lengths = Array.from(edges, (edge) => edge.getTotalLength());
-    edges.forEach((edge, index) => {
-      edge.style.strokeDasharray = `${lengths[index]}`;
-      edge.style.strokeDashoffset = `${lengths[index]}`;
+      // Each edge is drawn in by pulling its dash back to nothing, so the line
+      // appears to grow from one node to the next. The dash has to match the
+      // real length of the path, so it is measured rather than guessed.
+      const lengths = Array.from(edges, (edge) => edge.getTotalLength());
+      edges.forEach((edge, index) => {
+        edge.style.strokeDasharray = `${lengths[index]}`;
+        edge.style.strokeDashoffset = `${lengths[index]}`;
+      });
+
+      const edgeTween = gsap.to(edges, {
+        strokeDashoffset: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        stagger: 0.12,
+        scrollTrigger: { trigger: root, start: "top 80%", once: true },
+      });
+
+      // The boxes scale up into place, slightly after the edge that feeds them.
+      const boxTween = gsap.from(boxes, {
+        scale: 0.86,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.out(1.6)",
+        stagger: 0.09,
+        transformOrigin: "center center",
+        scrollTrigger: { trigger: root, start: "top 80%", once: true },
+      });
+
+      return () => {
+        edgeTween.scrollTrigger?.kill();
+        edgeTween.kill();
+        boxTween.scrollTrigger?.kill();
+        boxTween.kill();
+        // Undo the start states, so a tween that never ran cannot leave a
+        // diagram invisible or with undrawn edges.
+        gsap.set(edges, { clearProps: "strokeDashoffset,strokeDasharray" });
+        gsap.set(boxes, { clearProps: "transform,opacity" });
+      };
     });
-
-    const edgeTween = gsap.to(edges, {
-      strokeDashoffset: 0,
-      duration: 0.8,
-      ease: "power2.inOut",
-      stagger: 0.12,
-      scrollTrigger: { trigger: root, start: "top 80%", once: true },
-    });
-
-    // The boxes scale up into place, slightly after the edge that feeds them.
-    const boxTween = gsap.from(boxes, {
-      scale: 0.86,
-      opacity: 0,
-      duration: 0.6,
-      ease: "back.out(1.6)",
-      stagger: 0.09,
-      transformOrigin: "center center",
-      scrollTrigger: { trigger: root, start: "top 80%", once: true },
-    });
-
-    return () => {
-      edgeTween.scrollTrigger?.kill();
-      edgeTween.kill();
-      boxTween.scrollTrigger?.kill();
-      boxTween.kill();
-      // Undo the start states, so a tween that never ran cannot leave a
-      // diagram invisible or with undrawn edges.
-      gsap.set(edges, { clearProps: "strokeDashoffset,strokeDasharray" });
-      gsap.set(boxes, { clearProps: "transform,opacity" });
-    };
   }, [reducedMotion]);
 
   return (
     <figure className="architecture-diagram" ref={rootRef}>
       <p className="diagram-scroll-hint">{pageContent.diagramScroll}</p>
       <div className="diagram-frame">
-      <div
-        className="diagram-scroll"
-        data-horizontal-scroll
-        tabIndex={0}
-        role="region"
-        aria-label={diagram.title}
-      >
-        <svg
-          width={width}
-          height={height}
-          viewBox={`0 0 ${width} ${height}`}
-          role="img"
-          aria-labelledby={`${id}-title ${id}-desc`}
+        <div
+          className="diagram-scroll"
+          data-horizontal-scroll
+          tabIndex={0}
+          role="region"
+          aria-label={diagram.title}
         >
-          <title id={`${id}-title`}>{diagram.title}</title>
-          <desc id={`${id}-desc`}>{diagram.description}</desc>
-          <defs>
-            <marker
-              id={`${id}-arrow`}
-              viewBox="0 0 10 10"
-              refX="9"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto"
-            >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-            </marker>
-          </defs>
-          {diagram.edges.map((edge, index) => {
-            const a = nodes.find((node) => node.id === edge.from)!;
-            const b = nodes.find((node) => node.id === edge.to)!;
-            return (
-              <g key={index}>
-                <path
-                  className="diagram-edge"
-                  d={`M${a.x + 220},${a.y + 45} C${a.x + 270},${a.y + 45} ${b.x - 50},${b.y + 45} ${b.x},${b.y + 45}`}
-                  fill="none"
-                  stroke="currentColor"
-                  markerEnd={`url(#${id}-arrow)`}
+          <svg
+            width={width}
+            height={height}
+            viewBox={`0 0 ${width} ${height}`}
+            role="img"
+            aria-labelledby={`${id}-title ${id}-desc`}
+          >
+            <title id={`${id}-title`}>{diagram.title}</title>
+            <desc id={`${id}-desc`}>{diagram.description}</desc>
+            <defs>
+              <marker
+                id={`${id}-arrow`}
+                viewBox="0 0 10 10"
+                refX="9"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+              </marker>
+            </defs>
+            {diagram.edges.map((edge, index) => {
+              const a = nodes.find((node) => node.id === edge.from)!;
+              const b = nodes.find((node) => node.id === edge.to)!;
+              return (
+                <g key={index}>
+                  <path
+                    className="diagram-edge"
+                    d={`M${a.x + 220},${a.y + 45} C${a.x + 270},${a.y + 45} ${b.x - 50},${b.y + 45} ${b.x},${b.y + 45}`}
+                    fill="none"
+                    stroke="currentColor"
+                    markerEnd={`url(#${id}-arrow)`}
+                  />
+                  <text
+                    x={(a.x + 220 + b.x) / 2}
+                    y={(a.y + b.y) / 2 + 25}
+                    textAnchor="middle"
+                    fontSize="11"
+                  >
+                    {edge.label}
+                  </text>
+                </g>
+              );
+            })}
+            {nodes.map((node) => (
+              <g
+                key={node.id}
+                className={`diagram-node diagram-node--${node.kind}`}
+              >
+                <rect
+                  x={node.x}
+                  y={node.y}
+                  width="220"
+                  height="90"
+                  rx={node.kind === "db" ? 20 : 8}
                 />
                 <text
-                  x={(a.x + 220 + b.x) / 2}
-                  y={(a.y + b.y) / 2 + 25}
+                  x={node.x + 110}
+                  y={node.y + 50}
                   textAnchor="middle"
-                  fontSize="11"
+                  fontSize="14"
                 >
-                  {edge.label}
+                  {node.label}
                 </text>
               </g>
-            );
-          })}
-          {nodes.map((node) => (
-            <g
-              key={node.id}
-              className={`diagram-node diagram-node--${node.kind}`}
-            >
-              <rect
-                x={node.x}
-                y={node.y}
-                width="220"
-                height="90"
-                rx={node.kind === "db" ? 20 : 8}
-              />
-              <text
-                x={node.x + 110}
-                y={node.y + 50}
-                textAnchor="middle"
-                fontSize="14"
-              >
-                {node.label}
-              </text>
-            </g>
-          ))}
-        </svg>
-      </div>
+            ))}
+          </svg>
+        </div>
       </div>
       <figcaption>
         <p>{diagram.description}</p>

@@ -37,8 +37,12 @@ export function PageMotion() {
         observer?.observe(element);
       });
     };
-    const frame = requestAnimationFrame(activate);
+    let frame = 0;
+    const queue = () => { frame = requestAnimationFrame(activate); };
+    if (window.scrollY > 0) queue();
+    else window.addEventListener("scroll", queue, { passive: true, once: true });
     return () => {
+      window.removeEventListener("scroll", queue);
       cancelAnimationFrame(frame);
       observer?.disconnect();
       played.forEach((element) => element.removeAttribute("data-motion-enter"));
