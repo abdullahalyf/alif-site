@@ -15,7 +15,8 @@ async function audit() {
   try {
     for (const colorScheme of themes) {
       for (const width of widths) {
-        const page = await browser.newPage({ viewport: { width, height: 860 }, colorScheme, reducedMotion: "reduce" });
+        const context = await browser.newContext({ viewport: { width, height: 860 }, colorScheme, reducedMotion: "reduce" });
+        const page = await context.newPage();
         const errors: string[] = [];
         page.on("pageerror", (error) => errors.push(error.message));
         page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
@@ -71,7 +72,7 @@ async function audit() {
           totals.visits++;
           if (issues.length) console.log(`${colorScheme} ${width}px ${route} → ${issues.join(" | ")}`);
         }
-        await page.close();
+        await context.close();
       }
     }
     for (const width of [390, 1024, 1440]) {
