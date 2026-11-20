@@ -1,20 +1,20 @@
 .sync-simulator { display: grid; gap: 1rem; }
-.sync-diagram { min-width: 0; border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: var(--cream-2); }
+.sync-diagram { min-width: 0; border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: var(--surface-2); }
 .sync-diagram-scroll { min-width: 0; max-width: 100%; overflow-x: auto; }
 .sync-diagram svg { display: block; width: 100%; min-width: 640px; height: auto; font: 400 17px var(--font-sans); }
 .sync-diagram figcaption { font-size: 0.8125rem; color: var(--ink-muted); margin-top: 1rem; }
-.sync-diagram-node { fill: var(--cream); stroke: var(--ink-muted); }
+.sync-diagram-node { fill: var(--bg); stroke: var(--ink-muted); }
 .sync-cloud { fill: var(--ink); }
 .sync-diagram text { fill: var(--ink); }
 .sync-svg-label { font-size: 14px; }
 .sync-connection { fill: none; stroke: var(--ink-muted); stroke-width: 2; }
 .sync-connection[data-online="false"] { stroke-dasharray: 5 7; opacity: 0.55; }
-.sync-packet { fill: var(--ink); stroke: var(--cream); stroke-width: 2; }
+.sync-packet { fill: var(--ink); stroke: var(--bg); stroke-width: 2; }
 .sync-terminals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
 .sync-terminal-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; justify-content: space-between; }
 .sync-terminal-heading h2 { margin-bottom: 0; }
 .sync-status { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.65rem; }
-.sync-status[data-online="false"] { background: var(--ink); color: var(--cream); }
+.sync-status[data-online="false"] { background: var(--ink); color: var(--bg); }
 .sync-terminal > p { margin-top: 1rem; }
 .sync-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block: 0.75rem; }
 .sync-queue-title { font: 400 0.8125rem var(--font-sans); margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 0.75rem; }
@@ -31,6 +31,6 @@
 .sync-events li { padding: 0.5rem; font-size: 0.875rem; border-bottom: 1px solid var(--line); }
 @media (max-width: 999px) { .sync-terminals { grid-template-columns: 1fr; } }
 @media (max-width: 499px) { .sync-totals { grid-template-columns: 1fr; } }
-.sync-diagram .sync-cloud-label { fill: var(--cream); }
+.sync-diagram .sync-cloud-label { fill: var(--bg); }
 
 @media (max-width: 499px) { .sync-simulator .lab-panel { padding: 0.9rem; } .sync-totals { gap: 0.75rem; } }

@@ -7,7 +7,7 @@ import { ServiceIcon } from "@/components/service-icon";
 import { Reveal, StaggerIn } from "@/components/motion";
 
 export function Services() {
-  return <section className="tint-sand section-space" aria-labelledby="services-title">
+  return <section className="tint-b section-space" aria-labelledby="services-title">
     <div className="container">
       <SectionLabel>{homeContent.servicesLabel}</SectionLabel>
       <Reveal><h2 id="services-title" className="section-title">{homeContent.servicesTitle}</h2></Reveal>

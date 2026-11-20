@@ -9,14 +9,14 @@
 .estimate-form > fieldset { display: grid; gap: 2rem; }
 .estimate-field { min-width: 0; display: grid; align-content: start; gap: 0.65rem; }
 .estimate-field > label, .estimate-integrations legend { font-size: 0.875rem; }
-.estimate-form input[type="number"], .estimate-form select { width: 100%; min-width: 0; min-height: 44px; padding: 0.75rem 1rem; border: 1px solid var(--ink-muted); border-radius: 0.5rem; background: var(--cream); color: var(--ink); }
+.estimate-form input[type="number"], .estimate-form select { width: 100%; min-width: 0; min-height: 44px; padding: 0.75rem 1rem; border: 1px solid var(--ink-muted); border-radius: 0.5rem; background: var(--bg); color: var(--ink); }
 .estimate-counts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .estimate-checkbox { display: flex; align-items: center; gap: 0.75rem; min-height: 44px; font-size: 0.875rem; cursor: pointer; }
 .estimate-checkbox input { width: 1.15rem; height: 1.15rem; accent-color: var(--ink); flex-shrink: 0; }
 .estimate-integrations > div { display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem 1rem; margin-top: 0.75rem; }
 .estimate-hint { font-size: 0.8125rem; color: var(--ink-muted); max-width: 65ch; }
 .estimate-error, .estimate-invalid { color: var(--ink); font-size: 0.875rem; border-left: 3px solid var(--ink); padding-left: 0.75rem; }
-.estimate-result { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.25rem, 3vw, 2.5rem); background: var(--cream-2); }
+.estimate-result { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.25rem, 3vw, 2.5rem); background: var(--surface-2); }
 .estimate-ranges { display: grid; gap: 1.75rem; }
 .estimate-ranges h3 { font: 400 0.8125rem var(--font-sans); color: var(--ink-muted); }
 .estimate-ranges p { font: 400 clamp(2rem, 4vw, 3.5rem)/1.1 var(--font-serif); margin-top: 0.65rem; overflow-wrap: anywhere; }
@@ -24,12 +24,12 @@
 .estimate-result > .estimate-demo-notice { margin-block: 1.75rem 0.75rem; border-radius: 0.5rem; }
 .estimate-phases { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 1.5rem; }
 .estimate-phases figcaption { font-size: 1rem; margin-bottom: 1rem; }
-.estimate-phase-bar { display: flex; overflow: hidden; height: 0.75rem; border-radius: 999px; background: var(--cream); }
+.estimate-phase-bar { display: flex; overflow: hidden; height: 0.75rem; border-radius: 999px; background: var(--bg); }
 .estimate-phase-bar > span { display: block; height: 100%; transition: width 0.45s ease; }
 .estimate-phase-bar [data-phase="discovery"], .estimate-phase-dot[data-phase="discovery"] { background: var(--ink); }
 .estimate-phase-bar [data-phase="architecture"], .estimate-phase-dot[data-phase="architecture"] { background: var(--ink-muted); }
 .estimate-phase-bar [data-phase="build"], .estimate-phase-dot[data-phase="build"] { background: var(--line); }
-.estimate-phase-bar [data-phase="rollout"], .estimate-phase-dot[data-phase="rollout"] { background: var(--cream); }
+.estimate-phase-bar [data-phase="rollout"], .estimate-phase-dot[data-phase="rollout"] { background: var(--bg); }
 .estimate-phases dl { margin-block: 1rem 1.5rem; }
 .estimate-phases dl > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; padding-block: 0.5rem; font-size: 0.8125rem; }
 .estimate-phases dt { display: flex; align-items: center; gap: 0.65rem; }

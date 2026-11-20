@@ -4,7 +4,7 @@
 .lab-intro .lead { max-width: 60ch; }
 .lab-intro > a { justify-self: start; }
 .lab-demo-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-.lab-demo-card { display: grid; align-content: start; gap: 1.5rem; border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.5rem, 4vw, 3rem); background: var(--cream-2); }
+.lab-demo-card { display: grid; align-content: start; gap: 1.5rem; border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.5rem, 4vw, 3rem); background: var(--surface-2); }
 .lab-card-number { font: 400 2rem/1 var(--font-serif); color: var(--ink-muted); }
 .lab-demo-card h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
 .lab-demo-card a { justify-self: start; margin-top: 1rem; }
@@ -16,11 +16,11 @@
 .lab-panel h3 { margin-bottom: 1rem; }
 .lab-note { color: var(--ink-muted); font-size: 0.875rem; max-width: 65ch; }
 .lab-shell button, .lab-shell select { min-height: 44px; }
-.lab-shell button { border: 1px solid var(--ink); border-radius: 999px; padding: 0.6rem 1rem; background: var(--ink); color: var(--cream); }
+.lab-shell button { border: 1px solid var(--ink); border-radius: 999px; padding: 0.6rem 1rem; background: var(--ink); color: var(--bg); }
 .lab-shell button:disabled { opacity: 0.45; cursor: default; }
 .lab-shell button.lab-button-secondary { color: var(--ink); background: transparent; }
-.lab-shell button:hover:enabled { background: var(--cream); color: var(--ink); }
-.lab-shell select { border: 1px solid var(--ink-muted); border-radius: 0.5rem; padding: 0.65rem 1rem; background: var(--cream); color: var(--ink); width: 100%; }
+.lab-shell button:hover:enabled { background: var(--bg); color: var(--ink); }
+.lab-shell select { border: 1px solid var(--ink-muted); border-radius: 0.5rem; padding: 0.65rem 1rem; background: var(--bg); color: var(--ink); width: 100%; }
 .lab-shell label { font-size: 0.875rem; }
 @media (max-width: 699px) { .lab-demo-cards { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .lab-shell *, .lab-shell *::before, .lab-shell *::after { animation: none !important; transition: none !important; } }

@@ -8,7 +8,7 @@ import "./teaser.css";
 
 export function TravelTeaser() {
   const latest = [...trips].sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug)).slice(0, 3);
-  return <section className="travel-teaser tint-clay section-space" aria-labelledby="travel-teaser-title">
+  return <section className="travel-teaser band-surface section-space" aria-labelledby="travel-teaser-title">
     <div className="container">
       <h2 id="travel-teaser-title">{c.teaserTitle}</h2>
       <p className="travel-teaser-intro">{c.teaserIntro}</p>

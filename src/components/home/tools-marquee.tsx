@@ -1,7 +1,7 @@
 import { toolsMarquee } from "@/content/site";
 
 export function ToolsMarquee() {
-  return <section className="tools-marquee tint-sage section-space" aria-labelledby="tools-marquee-title">
+  return <section className="tools-marquee tint-a section-space" aria-labelledby="tools-marquee-title">
     <div className="container">
       <h2 id="tools-marquee-title">{toolsMarquee.label}</h2>
       <div className="tools-marquee__area">

@@ -5,7 +5,7 @@ import { SectionLabel } from "@/components/section-label";
 import { Reveal } from "@/components/motion";
 
 export function AboutTeaser() {
-  return <section className="tint-sage section-space" aria-labelledby="about-teaser-title">
+  return <section className="tint-a section-space" aria-labelledby="about-teaser-title">
     <div className="container">
       <SectionLabel>{homeContent.aboutLabel}</SectionLabel>
       <div className="split-section">

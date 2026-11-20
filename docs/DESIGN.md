@@ -13,20 +13,23 @@ Feel: warm, calm, editorial. A personal site people actually read — who Alif i
 ## Colours (CSS variables in `globals.css`, exposed to Tailwind via `@theme`)
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--cream` | `#F1E9DC` | `#1A1815` | page background |
-| `--cream-2` | `#E9DFCE` | `#24211D` | cards and image placeholders |
-| `--ink` | `#1E1C19` | `#EDE6DA` | text and primary buttons |
-| `--ink-muted` | `#62594F` | `#A79F92` | secondary text and captions |
-| `--line` | `#D6CEBF` | `#3A3530` | hairline dividers and diagonal lines |
-| `--sage` | `#E4E8D8` | `#252820` | tinted sections and tags |
-| `--sand` | `#EBDFCB` | `#29241D` | tinted sections and tags |
-| `--clay` | `#EEDED5` | `#2B2320` | tinted sections and tags |
-| `--night` | `#22201C` | `#28241F` | How I work and footer surface |
-| `--night-text` | `#EDE7DB` | `#EDE6DA` | text on night surfaces |
-| `--night-muted` | `#CFC5B3` | `#C7BBAA` | secondary text on night surfaces |
-| `--night-line` | `#6A645A` | `#5B5044` | outlines on night surfaces |
-| `--accent` | `#9DB34A` | `#9DB34A` | status marks and focus rings |
-| `--link-accent` | `#495923` | `#BACD80` | link underlines |
+| `--bg` | `#FAF8F4` | `#1C1B18` | Main page background |
+| `--surface-1` | `#FFFDFA` | `#242320` | Raised cards and product mockups |
+| `--surface-2` | `#F1EEE8` | `#2C2A25` | Neutral bands, panels and image placeholders |
+| `--tint-a` | `#F0F2E9` | `#262B23` | Soft green section background |
+| `--tint-b` | `#E8EDE2` | `#2E352A` | Deeper green section background |
+| `--ink` | `#22231E` | `#F4EFE7` | Primary text |
+| `--ink-muted` | `#56554D` | `#C0B9AD` | Secondary text, captions and control outlines |
+| `--line` | `#D4D0C5` | `#49463F` | Decorative dividers |
+| `--accent` | `#285438` | `#A8CC9F` | Forest green links, focus rings and key actions |
+| `--accent-2` | `#93492C` | `#E2A17E` | Terracotta for occasional highlights |
+| `--on-accent` | `#FFFDFA` | `#1C1B18` | Text on the forest accent |
+| `--night` | `#252823` | `#262823` | Home approach panel and footer |
+| `--night-text` | `#F4EFE7` | `#F4EFE7` | Text on night surfaces |
+| `--night-muted` | `#C0B9AD` | `#C0B9AD` | Secondary text on night surfaces |
+| `--night-line` | `#5B5E53` | `#5B5E53` | Decorative dividers on night surfaces |
+| `--night-accent` | `#A8CC9F` | `#A8CC9F` | Green links and focus rings on night surfaces |
+
 All text/background pairs must pass WCAG AA.
 
 ## Typography (local fonts in `src/fonts/`, `next/font/local`)
@@ -37,7 +40,7 @@ All text/background pairs must pass WCAG AA.
 
 ## Global elements
 - **Header**: wordmark on the left and navigation on wide screens. The Menu button opens a side drawer that fills small screens. Both the header and drawer offer a theme control. The site follows the system theme until a visitor makes a choice. The header stays fixed, compacts as visitors scroll down, and expands as they scroll up.
-- **Buttons**: pill shape, `--ink` bg + cream text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
+- **Buttons**: pill shape, `--ink` background with `--bg` text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.
 
@@ -46,16 +49,16 @@ All text/background pairs must pass WCAG AA.
 ### Home `/` (more info than raw.london — a visitor should understand Alif without clicking)
 1. **Intro**: multilingual greetings and versions of “Alif,” followed by an upward exit within 1.6s. Plays on arrival at Home and skips reloads within 10 seconds. Click or Escape dismisses it, and the page underneath is available without JavaScript.
 2. **Hero** (Steno hero): quote pill (`site.tagline`, small avatar dot) → serif h1 (`site.role`) → intro paragraph (`site.intro`) → buttons "Email me" / "See my work" → location line (`site.location`).
-   Below it: wide rounded panel (radius ~24px) showing `site.heroPhoto` (grey-wall portrait, `object-fit: cover`, keep his face in frame on mobile), with 3–4 thin diagonal lines (`--line`) crossing over the top edge of the panel (like steno's hero stripes). Subtle bottom gradient into cream.
+   Below it: wide rounded panel (radius ~24px) showing `site.heroPhoto` (grey-wall portrait, `object-fit: cover`, keep his face in frame on mobile), with 3–4 thin diagonal lines (`--line`) crossing over the top edge of the panel (like steno's hero stripes). Subtle bottom gradient into the page background.
 3. **About teaser**: two columns — short paragraph (`site.about[0]`) + "More about me" link → `/about`.
 4. **How I work** (Steno "Your Twin, custom built" section): `--night` background, serif h2, then `site.approach` steps stacked with hairline dividers, each step = h3 + paragraph. Link → `/approach`.
 5. **Services**: `site.services` as a large list with hairline rows.
-6. **Selected work** (Steno card row): horizontal row of project cards (scroll-snap, swipe on mobile, arrow buttons on desktop). Card = image or `--cream-2` placeholder, category label, title, summary. Link → `/work/[slug]`.
+6. **Selected work** (Steno card row): horizontal row of project cards (scroll-snap, swipe on mobile, arrow buttons on desktop). Card = image or `--surface-2` placeholder, category label, title, summary. Link → `/work/[slug]`.
 7. Footer (contact).
 
 ### About me `/about` (personal page, Atlas photo story)
 - h1 + `site.aboutPhoto` large, `site.about` paragraphs beside it.
-- **Story**: `site.story` chapters in an alternating staggered layout — big image on one side / text on the other, next chapter flips; images of different sizes (big, small, offset) like Atlas. Caption under each image: `[LABEL]` uppercase + chapter title. `image: null` → `--cream-2` placeholder block of the same size.
+- **Story**: `site.story` chapters in an alternating staggered layout — big image on one side / text on the other, next chapter flips; images of different sizes (big, small, offset) like Atlas. Caption under each image: `[LABEL]` uppercase + chapter title. `image: null` → `--surface-2` placeholder block of the same size.
 
 ### Approach `/approach`
 - h1 + intro line, then `site.approach` as large numbered steps (01, 02, …) — number in serif, title, text. Hairline between steps.
