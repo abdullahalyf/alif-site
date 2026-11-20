@@ -2,63 +2,75 @@ import { servicesSchema } from "./schemas/services";
 export const servicesContent = servicesSchema.parse({
   title: "Software built around your business.",
   intro:
-    "Start with the decisions that matter: how work flows, who needs access, and what must keep working when things go wrong.",
+    "Give your team one place to run sales, track stock and keep working when the internet drops.",
+  label: "Software services",
+  browseLabel: "Explore services",
   deliverablesLabel: "Typical deliverables",
   timelineLabel: "Typical timeline",
   processTitle: "How an engagement works",
+  recommendedModel: "Fixed-scope project",
+  recommendedLabel: "Recommended for a first build",
+  demoPriceLabel: "Demo price",
   modelsTitle: "Ways to work together",
   faqTitle: "Before we begin",
   cta: "Tell me about your project",
   contactPath: "/contact",
-  estimatePath: "/estimate",
-  estimateLabel: "Estimate this service",
+  estimateLabel: "Estimate this",
+  startingLabel: "Demo starting point",
+  demoNote: "Demo prices and timelines are examples for planning. I confirm scope and pricing with you before work starts.",
   // DEMO: indicative scope, timelines and engagement terms; confirm before offering.
   blocks: [
     {
       title: "System architecture",
       icon: "architecture",
-      description: "A practical blueprint before committing to a build.",
+      description: "Map how orders, stock and people fit together before you commit to building.",
       deliverables: [
-        "Domain and data model",
-        "Risk and failure-mode review",
-        "Release plan and cost assumptions",
+        "A map of your data and workflows",
+        "Risks and what to do if things fail",
+        "A release plan and cost assumptions",
       ],
-      timeline: "DEMO — 1–2 weeks, depending on scope",
+      timeline: "1–2 weeks",
+      maxWeeks: 2,
+      startingPrice: "From $650 USD",
     },
     {
       title: "Business software",
       icon: "operations",
-      description: "Make daily operations clear, traceable and easier to run.",
+      description: "Run sales and stock from one system, and see how each location is doing.",
       deliverables: [
-        "POS, inventory or operations workflows",
-        "Role-based dashboard",
+        "A tailored checkout, stock or operations workflow",
+        "A dashboard tailored to each role",
         "Tests, documentation and handover",
       ],
-      timeline: "DEMO — 6–12 weeks for an initial release",
+      timeline: "6–12 weeks",
+      maxWeeks: 12,
+      startingPrice: "From $3,650 USD",
     },
     {
       title: "Offline-first apps",
       icon: "offline",
-      description:
-        "Keep essential work moving through unreliable connectivity.",
+      description: "Save orders and field updates on the device, then sync when the connection comes back.",
       deliverables: [
-        "Local persistence and operation queue",
-        "Retry-safe synchronisation",
-        "Recovery and conflict scenarios",
+        "On-device storage and a queue for pending work",
+        "Automatic retries that avoid duplicate updates",
+        "A plan for recovery and conflicting changes",
       ],
-      timeline: "DEMO — 4–8 weeks for a focused workflow",
+      timeline: "4–8 weeks",
+      maxWeeks: 8,
+      startingPrice: "From $2,600 USD",
     },
     {
       title: "Database & access control",
       icon: "access",
-      description:
-        "Design the rules that protect the system beneath the interface.",
+      description: "Give staff access to the records they need and keep sensitive actions in the right hands.",
       deliverables: [
-        "Schema and migration plan",
-        "Permission matrix and RLS policies",
-        "Backup and query review",
+        "Database structure and migration plan",
+        "A clear table of who can view or change records",
+        "Backup and database performance review",
       ],
-      timeline: "DEMO — 1–3 weeks",
+      timeline: "1–3 weeks",
+      maxWeeks: 3,
+      startingPrice: "From $650 USD",
     },
   ],
   steps: [
@@ -87,17 +99,17 @@ export const servicesContent = servicesSchema.parse({
     {
       title: "Fixed-scope project",
       bestFor: "A defined problem with clear acceptance criteria.",
-      price: "DEMO — starting price to be agreed after discovery",
+      price: "From $3,650 USD / project",
     },
     {
       title: "Monthly retainer",
       bestFor: "Ongoing improvements and care for an existing system.",
-      price: "DEMO — monthly starting price to be confirmed",
+      price: "From $1,300 USD / month",
     },
     {
       title: "Architecture review",
       bestFor: "An independent review before a major technical decision.",
-      price: "DEMO — review starting price to be confirmed",
+      price: "From $650 USD / review",
     },
   ],
   faqs: [
@@ -143,3 +155,56 @@ export const servicesContent = servicesSchema.parse({
     },
   ],
 });
+
+export const serviceDetails = {
+  audienceLabel: "Who it's for",
+  whyTitle: "Why work with me",
+  reasons: [
+    { title: "Decisions with reasons", text: "I explain what each option buys, what it costs, and what would make me revisit the decision." },
+    { title: "Small releases with AI", text: "I give agents defined tasks so you can review a working slice early." },
+    { title: "Tested and reviewed", text: "I review changes and test realistic failure cases before release." },
+    { title: "Offline-first experience", text: "I design for lost connections, retries, and reconciliation when work must keep moving." },
+  ],
+  byService: {
+    architecture: {
+      audience: "Teams preparing a build, replacing a fragile system, or facing a decision they want to validate first.",
+    },
+    operations: {
+      audience: "Operators managing sales, stock or approvals across more than one role or location.",
+    },
+    offline: {
+      audience: "Counter staff and field teams who need to finish work without steady internet.",
+    },
+    access: {
+      audience: "Teams with shared records, branch boundaries or permissions that are hard to audit.",
+    },
+  },
+};
+
+export const serviceMockups = {
+  hero: ["Your business", "Your system", "Your dashboard"],
+  architecture: {
+    title: "Order workflow",
+    nodes: ["New order", "Check stock", "Send receipt"],
+    labels: ["Sales", "Inventory", "Customer"],
+  },
+  operations: {
+    title: "Sales overview",
+    summary: "Sales this week",
+    value: "$8,420",
+    order: "Open order",
+    amount: "$42.50",
+    action: "Take payment",
+    days: ["M", "T", "W", "T", "F", "S", "S"],
+  },
+  offline: {
+    title: "Field orders",
+    connection: "Connection lost",
+    statuses: ["Saved on device", "Waiting to sync", "Synced when online"],
+  },
+  access: {
+    title: "Staff permissions",
+    headers: ["Role", "View", "Edit", "Refund"],
+    roles: ["Owner", "Manager", "Cashier"],
+  },
+} as const;

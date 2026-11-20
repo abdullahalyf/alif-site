@@ -271,8 +271,19 @@ test("each service offers a timeline and a link to the estimator", async ({ page
   await page.goto("/services");
   const blocks = page.locator(".service-block");
   await expect(blocks).toHaveCount(4);
-  for (const block of await blocks.all()) {
+  const presets = { architecture: "web", operations: "pos", offline: "mobile", access: "dashboard" };
+  for (const [service, type] of Object.entries(presets)) {
+    await page.goto("/services");
+    const block = blocks.and(page.locator(`#${service}`));
     await expect(block.getByText("Typical timeline")).toBeVisible();
-    await expect(block.getByRole("link", { name: "Estimate this service" })).toHaveAttribute("href", "/estimate");
+    const link = block.getByRole("link", { name: "Estimate this" });
+    await expect(link).toHaveAttribute("href", `/estimate?service=${service}`);
+    await link.click();
+    await expect(page.getByRole("combobox", { name: "Project type" })).toHaveValue(type);
+    const offline = page.getByRole("checkbox", { name: "Needs to work offline" });
+    if (service === "offline") await expect(offline).toBeChecked();
+    else await expect(offline).not.toBeChecked();
   }
+  await page.goto("/estimate?service=constructor");
+  await expect(page.getByRole("combobox", { name: "Project type" })).toHaveValue("pos");
 });

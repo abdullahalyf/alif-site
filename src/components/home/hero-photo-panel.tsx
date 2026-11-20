@@ -89,7 +89,7 @@ export function HeroPhotoPanel({
     <div className="container hero-panel" ref={panel}>
       <div className="hero-panel__frame">
         <div className="hero-panel__image">{children}</div>
-        <HeroStripes className="hero-stripes" color="var(--cream)" drift={36} />
+        <HeroStripes className="hero-stripes" color="var(--bg)" drift={36} />
       </div>
     </div>
     <div ref={floating} className="hero-photo-story__floating" aria-hidden="true">{floatingPhoto}</div>

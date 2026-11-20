@@ -29,7 +29,7 @@
   border: 1px solid var(--ink-muted);
   border-radius: 0.5rem;
   padding: 0.75rem;
-  background: var(--cream);
+  background: var(--bg);
   color: var(--ink);
 }
 .brief-form [aria-invalid="true"] {

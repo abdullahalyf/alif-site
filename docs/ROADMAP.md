@@ -49,6 +49,7 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 
 - [x] Task 17: Unpinned travel journey with scoped wheel/drag scrolling, Bangladesh route map, place colours, trip pages and accessible galleries, computed stats, filters and local demo photos.
 - [x] Task 18: Interactive Lab index, offline-sync simulator and scoped access explorer, editable project estimator, contact summaries, reduced-motion/no-JS fallbacks and tests. Full regression has an existing pinned Travel blocker; see `docs/reports/CODEX-18-report.md`.
+- [x] Task 26: Visual Services page, service-specific estimator presets, and a shared light and dark palette. See [the report](reports/CODEX-26-report.md).
 - [x] Task 25: Audit fixes, richer sections and motion, Work, Services, and case studies. See [the report](reports/CODEX-25-report.md).
 - [x] Task 24: Work, Services and client case studies, folded into Task 25.
 - [x] Task 23: Site themes, multilingual Home greeting, photo reveal cleanup, Resume / CV, About travel notes and skills, and Home performance.

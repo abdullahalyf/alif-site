@@ -12,7 +12,7 @@
   color: var(--ink);
 }
 .diagram-node rect {
-  fill: var(--cream-2);
+  fill: var(--surface-2);
   stroke: var(--ink-muted);
 }
 .diagram-node--db rect {
@@ -23,7 +23,7 @@
 }
 .diagram-node--external rect {
   stroke-dasharray: 4 3;
-  fill: var(--cream);
+  fill: var(--bg);
 }
 .architecture-diagram figcaption {
   display: grid;
@@ -63,7 +63,7 @@
     position: absolute;
     inset: 1px 1px 1px auto;
     width: 1.75rem;
-    background: linear-gradient(to right, transparent, var(--cream));
+    background: linear-gradient(to right, transparent, var(--bg));
     pointer-events: none;
   }
 }

@@ -8,7 +8,7 @@ test("the header and drawer share a theme choice that survives reload", async ({
   await page.goto("/about");
   const root = page.locator("html");
   await expect(root).toHaveAttribute("data-theme", "dark");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(26, 24, 21)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await waitForHydration(page);
 
   await page.getByRole("banner").getByRole("button", { name: shell.useLightTheme }).click();

@@ -8,7 +8,7 @@ import { Reveal } from "@/components/motion";
 import { WorkCarousel } from "./work-carousel";
 
 export function SelectedWork() {
-  return <section className="tint-clay section-space selected-work" aria-labelledby="selected-title">
+  return <section className="band-surface section-space selected-work" aria-labelledby="selected-title">
     <div className="container">
       <SectionLabel>{workContent.selectedLabel}</SectionLabel>
       <div className="section-heading"><Reveal><h2 id="selected-title">{workContent.selectedTitle}</h2></Reveal><Reveal><Link className="text-link" href={navHref("/work")}>{workContent.allWork}<ArrowUpRight /></Link></Reveal></div>

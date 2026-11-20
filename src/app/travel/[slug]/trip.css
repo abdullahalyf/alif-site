@@ -23,7 +23,7 @@
 .trip-gallery figure { break-inside: avoid; margin-bottom: 2rem; }
 .trip-gallery figure:nth-child(even) { padding-top: 3rem; }
 .trip-gallery img { display: block; width: 100%; height: auto; border-radius: 0.5rem; }
-.trip-lightbox { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1rem, 3vw, 2rem); width: min(100% - 2rem, 76rem); max-height: calc(100svh - 2rem); margin: auto; background: var(--cream); color: var(--ink); overscroll-behavior: contain; }
+.trip-lightbox { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1rem, 3vw, 2rem); width: min(100% - 2rem, 76rem); max-height: calc(100svh - 2rem); margin: auto; background: var(--bg); color: var(--ink); overscroll-behavior: contain; }
 .trip-lightbox::backdrop { background: color-mix(in srgb, var(--scrim) 90%, transparent); }
 .trip-lightbox-header, .trip-lightbox-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .trip-lightbox-header { margin-bottom: 1.5rem; }

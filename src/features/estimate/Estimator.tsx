@@ -1,14 +1,33 @@
 "use client";
-import { useId, useState } from "react";
-import { estimateContent as c, estimateDefaults } from "@/content/estimate";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useId, useState } from "react";
+import { estimateContent as c, estimateDefaults, serviceEstimatePresets } from "@/content/estimate";
 import { estimateLimits, integrations, projectTypes, urgencyLevels, validEstimateCount } from "@/content/estimate-options";
 import type { EstimateInput } from "@/content/schemas/estimate";
 import { useInteractive } from "@/features/lab/useInteractive";
 import { calculateRange } from "./calculate-range";
 import { estimateSummary, estimateUrl } from "./summary";
 
+function ReadServicePreset({ onChange }: { onChange: (service: string | undefined) => void }) {
+  const values = useSearchParams().getAll("service");
+  const service = values.length === 1 && Object.hasOwn(serviceEstimatePresets, values[0]) ? values[0] : undefined;
+  useEffect(() => onChange(service), [onChange, service]);
+  return null;
+}
+
 export function Estimator() {
-  const [scope, setScope] = useState(estimateDefaults);
+  const [service, setService] = useState<string>();
+  const initialScope = service ? { ...estimateDefaults, ...serviceEstimatePresets[service] } : estimateDefaults;
+  return (
+    <>
+      <Suspense fallback={null}><ReadServicePreset onChange={setService} /></Suspense>
+      <EstimateForm key={service} initialScope={initialScope} />
+    </>
+  );
+}
+
+function EstimateForm({ initialScope }: { initialScope: EstimateInput }) {
+  const [scope, setScope] = useState(initialScope);
   const [branches, setBranches] = useState(String(estimateDefaults.branches));
   const [roles, setRoles] = useState(String(estimateDefaults.roles));
   const id = useId(), interactive = useInteractive();

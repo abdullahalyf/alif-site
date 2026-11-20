@@ -16,5 +16,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><div className="tint-clay"><Highlights /></div><HowIWork /><Services /><ToolsMarquee /><SelectedWork /><div className="tint-sand"><Testimonials /></div><div className="tint-sage"><LatestWriting /></div></>;
+  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><div className="band-surface"><Highlights /></div><HowIWork /><Services /><ToolsMarquee /><SelectedWork /><div className="tint-b"><Testimonials /></div><div className="tint-a"><LatestWriting /></div></>;
 }

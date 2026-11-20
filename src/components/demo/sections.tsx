@@ -54,7 +54,7 @@ export function AboutDetails() {
   const interestsPhoto = demoContent.interestsPhoto;
 
   return <>
-    <div className="tint-sage"><div className="container about-milestones section-space">
+    <div className="tint-a"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
         <SectionLabel>{demoContent.educationLabel}</SectionLabel>
         <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
@@ -62,7 +62,7 @@ export function AboutDetails() {
       </section>
       <Highlights standalone={false} />
     </div></div>
-    <div className="tint-clay"><div className="container about-bento section-space">
+    <div className="band-surface"><div className="container about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">
         <h2 id="skills-title">{skillProfile.label}</h2>
         <div className="skills-grid">

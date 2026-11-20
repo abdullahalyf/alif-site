@@ -24,7 +24,7 @@
 .post-prose ol { list-style: decimal; }
 .post-prose li + li { margin-top: 0.5rem; }
 .post-prose pre { max-width: 100%; overflow-x: auto; border-radius: 0.75rem; padding: 1.25rem; background: var(--night); color: var(--night-text); font-size: 0.875rem; }
-.post-prose :not(pre) > code { background: var(--cream-2); border-radius: 0.25rem; padding: 0.1rem 0.3rem; }
+.post-prose :not(pre) > code { background: var(--surface-2); border-radius: 0.25rem; padding: 0.1rem 0.3rem; }
 .post-prose blockquote { border-left: 2px solid var(--ink-muted); padding-left: 1.5rem; }
 .post-prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .post-prose td, .post-prose th { padding: 0.75rem; border: 1px solid var(--line); }
