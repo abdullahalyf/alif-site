@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 import type { Diagram } from "@/content/schemas/diagrams";
+import { pageContent } from "@/content/site";
 import { diagramContent as c } from "@/content/diagrams";
 import { layoutDiagram } from "./layout";
 import { getGsap } from "@/lib/gsap";
@@ -96,6 +97,8 @@ export function ArchitectureDiagram({
 
   return (
     <figure className="architecture-diagram" ref={rootRef}>
+      <p className="diagram-scroll-hint">{pageContent.diagramScroll}</p>
+      <div className="diagram-frame">
       <div
         className="diagram-scroll"
         data-horizontal-scroll
@@ -171,6 +174,7 @@ export function ArchitectureDiagram({
             </g>
           ))}
         </svg>
+      </div>
       </div>
       <figcaption>
         <p>{diagram.description}</p>

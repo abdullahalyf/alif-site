@@ -342,6 +342,7 @@ export const pageContent = {
   /** The section heading for the architecture diagram inside a case study. */
   systemDesign: "System design",
   /** The link to the full-size diagram. */
+  diagramScroll: "Scroll to see the full diagram →",
   systemDesignLink: "Open the full diagram",
 };
 
