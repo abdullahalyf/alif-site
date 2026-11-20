@@ -6,12 +6,14 @@ import { Button } from "./button";
 import { horizontalContent } from "@/content/site";
 import { StaggerIn } from "./motion/StaggerIn";
 
-export function HorizontalRow({ children, className, label, labelledBy, progressLabel = horizontalContent.progress, as = "div" }: {
+export function HorizontalRow({ children, className, label, labelledBy, progressLabel = horizontalContent.progress, previousLabel = horizontalContent.previous, nextLabel = horizontalContent.next, as = "div" }: {
   children: ReactNode;
   className: string;
   label?: string;
   labelledBy?: string;
   progressLabel?: string;
+  previousLabel?: string;
+  nextLabel?: string;
   as?: "div" | "ul";
 }) {
   const id = useId();
@@ -68,8 +70,8 @@ export function HorizontalRow({ children, className, label, labelledBy, progress
           const area = row.current;
           if (area) area.scrollLeft = event.currentTarget.valueAsNumber / 100 * (area.scrollWidth - area.clientWidth);
         }} />
-      <Button className="horizontal-row__back" variant="secondary" onClick={() => move(-1)} aria-label={horizontalContent.previous} aria-controls={id}><ArrowLeft /></Button>
-      <Button className="horizontal-row__forward" variant="secondary" onClick={() => move(1)} aria-label={horizontalContent.next} aria-controls={id}><ArrowRight /></Button>
+      <Button className="horizontal-row__back" variant="secondary" onClick={() => move(-1)} aria-label={previousLabel} aria-controls={id}><ArrowLeft /></Button>
+      <Button className="horizontal-row__forward" variant="secondary" onClick={() => move(1)} aria-label={nextLabel} aria-controls={id}><ArrowRight /></Button>
     </div>
   </div>;
 }
