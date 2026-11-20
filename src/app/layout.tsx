@@ -2,6 +2,7 @@ import { getBaseUrl } from "@/seo/base-url";
 import type { Metadata } from "next";
 import { shell, site } from "@/content/site";
 import localFont from "next/font/local";
+import { PageMotion } from "@/components/motion/PageMotion";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SmoothScroll } from "@/components/motion";
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>
           <Header />
-          <main id="main" tabIndex={-1}>{children}</main>
+          <main id="main" tabIndex={-1}>{children}<PageMotion /></main>
           <Footer />
           <SearchDialog />
         </SmoothScroll>
