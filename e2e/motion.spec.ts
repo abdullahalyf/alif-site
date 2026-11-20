@@ -53,7 +53,7 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
 });
 
 for (const width of [360, 390, 430]) {
-  test(`the mobile hero overlaps its photo with the card and diagram at ${width}px`, async ({ page, isMobile }) => {
+  test(`the mobile hero overlaps the photo with the status card and places the diagram below at ${width}px`, async ({ page, isMobile }) => {
     test.skip(!isMobile, "Mobile viewport composition");
     await page.setViewportSize({ width, height: 844 });
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -66,7 +66,7 @@ for (const width of [360, 390, 430]) {
     expect(photo.y).toBeGreaterThan(headline.y + headline.height);
     expect(card.y).toBeLessThan(photo.y + photo.height);
     expect(card.y + card.height).toBeGreaterThan(photo.y + photo.height);
-    expect(diagram.y + diagram.height).toBeGreaterThan(photo.y);
+    expect(diagram.y).toBeGreaterThanOrEqual(card.y + card.height);
     expect(diagram.x + diagram.width).toBeLessThanOrEqual(width);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   });
