@@ -392,3 +392,5 @@ export const heroPhotos = {
     { src: "/images/travel/bandarban/1.jpg", width: 1200, height: 900, alt: "Demo outdoor photograph" },
   ],
 };
+
+export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };

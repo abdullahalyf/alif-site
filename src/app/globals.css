@@ -454,3 +454,29 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .category-tag { width: fit-content; padding: 0.25rem 0.6rem; border-radius: 999px; color: var(--ink); background: var(--sand); }
 .category-tag[data-category="Client work"] { background: var(--clay); }
 .category-tag[data-category="Research"] { background: var(--sage); }
+
+.horizontal-row { min-width: 0; --row-fade: var(--cream); }
+.tint-sage .horizontal-row { --row-fade: var(--sage); }
+.tint-sand .horizontal-row { --row-fade: var(--sand); }
+.tint-clay .horizontal-row { --row-fade: var(--clay); }
+.horizontal-row__frame { position: relative; }
+.horizontal-row__frame::before, .horizontal-row__frame::after {
+  content: "";
+  position: absolute;
+  inset-block: 0 0.8rem;
+  z-index: 1;
+  width: min(2.75rem, 10%);
+  pointer-events: none;
+  display: none;
+}
+.horizontal-row__frame::before { left: 0; background: linear-gradient(to left, transparent, var(--row-fade)); }
+.horizontal-row__frame::after { right: 0; background: linear-gradient(to right, transparent, var(--row-fade)); }
+.horizontal-row[data-can-go-back] .horizontal-row__frame::before,
+.horizontal-row[data-can-go-forward] .horizontal-row__frame::after { display: block; }
+.horizontal-row__controls { display: flex; align-items: center; gap: 0.5rem; margin-block: 0.25rem 0.75rem; }
+.horizontal-row__progress { flex: 1; min-width: 0; height: 1.5rem; accent-color: var(--ink); cursor: ew-resize; }
+.horizontal-row__progress[hidden], .horizontal-row__controls .button { display: none; }
+@media (min-width: 48rem) and (pointer: fine) {
+  .horizontal-row[data-can-go-back] .horizontal-row__back,
+  .horizontal-row[data-can-go-forward] .horizontal-row__forward { display: inline-flex; width: 2.75rem; padding: 0; }
+}
