@@ -11,7 +11,7 @@ export const usesContent = usesSchema.parse({
       items: [
         {
           name: "DEMO — Everyday laptop",
-          why: "A portable machine for local development and client demos.",
+          why: "A portable machine to review builds, run local tests and show client demos.",
         },
         {
           name: "DEMO — External monitor",

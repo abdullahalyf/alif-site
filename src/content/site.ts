@@ -30,12 +30,12 @@ export const site = {
   fullName: "Md. Abdullah Alif",
   logoText: "Built by Alif",
   logoInitial: "A",
-  role: "Software Systems Architect & Freelance Developer",
+  role: "Software Systems Architect",
   location: "Dhaka, Bangladesh",
   intro:
     "I design reliable software for businesses, direct AI agents to build it, and review and test the work before launch.",
   now: [
-    "Building client software systems.",
+    "Designing client systems and directing AI implementation, reviews and tests.",
     "Studying Computer Science and Engineering at Daffodil International University.",
     "Researching traffic accident risk prediction with a university team.",
     "Learning basic Japanese through a DILC course.",

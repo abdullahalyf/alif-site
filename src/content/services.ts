@@ -76,7 +76,7 @@ export const servicesContent = servicesSchema.parse({
     },
     {
       title: "Build and review",
-      text: "Review small working releases with the people using them.",
+      text: "I direct AI agents to implement scoped changes, then review and test small releases with the people using them.",
     },
     {
       title: "Launch and hand over",

@@ -74,7 +74,7 @@ export const projects = [
     problem:
       "Road accidents are a major cost in lives and money. Predicting where and when risk is high lets planners and traffic systems act before accidents happen.",
     solution: [
-      "Built and evaluated models that estimate accident risk from traffic and road data.", // DEMO: confirm method/data
+      "Compared and evaluated models intended to estimate accident risk from traffic and road data.", // DEMO: confirm method/data
     ],
     stack: ["Python", "Machine Learning"], // DEMO: confirm
     results: ["Paper submitted for publication"],
