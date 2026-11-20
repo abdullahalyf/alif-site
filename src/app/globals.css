@@ -533,7 +533,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
   [data-motion-enter="line"] > span:first-child { animation: motion-hairline 700ms ease-out; }
 }
 @keyframes motion-heading { from { transform: translateY(0.45em); clip-path: inset(0 0 100%); } to { clip-path: inset(0 -0.2em -0.2em); } }
-@keyframes motion-rise { from { transform: translateY(0.75rem); opacity: 0.15; } }
+@keyframes motion-rise { from { transform: translateY(0.75rem); clip-path: inset(0 0 100% 0); } }
 @keyframes motion-image { from { opacity: 0.22; } }
 @keyframes motion-hairline { from { transform: scaleX(0); } }
 
