@@ -68,8 +68,8 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
         displayedTenths = tenths;
       }
       if (lower !== tintedSegment) {
-        tint.style.backgroundColor = trips[lower].color;
-        overlay.style.backgroundColor = trips[upper].color;
+        tint.style.setProperty("--journey-tint", trips[lower].color);
+        overlay.style.setProperty("--journey-tint", trips[upper].color);
         tintedSegment = lower;
       }
       overlay.style.opacity = String(fraction);
@@ -114,7 +114,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
   return <section ref={root} className="travel-book" aria-labelledby={`${id}-title`}>
     <h2 id={`${id}-title`}>{c.bookTitle}</h2>
     <div ref={stage} className="travel-book-stage">
-      <div ref={atmosphere} className="journey-atmosphere" aria-hidden="true" style={{ backgroundColor: trips[0].color }}>
+      <div ref={atmosphere} className="journey-atmosphere" aria-hidden="true" style={{ "--journey-tint": trips[0].color } as CSSProperties}>
         <div ref={blend} className="journey-atmosphere__tint" />
         <div className="journey-paper-grain" />
       </div>

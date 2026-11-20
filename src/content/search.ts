@@ -1,3 +1,4 @@
+import { resumeLink } from "./site";
 import type { SearchContent } from "./schemas/search";
 export const searchContent = {
   title: "Find your way around.",
@@ -26,9 +27,9 @@ export const searchContent = {
       href: "/contact",
     },
     {
-      title: "Résumé",
+      title: resumeLink.label,
       description: "Printable experience, education and skills.",
-      href: "/resume",
+      href: resumeLink.href,
     },
     {
       title: "Uses",

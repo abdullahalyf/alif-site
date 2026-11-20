@@ -4,12 +4,19 @@
 .about-bento h2 { font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 0.85rem; }
 .about-bento__skills { grid-column: 1 / -1; }
 .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; }
-.skill-card { padding: 0.9rem; border-radius: 0.8rem; background: var(--cream-2); }
+.skill-card { padding: clamp(0.9rem, 1.8vw, 1.5rem); border-radius: 0.8rem; background: var(--cream-2); }
 .skill-card h3 { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.55rem; font-size: 1.5rem; }
-.skill-card svg { flex: none; }
 .skill-card li { border-top: 1px solid var(--line); padding-block: 0.5rem; }
 .skill-card li:last-child { padding-bottom: 0; }
 .skill-card p { color: var(--ink-muted); font-size: 0.8125rem; }
+.skill-card--core { grid-column: 1 / -1; background: var(--cream); }
+.skill-card--core > p { margin-bottom: 1rem; font-size: 1rem; color: var(--ink); }
+.skill-card--core ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; }
+.skill-card--core li { padding-block: 0.7rem; }
+.skill-workflow { list-style: decimal; padding-left: 1.4rem; }
+.skill-workflow li { padding-left: 0.25rem; font-size: 0.875rem; }
+.skill-workflow li::marker { color: var(--link-accent); font-weight: 600; }
+.skill-tools.chip-list .chip { padding: 0.3rem 0.6rem; border: 1px solid var(--line); background: var(--cream); }
 .skill-row { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; font-size: 0.9rem; }
 .skill-row meter { flex: 0 0 3rem; height: 0.55rem; accent-color: var(--ink); }
 .skill-row meter::-webkit-meter-optimum-value { background: var(--ink); }
@@ -77,5 +84,5 @@
 }
 .stats-grid { overflow-x: clip; }
 @media (max-width: 35rem) {
-  .skills-grid { grid-template-columns: 1fr; }
+  .skills-grid, .skill-card--core ul { grid-template-columns: 1fr; }
 }

@@ -1,9 +1,10 @@
+import { site, skillProfile } from "./site";
 import { usesSchema } from "./schemas/uses";
-// DEMO: all equipment and preferences are illustrative; Alif should confirm each item.
+// DEMO hardware below is illustrative and should be confirmed.
 export const usesContent = usesSchema.parse({
   title: "Tools for thoughtful work.",
   intro:
-    "DEMO setup — an editable snapshot of hardware, software and habits, not confirmed purchasing advice.",
+    "I use these tools to specify work, direct AI agents, review their changes and test releases.",
   groups: [
     {
       title: "Hardware",
@@ -19,61 +20,13 @@ export const usesContent = usesSchema.parse({
       ],
     },
     {
-      title: "Editor & AI tools",
-      items: [
-        {
-          name: "DEMO — VS Code",
-          why: "A familiar editor with straightforward debugging.",
-        },
-        {
-          name: "DEMO — Codex",
-          why: "Focused implementation and test runs with reviewable diffs.",
-        },
-        {
-          name: "DEMO — Claude",
-          why: "Discussing architecture and documenting decisions.",
-        },
-      ],
+      title: skillProfile.toolsTitle,
+      items: skillProfile.tools,
     },
-    {
-      title: "Languages & frameworks",
-      items: [
-        {
-          name: "DEMO — TypeScript, React & Next.js",
-          why: "Typed application workflows and accessible web interfaces.",
-        },
-        {
-          name: "DEMO — Python",
-          why: "Data exploration and research experiments.",
-        },
-      ],
-    },
-    {
-      title: "Databases",
-      items: [
-        {
-          name: "DEMO — PostgreSQL",
-          why: "Transactions, constraints and explicit permission boundaries.",
-        },
-        {
-          name: "DEMO — SQLite",
-          why: "Durable local storage for offline work.",
-        },
-      ],
-    },
-    {
-      title: "Infrastructure & deployment",
-      items: [
-        {
-          name: "DEMO — Vercel",
-          why: "Preview deployments for reviewing small releases.",
-        },
-        {
-          name: "DEMO — Cloudflare & GitHub Actions",
-          why: "Delivery, automation and repeatable release steps.",
-        },
-      ],
-    },
+    ...site.skills.map((group) => ({
+      title: group.title,
+      items: group.items.map(({ name, note }) => ({ name, why: note })),
+    })),
     {
       title: "Productivity",
       items: [

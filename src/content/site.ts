@@ -1,6 +1,29 @@
 import { demoImage } from "./demo-images";
 import type { Site } from "./schema";
 
+export const skillProfile = {
+  label: "Skills",
+  intro: "I don't hand-write every line. I design the system, make the decisions, and direct AI to build it — then test and review everything.",
+  coreTitle: "Core strengths",
+  strengths: [
+    { name: "System architecture & design", note: "Plan how data, services and interfaces fit together and keep working during outages." },
+    { name: "Trade-off decisions with clear reasons", note: "Explain why I chose one design, what it costs to run, and what would make me revisit the decision." },
+    { name: "AI-orchestrated development", note: "Plan, direct and review work by Codex and Claude, then test their changes before shipping production software." },
+    { name: "Turning business processes into systems", note: "Map real workflows into data, roles and permissions. Account for failure cases and running costs up front." },
+  ],
+  workflowTitle: "How I build",
+  workflow: ["Write the spec", "Break it into tasks", "Have AI agents implement", "Run automated tests and review changes", "Ship small releases"],
+  toolsTitle: "Tools",
+  tools: [
+    { name: "Codex", why: "Implements scoped tasks and runs tests. I review the changes before merging." },
+    { name: "Claude", why: "Helps explore architecture trade-offs, turn decisions into specs and review changes." },
+    { name: "GitHub Actions", why: "Runs checks automatically before changes ship." },
+    { name: "Vercel", why: "Hosts previews for reviewing and testing small releases." },
+    { name: "Supabase", why: "Hosts project databases while I learn PostgreSQL and review permissions and constraints." },
+    { name: "Playwright", why: "Checks behavior in a real browser before release." },
+  ],
+};
+
 // Single source of truth for all site copy. Edit text here, never in components.
 export const site = {
   name: "Abdullah Alif",
@@ -10,7 +33,7 @@ export const site = {
   role: "Software Systems Architect & Freelance Developer",
   location: "Dhaka, Bangladesh",
   intro:
-    "I design and build reliable software systems for businesses — from architecture to launch.",
+    "I design reliable software for businesses, direct AI agents to build it, and review and test the work before launch.",
   now: [
     "Building client software systems.",
     "Studying Computer Science and Engineering at Daffodil International University.",
@@ -30,25 +53,13 @@ export const site = {
     { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
     { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
   ],
-  // DEMO: all skill groups are illustrative and should be checked by Alif.
   skills: [
-    { title: "Systems & architecture", icon: "systems", items: [
-      { name: "Domain modelling", level: 4, note: "Map branches, roles and stock movements." },
-      { name: "Offline-first design", level: 4, note: "Keep a checkout usable during outages." },
-      { name: "Access control", level: 4, note: "Model branch-specific permissions." },
-      { name: "Data synchronisation", level: 4, note: "Retry queued POS changes safely." },
-    ] },
-    { title: "Web & interfaces", icon: "web", items: [
-      { name: "TypeScript", level: 5, note: "Share types across UI and server code." },
-      { name: "React", level: 4, note: "Build reusable dashboard controls." },
-      { name: "Next.js", level: 4, note: "Ship server-rendered portfolio pages." },
-      { name: "Accessible UI", level: 4, note: "Test keyboard navigation and focus." },
-    ] },
-    { title: "Data & tooling", icon: "data", items: [
-      { name: "PostgreSQL", level: 4, note: "Reconcile inventory across branches." },
-      { name: "SQLite", level: 4, note: "Store POS transactions on the device." },
-      { name: "Python", level: 3, note: "Explore traffic-risk datasets." },
-      { name: "Git & CI", level: 4, note: "Automate checks before merging." },
+    { title: "Working knowledge", icon: "data", items: [
+      { name: "Git & CI", level: 4, note: "Comfortable" },
+      { name: "SQLite", level: 3, note: "Working knowledge" },
+      { name: "Python", level: 2, note: "Basic" },
+      { name: "PostgreSQL", level: 1, note: "Learning" },
+      { name: "React / Next.js", level: 2, note: "Reads and reviews code built with AI" },
     ] },
   ],
   languages: [
@@ -66,7 +77,7 @@ export const site = {
     { name: "DEMO — Nina Chowdhury", role: "DEMO — Project collaborator", quote: "Every decision came back to the people using the software and what they needed next." },
   ],
   about: [
-    "I'm a freelance developer from Bangladesh who starts every project with the system, not the screen. I map out the data, the roles, the failure cases and the costs first, then build software that keeps working when the internet doesn't.",
+    "I'm a software systems architect in Bangladesh. I map out the data, roles, failure cases and costs, explain the trade-offs to clients, then guide AI agents through implementation. I review the changes and test what happens when things go wrong.",
     "I'm studying Computer Science and Engineering at Daffodil International University and do research on traffic accident risk prediction.",
     "Outside work I travel across Bangladesh and talk to whoever I meet along the way — it's the best way I know to understand what people actually need. And yes, I'm a lifelong Cristiano Ronaldo fan.",
   ],
@@ -136,7 +147,7 @@ export const site = {
     },
     {
       title: "Build in small releases",
-      text: "I ship working pieces early so you can use them, give feedback and change direction without waste.",
+      text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
       title: "Launch and look after it",
@@ -166,11 +177,13 @@ export const site = {
     {
       label: "Savar, Dhaka",
       title: "Now",
-      text: "I live in Savar and design and build software systems for businesses as a freelancer.",
+      text: "I live in Savar and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
       image: demoImage("alif-story-4", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
   ],
 } satisfies Site;
+
+export const resumeLink = { label: "Resume / CV", href: "/resume" };
 
 const navigationLinks = {
   work: { label: "Work", href: "/work" },
@@ -182,17 +195,34 @@ const navigationLinks = {
   travel: { label: "Travel", href: "/travel" },
   lab: { label: "Lab", href: "/lab" },
   estimate: { label: "Estimate a project", href: "/estimate" },
-  resume: { label: "Résumé", href: "/resume" },
+  resume: resumeLink,
   uses: { label: "Uses", href: "/uses" },
   now: { label: "Now", href: "/now" },
 };
 
+export const greetingIntro = [
+  { word: "Hello", lang: "en" },
+  { word: "হ্যালো", lang: "bn" },
+  { word: "Hola", lang: "es" },
+  { word: "Bonjour", lang: "fr" },
+  { word: "こんにちは", lang: "ja" },
+  { word: "你好", lang: "zh" },
+  { word: "مرحبا", lang: "ar" },
+  { word: "Hallo", lang: "de" },
+  { word: "Alif", lang: "en" },
+  { word: "আলিফ", lang: "bn" },
+  { word: "アリフ", lang: "ja" },
+  { word: "阿利夫", lang: "zh" },
+  { word: "ألف", lang: "ar" },
+] as const;
+
 export const shell = {
+  useDarkTheme: "Use dark theme",
+  useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
-  introWord: "Alif",
   nav: [
     navigationLinks.work, navigationLinks.services, navigationLinks.approach,
-    navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    navigationLinks.writing, navigationLinks.about, navigationLinks.resume, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -282,7 +312,7 @@ export const workContent = {
 };
 
 export const aboutContent = {
-  intro: "I build business software and study how systems work in the real world.",
+  intro: "I design business software, explain the trade-offs, and direct AI agents to build it.",
   facts: [
     { label: "Based in", value: "Savar, Dhaka" },
     { label: "From", value: "Jhenaidah, Bangladesh" },
@@ -337,13 +367,10 @@ export const demoContent = {
   highlightsLabel: "Highlights",
   highlightsTitle: "Milestones along the way.",
   educationLabel: "Education",
-  skillsLabel: "Skills",
-  skillsNotice: "Illustrative skill levels and notes",
-  skillLevel: (level: number) => `Demo skill level ${level} of 5`,
   languagesLabel: "Languages",
   interestsLabel: "Interests",
   interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
-  aboutDemoNotice: "Demo education details, skills and interests — to be confirmed by Alif.",
+  aboutDemoNotice: "Demo education details and interests — to be confirmed by Alif.",
   statsLabel: "At a glance",
   statsNotice: "Demo figures · illustrative only",
   testimonialsLabel: "Working together",

@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { HeroStripes } from "@/components/motion/HeroStripes";
 import { getGsap } from "@/lib/gsap";
+import { whenNearViewport } from "@/lib/when-near-viewport";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
 export function HeroPhotoPanel({
@@ -32,54 +33,56 @@ export function HeroPhotoPanel({
     const first = row?.firstElementChild;
     if (!wrapper || !frame || !card || !row || !photo || !first) return;
 
-    const gsap = getGsap();
-    const motion = gsap.matchMedia(wrapper);
-    motion.add({ wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" }, ({ conditions }) => {
-      const wide = conditions?.wide;
-      gsap.fromTo(photo,
-        { filter: wide ? "blur(16px) saturate(0.38)" : "blur(5px) saturate(0.75)", opacity: wide ? 0.76 : 0.88, y: wide ? 28 : 14 },
-        {
-          filter: "blur(0px) saturate(1)", opacity: 1, y: 0, ease: "none",
-          scrollTrigger: { trigger: frame, start: "top 92%", end: "top 18%", scrub: true },
-        },
-      );
+    return whenNearViewport(frame, () => {
+      const gsap = getGsap();
+      const motion = gsap.matchMedia(wrapper);
+      motion.add({ wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" }, ({ conditions }) => {
+        const wide = conditions?.wide;
+        gsap.fromTo(photo,
+          { filter: wide ? "blur(16px) saturate(0.38)" : "blur(5px) saturate(0.75)", opacity: wide ? 0.76 : 0.88, y: wide ? 28 : 14 },
+          {
+            filter: "blur(0px) saturate(1)", opacity: 1, y: 0, ease: "none",
+            scrollTrigger: { trigger: frame, start: "top 92%", end: "top 18%", scrub: true },
+          },
+        );
 
-      const dock = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: row,
-          start: wide ? "top 98%" : "top 96%",
-          end: wide ? "top 48%" : "top 67%",
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
+        const dock = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: row,
+            start: wide ? "top 98%" : "top 96%",
+            end: wide ? "top 48%" : "top 67%",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+        const offsetX = (element: Element) => element.getBoundingClientRect().left - wrapper.getBoundingClientRect().left;
+        const offsetY = (element: Element) => element.getBoundingClientRect().top - wrapper.getBoundingClientRect().top;
+
+        // The visual copy can travel outside the strip's clipping boundary. At
+        // the end it hands off to the real first item, which scrolls with the row.
+        dock.fromTo(card, {
+          x: () => offsetX(frame) + frame.clientWidth * (wide ? 0.76 : 0.58) - card.offsetWidth * 0.5,
+          y: () => offsetY(frame) + frame.clientHeight * (wide ? 0.69 : 0.73) - card.offsetHeight * 0.45,
+          scale: wide ? 0.62 : 0.72,
+          opacity: 1,
+        }, {
+          x: () => offsetX(first) + row.scrollLeft,
+          y: () => offsetY(first),
+          scale: 1,
+          duration: 1,
+        }, 0);
+        dock.fromTo(first, { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.92);
+        dock.to(card, { opacity: 0, duration: 0.08 }, 0.92);
+        dock.fromTo(Array.from(row.children).slice(1).map((item) => item.firstElementChild),
+          { x: wide ? 35 : 16 },
+          { x: 0, duration: 0.38, stagger: 0.08 },
+          0.44,
+        );
       });
-      const offsetX = (element: Element) => element.getBoundingClientRect().left - wrapper.getBoundingClientRect().left;
-      const offsetY = (element: Element) => element.getBoundingClientRect().top - wrapper.getBoundingClientRect().top;
 
-      // The visual copy can travel outside the strip's clipping boundary. At
-      // the end it hands off to the real first item, which scrolls with the row.
-      dock.fromTo(card, {
-        x: () => offsetX(frame) + frame.clientWidth * (wide ? 0.76 : 0.58) - card.offsetWidth * 0.5,
-        y: () => offsetY(frame) + frame.clientHeight * (wide ? 0.69 : 0.73) - card.offsetHeight * 0.45,
-        scale: wide ? 0.62 : 0.72,
-        opacity: 1,
-      }, {
-        x: () => offsetX(first) + row.scrollLeft,
-        y: () => offsetY(first),
-        scale: 1,
-        duration: 1,
-      }, 0);
-      dock.fromTo(first, { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.92);
-      dock.to(card, { opacity: 0, duration: 0.08 }, 0.92);
-      dock.fromTo(Array.from(row.children).slice(1).map((item) => item.firstElementChild),
-        { x: wide ? 35 : 16 },
-        { x: 0, duration: 0.38, stagger: 0.08 },
-        0.44,
-      );
+      return () => motion.revert();
     });
-
-    return () => motion.revert();
   }, [reducedMotion]);
 
   return <div ref={root} className="hero-photo-story">

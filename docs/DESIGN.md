@@ -11,16 +11,22 @@ This is a multi-page **personal website + portfolio**, not a single landing page
 Feel: warm, calm, editorial. A personal site people actually read — who Alif is, what he does, where he lives, how he got here. Premium through typography, space and soft motion, not effects. No 3D/WebGL/video.
 
 ## Colours (CSS variables in `globals.css`, exposed to Tailwind via `@theme`)
-| Token | Value | Use |
-|---|---|---|
-| `--cream` | `#F2EDE3` | page background |
-| `--cream-2` | `#E8E1D3` | cards, image placeholders |
-| `--ink` | `#1E1C19` | text, primary buttons |
-| `--ink-muted` | `#6A645A` | secondary text, captions |
-| `--line` | `#D6CEBF` | hairline dividers, diagonal lines |
-| `--night` | `#22201C` | dark sections background |
-| `--night-text` | `#EDE7DB` | text on dark sections |
-| `--accent` | `#9DB34A` | tiny accents only (status dot, focus ring) |
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--cream` | `#F1E9DC` | `#1A1815` | page background |
+| `--cream-2` | `#E9DFCE` | `#24211D` | cards and image placeholders |
+| `--ink` | `#1E1C19` | `#EDE6DA` | text and primary buttons |
+| `--ink-muted` | `#62594F` | `#A79F92` | secondary text and captions |
+| `--line` | `#D6CEBF` | `#3A3530` | hairline dividers and diagonal lines |
+| `--sage` | `#E4E8D8` | `#252820` | tinted sections and tags |
+| `--sand` | `#EBDFCB` | `#29241D` | tinted sections and tags |
+| `--clay` | `#EEDED5` | `#2B2320` | tinted sections and tags |
+| `--night` | `#22201C` | `#28241F` | How I work and footer surface |
+| `--night-text` | `#EDE7DB` | `#EDE6DA` | text on night surfaces |
+| `--night-muted` | `#CFC5B3` | `#C7BBAA` | secondary text on night surfaces |
+| `--night-line` | `#6A645A` | `#5B5044` | outlines on night surfaces |
+| `--accent` | `#9DB34A` | `#9DB34A` | status marks and focus rings |
+| `--link-accent` | `#495923` | `#BACD80` | link underlines |
 All text/background pairs must pass WCAG AA.
 
 ## Typography (local fonts in `src/fonts/`, `next/font/local`)
@@ -30,7 +36,7 @@ All text/background pairs must pass WCAG AA.
 - Scale (fluid with `clamp`): h1 48→96px, h2 36→64px, h3 24→32px.
 
 ## Global elements
-- **Header**: logo text left; nav right (Work, Approach, About me, Contact). On mobile a "Menu" button opens a full-screen cream overlay with large serif links. The header stays fixed and becomes compact after 40px of scroll.
+- **Header**: wordmark on the left and navigation on wide screens. The Menu button opens a side drawer that fills small screens. Both the header and drawer offer a theme control. The site follows the system theme until a visitor makes a choice. The header stays fixed, compacts as visitors scroll down, and expands as they scroll up.
 - **Buttons**: pill shape, `--ink` bg + cream text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.
@@ -38,7 +44,7 @@ All text/background pairs must pass WCAG AA.
 ## Pages
 
 ### Home `/` (more info than raw.london — a visitor should understand Alif without clicking)
-1. **Intro** (RAW-style, first visit per session only): cream screen, "Alif" in huge serif fades/scales in, then slides up to reveal the page. ≤ 1.4s total. Content is in the HTML underneath (no JS needed to see it).
+1. **Intro**: multilingual greetings and versions of “Alif,” followed by an upward exit within 1.6s. Plays on arrival at Home and skips reloads within 10 seconds. Click or Escape dismisses it, and the page underneath is available without JavaScript.
 2. **Hero** (Steno hero): quote pill (`site.tagline`, small avatar dot) → serif h1 (`site.role`) → intro paragraph (`site.intro`) → buttons "Email me" / "See my work" → location line (`site.location`).
    Below it: wide rounded panel (radius ~24px) showing `site.heroPhoto` (grey-wall portrait, `object-fit: cover`, keep his face in frame on mobile), with 3–4 thin diagonal lines (`--line`) crossing over the top edge of the panel (like steno's hero stripes). Subtle bottom gradient into cream.
 3. **About teaser**: two columns — short paragraph (`site.about[0]`) + "More about me" link → `/about`.
@@ -61,8 +67,8 @@ All text/background pairs must pass WCAG AA.
 ## Animations (GSAP + ScrollTrigger + Lenis)
 Every animation: skipped when `prefers-reduced-motion: reduce` (final state shown immediately) and never hides content without JS (set initial states from JS, not CSS).
 1. **Smooth scroll** — Lenis site-wide.
-2. **Intro** — see Home 1. Once per session (`sessionStorage`).
-3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies to the hero photo, About photos, project images.
+2. **Intro** — see Home 1.
+3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies only to the Home hero photo in the wide panel.
 4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).
 6. **Card row** — cards slide in from the right with a small stagger when the section enters.

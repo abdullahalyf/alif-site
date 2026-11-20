@@ -1,127 +1,67 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { getGsap } from "@/lib/gsap";
-import { useHydrated } from "@/lib/use-hydrated";
-import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
+import { useEffect, useState } from "react";
+import { greetingIntro } from "@/content/site";
+import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
-const STORAGE_KEY = "alif-intro-seen";
+export const introStorageKey = "alif-intro-played-at";
+const RELOAD_WINDOW = 10_000;
+const WORD_INTERVAL = 112;
+const EXIT_DURATION = 230;
+const EXIT_START = (greetingIntro.length - 1) * WORD_INTERVAL;
+export const INTRO_DURATION = EXIT_START + EXIT_DURATION;
+let enteredHome = false;
 
-/**
- * Total length of the intro, in seconds. Must stay under 1.4s.
- *
- * The overlay covers the page while it plays, so every second here is a second
- * the largest contentful paint waits. It is kept short for that reason as well
- * as the design's own budget.
- */
-export const INTRO_DURATION = 0.9;
-
-type IntroOverlayProps = {
-  /** The word shown in the intro. */
-  word: string;
-  /** Overlay background colour. */
-  background?: string;
-  /** Word colour. */
-  color?: string;
-};
-
-/**
- * Whether the intro should play right now.
- *
- * On the server nothing is shown, so the overlay never appears in the initial
- * HTML. On the client the intro runs once per browser session
- * (`sessionStorage`), and never under `prefers-reduced-motion: reduce`.
- */
-function shouldPlayIntro(): boolean {
-  if (typeof window === "undefined") return false;
-
+function shouldPlayIntro() {
+  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+  const homeReload = !enteredHome && navigation?.type === "reload" && new URL(navigation.name).pathname === location.pathname;
+  enteredHome = true;
   try {
-    if (sessionStorage.getItem(STORAGE_KEY) === "1") return false;
-    sessionStorage.setItem(STORAGE_KEY, "1");
-  } catch {
-    // Storage unavailable — play the intro anyway.
-  }
-
+    const now = Date.now();
+    if (homeReload && now - Number(sessionStorage.getItem(introStorageKey)) < RELOAD_WINDOW) return false;
+    sessionStorage.setItem(introStorageKey, String(now));
+  } catch {}
   return true;
 }
 
-/**
- * RAW-style intro overlay: a cream screen with the name in huge serif fades and
- * scales in, then slides up to reveal the page (DESIGN.md animation 2).
- *
- * The overlay is created by JavaScript only, so the page underneath is fully
- * visible without it. It plays once per browser session (`sessionStorage`) and
- * never longer than {@link INTRO_DURATION} seconds. Under
- * `prefers-reduced-motion: reduce` it is skipped entirely.
- */
-export function IntroOverlay({
-  word,
-  background = "var(--cream)",
-  color = "var(--ink)",
-}: IntroOverlayProps) {
-  const reducedMotion = useReducedMotion();
-  const hydrated = useHydrated();
-  const rootRef = useRef<HTMLDivElement>(null);
-  const wordRef = useRef<HTMLSpanElement>(null);
+export function IntroOverlay() {
+  const reduced = useReducedMotion();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (!hydrated) return;
-    // Read the preference here rather than from the render: the hook returns
-    // the server snapshot until React swaps it for the real value.
     if (prefersReducedMotion()) return;
-    if (!shouldPlayIntro()) return;
-
-    // Start on the next frame so the overlay never flashes during hydration.
-    const frame = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(frame);
-  }, [hydrated, reducedMotion]);
-
-  useEffect(() => {
-    if (!visible) return;
-
-    const overlay = rootRef.current;
-    const word = wordRef.current;
-    if (!overlay || !word) return;
-
-    const gsap = getGsap();
-    const timeline = gsap.timeline({
-      onComplete: () => setVisible(false),
+    let dismiss: ReturnType<typeof setTimeout> | undefined;
+    const frame = requestAnimationFrame(() => {
+      if (!shouldPlayIntro()) return;
+      setVisible(true);
+      dismiss = setTimeout(() => setVisible(false), INTRO_DURATION);
     });
-
-    timeline
-      .fromTo(
-        word,
-        // The word is un-covered by a clip rather than faded: the text stays at
-        // full contrast the whole time, so it never dips below the threshold
-        // while the overlay is on screen.
-        { clipPath: "inset(0 0 100% 0)", scale: 0.92 },
-        { clipPath: "inset(0 0 0% 0)", scale: 1, duration: 0.4, ease: "power2.out" },
-      )
-      .to(overlay, {
-        yPercent: -100,
-        duration: 0.5,
-        ease: "power3.inOut",
-      });
-
-    return () => {
-      timeline.kill();
+    const skip = (event: KeyboardEvent) => {
+      if (event.key === "Escape" || event.key === "Tab") setVisible(false);
     };
-  }, [visible]);
+    window.addEventListener("keydown", skip);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(dismiss);
+      window.removeEventListener("keydown", skip);
+    };
+  }, []);
 
-  if (!visible) return null;
+  if (reduced || !visible) return null;
 
   return (
-    <div
-      ref={rootRef}
-      className="intro-overlay"
-      aria-hidden="true"
-      style={{ background, color }}
-      data-intro="playing"
-    >
-      <span ref={wordRef} className="intro-word">
-        {word}
-      </span>
+    <div className="intro-overlay" aria-hidden="true" data-intro="playing"
+      style={{ animationDelay: `${EXIT_START}ms`, animationDuration: `${EXIT_DURATION}ms` }}
+      onClick={() => setVisible(false)}>
+      <svg className="intro-words" focusable="false" width="100%" height="100%">
+        {greetingIntro.map(({ word, lang }, index) => (
+          <text key={word} lang={lang} direction={lang === "ar" ? "rtl" : "ltr"} x="50%" y="50%"
+            textAnchor="middle" dominantBaseline="central" className="intro-word"
+            style={{ animationDelay: `${index * WORD_INTERVAL}ms`, animationDuration: `${index === greetingIntro.length - 1 ? EXIT_DURATION : WORD_INTERVAL}ms` }}>
+            {word}
+          </text>
+        ))}
+      </svg>
     </div>
   );
 }

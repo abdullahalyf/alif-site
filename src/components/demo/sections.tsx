@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { demoContent, seo, site, writingContent } from "@/content/site";
+import { demoContent, seo, site, skillProfile, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
 import { getPosts, formatPostDate } from "@/content/posts";
 import { SectionLabel } from "@/components/section-label";
@@ -19,7 +19,7 @@ export function Highlights({ standalone = true }: { standalone?: boolean }) {
   return <section className={standalone ? "container section-space" : undefined} aria-labelledby="highlights-title">
     <SectionLabel>{demoContent.highlightsLabel}</SectionLabel>
     <Reveal><h2 id="highlights-title" className="section-title">{demoContent.highlightsTitle}</h2></Reveal>
-    <StaggerIn className="highlights-grid" data-horizontal-scroll tabIndex={0} role="region" aria-labelledby="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
+    <StaggerIn className="highlights-grid" data-horizontal-scroll tabIndex={0} role="group" aria-labelledby="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
   </section>;
 }
 export function AtAGlance() {
@@ -35,7 +35,7 @@ export function Testimonials() {
   return <section className="container section-space" aria-labelledby="testimonials-title">
     <SectionLabel>{demoContent.testimonialsLabel}</SectionLabel>
     <Reveal><h2 id="testimonials-title" className="section-title">{demoContent.testimonialsTitle}</h2><p className="demo-notice">{demoContent.testimonialsNotice}</p></Reveal>
-    <StaggerIn className="testimonials-grid" data-horizontal-scroll tabIndex={0} role="region" aria-labelledby="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
+    <StaggerIn className="testimonials-grid" data-horizontal-scroll tabIndex={0} role="group" aria-labelledby="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
       <blockquote><p>{item.quote}</p></blockquote><figcaption><p>{item.name}</p><p className="label">{item.role}</p></figcaption>
     </figure>)}</StaggerIn>
   </section>;
@@ -49,12 +49,6 @@ export function LatestWriting() {
     <Link className="text-link" href={seo.pages.writing.path}>{writingContent.back}</Link>
   </section>;
 }
-const skillIcons = {
-  systems: "M9 3h6v5H9zM3 16h6v5H3zm12 0h6v5h-6zM12 8v4m-6 4v-4h12v4",
-  web: "M3 5h18v14H3zm0 4h18m-11 3-2 2 2 2m4-4 2 2-2 2",
-  data: "M4 7c0-2 3.6-4 8-4s8 2 8 4-3.6 4-8 4-8-2-8-4zm0 0v10c0 2 3.6 4 8 4s8-2 8-4V7M4 12c0 2 3.6 4 8 4s8-2 8-4",
-};
-
 export function AboutDetails() {
   const interestsPhoto = demoContent.interestsPhoto;
 
@@ -67,26 +61,33 @@ export function AboutDetails() {
       </section>
       <Highlights standalone={false} />
     </div>
-    <div className="about-bento">
+    <div className="about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">
-        <h2 id="skills-title">{demoContent.skillsLabel}</h2>
-        <p className="demo-notice">{demoContent.skillsNotice}</p>
+        <h2 id="skills-title">{skillProfile.label}</h2>
         <div className="skills-grid">
+          <article className="skill-card skill-card--core">
+            <h3>{skillProfile.coreTitle}</h3>
+            <p>{skillProfile.intro}</p>
+            <ul>{skillProfile.strengths.map(({ name, note }) => <li key={name}><strong>{name}</strong><p>{note}</p></li>)}</ul>
+          </article>
+          <article className="skill-card">
+            <h3>{skillProfile.workflowTitle}</h3>
+            <ol className="skill-workflow">{skillProfile.workflow.map((step) => <li key={step}>{step}</li>)}</ol>
+          </article>
           {site.skills.map((group) => <article className="skill-card" key={group.title}>
-            <h3>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path d={skillIcons[group.icon]} />
-              </svg>
-              {group.title}
-            </h3>
+            <h3>{group.title}</h3>
             <ul>{group.items.map((item) => <li key={item.name}>
               <div className="skill-row">
                 <strong>{item.name}</strong>
-                <meter min={0} max={5} value={item.level} aria-label={demoContent.skillLevel(item.level)} />
+                <meter min={0} max={5} value={item.level} aria-label={item.name} aria-valuetext={item.note} />
               </div>
               <p>{item.note}</p>
             </li>)}</ul>
           </article>)}
+          <article className="skill-card">
+            <h3>{skillProfile.toolsTitle}</h3>
+            <ul className="chip-list skill-tools">{skillProfile.tools.map(({ name }) => <li key={name} className="chip">{name}</li>)}</ul>
+          </article>
         </div>
       </section>
       <section aria-labelledby="languages-title">

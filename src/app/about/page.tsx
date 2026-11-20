@@ -5,7 +5,7 @@ import { aboutContent, shell, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
-import { PhotoReveal, Reveal } from "@/components/motion";
+import { Reveal } from "@/components/motion";
 import { TravelTeaser } from "@/features/travel/TravelTeaser";
 
 export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.description, seo.pages.about.path);
@@ -15,7 +15,7 @@ export default function About() {
     <section className="container section-space about-opening" aria-labelledby="about-title">
       <SectionLabel>{site.name}</SectionLabel>
       <div className="about-heading">
-        <Reveal><h1 id="about-title" className="section-title">{shell.aboutTitle}</h1></Reveal>
+        <h1 id="about-title" className="section-title">{shell.aboutTitle}</h1>
         <div>
           <p className="about-heading__intro">{aboutContent.intro}</p>
           <dl className="about-facts">
@@ -28,9 +28,9 @@ export default function About() {
         </div>
       </div>
       <div className="about-intro">
-        <PhotoReveal className="about-photo-wrap">
-          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 768px) 100vw, 50vw" preload />
-        </PhotoReveal>
+        <div className="about-photo-wrap">
+          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" loading="eager" fetchPriority="high" />
+        </div>
         <div className="about-intro__copy">
           {site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}
           <div className="about-signature">
@@ -40,12 +40,14 @@ export default function About() {
         </div>
       </div>
     </section>
-    <AboutDetails />
-    <section className="container section-space" aria-labelledby="story-title">
-      <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
-      <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
-      <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
-      <TravelTeaser />
+    <div className="tint-sage"><AboutDetails /></div>
+    <section className="tint-sand section-space" aria-labelledby="story-title">
+      <div className="container">
+        <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
+        <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
+        <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
+      </div>
     </section>
+    <TravelTeaser />
   </>;
 }

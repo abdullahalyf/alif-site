@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { site } from "@/content/site";
 import { getGsap } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
-import { PhotoReveal } from "@/components/motion";
 import { StatusCard } from "./status-card";
 import { SystemDiagram } from "./system-diagram";
 
@@ -13,8 +12,7 @@ import { SystemDiagram } from "./system-diagram";
  * The hero's right column: a large photo with the status card floating over
  * its bottom-left corner and the system diagram over its top-right.
  *
- * The card and the diagram float in shortly after the headline appears. The
- * photo itself is revealed by `PhotoReveal`, which sharpens it on scroll.
+ * The card and the diagram float in shortly after the headline appears.
  */
 export function HeroSide() {
   const reducedMotion = useReducedMotion();
@@ -53,20 +51,21 @@ export function HeroSide() {
 
   return (
     <div ref={rootRef} className="hero-side">
-      <PhotoReveal className="hero-side__photo-wrap">
+      <div className="hero-side__photo-wrap">
         <Image
           {...site.heroSide}
           alt={site.heroSide.alt}
-          sizes="(max-width: 35rem) calc(100vw - 4rem), (max-width: 47.999rem) 31rem, (max-width: 63.999rem) 32rem, 34vw"
+          sizes="(max-width: 35rem) calc(100vw - 4rem), (max-width: 47.999rem) 31rem, (max-width: 63.999rem) 32rem, min(30rem, calc(39.8vw - 1.25rem))"
           // On a phone this photo is the largest element on screen, so it is
           // the largest contentful paint: it must load eagerly and be asked
           // for first, or the hero renders as an empty box while the image
           // trickles in.
+          quality={68}
           loading="eager"
           fetchPriority="high"
           className="hero-side__photo"
         />
-      </PhotoReveal>
+      </div>
       <SystemDiagram
         className="hero-side__diagram"
         steps={site.systemDiagram.steps}

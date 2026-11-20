@@ -7,8 +7,8 @@
 .travel-photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; padding: 1rem; min-width: 0; align-items: center; }
 .travel-photo-grid--1 { grid-template-columns: 1fr; }
 .travel-photo-grid--3 .travel-frame:first-child { grid-column: 1 / -1; width: 70%; justify-self: center; }
-.travel-frame { position: relative; background: #fff; padding: 0.65rem 0.65rem 1rem; transform: rotate(var(--frame-tilt)); box-shadow: 0 7px 24px #1e1c191a; min-width: 0; }
-.travel-frame::before { content: ""; position: absolute; z-index: 1; top: -0.5rem; left: 35%; width: 30%; height: 1.15rem; transform: rotate(-7deg); background: #d6cebf9c; }
+.travel-frame { position: relative; background: var(--cream-2); padding: 0.65rem 0.65rem 1rem; transform: rotate(var(--frame-tilt)); box-shadow: 0 7px 24px color-mix(in srgb, var(--shadow) 15%, transparent); min-width: 0; }
+.travel-frame::before { content: ""; position: absolute; z-index: 1; top: -0.5rem; left: 35%; width: 30%; height: 1.15rem; transform: rotate(-7deg); background: color-mix(in srgb, var(--line) 75%, transparent); }
 .travel-frame img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
 .travel-frame figcaption { font-size: 0.75rem; margin-top: 0.65rem; color: var(--ink-muted); overflow-wrap: anywhere; }
 .travel-book-text { display: grid; gap: 1.15rem; min-width: 0; }
@@ -58,6 +58,7 @@
   .travel-book .travel-photo-grid--1 .travel-frame img { max-height: 40svh; }
 }
 .travel-book-stage { position: relative; isolation: isolate; overflow: clip; }
+.journey-atmosphere, .journey-atmosphere__tint { background-color: light-dark(var(--journey-tint), color-mix(in srgb, var(--cream) 91%, var(--journey-tint))); }
 .journey-atmosphere { position: absolute; z-index: -1; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; }
 .journey-atmosphere__tint { position: absolute; inset: 0; opacity: 0; will-change: opacity; }
 .journey-paper-grain { position: absolute; inset: 0; opacity: 0.055; transform: translateZ(0); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23000' filter='url(%23grain)' opacity='.5' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); }

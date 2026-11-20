@@ -3,7 +3,6 @@ export { CountUp } from "./CountUp";
 export { HeroStripes } from "./HeroStripes";
 export { HoverPreview } from "./HoverPreview";
 export { IntroOverlay } from "./IntroOverlay";
-export { PhotoReveal } from "./PhotoReveal";
 export { Reveal } from "./Reveal";
 export { SmoothScroll } from "./SmoothScroll";
 export { useSmoothScroll } from "./smooth-scroll-context";

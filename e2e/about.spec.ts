@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { travelContent } from "../src/content/travel";
-import { aboutContent, demoContent, site } from "../src/content/site";
+import { aboutContent, site, skillProfile } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
@@ -42,47 +42,16 @@ test("the story chapters alternate sides and carry a bracketed label", async ({ 
   }
 });
 
-test("the story photographs drift with the scroll", async ({ page }) => {
-  // The photographs stay still when the reader has asked for less motion, and
-  // that is covered by the next test.
-  test.skip(
-    test.info().project.name === "reduced-motion",
-    "the photographs stay still when motion is reduced",
-  );
+test("About photos display without a blur or scroll transform", async ({ page }) => {
   await page.goto("/about");
-  await page.locator(".story-photo-frame").first().scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const before = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  await page.mouse.wheel(0, 600);
-  await page.waitForTimeout(400);
-
-  const after = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  // The photograph moved, and it moved up rather than down.
-  expect(after).not.toBe(before);
-  expect(after).toBeLessThan(before);
-});
-
-test("the story photographs stay still under reduced motion", async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/about");
-  await page.locator(".story-photo-frame").first().scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const drift = await page
-    .locator(".story-photo")
-    .first()
-    .evaluate((node) => new DOMMatrix(getComputedStyle(node).transform).m42);
-
-  expect(drift).toBe(0);
+  const photos = page.locator(".about-photo-wrap img, .education-timeline__photo img, .story-photo-frame img");
+  expect(await photos.count()).toBeGreaterThan(1);
+  for (const photo of await photos.all()) {
+    await photo.scrollIntoViewIfNeeded();
+    await expect(photo).toBeVisible();
+    await expect(photo).toHaveCSS("filter", "none");
+    await expect(photo).toHaveCSS("transform", "none");
+  }
 });
 
 test("the education timeline has a rule that fills as it scrolls", async ({ page }) => {
@@ -117,14 +86,17 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
   expect(filled).toBeGreaterThan(0);
 });
 
-test("skills show notes and demo levels alongside language chips", async ({ page }) => {
+test("skills show the workflow and honest levels alongside language chips", async ({ page }) => {
   await page.goto("/about");
+
+  await expect(page.getByText(skillProfile.intro)).toBeVisible();
+  for (const step of skillProfile.workflow) await expect(page.getByText(step, { exact: true })).toBeVisible();
 
   for (const group of site.skills) {
     for (const item of group.items) {
       const row = page.locator(".skill-card li").filter({ hasText: item.name });
       await expect(row.getByText(item.note)).toBeVisible();
-      await expect(row.getByRole("meter", { name: demoContent.skillLevel(item.level) })).toHaveAttribute("value", String(item.level));
+      await expect(row.getByRole("meter", { name: item.name })).toHaveAttribute("value", String(item.level));
     }
   }
 

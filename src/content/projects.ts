@@ -8,10 +8,10 @@ export const projects = [
     title: "Multi-Branch POS & Operations Platform",
     client: "Boba tea chain, Bangladesh", // brand name hidden until the client approves
     year: 2026,
-    role: "System architect & sole developer",
+    role: "System architect & AI-led implementation",
     category: "Client work",
     summary:
-      "An offline-first point-of-sale and back-office system for a growing chain of tea shops.",
+      "An offline-first point-of-sale and back-office system for a growing chain of tea shops. I designed the system and directed AI agents to build it, then reviewed and tested the implementation.",
     problem:
       "The chain was running its counters by hand and growing from 5 to 10 branches fast. The owners needed fast, reliable billing at every counter, stock that tracks itself, and a clear view of every branch — without paying for heavy servers.",
     solution: [
@@ -73,7 +73,7 @@ export const projects = [
       "solution": [
     "Modelled purchase orders, dispatches and receipts as explicit state transitions; stock changes are append-only ledger entries rather than overwritten balances.",
     "Used PostgreSQL transactions and unique operation keys to make receipt retries safe, with branch-scoped permissions checked on the server.",
-    "Built a TypeScript reconciliation worker that compares branch movement totals against the ledger and puts discrepancies into a review queue.",
+    "Designed a TypeScript reconciliation worker that compares branch movement totals against the ledger and puts discrepancies into a review queue.",
     "Kept the interface focused on exceptions: low-stock suggestions, overdue transfers and adjustments requiring a second approval."
 ],
       "stack": [
@@ -192,7 +192,7 @@ export const projects = [
       "problem": "The demo tool addresses a common debugging gap: an application reports that sync failed but cannot explain which operation was retried, whether the server committed it, or how a conflict was resolved. Debugging should work from a redacted capture without needing a production database or a specific frontend framework.",
       "solution": [
     "Defined a versioned event format containing operation identity, state transitions, acknowledgements and correlation IDs, while excluding payload values by default.",
-    "Built a TypeScript state reducer shared by the CLI and timeline view so both explain an operation using the same rules.",
+    "Designed a TypeScript state reducer shared by the CLI and timeline view so both explain an operation using the same rules.",
     "Used small SQLite captures for reproducible fixtures, with adapters responsible for translating application-specific events into the neutral format.",
     "Added deterministic replay, schema validation and regression fixtures for late acknowledgements, interrupted retries and out-of-order delivery."
 ],

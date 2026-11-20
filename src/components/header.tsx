@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { footerGroups, shell } from "@/content/site";
 import { Button } from "./button";
+import { ThemeToggle } from "./theme-toggle";
 import { BrandMark } from "./brand-mark";
 import { openSearch } from "@/features/search/search-context";
 import { SearchTrigger } from "@/features/search/SearchTrigger";
@@ -83,6 +84,7 @@ export function Header() {
         <nav className="desktop-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}</nav>
         <div className="header-actions">
           <SearchTrigger />
+          <ThemeToggle />
           <button ref={trigger} className="menu-trigger button button--secondary" aria-expanded={open} aria-controls="site-menu" aria-haspopup="dialog" onClick={() => { dialog.current?.showModal(); setOpen(true); setOpenedAt(pathname); }}>
             {shell.menu}
           </button>
@@ -116,7 +118,10 @@ export function Header() {
         >
           <div className="site-menu__content">
             <div className="site-menu__top">
-              <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
+              <div className="site-menu__actions">
+                <Button variant="secondary" onClick={close}>{shell.closeMenu}</Button>
+                <ThemeToggle />
+              </div>
               <form role="search" onSubmit={(event) => {
                 event.preventDefault();
                 const query = new FormData(event.currentTarget).get("query");
