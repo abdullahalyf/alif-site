@@ -123,7 +123,7 @@ export const site = {
     timezoneLabel: "Dhaka",
     buildingLabel: "Currently building",
     building: "Offline-first POS & inventory platform",
-    stack: ["TypeScript", "PostgreSQL", "Next.js"],
+    stack: ["System design", "AI agents", "Offline-first"],
   },
   systemDiagram: {
     label: "How the system fits together",
@@ -334,7 +334,8 @@ export const pageContent = {
   workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
   problem: "Problem",
   solution: "Solution",
-  stack: "Stack",
+  stack: "Built with (via AI agents)",
+  orchestrated: "Orchestrated with: Codex, Claude",
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",

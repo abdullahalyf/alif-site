@@ -43,7 +43,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
     <div className="case-sections">
       <section className="case-section" aria-labelledby="problem-title"><Reveal><h2 id="problem-title">{pageContent.problem}</h2></Reveal><Reveal><p>{project.problem}</p></Reveal></section>
       <section className="case-section" aria-labelledby="solution-title"><Reveal><h2 id="solution-title">{pageContent.solution}</h2></Reveal><Reveal><ul className="detail-list">{project.solution.map((text) => <li key={text}>{text}</li>)}</ul></Reveal></section>
-      <section className="case-section" aria-labelledby="stack-title"><Reveal><h2 id="stack-title">{pageContent.stack}</h2></Reveal><Reveal><ul className="stack-pills">{project.stack.map((item) => <li key={item}>{item}</li>)}</ul></Reveal></section>
+      <section className="case-section" aria-labelledby="stack-title"><Reveal><h2 id="stack-title">{pageContent.stack}</h2></Reveal><Reveal><p>{pageContent.orchestrated}</p><ul className="stack-pills">{project.stack.map((item) => <li key={item}>{item}</li>)}</ul></Reveal></section>
       {project.results.length > 0 && <section className="case-section" aria-labelledby="results-title"><Reveal><h2 id="results-title">{pageContent.results}</h2></Reveal><Reveal><ul className="detail-list">{project.results.map((text) => <li key={text}>{text}</li>)}</ul></Reveal></section>}
     </div>
     {project.images.slice(1).map((image) => <ProjectMedia key={image.src} image={image} sizes="(max-width: 768px) 100vw, 1216px" />)}
