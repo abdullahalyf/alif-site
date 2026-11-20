@@ -66,13 +66,13 @@ export function HeroSide() {
           className="hero-side__photo"
         />
       </div>
+      <StatusCard className="hero-side__card" float />
       <SystemDiagram
         className="hero-side__diagram"
         steps={site.systemDiagram.steps}
         label={site.systemDiagram.label}
         float
       />
-      <StatusCard className="hero-side__card" float />
     </div>
   );
 }
