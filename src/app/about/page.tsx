@@ -40,7 +40,7 @@ export default function About() {
         </div>
       </div>
     </section>
-    <div className="tint-sage"><AboutDetails /></div>
+    <AboutDetails />
     <section className="tint-sand section-space" aria-labelledby="story-title">
       <div className="container">
         <SectionLabel>{aboutContent.storyLabel}</SectionLabel>

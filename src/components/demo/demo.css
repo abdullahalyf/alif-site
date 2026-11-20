@@ -33,7 +33,7 @@
 .demo-caption { padding-top: 0.75rem; }
 .demo-notice { margin-bottom: 0.95rem; }
 /* Stats band: tighter than a full section so it reads as a summary strip. */
-.glance-section { padding-block: clamp(1.5rem, 3vw, 2.25rem) 0; }
+.glance-section { padding-block: var(--section-space); }
 /* The band sits directly above the next section, so the gap comes from that
    section's own padding instead of doubling up. */
 .glance-section + .section-space { padding-top: var(--section-space); }

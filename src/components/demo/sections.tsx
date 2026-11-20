@@ -53,16 +53,16 @@ export function LatestWriting() {
 export function AboutDetails() {
   const interestsPhoto = demoContent.interestsPhoto;
 
-  return <div className="container">
-    <div className="about-milestones section-space">
+  return <>
+    <div className="tint-sage"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
         <SectionLabel>{demoContent.educationLabel}</SectionLabel>
         <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
         <EducationTimeline items={site.education} />
       </section>
       <Highlights standalone={false} />
-    </div>
-    <div className="about-bento section-space">
+    </div></div>
+    <div className="tint-clay"><div className="container about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">
         <h2 id="skills-title">{skillProfile.label}</h2>
         <div className="skills-grid">
@@ -102,6 +102,6 @@ export function AboutDetails() {
         </div>
         <Image {...interestsPhoto} alt="" sizes="(max-width: 35rem) 80vw, 8rem" />
       </section>
-    </div>
-  </div>;
+    </div></div>
+  </>;
 }
