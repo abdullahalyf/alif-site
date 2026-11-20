@@ -13,3 +13,4 @@ Notes:
 - The greeting rendered all 13 words in order. Browser coverage verified Escape, click, short reload suppression and replay on navigation to Home.
 - Below-the-fold animations initialize as their sections approach the viewport.
 - Lighthouse 13.6.0 used Chromium 156 with simulated mobile throttling against the production build. Playwright used the installed Chromium because the browser download returned HTTP 403.
+- Clean-build recheck on the same code passed `pnpm check` and both-theme axe checks. Playwright recorded 688 passes, 13 skips and one preview-link timeout that passed on an isolated retry. Mobile Lighthouse medians were Home 92 (72, 92, 95) and About 88 (88, 90, 88), with accessibility 100 on both routes.
