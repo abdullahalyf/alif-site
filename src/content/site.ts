@@ -394,3 +394,12 @@ export const heroPhotos = {
 };
 
 export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };
+
+export const contactNext = {
+  title: "What happens next",
+  steps: [
+    "Send a short brief describing the workflow and what needs to improve.",
+    "I review the brief and ask about scope, users and constraints.",
+    "If the project is a fit, we agree on a first step and a way to measure it.",
+  ],
+};

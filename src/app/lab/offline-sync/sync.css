@@ -1,4 +1,4 @@
-.sync-simulator { display: grid; gap: 2rem; }
+.sync-simulator { display: grid; gap: 1rem; }
 .sync-diagram { min-width: 0; border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; background: var(--cream-2); }
 .sync-diagram-scroll { min-width: 0; max-width: 100%; overflow-x: auto; }
 .sync-diagram svg { display: block; width: 100%; min-width: 640px; height: auto; font: 400 17px var(--font-sans); }
@@ -16,8 +16,8 @@
 .sync-status { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 999px; padding: 0.25rem 0.65rem; }
 .sync-status[data-online="false"] { background: var(--ink); color: var(--cream); }
 .sync-terminal > p { margin-top: 1rem; }
-.sync-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block: 1.5rem; }
-.sync-queue-title { font: 400 0.8125rem var(--font-sans); margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: 1.25rem; }
+.sync-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-block: 0.75rem; }
+.sync-queue-title { font: 400 0.8125rem var(--font-sans); margin-top: 1rem; border-top: 1px solid var(--line); padding-top: 0.75rem; }
 .sync-queue { list-style: none; padding: 0; max-height: 16rem; overflow: auto; }
 .sync-queue li { display: grid; gap: 0.3rem; font-size: 0.8125rem; padding-block: 0.5rem; }
 .sync-queue li span { color: var(--ink-muted); }
@@ -32,3 +32,5 @@
 @media (max-width: 999px) { .sync-terminals { grid-template-columns: 1fr; } }
 @media (max-width: 499px) { .sync-totals { grid-template-columns: 1fr; } }
 .sync-diagram .sync-cloud-label { fill: var(--cream); }
+
+@media (max-width: 499px) { .sync-simulator .lab-panel { padding: 0.9rem; } .sync-totals { gap: 0.75rem; } }
