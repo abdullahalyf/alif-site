@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { projectsSchema, siteSchema } from "./schema";
+import { projectSchema, projectsSchema, siteSchema } from "./schema";
 import { demoContent, heroPhotos, site } from "./site";
 import { allTrips } from "./travel";
 import { getProject, projects } from "./projects";
@@ -32,6 +32,18 @@ describe("content", () => {
 
   it("projects content is valid and slugs are unique", () => {
     expect(() => projectsSchema.parse(projects)).not.toThrow();
+  });
+
+  it("validates case-study details and accepts older project entries", () => {
+    for (const project of projects) {
+      expect(project.timeline.length).toBeGreaterThan(0);
+      expect(project.decisions.length).toBeGreaterThanOrEqual(3);
+      expect(project.challenges.length).toBeGreaterThanOrEqual(2);
+      expect(project.metrics.length).toBeGreaterThan(0);
+    }
+    const legacy = { ...projects[0], timeline: undefined, decisions: undefined, challenges: undefined, metrics: undefined };
+    expect(projectSchema.safeParse(legacy).success).toBe(true);
+    expect(projectSchema.safeParse({ ...legacy, decisions: [{ decision: "Use SQLite", why: "Offline", alternatives: "" }] }).success).toBe(false);
   });
 
   it("every referenced image exists in public/", () => {

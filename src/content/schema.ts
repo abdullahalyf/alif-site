@@ -90,6 +90,14 @@ export const projectSchema = z.object({
   solution: z.array(z.string().min(1)).min(1),
   stack: z.array(z.string().min(1)).min(1),
   results: z.array(z.string().min(1)),
+  timeline: z.array(z.object({ phase: z.string().min(1), weeks: z.string().min(1) })).min(1).optional(),
+  decisions: z.array(z.object({
+    decision: z.string().min(1),
+    alternatives: z.string().min(1),
+    why: z.string().min(1),
+  })).min(3).max(4).optional(),
+  challenges: z.array(z.object({ problem: z.string().min(1), resolution: z.string().min(1) })).min(2).max(3).optional(),
+  metrics: z.array(z.object({ label: z.string().min(1), value: z.string().min(1) })).min(1).optional(),
   link: z.url().nullable(),
   images: z.array(image),
 });
