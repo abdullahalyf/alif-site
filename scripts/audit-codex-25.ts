@@ -28,11 +28,19 @@ async function audit() {
             await document.fonts.ready;
             const images = Array.from(document.images);
             images.forEach((image) => { image.loading = "eager"; });
-            const decoded = await Promise.allSettled(images.map((image) => image.decode()));
+            const pending = new Set(images);
+            const broken = new Set<HTMLImageElement>();
+            let timer = 0;
+            const deadline = new Promise<void>((resolve) => { timer = window.setTimeout(resolve, 12_000); });
+            await Promise.race([deadline, Promise.all(images.map(async (image) => {
+              try { await image.decode(); } catch { broken.add(image); }
+              pending.delete(image);
+            }))]);
+            clearTimeout(timer);
             const intervals: [number, number][] = [];
             for (const element of document.querySelectorAll("main *, footer *")) {
               if (!element.checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
-              // Ignore clipped contents of horizontal rows and scrollable panels.
+              // Skip decorative, inert and offscreen horizontal content.
               if (element.closest("[aria-hidden=true], [inert], .sr-only")) continue;
               const meaningful = element.matches("img, svg, table, pre, iframe, input, textarea, select, meter, hr")
                 || Array.from(element.childNodes).some((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim());
@@ -50,7 +58,7 @@ async function audit() {
             return {
               overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
               h1: document.querySelectorAll("h1").length,
-              broken: images.filter((_, i) => decoded[i].status === "rejected").map((image) => image.currentSrc || image.src),
+              broken: [...broken, ...pending].map((image) => image.currentSrc || image.src),
               gap: { size: Math.round(largest.size), from: Math.round(largest.from), to: Math.round(largest.to) },
             };
           });
@@ -72,6 +80,7 @@ async function audit() {
           totals.visits++;
           if (issues.length) console.log(`${colorScheme} ${width}px ${route} → ${issues.join(" | ")}`);
         }
+        console.log(`${colorScheme} ${width}px: ${routes.length} routes checked`);
         await context.close();
       }
     }

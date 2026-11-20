@@ -33,7 +33,7 @@ export function HorizontalRow({ children, className, label, labelledBy, progress
       root.toggleAttribute("data-can-go-back", area.scrollLeft > 2);
       root.toggleAttribute("data-can-go-forward", area.scrollLeft < max - 2);
       range.hidden = max <= 2;
-      range.value = max > 2 ? String(area.scrollLeft / max * 100) : "0";
+      range.value = max <= 2 ? "0" : area.scrollLeft >= max - 2 ? "100" : String(area.scrollLeft / max * 100);
     }
 
     const resize = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(sync);
@@ -59,8 +59,8 @@ export function HorizontalRow({ children, className, label, labelledBy, progress
 
   return <div className="horizontal-row" ref={group}>
     <div className="horizontal-row__frame">
-      <StaggerIn as={as} id={id} listRef={row} className={className} data-horizontal-scroll
-        tabIndex={0} role={as === "div" ? "region" : undefined} aria-label={label} aria-labelledby={labelledBy}>
+      <StaggerIn as={as} distance={0} id={id} listRef={row} className={className} data-horizontal-scroll
+        tabIndex={0} role={as === "div" ? (labelledBy ? "group" : "region") : undefined} aria-label={label} aria-labelledby={labelledBy}>
         {children}
       </StaggerIn>
     </div>
