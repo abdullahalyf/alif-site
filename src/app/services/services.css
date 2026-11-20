@@ -61,3 +61,15 @@
     grid-template-columns: 1fr;
   }
 }
+
+.services-page { gap: clamp(1.5rem, 3vw, 2.75rem); }
+.services-page header, .services-page section { gap: 1rem; }
+.service-block { background: var(--cream-2); }
+.service-block p { font-size: 0.95rem; }
+.service-block h3 { margin-top: 0.4rem; }
+.service-timeline { margin-top: 0.4rem; }
+.service-block .button { margin-top: auto; }
+.service-reasons { padding: clamp(0.9rem, 3vw, 1.8rem); border-radius: 1rem; }
+.service-reasons ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.service-reasons h3 { font-size: clamp(1.35rem, 2.3vw, 1.8rem); margin-bottom: 0.3rem; }
+@media (max-width: 38rem) { .service-reasons ul { grid-template-columns: 1fr; } }

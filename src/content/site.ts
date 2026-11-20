@@ -429,3 +429,33 @@ export const toolsMarquee = {
   pause: "Pause scrolling",
   items: ["Codex", "Claude", "GitHub", "GitHub Actions", "Vercel", "Supabase", "Playwright", "SQLite"],
 };
+
+export const serviceDetails = {
+  audienceLabel: "Who it's for",
+  workflowLabel: "How I deliver",
+  whyTitle: "Why work with me",
+  reasons: [
+    { title: "Decisions with reasons", text: "I explain what each option buys, what it costs, and what would make me revisit the decision." },
+    { title: "Small releases with AI", text: "I give agents defined tasks so you can review a working slice early." },
+    { title: "Tested and reviewed", text: "I review changes and test realistic failure cases before release." },
+    { title: "Offline-first experience", text: "I design for lost connections, retries, and reconciliation when work must keep moving." },
+  ],
+  byService: {
+    architecture: {
+      audience: "Teams preparing a build, replacing a fragile system, or facing a decision they want to validate first.",
+      workflow: "I make the design decisions and use agents to draft options and prototypes. I review the evidence so you can settle direction before spending on a build.",
+    },
+    operations: {
+      audience: "Operators managing sales, stock or approvals across more than one role or location.",
+      workflow: "I specify a small workflow, direct agents to implement it, then review and test it with you. Smaller releases limit rework and expose the next decision sooner.",
+    },
+    offline: {
+      audience: "Counter staff and field teams who need to finish work without steady internet.",
+      workflow: "Agents implement the queue and test scaffolding from my spec. I review the data model and verify retries, interruptions and reconciliation before release.",
+    },
+    access: {
+      audience: "Teams with shared records, branch boundaries or permissions that are hard to audit.",
+      workflow: "I define the roles and trust boundaries, direct agents to implement the checks and test them against the permission matrix.",
+    },
+  },
+};

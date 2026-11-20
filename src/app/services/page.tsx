@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { serviceDetails as details } from "@/content/site";
 import { servicesContent as c } from "@/content/services";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal, StaggerIn } from "@/components/motion";
@@ -12,7 +13,7 @@ export default function ServicesPage() {
         <Reveal><h1>{c.title}</h1></Reveal>
         <Reveal><p className="lead">{c.intro}</p></Reveal>
       </header>
-      <section className="service-blocks" aria-label={c.deliverablesLabel}>
+      <StaggerIn as="section" className="service-blocks" aria-label={c.deliverablesLabel}>
         {c.blocks.map((block) => (
           <article className="service-block" id={block.icon} key={block.title}>
             <h2>
@@ -20,14 +21,22 @@ export default function ServicesPage() {
               {block.title}
             </h2>
             <p>{block.description}</p>
+            <h3>{details.audienceLabel}</h3><p>{details.byService[block.icon].audience}</p>
             <h3>{c.deliverablesLabel}</h3>
             <ul>{block.deliverables.map((item) => <li key={item}>{item}</li>)}</ul>
+            <h3>{details.workflowLabel}</h3><p>{details.byService[block.icon].workflow}</p>
             <dl className="service-timeline">
               <dt className="label">{c.timelineLabel}</dt><dd>{block.timeline}</dd>
             </dl>
             <Link className="button button--secondary" href={c.estimatePath}>{c.estimateLabel}</Link>
           </article>
         ))}
+      </StaggerIn>
+      <section className="service-reasons tint-sage" aria-labelledby="service-reasons-title">
+        <Reveal><h2 id="service-reasons-title">{details.whyTitle}</h2></Reveal>
+        <StaggerIn as="ul">
+          {details.reasons.map(({ title, text }) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
+        </StaggerIn>
       </section>
       <section>
         <Reveal><h2>{c.processTitle}</h2></Reveal>
