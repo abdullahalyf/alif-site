@@ -86,3 +86,4 @@
 @media (max-width: 35rem) {
   .skills-grid, .skill-card--core ul { grid-template-columns: 1fr; }
 }
+.highlight-card[data-featured] { background: var(--sage); border-color: var(--ink-muted); }

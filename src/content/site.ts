@@ -41,7 +41,7 @@ export const site = {
     "Learning basic Japanese through a DILC course.",
   ],
   achievements: [
-    { title: "Nominated for a semester exchange at IIT Bombay (Spring 2027) — DIU–IIT Bombay MoU", org: "Daffodil International University · IIT Bombay", year: 2027, text: "Nominated for a Spring 2027 semester exchange under the DIU–IIT Bombay MoU." },
+    { title: "Semester exchange at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Spring 2027", text: "Nominated by Daffodil International University for a one-semester exchange at IIT Bombay." },
     // DEMO: replace this entire illustrative achievement.
     { title: "DEMO — Student systems showcase", org: "DEMO — Campus technology forum", year: 2026, text: "Presented an offline-first software concept at an illustrative student showcase.", demo: true },
     // DEMO: replace this entire illustrative achievement.

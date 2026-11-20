@@ -63,7 +63,7 @@ describe("content", () => {
     expect(projects).toHaveLength(7); expect(projects.filter((project) => project.demo)).toHaveLength(5);
     expect(projects.some((project) => project.slug === "portfolio")).toBe(false);
     for (const project of projects) expect(project.images.length).toBeGreaterThanOrEqual(2);
-    expect(site.achievements[0].title).toContain("Nominated for a semester exchange at IIT Bombay");
+    expect(site.achievements[0].title).toBe("Semester exchange at IIT Bombay");
   });
 
   it("getProject finds by slug", () => {

@@ -25,7 +25,7 @@ export const siteSchema = z.object({
   location: z.string().min(1),
   intro: z.string().min(1),
   now: z.array(z.string().min(1)).min(1),
-  achievements: z.array(z.object({ title: z.string().min(1), org: z.string().min(1), year: z.number().int(), text: z.string().min(1), demo: z.boolean().optional() })).min(1),
+  achievements: z.array(z.object({ title: z.string().min(1), org: z.string().min(1), year: z.number().int(), period: z.string().min(1).optional(), text: z.string().min(1), demo: z.boolean().optional() })).min(1),
   education: z.array(z.object({ title: z.string().min(1), org: z.string().min(1), years: z.string().min(1), text: z.string().min(1), image })).min(1),
   skills: z.array(z.object({
     title: z.string().min(1),

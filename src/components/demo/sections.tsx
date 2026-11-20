@@ -9,9 +9,9 @@ import { CountUp, Reveal, StaggerIn } from "@/components/motion";
 import { HorizontalRow } from "@/components/horizontal-row";
 import "./demo.css";
 
-function Achievement({ entry }: { entry: Site["achievements"][number] }) {
-  return <article className="highlight-card">
-    <p className="label">{entry.year} · {entry.org}</p>
+function Achievement({ entry, featured }: { entry: Site["achievements"][number]; featured: boolean }) {
+  return <article className="highlight-card" data-featured={featured || undefined}>
+    <p className="label">{entry.period ?? entry.year} · {entry.org}</p>
     <h3>{entry.title}</h3><p>{entry.text}</p>
     {entry.demo && <span className="demo-badge">{demoContent.demoLabel}</span>}
   </article>;
@@ -20,7 +20,7 @@ export function Highlights({ standalone = true }: { standalone?: boolean }) {
   return <section className={standalone ? "container section-space" : undefined} aria-labelledby="highlights-title">
     <SectionLabel>{demoContent.highlightsLabel}</SectionLabel>
     <Reveal><h2 id="highlights-title" className="section-title">{demoContent.highlightsTitle}</h2></Reveal>
-    <HorizontalRow className="highlights-grid" labelledBy="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</HorizontalRow>
+    <HorizontalRow className="highlights-grid" labelledBy="highlights-title">{site.achievements.map((entry, index) => <Achievement key={entry.title} entry={entry} featured={index === 0} />)}</HorizontalRow>
   </section>;
 }
 export function AtAGlance() {
