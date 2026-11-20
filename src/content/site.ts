@@ -413,3 +413,9 @@ export const homeServices = {
     { icon: "access", title: "Database & access control", description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: "/images/demo/clinic-booking-overview.jpg" },
   ] as const,
 };
+
+export const toolsMarquee = {
+  label: "How I build: I design, AI agents implement, I review and test.",
+  pause: "Pause scrolling",
+  items: ["Codex", "Claude", "GitHub", "GitHub Actions", "Vercel", "Supabase", "Playwright", "SQLite"],
+};
