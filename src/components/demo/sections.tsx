@@ -6,11 +6,12 @@ import { getPosts, formatPostDate } from "@/content/posts";
 import { SectionLabel } from "@/components/section-label";
 import { EducationTimeline } from "@/components/education-timeline";
 import { CountUp, Reveal, StaggerIn } from "@/components/motion";
+import { HorizontalRow } from "@/components/horizontal-row";
 import "./demo.css";
 
-function Achievement({ entry }: { entry: Site["achievements"][number] }) {
-  return <article className="highlight-card">
-    <p className="label">{entry.year} · {entry.org}</p>
+function Achievement({ entry, featured }: { entry: Site["achievements"][number]; featured: boolean }) {
+  return <article className="highlight-card" data-featured={featured || undefined}>
+    <p className="label">{entry.period ?? entry.year} · {entry.org}</p>
     <h3>{entry.title}</h3><p>{entry.text}</p>
     {entry.demo && <span className="demo-badge">{demoContent.demoLabel}</span>}
   </article>;
@@ -19,7 +20,7 @@ export function Highlights({ standalone = true }: { standalone?: boolean }) {
   return <section className={standalone ? "container section-space" : undefined} aria-labelledby="highlights-title">
     <SectionLabel>{demoContent.highlightsLabel}</SectionLabel>
     <Reveal><h2 id="highlights-title" className="section-title">{demoContent.highlightsTitle}</h2></Reveal>
-    <StaggerIn className="highlights-grid" data-horizontal-scroll tabIndex={0} role="group" aria-labelledby="highlights-title">{site.achievements.map((entry) => <Achievement key={entry.title} entry={entry} />)}</StaggerIn>
+    <HorizontalRow className="highlights-grid" labelledBy="highlights-title">{site.achievements.map((entry, index) => <Achievement key={entry.title} entry={entry} featured={index === 0} />)}</HorizontalRow>
   </section>;
 }
 export function AtAGlance() {
@@ -35,9 +36,9 @@ export function Testimonials() {
   return <section className="container section-space" aria-labelledby="testimonials-title">
     <SectionLabel>{demoContent.testimonialsLabel}</SectionLabel>
     <Reveal><h2 id="testimonials-title" className="section-title">{demoContent.testimonialsTitle}</h2><p className="demo-notice">{demoContent.testimonialsNotice}</p></Reveal>
-    <StaggerIn className="testimonials-grid" data-horizontal-scroll tabIndex={0} role="group" aria-labelledby="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
+    <HorizontalRow className="testimonials-grid" labelledBy="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
       <blockquote><p>{item.quote}</p></blockquote><figcaption><p>{item.name}</p><p className="label">{item.role}</p></figcaption>
-    </figure>)}</StaggerIn>
+    </figure>)}</HorizontalRow>
   </section>;
 }
 export function LatestWriting() {
@@ -52,16 +53,16 @@ export function LatestWriting() {
 export function AboutDetails() {
   const interestsPhoto = demoContent.interestsPhoto;
 
-  return <div className="container">
-    <div className="about-milestones section-space">
+  return <>
+    <div className="tint-sage"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
         <SectionLabel>{demoContent.educationLabel}</SectionLabel>
         <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
         <EducationTimeline items={site.education} />
       </section>
       <Highlights standalone={false} />
-    </div>
-    <div className="about-bento section-space">
+    </div></div>
+    <div className="tint-clay"><div className="container about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">
         <h2 id="skills-title">{skillProfile.label}</h2>
         <div className="skills-grid">
@@ -101,6 +102,6 @@ export function AboutDetails() {
         </div>
         <Image {...interestsPhoto} alt="" sizes="(max-width: 35rem) 80vw, 8rem" />
       </section>
-    </div>
-  </div>;
+    </div></div>
+  </>;
 }

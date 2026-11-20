@@ -31,7 +31,7 @@ type StaggerInProps = {
 export function StaggerIn({
   children,
   stagger = 0.09,
-  distance = 48,
+  distance = 20,
   start = "top 85%",
   as: Component = "div",
   listRef,

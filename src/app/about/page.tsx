@@ -5,7 +5,6 @@ import { aboutContent, shell, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
-import { Reveal } from "@/components/motion";
 import { TravelTeaser } from "@/features/travel/TravelTeaser";
 
 export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.description, seo.pages.about.path);
@@ -29,10 +28,10 @@ export default function About() {
       </div>
       <div className="about-intro">
         <div className="about-photo-wrap">
-          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" loading="eager" fetchPriority="high" />
+          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" quality={68} loading="eager" fetchPriority="high" />
         </div>
         <div className="about-intro__copy">
-          {site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}
+          {site.about.map((text) => <p key={text}>{text}</p>)}
           <div className="about-signature">
             <p>{aboutContent.signature}</p>
             <ul>{site.socials.map(({ href, label }) => <li key={href}><a className="text-link" href={href}>{label}</a></li>)}</ul>
@@ -40,11 +39,11 @@ export default function About() {
         </div>
       </div>
     </section>
-    <div className="tint-sage"><AboutDetails /></div>
+    <AboutDetails />
     <section className="tint-sand section-space" aria-labelledby="story-title">
       <div className="container">
         <SectionLabel>{aboutContent.storyLabel}</SectionLabel>
-        <Reveal><h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2></Reveal>
+        <h2 id="story-title" className="section-title">{aboutContent.storyTitle}</h2>
         <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
       </div>
     </section>

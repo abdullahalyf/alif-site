@@ -77,7 +77,7 @@ export function Reveal({
   }, [reducedMotion, lines, stagger, start]);
 
   return (
-    <Component ref={rootRef} className={className} {...rest}>
+    <Component ref={rootRef} className={className} data-motion-managed {...rest}>
       {children}
     </Component>
   );

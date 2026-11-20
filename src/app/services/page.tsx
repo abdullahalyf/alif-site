@@ -1,41 +1,42 @@
 import Link from "next/link";
+import { serviceDetails as details } from "@/content/site";
 import { servicesContent as c } from "@/content/services";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal, StaggerIn } from "@/components/motion";
+import { ServiceIcon } from "@/components/service-icon";
 import "./services.css";
 export const metadata = pageMetadata(c.title, c.intro, "/services");
-const serviceIcons = {
-  architecture: "M9 3h6v5H9zM3 16h6v5H3zm12 0h6v5h-6zM12 8v4m-6 4v-4h12v4",
-  operations: "M3 4h18v16H3zm0 5h18m-12 0v11m3-7h6m-6 3h4",
-  offline: "M3 8c5-5 13-5 18 0M6 11c3-3 9-3 12 0m-9 3c2-2 4-2 6 0m-3 5h.01M3 3l18 18",
-  access: "M6 10h12v11H6zm2 0V7a4 4 0 0 1 8 0v3m-4 4v3",
-};
-
 export default function ServicesPage() {
   return (
     <div className="container page-shell services-page">
       <header>
-        <Reveal><h1>{c.title}</h1></Reveal>
-        <Reveal><p className="lead">{c.intro}</p></Reveal>
+        <h1>{c.title}</h1>
+        <p className="lead">{c.intro}</p>
       </header>
-      <section className="service-blocks" aria-label={c.deliverablesLabel}>
+      <StaggerIn as="section" className="service-blocks" aria-label={c.deliverablesLabel}>
         {c.blocks.map((block) => (
-          <article className="service-block" key={block.title}>
+          <article className="service-block" id={block.icon} key={block.title}>
             <h2>
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <path d={serviceIcons[block.icon]} />
-              </svg>
+              <ServiceIcon name={block.icon} />
               {block.title}
             </h2>
             <p>{block.description}</p>
+            <h3>{details.audienceLabel}</h3><p>{details.byService[block.icon].audience}</p>
             <h3>{c.deliverablesLabel}</h3>
             <ul>{block.deliverables.map((item) => <li key={item}>{item}</li>)}</ul>
+            <h3>{details.workflowLabel}</h3><p>{details.byService[block.icon].workflow}</p>
             <dl className="service-timeline">
               <dt className="label">{c.timelineLabel}</dt><dd>{block.timeline}</dd>
             </dl>
             <Link className="button button--secondary" href={c.estimatePath}>{c.estimateLabel}</Link>
           </article>
         ))}
+      </StaggerIn>
+      <section className="service-reasons tint-sage" aria-labelledby="service-reasons-title">
+        <Reveal><h2 id="service-reasons-title">{details.whyTitle}</h2></Reveal>
+        <StaggerIn as="ul">
+          {details.reasons.map(({ title, text }) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
+        </StaggerIn>
       </section>
       <section>
         <Reveal><h2>{c.processTitle}</h2></Reveal>

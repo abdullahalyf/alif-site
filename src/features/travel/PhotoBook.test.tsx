@@ -77,6 +77,7 @@ it("consumes wheel events only while the book can move, and passes both edges th
   expect(wheel(100).defaultPrevented).toBe(false);
 });
 it("provides a teaser for exactly the three latest journeys", () => {
+  mocks.reduced = true;
   render(<TravelTeaser />);
   const latest = [...trips].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   for (const trip of latest) expect(screen.getByRole("heading", { name: trip.title })).toBeInTheDocument();

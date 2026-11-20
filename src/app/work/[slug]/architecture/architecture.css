@@ -49,3 +49,21 @@
 .case-section--diagram .diagram-scroll {
   margin-bottom: 1rem;
 }
+
+.diagram-frame { position: relative; min-width: 0; }
+.diagram-scroll svg { display: block; width: 100%; height: auto; }
+.diagram-scroll svg text { fill: var(--ink); }
+.diagram-scroll svg .diagram-node--db text { fill: var(--night-text); }
+.diagram-scroll-hint { display: none; }
+@media (max-width: 47.999rem) {
+  .diagram-scroll svg { min-width: 40rem; }
+  .diagram-scroll-hint { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--ink-muted); }
+  .diagram-frame::after {
+    content: "";
+    position: absolute;
+    inset: 1px 1px 1px auto;
+    width: 1.75rem;
+    background: linear-gradient(to right, transparent, var(--cream));
+    pointer-events: none;
+  }
+}

@@ -34,7 +34,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Read the preference here rather than from the render: the hook returns the
     // server snapshot until React swaps it for the real value.
-    if (prefersReducedMotion()) return;
+    if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;
 
     const instance = new Lenis({ autoRaf: false });
     instanceRef.current = instance;

@@ -7,7 +7,7 @@ for (const [mode, routes] of [["production", pageRoutes], ["preview", previewRou
     // Inspect the rendered anchors without the preview client's HMR and asset
     // requests running while the test compiles and probes destinations.
     test.use({ baseURL: "http://localhost:3100", javaScriptEnabled: false });
-    test.describe.configure({ timeout: 60_000 });
+    test.describe.configure({ timeout: 120_000 });
   }
   for (const path of routes) {
   test(`every internal link on ${path} returns 200`, async ({ page, request }, testInfo) => {

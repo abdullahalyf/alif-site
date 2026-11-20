@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 type HoverPreviewProps = {
@@ -57,12 +58,25 @@ export function HoverPreview({
     const row = rowRef.current;
     if (!row) return;
 
+    let overRow = false;
     const move = (event: PointerEvent) => {
-      setPosition({ x: event.clientX + offset, y: event.clientY + offset });
+      if (!overRow) return;
+      const previewHeight = size * height / width;
+      setPosition({
+        x: Math.max(8, Math.min(event.clientX + offset, window.innerWidth - size - 8)),
+        y: Math.max(8, Math.min(event.clientY + offset, window.innerHeight - previewHeight - 8)),
+      });
     };
 
-    const enter = () => setActive(true);
-    const leave = () => setActive(false);
+    const enter = (event: PointerEvent) => {
+      overRow = true;
+      if (typeof event.clientX === "number") move(event);
+      setActive(true);
+    };
+    const leave = () => {
+      overRow = false;
+      setActive(false);
+    };
 
     row.addEventListener("pointerenter", enter);
     row.addEventListener("pointerleave", leave);
@@ -73,7 +87,7 @@ export function HoverPreview({
       row.removeEventListener("pointerleave", leave);
       window.removeEventListener("pointermove", move);
     };
-  }, [offset]);
+  }, [height, offset, size, width]);
 
   return (
     <>
@@ -94,12 +108,12 @@ export function HoverPreview({
             zIndex: 30,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src}
             alt={alt}
             width={width}
             height={height}
+            sizes={`${size}px`}
             style={{ display: "block", width: "100%", height: "auto" }}
           />
         </div>

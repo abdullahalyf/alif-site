@@ -30,18 +30,18 @@ export const site = {
   fullName: "Md. Abdullah Alif",
   logoText: "Built by Alif",
   logoInitial: "A",
-  role: "Software Systems Architect & Freelance Developer",
+  role: "Software Systems Architect",
   location: "Dhaka, Bangladesh",
   intro:
     "I design reliable software for businesses, direct AI agents to build it, and review and test the work before launch.",
   now: [
-    "Building client software systems.",
+    "Designing client systems and directing AI implementation, reviews and tests.",
     "Studying Computer Science and Engineering at Daffodil International University.",
     "Researching traffic accident risk prediction with a university team.",
     "Learning basic Japanese through a DILC course.",
   ],
   achievements: [
-    { title: "Nominated for a semester exchange at IIT Bombay (Spring 2027) — DIU–IIT Bombay MoU", org: "Daffodil International University · IIT Bombay", year: 2027, text: "Nominated for a Spring 2027 semester exchange under the DIU–IIT Bombay MoU." },
+    { title: "Semester exchange at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Spring 2027", text: "Nominated by Daffodil International University for a one-semester exchange at IIT Bombay." },
     // DEMO: replace this entire illustrative achievement.
     { title: "DEMO — Student systems showcase", org: "DEMO — Campus technology forum", year: 2026, text: "Presented an offline-first software concept at an illustrative student showcase.", demo: true },
     // DEMO: replace this entire illustrative achievement.
@@ -123,7 +123,7 @@ export const site = {
     timezoneLabel: "Dhaka",
     buildingLabel: "Currently building",
     building: "Offline-first POS & inventory platform",
-    stack: ["TypeScript", "PostgreSQL", "Next.js"],
+    stack: ["System design", "AI agents", "Offline-first"],
   },
   systemDiagram: {
     label: "How the system fits together",
@@ -330,17 +330,29 @@ export const aboutContent = {
 export const pageContent = {
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
   workFilter: "Filter by category",
+  featuredProject: "Featured project",
+  workEmpty: "No projects match this category.",
   allWorkCategories: "All categories",
   workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
+  contents: "In this case study",
+  decisions: "Key decisions & trade-offs",
+  alternatives: "Options considered",
+  reasoning: "Why this decision",
+  timeline: "Delivery timeline",
+  challenges: "Challenges",
+  metrics: "Project outcomes",
+  researchNote: "The research decisions and delivery phases below are illustrative and pending confirmation.",
   problem: "Problem",
   solution: "Solution",
-  stack: "Stack",
+  stack: "Built with (via AI agents)",
+  orchestrated: "Orchestrated with: Codex, Claude",
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",
   /** The section heading for the architecture diagram inside a case study. */
   systemDesign: "System design",
   /** The link to the full-size diagram. */
+  diagramScroll: "Scroll to see the full diagram →",
   systemDesignLink: "Open the full diagram",
 };
 
@@ -383,10 +395,67 @@ export const demoContent = {
 export const heroPhotos = {
   label: "A few photos",
   images: [
-    site.aboutPhoto,
     // DEMO: existing local travel placeholders, to be replaced with personal photos.
+    { src: "/images/travel/sundarbans/1.jpg", width: 1200, height: 900, alt: "Demo photograph of the Sundarbans" },
     { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900, alt: "Demo landscape photograph" },
     { src: "/images/travel/sylhet-tea/1.jpg", width: 1200, height: 900, alt: "Demo travel photograph" },
     { src: "/images/travel/bandarban/1.jpg", width: 1200, height: 900, alt: "Demo outdoor photograph" },
   ],
+};
+
+export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };
+
+export const contactNext = {
+  title: "What happens next",
+  steps: [
+    "Send a short brief describing the workflow and what needs to improve.",
+    "I review the brief and ask about scope, users and constraints.",
+    "If the project is a fit, we agree on a first step and a way to measure it.",
+  ],
+};
+
+export const homeServices = {
+  learn: "Learn more",
+  cards: [
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: "/images/demo/sync-inspector-overview.jpg" },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: "/images/demo/stockroom-operations-overview.jpg" },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: "/images/demo/field-service-overview.jpg" },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: "/images/demo/clinic-booking-overview.jpg" },
+  ] as const,
+};
+
+export const toolsMarquee = {
+  label: "How I build: I design, AI agents implement, I review and test.",
+  pause: "Pause scrolling",
+  items: ["Codex", "Claude", "GitHub", "GitHub Actions", "Vercel", "Supabase", "Playwright", "SQLite"],
+};
+
+export const serviceDetails = {
+  audienceLabel: "Who it's for",
+  workflowLabel: "How I deliver",
+  whyTitle: "Why work with me",
+  reasons: [
+    { title: "Decisions with reasons", text: "I explain what each option buys, what it costs, and what would make me revisit the decision." },
+    { title: "Small releases with AI", text: "I give agents defined tasks so you can review a working slice early." },
+    { title: "Tested and reviewed", text: "I review changes and test realistic failure cases before release." },
+    { title: "Offline-first experience", text: "I design for lost connections, retries, and reconciliation when work must keep moving." },
+  ],
+  byService: {
+    architecture: {
+      audience: "Teams preparing a build, replacing a fragile system, or facing a decision they want to validate first.",
+      workflow: "I make the design decisions and use agents to draft options and prototypes. I review the evidence so you can settle direction before spending on a build.",
+    },
+    operations: {
+      audience: "Operators managing sales, stock or approvals across more than one role or location.",
+      workflow: "I specify a small workflow, direct agents to implement it, then review and test it with you. Smaller releases limit rework and expose the next decision sooner.",
+    },
+    offline: {
+      audience: "Counter staff and field teams who need to finish work without steady internet.",
+      workflow: "Agents implement the queue and test scaffolding from my spec. I review the data model and verify retries, interruptions and reconciliation before release.",
+    },
+    access: {
+      audience: "Teams with shared records, branch boundaries or permissions that are hard to audit.",
+      workflow: "I define the roles and trust boundaries, direct agents to implement the checks and test them against the permission matrix.",
+    },
+  },
 };

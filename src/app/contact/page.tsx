@@ -1,5 +1,5 @@
 import { contactContent as c } from "@/content/contact";
-import { site } from "@/content/site";
+import { contactNext, site } from "@/content/site";
 import { BriefForm } from "@/features/contact/BriefForm";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal } from "@/components/motion";
@@ -32,6 +32,10 @@ export default function ContactPage() {
           <BriefForm />
         </Reveal>
       </div>
+      <section className="contact-next tint-sage" aria-labelledby="contact-next-title">
+        <h2 id="contact-next-title">{contactNext.title}</h2>
+        <ol>{contactNext.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+      </section>
     </div>
   );
 }

@@ -33,7 +33,7 @@
 .demo-caption { padding-top: 0.75rem; }
 .demo-notice { margin-bottom: 0.95rem; }
 /* Stats band: tighter than a full section so it reads as a summary strip. */
-.glance-section { padding-block: clamp(1.5rem, 3vw, 2.25rem) 0; }
+.glance-section { padding-block: var(--section-space); }
 /* The band sits directly above the next section, so the gap comes from that
    section's own padding instead of doubling up. */
 .glance-section + .section-space { padding-top: var(--section-space); }
@@ -86,3 +86,15 @@
 @media (max-width: 35rem) {
   .skills-grid, .skill-card--core ul { grid-template-columns: 1fr; }
 }
+.highlight-card[data-featured] { background: var(--sage); border-color: var(--ink-muted); }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .education-timeline__fill {
+      animation: education-rule linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 70%;
+    }
+  }
+}
+@keyframes education-rule { from { transform: scaleY(0); } }

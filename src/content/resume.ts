@@ -22,7 +22,7 @@ export const resumeContent = resumeSchema.parse({
     {
       title: "DEMO — Independent software collaborator",
       period: "DEMO — dates to confirm",
-      text: "DEMO — prototyping operations tools and documenting system decisions for a small team.",
+      text: "DEMO — specified operations workflows, directed AI prototypes and documented decisions for a small team.",
     },
   ],
 });

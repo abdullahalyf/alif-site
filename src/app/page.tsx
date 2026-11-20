@@ -7,6 +7,7 @@ import { AboutTeaser } from "@/components/home/about-teaser";
 import { HowIWork } from "@/components/home/how-i-work";
 import { SelectedWork } from "@/components/home/selected-work";
 import { Services } from "@/components/home/services";
+import { ToolsMarquee } from "@/components/home/tools-marquee";
 import { IntroOverlay } from "@/components/motion";
 
 export const metadata = {
@@ -15,5 +16,5 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><Highlights /><HowIWork /><Services /><SelectedWork /><Testimonials /><LatestWriting /></>;
+  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><div className="tint-clay"><Highlights /></div><HowIWork /><Services /><ToolsMarquee /><SelectedWork /><div className="tint-sand"><Testimonials /></div><div className="tint-sage"><LatestWriting /></div></>;
 }
