@@ -29,7 +29,7 @@ export default function About() {
       </div>
       <div className="about-intro">
         <div className="about-photo-wrap">
-          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" loading="eager" fetchPriority="high" />
+          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" quality={68} loading="eager" fetchPriority="high" />
         </div>
         <div className="about-intro__copy">
           {site.about.map((text) => <Reveal key={text}><p>{text}</p></Reveal>)}

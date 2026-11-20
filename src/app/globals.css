@@ -339,7 +339,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 
 .night-section { position: relative; isolation: isolate; overflow: clip; color: var(--night-text); }
 .night-section__panel { position: absolute; z-index: -1; inset: 0; background: var(--night); border-block: 1px solid var(--night-line); }
-.night-section .section-label { color: var(--night-text); border-color: var(--night-line); }
+.night-section .section-label { color: var(--night-text); }
 .night-section :focus-visible { outline-color: var(--night-text); }
 /* The intro column sticks so it does not leave a dead zone beside the tall step list. */
 .split-section--sticky { align-items: start; }
@@ -536,3 +536,10 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 @keyframes motion-rise { from { transform: translateY(0.75rem); opacity: 0.15; } }
 @keyframes motion-image { from { opacity: 0.22; } }
 @keyframes motion-hairline { from { transform: scaleX(0); } }
+
+
+.horizontal-row__progress { appearance: none; background: transparent; }
+.horizontal-row__progress::-webkit-slider-runnable-track { height: 3px; background: var(--line); border-radius: 999px; }
+.horizontal-row__progress::-webkit-slider-thumb { appearance: none; width: 1.25rem; height: 0.5rem; margin-top: -2.5px; border-radius: 999px; background: var(--ink-muted); }
+.horizontal-row__progress::-moz-range-track { height: 3px; background: var(--line); border-radius: 999px; }
+.horizontal-row__progress::-moz-range-thumb { width: 1.25rem; height: 0.5rem; border: none; border-radius: 999px; background: var(--ink-muted); }

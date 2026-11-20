@@ -10,8 +10,8 @@ export default function ServicesPage() {
   return (
     <div className="container page-shell services-page">
       <header>
-        <Reveal><h1>{c.title}</h1></Reveal>
-        <Reveal><p className="lead">{c.intro}</p></Reveal>
+        <h1>{c.title}</h1>
+        <p className="lead">{c.intro}</p>
       </header>
       <StaggerIn as="section" className="service-blocks" aria-label={c.deliverablesLabel}>
         {c.blocks.map((block) => (

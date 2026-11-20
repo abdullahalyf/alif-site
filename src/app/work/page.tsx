@@ -5,7 +5,7 @@ import { demoContent, pageContent, shell, site, seo } from "@/content/site";
 import { projects } from "@/content/projects";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
-import { HoverPreview, Reveal } from "@/components/motion";
+import { HoverPreview } from "@/components/motion";
 import { ProjectFilter } from "./ProjectFilter";
 import "./work-index.css";
 
@@ -38,7 +38,7 @@ export default function Work() {
 
   return <div className="container section-space">
     <SectionLabel>{site.name}</SectionLabel>
-    <div className="page-intro"><Reveal><h1>{shell.workTitle}</h1></Reveal><Reveal><p>{pageContent.workIntro}</p></Reveal></div>
+    <div className="page-intro"><h1>{shell.workTitle}</h1><p>{pageContent.workIntro}</p></div>
     <noscript><style>{".work-filter { display: none; }"}</style></noscript>
     <ProjectFilter label={pageContent.workFilter} allLabel={pageContent.allWorkCategories} emptyLabel={pageContent.workEmpty} entries={entries} />
   </div>;
