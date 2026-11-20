@@ -8,9 +8,9 @@ export function HowIWork() {
   return <BackgroundShift className="night-section">
     <section className="section-space" aria-labelledby="how-title">
       <div className="container">
-        <SectionLabel>{workContent.approachLabel}</SectionLabel>
         <div className="split-section split-section--sticky">
           <div className="prose night-intro">
+            <SectionLabel>{workContent.approachLabel}</SectionLabel>
             <h2 id="how-title">{workContent.approachTitle}</h2>
             <p className="night-intro__text">{workContent.approachIntro}</p>
             <Link className="text-link" href={navHref("/approach")}>{workContent.approachLink}<ArrowUpRight /></Link>
