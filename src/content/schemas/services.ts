@@ -3,6 +3,8 @@ const text = z.string().min(1);
 export const servicesSchema = z.object({
   title: text,
   intro: text,
+  label: text,
+  browseLabel: text,
   deliverablesLabel: text,
   timelineLabel: text,
   processTitle: text,
@@ -10,8 +12,12 @@ export const servicesSchema = z.object({
   faqTitle: text,
   cta: text,
   contactPath: text,
-  estimatePath: text,
   estimateLabel: text,
+  startingLabel: text,
+  demoNote: text,
+  recommendedModel: text,
+  recommendedLabel: text,
+  demoPriceLabel: text,
   blocks: z
     .array(
       z.object({
@@ -20,6 +26,8 @@ export const servicesSchema = z.object({
         description: text,
         deliverables: z.array(text).min(1),
         timeline: text,
+        maxWeeks: z.number().int().positive(),
+        startingPrice: text,
       }),
     )
     .length(4),

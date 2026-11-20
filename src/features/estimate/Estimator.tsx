@@ -7,8 +7,8 @@ import { useInteractive } from "@/features/lab/useInteractive";
 import { calculateRange } from "./calculate-range";
 import { estimateSummary, estimateUrl } from "./summary";
 
-export function Estimator() {
-  const [scope, setScope] = useState(estimateDefaults);
+export function Estimator({ initialScope = estimateDefaults }: { initialScope?: EstimateInput }) {
+  const [scope, setScope] = useState(initialScope);
   const [branches, setBranches] = useState(String(estimateDefaults.branches));
   const [roles, setRoles] = useState(String(estimateDefaults.roles));
   const id = useId(), interactive = useInteractive();

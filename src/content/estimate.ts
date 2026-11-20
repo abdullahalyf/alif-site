@@ -14,6 +14,13 @@ export const estimateModel: EstimateModel = {
   urgency: { flexible: { calendarFactor: 1.15, priceFactor: 0.95 }, standard: { calendarFactor: 1, priceFactor: 1 }, urgent: { calendarFactor: 0.85, priceFactor: 1.25 } },
 };
 export const estimateDefaults: EstimateInput = { projectType: "pos", branches: 1, roles: 3, offline: false, integrations: [], migration: false, urgency: "standard" };
+export const serviceEstimatePresets: Readonly<Record<string, Pick<EstimateInput, "projectType" | "offline">>> = {
+  architecture: { projectType: "web", offline: false },
+  operations: { projectType: "pos", offline: false },
+  offline: { projectType: "mobile", offline: true },
+  access: { projectType: "dashboard", offline: false },
+};
+
 const currencyFormat = new Intl.NumberFormat("en-US", { style: "currency", currency: estimateModel.currency, maximumFractionDigits: 0 });
 export const estimateContent = {
   path: "/estimate",
