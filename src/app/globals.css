@@ -345,12 +345,17 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .split-section--sticky { align-items: start; }
 .night-intro { position: sticky; top: 8rem; display: grid; gap: 1.5rem; align-content: start; }
 .night-intro__text { color: var(--night-text); opacity: 0.78; }
-.night-steps { list-style: none; padding: 0; }
-.night-steps li { display: grid; gap: 1rem; border-top: 1px solid var(--night-line); padding-block: 1.3rem; transition: border-color 240ms ease; }
-.night-steps li:hover { border-color: var(--night-text); }
-.night-steps p { color: var(--night-text); opacity: 0.82; }
-.night-steps h3 { transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1); }
-.night-steps li:hover h3 { transform: translateX(0.4rem); }
+.night-steps { display: grid; gap: 0.85rem; list-style: none; padding: 0; }
+.night-step { position: relative; display: grid; gap: 0.6rem; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--night-line); border-radius: 1rem; background: color-mix(in srgb, var(--night) 92%, var(--night-text)); }
+.night-step p { color: var(--night-muted); }
+.night-step__marker { display: flex; align-items: center; justify-content: space-between; color: var(--night-muted); font-size: 0.875rem; }
+.night-step__shade { position: absolute; inset: 0; border-radius: inherit; background: var(--scrim); opacity: 0; pointer-events: none; }
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  .night-steps { gap: 1rem; padding-bottom: 2rem; }
+  .night-steps li { position: sticky; top: calc(7rem + var(--step-offset)); }
+  .night-step { min-height: clamp(12rem, 24vh, 16rem); align-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .night-section .night-intro { position: static; } }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1.25rem; margin-block: 1.25rem; flex-wrap: wrap; }
 .project-carousel { display: flex; overflow-x: auto; gap: 1.5rem; scroll-snap-type: x mandatory; padding: 0.5rem 0.25rem 1.5rem; list-style: none; scrollbar-color: var(--ink-muted) var(--cream-2); }
 .project-card { flex: 0 0 42%; scroll-snap-align: start; min-width: 0; }
