@@ -34,7 +34,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     const toTopOnSamePage = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       const link = (event.target as Element | null)?.closest?.("a[href]");
-      if (!(link instanceof HTMLAnchorElement) || link.target === "_blank") return;
+      if (!(link instanceof HTMLAnchorElement) || link.target === "_blank" || link.hasAttribute("download")) return;
       const url = new URL(link.href, location.href);
       if (url.origin !== location.origin) return;
       if (url.pathname !== location.pathname) {

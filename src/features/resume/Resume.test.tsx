@@ -13,9 +13,9 @@ it("renders identity and every CV section", () => {
   // The entrance animations read the motion preference, and GSAP's
   // ScrollTrigger needs `matchMedia`, which jsdom does not implement.
   mockMatchMedia(false);
-  render(<Resume />);
+  render(<Resume id="cv" />);
   expect(
-    screen.getByRole("heading", { level: 1, name: site.fullName }),
+    screen.getByRole("heading", { level: 2, name: site.fullName }),
   ).toBeInTheDocument();
   for (const name of [
     c.summaryTitle,
@@ -26,7 +26,7 @@ it("renders identity and every CV section", () => {
     c.languagesTitle,
     c.achievementsTitle,
   ])
-    expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 3, name })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: site.email })).toHaveAttribute(
     "href",
     `mailto:${site.email}`,

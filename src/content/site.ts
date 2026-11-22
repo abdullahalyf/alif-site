@@ -195,7 +195,8 @@ export const hackathonContent = {
   live: "Live",
 };
 
-export const resumeLink = { label: "Resume / CV", href: "/resume" };
+export const cvId = "cv";
+export const resumeLink = { label: "CV", href: `/contact#${cvId}` };
 
 const navigationLinks = {
   work: { label: "Work", href: "/work" },

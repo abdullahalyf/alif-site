@@ -4,7 +4,7 @@ import { projects } from "./projects";
 export const resumeContent = resumeSchema.parse({
   title: resumeLink.label,
   description: "Experience, projects and education in a printable format.",
-  print: "Download PDF",
+  print: "Print CV",
   summaryTitle: "Summary",
   experienceTitle: "Experience",
   projectsTitle: "Projects",
@@ -20,3 +20,7 @@ export const resumeContent = resumeSchema.parse({
     },
   ],
 });
+
+export const cvProjects = projects.filter(({ slug }) => slug === "multi-branch-pos");
+
+export const cvDownload = { label: "Download CV (PDF)", href: "/documents/alif-cv.pdf" };

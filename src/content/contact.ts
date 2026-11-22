@@ -1,6 +1,6 @@
 import { contactContentSchema } from "./schemas/contact";
 export const contactContent = contactContentSchema.parse({
-  title: "Let’s talk about your project.",
+  title: "Contact & CV",
   intro:
     "Tell me what needs to work better. Your brief stays in your browser until you send it through your chosen app.",
   response: "Send a short brief and I will reply by email.",
