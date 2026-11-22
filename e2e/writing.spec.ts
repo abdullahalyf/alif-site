@@ -52,7 +52,9 @@ test.describe("development draft article", () => {
     await expect(page.locator(".post-prose")).toContainText("TODO(Alif)");
     await expect(page.getByText(writingContent.draft, { exact: true })).toBeVisible();
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+    await waitForHydration(page);
     await page.getByRole("link", { name: writingContent.back, exact: true }).click();
+    await expect(page).toHaveURL(seo.pages.writing.path, { timeout: 15_000 });
     await expect(page.getByRole("link", { name: post.title, exact: true })).toBeVisible();
   });
 });
@@ -61,7 +63,7 @@ test("Writing filters tech and travel and links back from a trip", async ({ page
   const { filters, filterLabel } = writingContent;
   await page.goto(filters.all.href);
   const nav = page.getByRole("navigation", { name: filterLabel });
-  const list = page.locator(".post-list");
+  const list = page.locator(".post-list:visible");
   await nav.getByRole("link", { name: filters.travel.label }).click();
   await expect(page).toHaveURL(filters.travel.href);
   await expect(list.locator(":scope > li")).toHaveCount(allTrips.length);

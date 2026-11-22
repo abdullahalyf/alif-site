@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { trips, travelContent as c } from "../src/content/travel";
-import { project } from "../src/features/travel/map/geo";
+import { project, routeCurves } from "../src/features/travel/map/geo";
 
 for (const trip of trips) {
   test(`trip page ${trip.slug} has content, canonical metadata and a mini map`, async ({ page, request }) => {
@@ -69,6 +69,9 @@ test("travel stats and combined filters describe the actual demo dataset", async
 test("map progress, pin selection and place atmosphere follow the horizontal book", async ({ page }) => {
   await page.goto(c.path);
   await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
+  const atmosphere = page.locator(".journey-atmosphere");
+  const color = () => atmosphere.evaluate(element => getComputedStyle(element).backgroundColor);
+  const startingColor = await color();
   const index = 5;
   const pin = page.getByRole("link", { name: c.mapPinLabel(trips[index].place) });
   await pin.click();
@@ -77,13 +80,21 @@ test("map progress, pin selection and place atmosphere follow the horizontal boo
   const book = page.getByRole("region", { name: c.bookLabel });
   await expect(book.getByRole("heading", { name: trips[index].title })).toBeInViewport();
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const points = trips.map(project);
-  const routeLengths = points.slice(1).map((point, step) => Math.hypot(point.x - points[step].x, point.y - points[step].y));
+  const { path, legs } = routeCurves(trips.map(project));
+  await expect(page.locator(".route-upcoming")).toHaveAttribute("d", path);
+  expect(path).toContain("Q");
+  const routeLengths = await page.evaluate(segments => {
+    const leg = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    return segments.map(segment => {
+      leg.setAttribute("d", segment);
+      return leg.getTotalLength();
+    });
+  }, legs);
   const length = (segments: number[]) => segments.reduce((sum, segment) => sum + segment, 0);
   const offset = () => page.locator(".travel-route-map .route-visited").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
   await expect.poll(offset).toBeCloseTo(reduced ? 0 : 1 - length(routeLengths.slice(0, index)) / length(routeLengths), 2);
-  const rgb = trips[index].color.match(/[0-9a-f]{2}/g)!.map(part => parseInt(part, 16)).join(", ");
-  await expect(page.locator(".journey-atmosphere")).toHaveCSS("background-color", `rgb(${rgb})`);
+  await expect.poll(() => atmosphere.evaluate(element => element.style.getPropertyValue("--journey-tint"))).toBe(trips[index].color);
+  await expect.poll(color).not.toBe(startingColor);
   if (reduced) {
     await expect(page.locator('.route-pin[data-state="active"] .route-pin-halo')).toHaveCSS("animation-name", "none");
   }
