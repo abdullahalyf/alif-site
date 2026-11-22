@@ -7,6 +7,7 @@ for (const [mode, routes] of [["production", pageRoutes], ["preview", previewRou
   if (mode === "preview") test.use({ baseURL: "http://localhost:3100" });
   for (const path of routes) {
   test(`no serious or critical accessibility violations on ${path}`, async ({ page }, testInfo) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
     await page.evaluate(() => document.fonts.ready);
