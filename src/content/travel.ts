@@ -197,6 +197,8 @@ export const travelContent = {
   progress: "Travel book progress",
   peopleLabel: "A conversation along the way",
   mapLabel: "The journey so far",
+  mapStopLabel: "Stop",
+  mapPhotosLabel: "Photos",
   mapNote: "Approximate demo locations. Select a pin to turn to its page.",
   mapPinLabel: (place: string) => `Turn to ${place}`,
   statsTitle: "At a glance",
