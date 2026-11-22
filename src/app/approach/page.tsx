@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import Link from "next/link";
 import { ArrowUpRight } from "@/components/arrows";
 import { approachDetail, pageContent, shell, site, seo, workContent } from "@/content/site";
@@ -9,6 +10,8 @@ export const metadata = pageMetadata(seo.pages.approach.title, seo.pages.approac
 
 export default function Approach() {
   return <div className="container section-space">
+      <WorkSubnav current="/approach" />
+      
     <SectionLabel>{site.tagline}</SectionLabel>
     <div className="page-intro"><Reveal><h1>{shell.approachTitle}</h1></Reveal><Reveal><p>{pageContent.approachIntro}</p></Reveal></div>
     <ol className="approach-steps">{site.approach.map((step, index) => <Reveal as="li" key={step.title} lines>

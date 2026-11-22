@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { Header } from "./header";
-import { footerGroups, shell } from "@/content/site";
+import { menuGroups, shell, workNavigation } from "@/content/site";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/work" }));
 beforeEach(() => {
@@ -24,7 +24,7 @@ it("opens the menu, closes on a link, and restores trigger focus", () => {
   fireEvent.click(trigger);
   expect(trigger).toHaveAttribute("aria-expanded", "true");
   expect(document.body.style.overflow).toBe("hidden");
-  const link = within(screen.getByRole("dialog")).getByRole("link", { name: shell.workTitle });
+  const link = within(screen.getByRole("dialog")).getByRole("link", { name: workNavigation.links[0].label });
   link.addEventListener("click", (event) => event.preventDefault());
   fireEvent.click(link);
   expect(trigger).toHaveAttribute("aria-expanded", "false");
@@ -43,11 +43,11 @@ it("closes the dialog with its close button or Escape", () => {
   expect(trigger).toHaveAttribute("aria-expanded", "false");
 });
 
-it("puts every footer destination in the menu", () => {
+it("puts every grouped destination in the menu", () => {
   render(<Header />);
   fireEvent.click(screen.getByRole("button", { name: shell.menu }));
   const dialog = screen.getByRole("dialog");
-  for (const link of footerGroups.flatMap((group) => group.links)) {
+  for (const link of menuGroups.flatMap((group) => group.links)) {
     expect(within(dialog).getByRole("link", { name: link.label })).toHaveAttribute("href", link.href);
   }
 

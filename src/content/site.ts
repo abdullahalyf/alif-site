@@ -205,7 +205,7 @@ const navigationLinks = {
   about: { label: "About me", href: "/about" },
   contact: { label: "Contact", href: "/contact" },
   travel: { label: "Travel", href: "/travel" },
-  lab: { label: "Lab", href: "/lab" },
+  lab: { label: "Lab demos", href: "/lab" },
   estimate: { label: "Estimate a project", href: "/estimate" },
   resume: resumeLink,
   uses: { label: "Uses", href: "/uses" },
@@ -233,8 +233,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    navigationLinks.work, navigationLinks.services, navigationLinks.approach,
-    navigationLinks.writing, navigationLinks.about, navigationLinks.resume, navigationLinks.contact,
+    navigationLinks.work, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -266,6 +265,19 @@ export const shell = {
   searchHint: "⌘K",
   footerNavigation: "Footer navigation",
 };
+
+export const workNavigation = {
+  label: "Work sections",
+  links: [{ ...navigationLinks.work, label: "Projects" }, navigationLinks.services, navigationLinks.approach, navigationLinks.lab, navigationLinks.estimate],
+};
+
+export const menuGroups = [
+  { label: navigationLinks.work.label, links: workNavigation.links },
+  { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel, { label: "Writing RSS", href: "/writing/rss.xml" }] },
+  { label: "About", links: [navigationLinks.about] },
+  { label: "Contact & CV", links: [navigationLinks.contact, navigationLinks.resume, { ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
+  { label: "More", links: [navigationLinks.uses, navigationLinks.now] },
+];
 
 export const footerGroups = [
   { label: "Explore", links: [navigationLinks.work, navigationLinks.services, navigationLinks.approach, navigationLinks.about, navigationLinks.travel] },

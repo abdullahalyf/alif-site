@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { footerGroups, shell } from "@/content/site";
+import { menuGroups, shell, workNavigation } from "@/content/site";
 import { Button } from "./button";
 import { ThemeToggle } from "./theme-toggle";
 import { BrandMark } from "./brand-mark";
@@ -17,6 +17,8 @@ export function Header() {
   const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const pressedBackdrop = useRef(false);
+  const workTrigger = useRef<HTMLAnchorElement>(null);
+  const [dismissedWork, setDismissedWork] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   const [openedAt, setOpenedAt] = useState<string | null>(null);
@@ -81,7 +83,22 @@ export function Header() {
     <header ref={header} className="header">
       <div className="container header-inner">
         <BrandMark />
-        <nav className="desktop-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}</nav>
+        <nav className="desktop-nav" aria-label={shell.navigation}>
+          <div className="work-dropdown" data-dismissed={dismissedWork || undefined}
+            onMouseEnter={() => setDismissedWork(false)}
+            onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDismissedWork(false); }}
+            onKeyDown={(event) => {
+              if (event.key !== "Escape") return;
+              workTrigger.current?.focus();
+              setDismissedWork(true);
+            }}>
+            <Link ref={workTrigger} href={shell.nav[0].href} aria-current={pathname === shell.nav[0].href ? "page" : undefined}>{shell.nav[0].label}</Link>
+            <ul className="work-dropdown__links">{workNavigation.links.map((link) =>
+              <li key={link.href} onClick={() => setDismissedWork(true)}>{linkItem(link)}</li>
+            )}</ul>
+          </div>
+          {shell.nav.slice(1).map(linkItem)}
+        </nav>
         <div className="header-actions">
           <SearchTrigger />
           <ThemeToggle />
@@ -135,18 +152,17 @@ export function Header() {
             </div>
             <nav aria-label={shell.navigation}>
               <div className="site-menu__groups">
-                {footerGroups.map((group) => <div key={group.label}>
+                {menuGroups.map((group) => <div key={group.label}>
                   <h2 className="label">{group.label}</h2>
                   <ul>
                     {group.links.map((link) => <li key={link.href}>{linkItem(link)}</li>)}
                   </ul>
                 </div>)}
               </div>
-              <div className="site-menu__contact">{linkItem(shell.contact)}</div>
             </nav>
           </div>
         </dialog>
-        <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}{footerGroups.flatMap((group) => group.links).filter((link) => !shell.nav.some((item) => item.href === link.href)).map(linkItem)}</nav><style>{`.header-actions { display: none; }`}</style></noscript>
+        <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}{menuGroups.flatMap((group) => group.links).filter((link) => !shell.nav.some((item) => item.href === link.href)).map(linkItem)}</nav><style>{`.header-actions, .desktop-nav { display: none; }`}</style></noscript>
       </div>
     </header>
   );

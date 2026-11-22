@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { navHref, shell, site } from "../src/content/site";
+import { navHref, shell, site, workNavigation } from "../src/content/site";
 import { projects } from "../src/content/projects";
 
 for (const link of shell.nav) {
@@ -7,7 +7,7 @@ for (const link of shell.nav) {
     await page.goto("/");
     if (isMobile) await page.getByRole("button", { name: shell.menu, exact: true }).click();
     const navigation = isMobile ? page.getByRole("dialog").getByRole("navigation") : page.getByRole("banner").getByRole("navigation");
-    await navigation.getByRole("link", { name: link.label, exact: true }).click();
+    await navigation.getByRole("link", { name: isMobile && link.href === "/work" ? workNavigation.links[0].label : link.label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${link.href.replace("/", "\\/")}$`));
     if (link.href.startsWith("#")) await expect(page.getByRole("contentinfo")).toBeInViewport();
     // A page carries its own heading, which does not have to repeat the

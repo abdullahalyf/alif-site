@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import { ArrowUpRight } from "@/components/arrows";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,6 +39,8 @@ export default function Work() {
   });
 
   return <div className="container section-space">
+      <WorkSubnav current="/work" />
+      
     <SectionLabel>{site.name}</SectionLabel>
     <div className="page-intro"><h1>{shell.workTitle}</h1><p>{pageContent.workIntro}</p></div>
     <noscript><style>{".work-filter { display: none; }"}</style></noscript>
