@@ -35,23 +35,21 @@ export const site = {
   intro:
     "I design reliable software for businesses, direct AI agents to build it, and review and test the work before launch.",
   now: [
-    "Designing client systems and directing AI implementation, reviews and tests.",
-    "Studying Computer Science and Engineering at Daffodil International University.",
-    "Researching traffic accident risk prediction with a university team.",
+    "5th semester, BSc in Computer Science and Engineering at Daffodil International University.",
+    "Selected for the DIU–IIT Bombay exchange semester, Dec 31, 2026 to about May 31, 2027.",
+    "Research paper on explainable machine learning for traffic accident injury prediction — second author, submitted.",
+    "Freelancing as a software systems architect: designing client systems and directing AI implementation, reviews and tests.",
     "Learning basic Japanese through a DILC course.",
   ],
   achievements: [
-    { title: "Semester exchange at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Spring 2027", text: "Nominated by Daffodil International University for a one-semester exchange at IIT Bombay." },
-    // DEMO: replace this entire illustrative achievement.
-    { title: "DEMO — Student systems showcase", org: "DEMO — Campus technology forum", year: 2026, text: "Presented an offline-first software concept at an illustrative student showcase.", demo: true },
-    // DEMO: replace this entire illustrative achievement.
-    { title: "DEMO — Community project recognition", org: "DEMO — Local developer circle", year: 2025, text: "Recognised for a sample community tool and a practical approach to documentation.", demo: true },
+    { title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Dec 31, 2026 – ~May 31, 2027", text: "Selected by Daffodil International University for a one-semester exchange at IIT Bombay." },
+    { title: "Research paper submitted", org: "Traffic accident injury prediction", year: 2026, text: "Second author on \"Explainable Machine Learning for Traffic Accident Injury Prediction: A Leakage-Aware and Statistically Validated Framework\". Status: submitted." },
   ],
-  // DEMO: the entire education timeline uses illustrative dates/details; replace before publication.
+  // TODO(alif): add start/end years for each education entry; replace the demo photos in Session 4.
   education: [
-    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University", years: "2023–present · DEMO dates", text: "DEMO — coursework in software engineering, databases and intelligent systems.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
-    { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
-    { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
+    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
+    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "GPA 5.00", text: "Science group.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
+    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
   ],
   skills: [
     { title: "Working knowledge", icon: "data", items: [
@@ -64,12 +62,10 @@ export const site = {
   ],
   languages: [
     { name: "Bangla", level: "Fluent" }, { name: "English", level: "Fluent" },
-    { name: "Hindi", level: "Speaking" }, { name: "Japanese", level: "Basic · DILC course" },
+    { name: "Hindi", level: "Conversational" }, { name: "Japanese", level: "Basic · DILC course" },
   ],
-  // DEMO: illustrative interests to replace or confirm.
-  interests: ["Travelling across Bangladesh", "Street photography", "Football", "Reading about how cities work"],
-  // DEMO: every number below is illustrative, not a claim about completed client work.
-  stats: [{ value: "12+", label: "Demo projects explored" }, { value: "4", label: "Demo systems domains" }, { value: "3", label: "Demo years of building" }],
+  interests: ["Travelling across Bangladesh (24 of 64 districts) and Malaysia"],
+  stats: [{ value: "3", label: "Branches live on my POS" }, { value: "9", label: "Branches the POS is built to scale to" }, { value: "24/64", label: "Districts travelled in Bangladesh" }],
   // DEMO: all quotes, names and roles are fictional examples, not client endorsements.
   testimonials: [
     { name: "DEMO — Maya Rahman", role: "DEMO — Operations lead", quote: "The best part was seeing the messy process become a system everyone could understand." },
@@ -78,12 +74,12 @@ export const site = {
   ],
   about: [
     "I'm a software systems architect in Bangladesh. I map out the data, roles, failure cases and costs, explain the trade-offs to clients, then guide AI agents through implementation. I review the changes and test what happens when things go wrong.",
-    "I'm studying Computer Science and Engineering at Daffodil International University and do research on traffic accident risk prediction.",
-    "Outside work I travel across Bangladesh and talk to whoever I meet along the way — it's the best way I know to understand what people actually need. And yes, I'm a lifelong Cristiano Ronaldo fan.",
+    "I was born in Jhenaidah and grew up in Dhaka. I got my first laptop in Class 9, during COVID online classes, and started building from there.",
+    "I'm studying Computer Science and Engineering at Daffodil International University, and I'm part of a research team working on traffic accident risk prediction.",
   ],
   email: "abdullahaylif@gmail.com",
   whatsapp: {
-    display: "+880 1629-889764",
+    display: "Message on WhatsApp",
     href: "https://wa.me/8801629889764",
   },
   socials: [
@@ -118,7 +114,7 @@ export const site = {
     alt: "DEMO photograph — replace with a real portrait of Alif",
   },
   statusCard: {
-    availability: "Available for new projects",
+    availability: "Available for work",
     timezone: "Asia/Dhaka",
     timezoneLabel: "Dhaka",
     buildingLabel: "Currently building",
@@ -154,18 +150,18 @@ export const site = {
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
-  // DEMO: review the story copy and replace each chapter photo.
+  // TODO(alif): replace each chapter photo (Session 4).
   story: [
     {
       label: "Jhenaidah",
       title: "Where it started",
-      text: "DEMO — Growing up in Jhenaidah, curiosity about everyday tools became a curiosity about computers and how they work.", // DEMO story copy.
+      text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
       image: demoImage("alif-story-1", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
       label: "School & college",
       title: "Learning to build",
-      text: "DEMO — School and college were a time for small experiments: simple pages, tiny programs and a growing habit of learning by building.", // DEMO story copy.
+      text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
       image: demoImage("alif-story-2", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
@@ -175,9 +171,9 @@ export const site = {
       image: demoImage("alif-story-3", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
     {
-      label: "Savar, Dhaka",
+      label: "Dhaka",
       title: "Now",
-      text: "I live in Savar and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
+      text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
       image: demoImage("alif-story-4", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
     },
   ],
@@ -296,6 +292,21 @@ export const homeContent = {
   aboutLink: "More about me",
   servicesLabel: "What I do",
   servicesTitle: "Software built around your business.",
+  currentlyLabel: "Currently",
+  currently: "5th semester CSE at DIU · IIT Bombay exchange from Dec 31, 2026 · research paper submitted",
+  currentlyLink: "More on Now",
+};
+
+export const availability = {
+  status: "Available for work",
+  offersLabel: "What I take on",
+  offers: [
+    "POS systems (my own POS, available to new shops)",
+    "Business websites",
+    "Inventory management",
+    "Business OS and back-office systems",
+    "Custom software",
+  ],
 };
 
 export const workContent = {
@@ -314,9 +325,10 @@ export const workContent = {
 export const aboutContent = {
   intro: "I design business software, explain the trade-offs, and direct AI agents to build it.",
   facts: [
-    { label: "Based in", value: "Savar, Dhaka" },
+    { label: "Based in", value: "Dhaka, Bangladesh" },
     { label: "From", value: "Jhenaidah, Bangladesh" },
     { label: "Studying", value: "CSE at Daffodil International University" },
+    { label: "Exchange", value: "IIT Bombay, Dec 31, 2026 – ~May 31, 2027" },
     { label: "Languages", value: site.languages.map(({ name }) => name).join(" · ") },
     { label: site.statusCard.buildingLabel, value: site.statusCard.building },
   ],
@@ -384,7 +396,7 @@ export const demoContent = {
   interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
   aboutDemoNotice: "Demo education details and interests — to be confirmed by Alif.",
   statsLabel: "At a glance",
-  statsNotice: "Demo figures · illustrative only",
+  statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",
   testimonialsTitle: "A little outside perspective.",
   testimonialsNotice: "Demo quotes from fictional people · not client endorsements",

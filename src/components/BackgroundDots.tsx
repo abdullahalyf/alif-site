@@ -5,7 +5,6 @@ import { LINK_DISTANCE, linkAlpha, resizeDots, stepDots, type Dot, type Pointer 
 import { REDUCED_MOTION_QUERY } from "@/lib/use-reduced-motion";
 
 const MAX_DPR = 2;
-const DOT_RADIUS = 1.6;
 
 export function BackgroundDots() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -42,19 +41,20 @@ export function BackgroundDots() {
           const b = dots[j];
           const alpha = linkAlpha(Math.hypot(a.x - b.x, a.y - b.y), LINK_DISTANCE);
           if (alpha <= 0) continue;
-          context.globalAlpha = alpha * 0.5;
+          context.globalAlpha = alpha * 0.4 * Math.max(a.weight, b.weight);
           context.beginPath();
           context.moveTo(a.x, a.y);
           context.lineTo(b.x, b.y);
           context.stroke();
         }
       }
-      context.globalAlpha = 1;
       for (const dot of dots) {
+        context.globalAlpha = dot.weight;
         context.beginPath();
-        context.arc(dot.x, dot.y, DOT_RADIUS, 0, Math.PI * 2);
+        context.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
         context.fill();
       }
+      context.globalAlpha = 1;
     };
 
     const resize = () => {

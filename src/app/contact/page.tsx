@@ -1,5 +1,5 @@
 import { contactContent as c } from "@/content/contact";
-import { contactNext, site } from "@/content/site";
+import { availability, contactNext, site } from "@/content/site";
 import { BriefForm } from "@/features/contact/BriefForm";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal } from "@/components/motion";
@@ -22,7 +22,9 @@ export default function ContactPage() {
           </p>
           <p>{site.location}</p>
           <p>{c.response}</p>
-          <p>{c.availability}</p>
+          <p><strong>{availability.status}</strong></p>
+          <p className="label">{availability.offersLabel}</p>
+          <ul>{availability.offers.map((offer) => <li key={offer}>{offer}</li>)}</ul>
           <a href={`mailto:${site.email}`}>{c.fallback}</a>
         </Reveal>
         <noscript>

@@ -1,21 +1,22 @@
-export type Dot = { x: number; y: number; vx: number; vy: number; bx: number; by: number };
+export type Dot = { x: number; y: number; vx: number; vy: number; bx: number; by: number; size: number; weight: number };
 export type Pointer = { x: number; y: number } | null;
 
 export const MOBILE_MAX_WIDTH = 768;
 export const LINK_DISTANCE = 140;
 export const ATTRACT_RADIUS = 160;
 
-const AREA_PER_DOT = 22000;
-const BASE_SPEED = 9;
+const AREA_PER_DOT = 13000;
+const BASE_SPEED = 17;
+const PROMINENT_SHARE = 0.22;
 const ATTRACT_ACCEL = 140;
 const ATTRACT_DEADZONE = 28;
 const RELAX_RATE = 1.6;
-const MAX_SPEED = 90;
+const MAX_SPEED = 140;
 
 export function dotCount(width: number, height: number): number {
   const raw = (width * height) / AREA_PER_DOT;
-  if (width < MOBILE_MAX_WIDTH) return clamp(Math.round(raw * 0.6), 24, 40);
-  return clamp(Math.round(raw), 40, 80);
+  if (width < MOBILE_MAX_WIDTH) return clamp(Math.round(raw * 0.6), 30, 55);
+  return clamp(Math.round(raw), 60, 120);
 }
 
 export function createDots(count: number, width: number, height: number, random: () => number = Math.random): Dot[] {
@@ -24,7 +25,12 @@ export function createDots(count: number, width: number, height: number, random:
     const speed = BASE_SPEED * (0.4 + random() * 0.6);
     const bx = Math.cos(angle) * speed;
     const by = Math.sin(angle) * speed;
-    return { x: random() * width, y: random() * height, vx: bx, vy: by, bx, by };
+    const prominent = random() < PROMINENT_SHARE;
+    return {
+      x: random() * width, y: random() * height, vx: bx, vy: by, bx, by,
+      size: prominent ? 2.4 + random() * 0.8 : 1.1 + random() * 0.5,
+      weight: prominent ? 1 : 0.35 + random() * 0.25,
+    };
   });
 }
 

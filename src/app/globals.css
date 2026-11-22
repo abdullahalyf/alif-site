@@ -108,7 +108,7 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .button--secondary:hover { background: var(--ink); color: var(--bg); }
 }
 /* SVG lettering keeps the decorative sequence out of text LCP candidates. */
-.bg-dots { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; color: var(--ink); opacity: 0.22; }
+.bg-dots { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; color: var(--ink); opacity: 0.5; }
 .intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--bg); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
 .intro-words { display: block; fill: var(--ink); }
 .intro-word { visibility: hidden; font-family: var(--font-instrument), serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
@@ -458,17 +458,17 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 }
 [data-horizontal-dragging] { cursor: grabbing; user-select: none; }
 
-.tint-a { background: var(--tint-a); }
-.tint-b { background: var(--tint-b); }
-.band-surface { background: var(--surface-2); }
+.tint-a { --tint-glass: color-mix(in srgb, var(--tint-a) 62%, transparent); background: var(--tint-glass); }
+.tint-b { --tint-glass: color-mix(in srgb, var(--tint-b) 62%, transparent); background: var(--tint-glass); }
+.band-surface { --tint-glass: color-mix(in srgb, var(--surface-2) 62%, transparent); background: var(--tint-glass); }
 .category-tag { width: fit-content; padding: 0.25rem 0.6rem; border-radius: 999px; color: var(--ink); background: var(--tint-b); }
 .category-tag[data-category="Client work"] { background: var(--surface-2); color: var(--accent-2); }
 .category-tag[data-category="Research"] { background: var(--tint-a); }
 
 .horizontal-row { min-width: 0; --row-fade: var(--bg); }
-.tint-a .horizontal-row { --row-fade: var(--tint-a); }
-.tint-b .horizontal-row { --row-fade: var(--tint-b); }
-.band-surface .horizontal-row { --row-fade: var(--surface-2); }
+.tint-a .horizontal-row { --row-fade: var(--tint-glass); }
+.tint-b .horizontal-row { --row-fade: var(--tint-glass); }
+.band-surface .horizontal-row { --row-fade: var(--tint-glass); }
 .horizontal-row__frame { position: relative; }
 .horizontal-row__frame::before, .horizontal-row__frame::after {
   content: "";

@@ -18,11 +18,5 @@ export const resumeContent = resumeSchema.parse({
       period: String(projects[0].year),
       text: projects[0].summary,
     },
-    // DEMO: illustrative experience; replace with confirmed role and dates.
-    {
-      title: "DEMO — Independent software collaborator",
-      period: "DEMO — dates to confirm",
-      text: "DEMO — specified operations workflows, directed AI prototypes and documented decisions for a small team.",
-    },
   ],
 });
