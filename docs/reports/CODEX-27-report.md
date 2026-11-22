@@ -12,7 +12,7 @@ The full Playwright suite is running. An earlier check exposed a photo assertion
 
 ## Axe
 
-Both themes are covered by the production and preview accessibility suites. The dedicated theme audit is in progress.
+The dedicated audit found zero serious or critical violations in 32 checks. It covered Home, About, Work, Contact, Travel, Writing, Writing’s Travel filter, and Uses at 390 px and 1440 px in both themes. The full production and preview accessibility suites also check both themes.
 
 ## Lighthouse
 
