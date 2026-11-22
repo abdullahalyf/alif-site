@@ -6,21 +6,22 @@ export const projects = [
   {
     slug: "multi-branch-pos",
     title: "Multi-Branch POS & Operations Platform",
-    client: "Boba tea chain, Bangladesh", // brand name hidden until the client approves
+    client: "A multi-branch boba tea brand in Dhaka", // TODO(alif): confirm the brand name (spelling) before naming the client.
     year: 2026,
     role: "System architect · Directed Codex and Claude · Reviewed and tested",
     category: "Client work",
     summary:
-      "An offline-first point-of-sale and back-office system for a growing chain of tea shops. I designed the system and directed AI agents to build it, then reviewed and tested the implementation.",
+      "A POS and back-office system for a multi-branch boba tea brand in Dhaka. It is live in 3 branches and built to scale to 9. I designed the system and directed AI agents to build it, then reviewed and tested the implementation.",
     problem:
-      "The chain was running its counters by hand and growing from 5 to 10 branches fast. The owners needed fast, reliable billing at every counter, stock that tracks itself, and a clear view of every branch — without paying for heavy servers.",
+      "The brand runs several branches and needed one system for all of them: fast billing at every counter, owners who can see sales and reports from anywhere, and central control across branches — without a heavy, expensive setup.",
     solution: [
-      "Desktop POS (Electron) that keeps selling with no internet, using a local SQLite database, then syncs automatically when the connection returns.",
-      "Idempotent sync with branch- and device-prefixed order IDs, so no sale is ever lost or counted twice.",
-      "Role-based access for six roles, enforced at the database level with Postgres row-level security.",
+      "In every branch: an in-shop POS for billing at the counter.",
+      "Online access: owners and managers check sales and reports from anywhere.",
+      "Central control: all branches are managed from one system.",
+      "Plug-and-play branches: adding a branch is configuration, not new code.",
+      "Desktop POS (Electron) with a local SQLite database that syncs to the cloud, using branch- and device-prefixed order IDs so no sale is counted twice.",
+      "Role-based access enforced at the database level with Postgres row-level security.",
       "Recipe-based inventory: every cup sold deducts its raw ingredients automatically.",
-      "Owner dashboard with branch health monitoring, audit logs and nightly email reports.",
-      "Staged rollouts and one-click rollback, so updates reach branches without site visits.",
     ],
     stack: [
       "Electron",
@@ -32,18 +33,13 @@ export const projects = [
       "Cloudflare",
       "GitHub Actions",
     ],
+    // TODO(alif): add measured results (uptime, time saved, cost) once you have real numbers.
     results: [
-      "Designed for 10+ branches on a single codebase",
-      "Runs up to a full day offline without losing a sale",
-      "Infrastructure kept under ~$30 per month",
+      "Live in 3 branches today",
+      "Built to scale to 9 branches on a single codebase",
+      "Adding a branch is configuration, not new code",
     ],
     link: null,
-    // DEMO: illustrative sequencing and durations.
-    timeline: [
-      { phase: "Counter workflow and data model", weeks: "DEMO · Weeks 1–2" },
-      { phase: "Offline billing and reconciliation", weeks: "DEMO · Weeks 3–5" },
-      { phase: "Branch permissions and staged rollout", weeks: "DEMO · Weeks 6–8" },
-    ],
     decisions: [
       { decision: "Keep a local SQLite copy at each counter", alternatives: "A cloud-only checkout or a local store with automatic sync", why: "Counter sales must continue during outages. Local persistence makes the sale durable immediately, at the cost of designing a sync path." },
       { decision: "Give each sale a stable, branch- and device-prefixed ID", alternatives: "Rely on each server request as a new write or deduplicate by operation ID", why: "The same sale can be sent again after a lost response. Retrying the same ID avoids adding a duplicate to the ledger." },
@@ -56,9 +52,9 @@ export const projects = [
       { problem: "Owners need visibility across the chain", resolution: "Use branch health checks, audits and nightly reports to surface what needs attention." },
     ],
     metrics: [
-      { label: "Branch capacity", value: "10+ designed for" },
-      { label: "Offline operation", value: "Up to a full day" },
-      { label: "Infrastructure", value: "Under ~$30 per month" },
+      { label: "Branches live", value: "3" },
+      { label: "Built to scale to", value: "9 branches" },
+      { label: "Adding a branch", value: "Configuration, not new code" },
     ],
     images: [demoImage("pos-overview", "DEMO photograph for the POS case study"), demoImage("pos-detail", "DEMO detail photograph for the POS case study")], // DEMO images only; project copy is unchanged.
   },

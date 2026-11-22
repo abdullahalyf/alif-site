@@ -21,3 +21,11 @@ Notes
 - Uses: Legion 5 specs (TODO confirm GPU/SSD); invented monitor/productivity items removed. Resume: invented experience removed.
 - TONE RULE: phone number no longer shown as text (button says "Message on WhatsApp"; the wa.me link still contains the number), Savar removed, Ronaldo line removed.
 - TODO(alif): education start/end years; confirm Legion GPU/SSD; keep or drop the WhatsApp button.
+
+## Session 3 — Alez POS case study ✅ (hackathons: waiting for data)
+- Alez case study rewritten truthfully: client "A multi-branch boba tea brand in Dhaka"; live in **3 branches**, built to scale to **9**, adding a branch = configuration. What the client gets listed first: in-shop POS, online access, central control.
+- Removed unverified claims (10+ branches, "full day offline", "~$30/month", invented timeline weeks). Technical solution bullets (Electron/SQLite sync, RLS, recipe inventory) kept as they were — TODO(alif): confirm they match what is deployed.
+- Testimonial: Asad's draft added with `published: false`; the Home "Working together" section renders nothing until it is `true`. The three fictional DEMO testimonials are gone. Schema: `testimonials[].published` (optional), min(2) removed.
+- Hackathons: new `hackathons` array (empty) + `Hackathons` component on /work, hidden while empty (tested).
+- Blocked: the PC folder `Desktop\portfolio-content` could not be read (folder-access prompt was denied), so `08b-hackathons/links.txt` is unread.
+- e2e specs updated (demo-content, menu-scroll); demo-content passes locally.

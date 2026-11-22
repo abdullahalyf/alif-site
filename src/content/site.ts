@@ -1,5 +1,5 @@
 import { demoImage } from "./demo-images";
-import type { Site } from "./schema";
+import type { Hackathon, Site } from "./schema";
 
 export const skillProfile = {
   label: "Skills",
@@ -66,11 +66,9 @@ export const site = {
   ],
   interests: ["Travelling across Bangladesh (24 of 64 districts) and Malaysia"],
   stats: [{ value: "3", label: "Branches live on my POS" }, { value: "9", label: "Branches the POS is built to scale to" }, { value: "24/64", label: "Districts travelled in Bangladesh" }],
-  // DEMO: all quotes, names and roles are fictional examples, not client endorsements.
+  // Draft from Alif's notes. Nothing renders while `published` is false — set it to true only after Asad approves.
   testimonials: [
-    { name: "DEMO — Maya Rahman", role: "DEMO — Operations lead", quote: "The best part was seeing the messy process become a system everyone could understand." },
-    { name: "DEMO — Arif Hasan", role: "DEMO — Small-business owner", quote: "Clear questions, a thoughtful plan and a tool that made the daily work feel simpler." },
-    { name: "DEMO — Nina Chowdhury", role: "DEMO — Project collaborator", quote: "Every decision came back to the people using the software and what they needed next." },
+    { name: "Md. Asaduzzaman", role: "Managing Director", quote: "Alif built our POS from the ground up. We now run every branch from one system — the counters work smoothly in-shop, and we can check sales and reports online from anywhere. It's made managing our outlets much easier.", published: false }, // TODO(alif): confirm Asad's title and get his approval.
   ],
   about: [
     "I'm a software systems architect in Bangladesh. I map out the data, roles, failure cases and costs, explain the trade-offs to clients, then guide AI agents through implementation. I review the changes and test what happens when things go wrong.",
@@ -178,6 +176,16 @@ export const site = {
     },
   ],
 } satisfies Site;
+
+// TODO(alif): fill from 08b-hackathons/links.txt (name, role, result, github, live). The section stays hidden while this is empty.
+export const hackathons: Hackathon[] = [];
+
+export const hackathonContent = {
+  label: "Hackathons",
+  title: "Built against the clock.",
+  github: "GitHub",
+  live: "Live",
+};
 
 export const resumeLink = { label: "Resume / CV", href: "/resume" };
 
@@ -399,7 +407,6 @@ export const demoContent = {
   statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",
   testimonialsTitle: "A little outside perspective.",
-  testimonialsNotice: "Demo quotes from fictional people · not client endorsements",
   latestLabel: "Latest writing",
   latestTitle: "Notes from the workbench.",
 };

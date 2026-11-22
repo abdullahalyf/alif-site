@@ -33,10 +33,12 @@ export function AtAGlance() {
   </section>;
 }
 export function Testimonials() {
+  const published = site.testimonials.filter((item) => item.published);
+  if (!published.length) return null;
   return <section className="container section-space" aria-labelledby="testimonials-title">
     <SectionLabel>{demoContent.testimonialsLabel}</SectionLabel>
-    <Reveal><h2 id="testimonials-title" className="section-title">{demoContent.testimonialsTitle}</h2><p className="demo-notice">{demoContent.testimonialsNotice}</p></Reveal>
-    <HorizontalRow className="testimonials-grid" labelledBy="testimonials-title">{site.testimonials.map((item) => <figure className="testimonial" key={item.name}>
+    <Reveal><h2 id="testimonials-title" className="section-title">{demoContent.testimonialsTitle}</h2></Reveal>
+    <HorizontalRow className="testimonials-grid" labelledBy="testimonials-title">{published.map((item) => <figure className="testimonial" key={item.name}>
       <blockquote><p>{item.quote}</p></blockquote><figcaption><p>{item.name}</p><p className="label">{item.role}</p></figcaption>
     </figure>)}</HorizontalRow>
   </section>;
