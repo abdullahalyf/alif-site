@@ -3,9 +3,10 @@
 .travel-map-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .bangladesh-outline { fill: var(--bg); fill-opacity: 0.55; stroke: var(--ink-muted); stroke-width: 1; stroke-opacity: 0.45; }
 .bangladesh-divisions { fill: none; stroke: var(--ink-muted); stroke-width: 0.65; stroke-opacity: 0.58; }
-.route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; }
-.route-upcoming { opacity: 0.25; stroke-dasharray: 3 6; }
-.route-visited { stroke: var(--ink); }
+.route-upcoming, .route-progress, .international-map-route { fill: none; stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
+.route-upcoming { stroke: var(--ink-muted); opacity: 0.4; }
+.route-progress { stroke: var(--ink); }
+.route-visited { fill: none; stroke: white; stroke-width: 4; }
 .route-pin-target { fill: transparent; }
 .route-pin-dot { stroke: var(--ink); stroke-width: 1.5; fill: var(--bg); }
 .route-pin[data-state="visited"] .route-pin-dot, .route-pin[data-state="active"] .route-pin-dot { fill: var(--ink); }
@@ -41,7 +42,7 @@
 .international-map svg { display: block; width: 100%; border: 1px solid var(--line); border-radius: 1rem; background: var(--tint-a); }
 .international-map figcaption { margin-top: 0.75rem; }
 .international-map-land { fill: var(--bg); stroke: var(--ink-muted); stroke-width: 0.55; stroke-opacity: 0.7; }
-.international-map-route { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 4; }
+.international-map-route { stroke: var(--accent); }
 .international-map-stop { fill: var(--ink); }
 .international-map-stop circle { stroke: var(--bg); stroke-width: 0.25; }
 .international-map-stop text { font-family: var(--font-sans); font-weight: 600; paint-order: stroke; stroke: var(--bg); stroke-width: 0.45; stroke-linejoin: round; }

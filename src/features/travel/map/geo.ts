@@ -15,6 +15,19 @@ export function distanceKm(first: Coordinates, second: Coordinates): number {
 export function routeDistanceKm(points: Coordinates[]): number {
   return points.slice(1).reduce((total, point, index) => total + distanceKm(points[index], point), 0);
 }
-export function routePath(points: Coordinates[]): string {
-  return points.map((point, index) => { const { x, y } = project(point); return `${index ? "L" : "M"}${x.toFixed(2)},${y.toFixed(2)}`; }).join(" ");
+type MapPoint = { x: number; y: number };
+const pointText = ({ x, y }: MapPoint) => `${x.toFixed(2)},${y.toFixed(2)}`;
+
+export function routeCurves(points: MapPoint[]) {
+  const legs = points.slice(1).map((end, index) => {
+    const start = points[index];
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const control = { x: start.x + dx / 2 + dy * 0.18, y: start.y + dy / 2 - dx * 0.18 };
+    return `Q${pointText(control)} ${pointText(end)}`;
+  });
+  return {
+    path: points.length ? [`M${pointText(points[0])}`, ...legs].join(" ") : "",
+    legs: legs.map((leg, index) => `M${pointText(points[index])} ${leg}`),
+  };
 }
