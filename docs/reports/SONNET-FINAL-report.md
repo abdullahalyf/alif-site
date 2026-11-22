@@ -38,3 +38,20 @@ Notes
   - `projects.ts`: demo images for Alez POS (`pos-overview`, `pos-detail`) and the research project; 5 fictional demo projects.
   - `travel.ts`: all journeys use seeded placeholder photos and illustrative copy.
 - Folders to use when access is granted: 01-profile, 03-school, 04-college, 05-university-diu, 06-journey, 07-travel (bangladesh/*, international/malaysia, bangladesh-travel-map.png), 08-projects/alez-pos, 09-work-setup. Skip 02b-childhood-jessore.
+
+### Alif feedback round 2 (02:44)
+- Dots faster again (drift 27 px/s, max 200), and now also inside the dark "How I work" panel and the footer (`BackgroundDots variant="night"`, light dots, paused when off-screen).
+- Hero photo blur: weaker (10px) and fully sharp once the panel top reaches ~66% of the viewport (was 18%).
+- Copy protection: `user-select: none` site-wide (inputs/textarea still work), `CopyGuard` blocks copy/cut/select/drag and the image right-click menu. Note: this stops casual copying only — screenshots, view-source or disabling JS still work; no website can fully prevent that.
+
+## Session 5 — voice + final check ✅ (voice waits for text)
+- About: Mission & vision block added, hidden while `aboutContent.missionVision` is empty (TODO(alif)). Opinion posts not written — no topics/text yet.
+- Lighthouse mobile (local prod build, 1 run): Home 95/100/100/100, About 95/100/100/100, Work 97/100/100/100 (Perf/A11y/BP/SEO). Targets met.
+
+## Questions for Alif (all in one place)
+1. Folder access to `Desktop\portfolio-content` (photos + `08b-hackathons/links.txt`) — the request was denied; please approve or use "Add folder" in the desktop app.
+2. Brand name spelling (Yucha / Roomcha?) and Asad's exact title; approval to publish his testimonial.
+3. Hackathon list (name, role, result, GitHub, live link).
+4. Mission & vision (1–2 sentences each) and opinion post topics.
+5. Education years; Legion 5 GPU/SSD confirm; keep the WhatsApp button (its link contains your number)?
+6. Alez tech bullets (Electron/SQLite sync, RLS, recipe inventory) — still accurate?

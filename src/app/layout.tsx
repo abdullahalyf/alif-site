@@ -6,6 +6,7 @@ import { PageMotion } from "@/components/motion/PageMotion";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { BackgroundDots } from "@/components/BackgroundDots";
+import { CopyGuard } from "@/components/CopyGuard";
 import { SmoothScroll } from "@/components/motion";
 import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body>
         <BackgroundDots />
+        <CopyGuard />
         <SmoothScroll>
           <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>
           <Header />

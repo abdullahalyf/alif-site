@@ -6,13 +6,14 @@ import { REDUCED_MOTION_QUERY } from "@/lib/use-reduced-motion";
 
 const MAX_DPR = 2;
 
-export function BackgroundDots() {
+export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night" }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
+    const container = variant === "night" ? canvas.parentElement : null;
 
     const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
     const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -25,6 +26,8 @@ export function BackgroundDots() {
     let last = 0;
     let idle = 0;
     let running = false;
+    let started = false;
+    let visible = variant === "page";
 
     const readColor = () => {
       color = getComputedStyle(canvas).color;
@@ -58,9 +61,10 @@ export function BackgroundDots() {
     };
 
     const resize = () => {
-      const nextWidth = window.innerWidth;
-      const nextHeight = window.innerHeight;
-      if (width && nextWidth === width && Math.abs(nextHeight - height) < 120) return;
+      const nextWidth = container ? container.clientWidth : window.innerWidth;
+      const nextHeight = container ? container.clientHeight : window.innerHeight;
+      if (!nextWidth || !nextHeight) return;
+      if (width && nextWidth === width && Math.abs(nextHeight - height) < (container ? 2 : 120)) return;
       const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
       canvas.width = Math.round(nextWidth * dpr);
       canvas.height = Math.round(nextHeight * dpr);
@@ -72,15 +76,24 @@ export function BackgroundDots() {
     };
 
     const tick = (now: number) => {
-      const dt = last ? (now - last) / 1000 : 0;
-      last = now;
-      stepDots(dots, dt, width, height, pointer);
-      draw();
+      if (visible) {
+        const dt = last ? (now - last) / 1000 : 0;
+        last = now;
+        stepDots(dots, dt, width, height, pointer);
+        draw();
+      } else {
+        last = 0;
+      }
       frame = requestAnimationFrame(tick);
     };
 
     const onPointerMove = (event: PointerEvent) => {
-      pointer = event.pointerType === "touch" ? null : { x: event.clientX, y: event.clientY };
+      if (event.pointerType === "touch") {
+        pointer = null;
+        return;
+      }
+      const rect = canvas.getBoundingClientRect();
+      pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top };
     };
     const clearPointer = () => {
       pointer = null;
@@ -125,7 +138,6 @@ export function BackgroundDots() {
       if (!motionQuery.matches) startMotion();
     };
 
-    let started = false;
     const begin = () => {
       started = true;
       readColor();
@@ -136,7 +148,6 @@ export function BackgroundDots() {
       ? (callback: () => void) => window.requestIdleCallback(callback, { timeout: 1500 })
       : (callback: () => void) => window.setTimeout(callback, 200);
     const cancel = window.cancelIdleCallback ?? window.clearTimeout;
-
     idle = schedule(begin);
 
     const themeObserver = new MutationObserver(onThemeChange);
@@ -144,7 +155,18 @@ export function BackgroundDots() {
     const onResize = () => {
       if (started) resize();
     };
-    window.addEventListener("resize", onResize);
+    const sizeObserver = container && typeof ResizeObserver !== "undefined" ? new ResizeObserver(onResize) : null;
+    if (container) sizeObserver?.observe(container);
+    else window.addEventListener("resize", onResize);
+    const visibilityObserver = container && typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver(([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible && !running && started) draw();
+      })
+      : null;
+    if (container) visibilityObserver?.observe(container);
+    else visible = true;
+    if (container && !visibilityObserver) visible = true;
     motionQuery.addEventListener("change", apply);
     darkQuery.addEventListener("change", onThemeChange);
 
@@ -152,11 +174,13 @@ export function BackgroundDots() {
       cancel(idle);
       stopMotion();
       themeObserver.disconnect();
+      sizeObserver?.disconnect();
+      visibilityObserver?.disconnect();
       window.removeEventListener("resize", onResize);
       motionQuery.removeEventListener("change", apply);
       darkQuery.removeEventListener("change", onThemeChange);
     };
-  }, []);
+  }, [variant]);
 
-  return <canvas ref={canvasRef} className="bg-dots" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className={variant === "night" ? "bg-dots bg-dots--night" : "bg-dots"} aria-hidden="true" />;
 }

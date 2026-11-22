@@ -68,9 +68,9 @@ describe("stepDots", () => {
   });
 
   it("never exceeds the speed cap", () => {
-    const dots = [dot({ x: 100, y: 100, vx: 500, vy: 0, bx: 0, by: 0 })];
+    const dots = [dot({ x: 100, y: 100, vx: 900, vy: 0, bx: 0, by: 0 })];
     stepDots(dots, 0.016, 800, 600, null);
-    expect(Math.hypot(dots[0].vx, dots[0].vy)).toBeLessThanOrEqual(140.001);
+    expect(Math.hypot(dots[0].vx, dots[0].vy)).toBeLessThanOrEqual(200.001);
   });
 });
 

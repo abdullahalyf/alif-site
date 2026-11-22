@@ -36,6 +36,8 @@ html[data-theme="dark"] { color-scheme: dark; --photo-filter: brightness(0.88); 
   }
   html[data-theme-switching] img { transition: filter 300ms ease; }
 }
+input, textarea, select, [contenteditable="true"] { -webkit-user-select: text; user-select: text; }
+img, a { -webkit-user-drag: none; }
 img:where(:not(.hero-photo)), .hero-panel__image { filter: var(--photo-filter); }
 
 @theme inline {
@@ -60,7 +62,7 @@ img:where(:not(.hero-photo)), .hero-panel__image { filter: var(--photo-filter); 
 
 html { --section-space: clamp(1.6rem, 4.05vw, 3.6rem); --header-height: 5.5rem; scroll-padding-top: calc(var(--header-height) + 0.75rem); }
 @media (max-width: 47.999rem) { html { --header-height: 4.5rem; } }
-body { margin: 0; padding-top: var(--header-height); background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; }
+body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; margin: 0; padding-top: var(--header-height); background: var(--bg); color: var(--ink); font-family: var(--font-sans); font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); line-height: 1.6; }
 h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; line-height: 1.05; letter-spacing: -0.025em; text-wrap: balance; }
 h1 { font-size: var(--type-h1); max-width: 18ch; }
 h2 { font-size: var(--type-h2); }
@@ -109,6 +111,7 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 }
 /* SVG lettering keeps the decorative sequence out of text LCP candidates. */
 .bg-dots { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; color: var(--ink); opacity: 0.5; }
+.bg-dots--night { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; color: var(--night-text); opacity: 0.4; }
 .intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--bg); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
 .intro-words { display: block; fill: var(--ink); }
 .intro-word { visibility: hidden; font-family: var(--font-instrument), serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
@@ -206,8 +209,8 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 @media (max-width: 74.999rem) { .desktop-nav { display: none; } }
 @media (max-width: 22rem) { .header-inner { width: calc(100% - 2rem); } }
 .fallback-nav { display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
-.footer { background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
-.footer-inner { display: grid; gap: 1.25rem; padding-block: var(--section-space); }
+.footer { position: relative; isolation: isolate; overflow: clip; background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
+.footer-inner { position: relative; z-index: 1; display: grid; gap: 1.25rem; padding-block: var(--section-space); }
 .footer h2 { max-width: 23ch; }
 .footer .button { border-color: var(--night-text); }
 .footer .button--primary { background: var(--night-text); color: var(--night); }
@@ -343,7 +346,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 }
 
 .night-section { position: relative; isolation: isolate; overflow: clip; color: var(--night-text); }
-.night-section__panel { position: absolute; z-index: -1; inset: 0; background: var(--night); border-block: 1px solid var(--night-line); }
+.night-section__panel { overflow: hidden; position: absolute; z-index: -1; inset: 0; background: var(--night); border-block: 1px solid var(--night-line); }
 .night-section .section-label { color: var(--night-text); }
 .night-section :focus-visible { outline-color: var(--night-text); }
 /* The intro column sticks so it does not leave a dead zone beside the tall step list. */

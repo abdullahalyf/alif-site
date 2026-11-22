@@ -40,6 +40,14 @@ export default function About() {
       </div>
     </section>
     <AboutDetails />
+    {(aboutContent.missionVision.mission || aboutContent.missionVision.vision) && <section className="container section-space" aria-labelledby="mission-title">
+      <SectionLabel>{aboutContent.missionVision.label}</SectionLabel>
+      <h2 id="mission-title" className="sr-only">{aboutContent.missionVision.label}</h2>
+      <dl className="about-facts">
+        {aboutContent.missionVision.mission && <div><dt className="label">{aboutContent.missionVision.missionLabel}</dt><dd>{aboutContent.missionVision.mission}</dd></div>}
+        {aboutContent.missionVision.vision && <div><dt className="label">{aboutContent.missionVision.visionLabel}</dt><dd>{aboutContent.missionVision.vision}</dd></div>}
+      </dl>
+    </section>}
     <section className="tint-b section-space" aria-labelledby="story-title">
       <div className="container">
         <SectionLabel>{aboutContent.storyLabel}</SectionLabel>

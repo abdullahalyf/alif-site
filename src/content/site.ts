@@ -343,6 +343,8 @@ export const aboutContent = {
   email: { ...shell.email, label: "Email" },
   resume: navigationLinks.resume,
   signature: site.name,
+  // TODO(alif): write your mission and vision (1–2 sentences each). The block stays hidden while both are empty.
+  missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
 };

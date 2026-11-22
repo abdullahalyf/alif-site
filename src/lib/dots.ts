@@ -6,12 +6,12 @@ export const LINK_DISTANCE = 140;
 export const ATTRACT_RADIUS = 160;
 
 const AREA_PER_DOT = 13000;
-const BASE_SPEED = 17;
+const BASE_SPEED = 27;
 const PROMINENT_SHARE = 0.22;
-const ATTRACT_ACCEL = 140;
+const ATTRACT_ACCEL = 200;
 const ATTRACT_DEADZONE = 28;
 const RELAX_RATE = 1.6;
-const MAX_SPEED = 140;
+const MAX_SPEED = 200;
 
 export function dotCount(width: number, height: number): number {
   const raw = (width * height) / AREA_PER_DOT;

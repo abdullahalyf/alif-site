@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { whenNearViewport } from "@/lib/when-near-viewport";
 import { getGsap } from "@/lib/gsap";
+import { BackgroundDots } from "@/components/BackgroundDots";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 export function BackgroundShift({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -30,7 +31,7 @@ export function BackgroundShift({ children, className }: { children: React.React
   }, [reducedMotion]);
 
   return <div ref={root} className={className}>
-    <div ref={panel} className="night-section__panel" aria-hidden="true" />
+    <div ref={panel} className="night-section__panel" aria-hidden="true"><BackgroundDots variant="night" /></div>
     {children}
   </div>;
 }
