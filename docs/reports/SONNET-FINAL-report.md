@@ -29,3 +29,12 @@ Notes
 - Hackathons: new `hackathons` array (empty) + `Hackathons` component on /work, hidden while empty (tested).
 - Blocked: the PC folder `Desktop\portfolio-content` could not be read (folder-access prompt was denied), so `08b-hackathons/links.txt` is unread.
 - e2e specs updated (demo-content, menu-scroll); demo-content passes locally.
+
+## Session 4 — real images ⛔ blocked (no photo access)
+- Not done: converting photos from `C:\Users\Abdullah Alif\Desktop\portfolio-content` to WebP. The folder-access request was denied, so no photo was read, converted or replaced. Nothing was guessed or changed.
+- Ready when access exists: pipeline `pnpm add:image <file> <name>` (JPEG/PNG, max 2400px). Note: Session 4 asks for WebP ≤200 KB in `public/images/<section>/`; the repo script outputs JPEG — I would use `sharp` directly for WebP.
+- `pnpm demo:list` still reports 52 DEMO markers. Image-related ones left as-is with their `// DEMO` comments:
+  - `site.ts`: story chapters 1–4 (`alif-story-1…4`), hero side photo (`alif-hero-side.jpg`), education photos (3), `heroPhotos` (4 travel placeholders), `demoContent.interestsPhoto`.
+  - `projects.ts`: demo images for Alez POS (`pos-overview`, `pos-detail`) and the research project; 5 fictional demo projects.
+  - `travel.ts`: all journeys use seeded placeholder photos and illustrative copy.
+- Folders to use when access is granted: 01-profile, 03-school, 04-college, 05-university-diu, 06-journey, 07-travel (bangladesh/*, international/malaysia, bangladesh-travel-map.png), 08-projects/alez-pos, 09-work-setup. Skip 02b-childhood-jessore.
