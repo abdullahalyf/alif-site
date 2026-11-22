@@ -4,12 +4,15 @@ import { greetingIntro, homeContent, shell, site } from "../src/content/site";
 import { waitForHydration } from "./helpers/routes";
 
 test("the header and drawer share a theme choice that survives reload", async ({ page }) => {
-  await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
+  await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
   await page.goto("/about");
   const root = page.locator("html");
   await expect(root).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await waitForHydration(page);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(root).toHaveAttribute("data-theme", "dark");
 
   await page.getByRole("banner").getByRole("button", { name: shell.useLightTheme }).click();
   await expect(root).toHaveAttribute("data-theme", "light");
@@ -25,14 +28,15 @@ test("the header and drawer share a theme choice that survives reload", async ({
 });
 
 for (const colorScheme of ["light", "dark"] as const) {
-  for (const route of ["/", "/about", "/travel", "/resume", "/uses"]) {
+  for (const route of ["/", "/about", "/travel", "/contact", "/uses", "/work", "/writing"]) {
     test(`${colorScheme} theme passes axe on ${route}`, async ({ page }) => {
-      await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.addInitScript(theme => localStorage.setItem("alif-theme", theme), colorScheme);
       await page.goto(route);
       await waitForHydration(page);
       await expect(page.locator("html")).toHaveAttribute("data-theme", colorScheme);
       await page.evaluate(() => document.fonts.ready);
-      expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+      expect((await new AxeBuilder({ page }).setLegacyMode().analyze()).violations).toEqual([]);
     });
   }
 }

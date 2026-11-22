@@ -12,11 +12,10 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
+    if (!canvas || !context || typeof window.matchMedia !== "function") return;
     const container = variant === "night" ? canvas.parentElement : null;
 
     const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
-    const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
     let width = 0;
     let height = 0;
     let dots: Dot[] = [];
@@ -168,7 +167,6 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     else visible = true;
     if (container && !visibilityObserver) visible = true;
     motionQuery.addEventListener("change", apply);
-    darkQuery.addEventListener("change", onThemeChange);
 
     return () => {
       cancel(idle);
@@ -178,7 +176,6 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
       visibilityObserver?.disconnect();
       window.removeEventListener("resize", onResize);
       motionQuery.removeEventListener("change", apply);
-      darkQuery.removeEventListener("change", onThemeChange);
     };
   }, [variant]);
 

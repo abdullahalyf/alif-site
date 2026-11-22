@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --bg: light-dark(#faf8f4, #1c1b18);
   --surface-1: light-dark(#fffdfa, #242320);
   --surface-2: light-dark(#f1eee8, #2c2a25);
@@ -27,9 +27,7 @@
 }
 
 html[data-theme="dark"] { color-scheme: dark; --photo-filter: brightness(0.88); }
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme]) { color-scheme: dark; --photo-filter: brightness(0.88); }
-}
+html[data-theme="light"] { color-scheme: light; }
 @media (prefers-reduced-motion: no-preference) {
   html[data-theme-switching] :where(body, header, footer, section, article, a, button, input, select, dialog, div, li) {
     transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease;

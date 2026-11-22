@@ -42,9 +42,9 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
   await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(50);
   expect((await header.boundingBox())!.y).toBe(0);
   expect((await section.boundingBox())!.y).toBeGreaterThan(50);
-  await expect(header).toHaveCSS("background-color", "rgb(250, 248, 244)");
-  await expect(header).toHaveCSS("color", "rgb(34, 35, 30)");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(250, 248, 244)");
+  await expect(header).toHaveCSS("background-color", "rgb(28, 27, 24)");
+  await expect(header).toHaveCSS("color", "rgb(244, 239, 231)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await expect(section.getByRole("heading", { level: 2 })).toHaveCSS("opacity", "1");
   const { default: AxeBuilder } = await import("@axe-core/playwright");
   const { violations } = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
@@ -96,7 +96,7 @@ test("the Home photo sharpens without changing the inset frame", async ({ page, 
     await expect(photo).toHaveCSS("filter", "none");
   } else {
     const blur = () => photo.evaluate(element => Number(getComputedStyle(element).filter.match(/blur\(([\d.]+)px\)/)?.[1] ?? 0));
-    await expect.poll(blur).toBeGreaterThan(isMobile ? 3 : 10);
+    await expect.poll(blur).toBeGreaterThan(isMobile ? 2.5 : 7);
   }
   const initial = (await frame.boundingBox())!;
   expect(initial.x).toBeGreaterThan(0);

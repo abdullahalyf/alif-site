@@ -45,7 +45,7 @@ test.describe("development draft article", () => {
     const post = drafts.find((post) => post.slug === "hello-im-alif")!;
     await page.goto(writingContent.postHref(post.slug));
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(post.title);
-    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(250, 248, 244)");
+    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
     await expect(page).toHaveTitle(`${post.title} — ${site.name}`);
     await expect(page.locator(".post-prose")).toContainText("TODO(Alif)");
     await expect(page.getByText(writingContent.draft, { exact: true })).toBeVisible();

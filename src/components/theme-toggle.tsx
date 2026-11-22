@@ -1,18 +1,17 @@
 "use client";
 
 import { shell } from "@/content/site";
-import { themeStorageKey } from "@/lib/theme";
+import { defaultTheme, themeStorageKey } from "@/lib/theme";
 
 let transitionTimer: ReturnType<typeof setTimeout> | undefined;
 
 export function ThemeToggle() {
   function toggle() {
     const root = document.documentElement;
-    const current = root.dataset.theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const current = root.dataset.theme ?? defaultTheme;
     const next = current === "dark" ? "light" : "dark";
     root.setAttribute("data-theme-switching", "");
     root.dataset.theme = next;
-    root.setAttribute("data-theme-chosen", "");
     clearTimeout(transitionTimer);
     transitionTimer = setTimeout(() => root.removeAttribute("data-theme-switching"), 320);
     try { localStorage.setItem(themeStorageKey, next); } catch {}

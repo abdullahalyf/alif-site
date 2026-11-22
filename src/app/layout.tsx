@@ -10,7 +10,7 @@ import { CopyGuard } from "@/components/CopyGuard";
 import { SmoothScroll } from "@/components/motion";
 import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
-import { themeBootstrap } from "@/lib/theme";
+import { defaultTheme, themeBootstrap } from "@/lib/theme";
 import { introBootstrap } from "@/lib/intro";
 import "./globals.css";
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${instrument.variable}`}>
+    <html lang="en" data-theme={defaultTheme} suppressHydrationWarning className={`${inter.variable} ${instrument.variable}`}>
       <head>
         {/* A parser-blocking inline script sets the root theme before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
