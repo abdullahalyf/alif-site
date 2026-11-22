@@ -3,25 +3,15 @@
 import { useEffect, useState } from "react";
 import { greetingIntro } from "@/content/site";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
+import { INTRO_PENDING_ATTR, introStorageKey } from "@/lib/intro";
 
-export const introStorageKey = "alif-intro-played-at";
-const RELOAD_WINDOW = 10_000;
+export { introStorageKey };
 const WORD_INTERVAL = 112;
 const EXIT_DURATION = 230;
 const EXIT_START = (greetingIntro.length - 1) * WORD_INTERVAL;
 export const INTRO_DURATION = EXIT_START + EXIT_DURATION;
-let enteredHome = false;
-
 function shouldPlayIntro() {
-  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-  const homeReload = !enteredHome && navigation?.type === "reload" && new URL(navigation.name).pathname === location.pathname;
-  enteredHome = true;
-  try {
-    const now = Date.now();
-    if (homeReload && now - Number(sessionStorage.getItem(introStorageKey)) < RELOAD_WINDOW) return false;
-    sessionStorage.setItem(introStorageKey, String(now));
-  } catch {}
-  return true;
+  return document.documentElement.hasAttribute(INTRO_PENDING_ATTR);
 }
 
 export function IntroOverlay() {
@@ -29,10 +19,12 @@ export function IntroOverlay() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    const reveal = () => document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
+    if (prefersReducedMotion()) return reveal();
+    const play = shouldPlayIntro();
     let dismiss: ReturnType<typeof setTimeout> | undefined;
     const frame = requestAnimationFrame(() => {
-      if (!shouldPlayIntro()) return;
+      if (!play) return reveal();
       setVisible(true);
       dismiss = setTimeout(() => setVisible(false), INTRO_DURATION);
     });
@@ -46,6 +38,10 @@ export function IntroOverlay() {
       window.removeEventListener("keydown", skip);
     };
   }, []);
+
+  useEffect(() => {
+    if (visible) document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
+  }, [visible]);
 
   if (reduced || !visible) return null;
 

@@ -132,19 +132,27 @@ export const site = {
   tagline: "Systems first, screens second.",
   approach: [
     {
+      slug: "understand-the-business",
       title: "Understand the business",
+      details: [], // TODO(alif): write the full detail for this step.
       text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
     },
     {
+      slug: "design-the-system",
       title: "Design the system",
+      details: [], // TODO(alif): write the full detail for this step.
       text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
     },
     {
+      slug: "build-in-small-releases",
       title: "Build in small releases",
+      details: [], // TODO(alif): write the full detail for this step.
       text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
+      slug: "launch-and-look-after-it",
       title: "Launch and look after it",
+      details: [], // TODO(alif): write the full detail for this step.
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
@@ -322,6 +330,7 @@ export const workContent = {
   approachTitle: "Good systems start with good questions.",
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that keeps working.",
   approachLink: "Explore my approach",
+  stepLink: "Read more",
   selectedLabel: "Selected work",
   selectedTitle: "Built to keep working.",
   allWork: "View all work",
@@ -347,6 +356,14 @@ export const aboutContent = {
   missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
+};
+
+export const approachDetail = {
+  href: (slug: string) => `/approach/${slug}`,
+  stepLabel: (index: number) => `Step ${String(index + 1).padStart(2, "0")}`,
+  pending: "The full write-up for this step is coming soon.",
+  back: "All steps",
+  next: "Next step",
 };
 
 export const pageContent = {

@@ -37,7 +37,7 @@ for (const colorScheme of ["light", "dark"] as const) {
   }
 }
 
-test("the greeting plays on arrival, skips an immediate reload, and replays when returning to Home", async ({ page }) => {
+test("the greeting plays once per visit, only when the visit starts on Home", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/", { waitUntil: "commit" });
   const overlay = page.locator("[data-intro]");
@@ -45,21 +45,16 @@ test("the greeting plays on arrival, skips an immediate reload, and replays when
   await expect(overlay).toHaveAttribute("aria-hidden", "true");
   await page.keyboard.press("Escape");
   await expect(overlay).toHaveCount(0);
+  await expect(page.locator("html")).not.toHaveAttribute("data-intro-pending", "");
 
-  const playedAt = () => page.evaluate(() => sessionStorage.getItem("alif-intro-played-at"));
-  const first = await playedAt();
-  expect(first).toBeTruthy();
   await page.reload();
   await waitForHydration(page);
   await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
-  expect(await playedAt()).toBe(first);
   await expect(overlay).toHaveCount(0);
 
   await page.getByRole("link", { name: homeContent.aboutLink }).click();
   await expect(page).toHaveURL(/\/about$/);
   await page.getByRole("link", { name: site.logoText }).click();
-  await expect(overlay).toBeVisible();
-  await overlay.click();
+  await expect(page).toHaveURL(/\/$/);
   await expect(overlay).toHaveCount(0);
-  expect(await playedAt()).not.toBe(first);
 });

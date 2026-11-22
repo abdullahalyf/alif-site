@@ -1,4 +1,6 @@
-import { pageContent, shell, site, seo } from "@/content/site";
+import Link from "next/link";
+import { ArrowUpRight } from "@/components/arrows";
+import { approachDetail, pageContent, shell, site, seo, workContent } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { Reveal } from "@/components/motion";
@@ -11,7 +13,7 @@ export default function Approach() {
     <div className="page-intro"><Reveal><h1>{shell.approachTitle}</h1></Reveal><Reveal><p>{pageContent.approachIntro}</p></Reveal></div>
     <ol className="approach-steps">{site.approach.map((step, index) => <Reveal as="li" key={step.title} lines>
       <span className="step-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-      <div className="prose"><h2>{step.title}</h2><p>{step.text}</p></div>
+      <div className="prose"><h2 id={step.slug}>{step.title}</h2><p>{step.text}</p><Link className="text-link" href={approachDetail.href(step.slug)}>{workContent.stepLink}<ArrowUpRight /></Link></div>
     </Reveal>)}</ol>
   </div>;
 }

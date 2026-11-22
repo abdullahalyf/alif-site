@@ -63,7 +63,12 @@ export const siteSchema = z.object({
   services: z.array(z.string().min(1)).min(1),
   tagline: z.string().min(1),
   approach: z
-    .array(z.object({ title: z.string().min(1), text: z.string().min(1) }))
+    .array(z.object({
+      slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      title: z.string().min(1),
+      text: z.string().min(1),
+      details: z.array(z.string().min(1)),
+    }))
     .min(1),
   story: z
     .array(

@@ -126,7 +126,9 @@ export const site = {
   "tagline": "Your tagline", // REPLACE
   "approach": [ // REPLACE
     {
+      "slug": "your-process-step", // REPLACE
       "title": "Your process step", // REPLACE
+      "details": [], // REPLACE
       "text": "Describe how you work." // REPLACE
     }
   ], // REPLACE

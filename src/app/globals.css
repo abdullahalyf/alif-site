@@ -112,6 +112,7 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
 /* SVG lettering keeps the decorative sequence out of text LCP candidates. */
 .bg-dots { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; color: var(--ink); opacity: 0.5; }
 .bg-dots--night { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; color: var(--night-text); opacity: 0.4; }
+html[data-intro-pending]::after { content: ""; position: fixed; inset: 0; z-index: 59; background: var(--bg); }
 .intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--bg); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
 .intro-words { display: block; fill: var(--ink); }
 .intro-word { visibility: hidden; font-family: var(--font-instrument), serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }
@@ -356,6 +357,9 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .night-steps { display: grid; gap: 0.85rem; list-style: none; padding: 0; }
 .night-step { position: relative; display: grid; gap: 0.6rem; padding: clamp(1rem, 3vw, 2rem); border: 1px solid var(--night-line); border-radius: 1rem; background: color-mix(in srgb, var(--night) 92%, var(--night-text)); }
 .night-step p { color: var(--night-muted); }
+.night-step__link { justify-self: start; color: var(--night-text); }
+.approach-detail .prose { display: grid; gap: 1rem; }
+.approach-detail .post-neighbours { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
 .night-step__marker { display: flex; align-items: center; justify-content: space-between; color: var(--night-muted); font-size: 0.875rem; }
 .night-step__shade { position: absolute; inset: 0; border-radius: inherit; background: var(--scrim); opacity: 0; pointer-events: none; }
 @media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {

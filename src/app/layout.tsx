@@ -11,6 +11,7 @@ import { SmoothScroll } from "@/components/motion";
 import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
 import { themeBootstrap } from "@/lib/theme";
+import { introBootstrap } from "@/lib/intro";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* A parser-blocking inline script sets the root theme before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+        <script dangerouslySetInnerHTML={{ __html: introBootstrap }} />
       </head>
       <body>
         <BackgroundDots />

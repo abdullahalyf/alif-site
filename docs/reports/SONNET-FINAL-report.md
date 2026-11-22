@@ -55,3 +55,9 @@ Notes
 4. Mission & vision (1–2 sentences each) and opinion post topics.
 5. Education years; Legion 5 GPU/SSD confirm; keep the WhatsApp button (its link contains your number)?
 6. Alez tech bullets (Electron/SQLite sync, RLS, recipe inventory) — still accurate?
+
+### Alif feedback round 3 (02:50–02:56)
+- Intro: a pre-paint inline script covers Home before first paint, so the page no longer flashes before "Hello…Alif". Plays **once per visit**, only when the visit starts on Home (never on return to Home or reload). e2e spec updated.
+- Scroll: each page remembers its own scroll position in the tab; going to a new page starts at the top; clicking the link of the page you are on scrolls smoothly to the top.
+- Writing: post-title underline is a thin 1px muted rule that draws in left → right on load (static under reduced motion).
+- Approach: every step has a "Read more" link (Home dark panel + /approach) to a new page `/approach/<slug>`. `site.approach[].details` is empty — TODO(alif): send the full text for each of the 4 steps.
