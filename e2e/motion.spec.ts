@@ -121,3 +121,41 @@ test("the hero headline and sharp photo are present with JavaScript disabled", a
     await context.close();
   }
 });
+
+for (const route of ["/contact", "/about", "/work"]) {
+  test(`visible headings and their content are readable on ${route}`, async ({ page }) => {
+    await page.goto(route);
+    await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+    const checkVisibleContent = () => page.evaluate(() => {
+      const bottom = innerHeight;
+      const top = document.querySelector(".header")!.getBoundingClientRect().bottom;
+      const visible = (element: Element) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.height > 0 && bounds.bottom > top && bounds.top < bottom;
+      };
+      const headings = Array.from(document.querySelectorAll("main :is(h1, h2, h3, h4)")).filter(visible);
+      const nextContent = (heading: Element) => heading.nextElementSibling
+        ?? (heading.parentElement?.matches("[data-motion-managed]") ? heading.parentElement.nextElementSibling : null);
+      const obstructed = (element: Element) => {
+        for (let ancestor: Element | null = element; ancestor && ancestor.tagName !== "MAIN"; ancestor = ancestor.parentElement) {
+          const { opacity, clipPath, visibility } = getComputedStyle(ancestor);
+          if (opacity !== "1" || clipPath !== "none" || visibility !== "visible") return true;
+        }
+        return false;
+      };
+      const following = headings.flatMap((heading) => {
+        const next = nextContent(heading);
+        return next ? [heading, next, ...next.querySelectorAll("p, li, article, h3, h4")].filter(visible) : [heading];
+      });
+      const body = Array.from(document.querySelectorAll("main :is(p, li, label, input, select, textarea, article)")).filter(visible);
+      const content = [...new Set([...following, ...body])];
+      return { count: content.length, hidden: content.filter(obstructed).map(element => element.textContent?.trim()) };
+    });
+    for (const position of [0, 300]) {
+      await page.evaluate(top => scrollTo({ top, behavior: "instant" }), position);
+      const { count, hidden } = await checkVisibleContent();
+      expect(count).toBeGreaterThan(0);
+      expect(hidden).toEqual([]);
+    }
+  });
+}

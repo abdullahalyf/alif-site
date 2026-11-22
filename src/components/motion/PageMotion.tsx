@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { whenScrollRevealed } from "@/lib/when-scroll-revealed";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
 const candidates = "h1, h2, h3, p, figure img, .project-media img, .about-photo-wrap img, section > article, section > ul > li";
@@ -17,34 +18,18 @@ export function PageMotion() {
     if (!main) return;
 
     const played = new Set<Element>();
-    let observer: IntersectionObserver | undefined;
-    // Let the content in the initial viewport paint at its final state.
-    const activate = () => {
-      if (observer) return;
-      observer = new IntersectionObserver((entries) => {
-        for (const { target, isIntersecting } of entries) {
-          if (!isIntersecting) continue;
-          observer?.unobserve(target);
-          const kind = target.matches("h1, h2, h3") ? "heading"
-            : target.matches(".section-label") ? "line"
-              : target.matches("img") ? "image" : "rise";
-          target.setAttribute("data-motion-enter", kind);
-          played.add(target);
-        }
-      }, { rootMargin: "0px 0px -20px" });
-      main.querySelectorAll(candidates).forEach((element) => {
-        if (element.closest(excluded) || element.getBoundingClientRect().top < window.innerHeight) return;
-        observer?.observe(element);
+    const stops = Array.from(main.querySelectorAll(candidates), (element) => {
+      if (element.closest(excluded)) return;
+      return whenScrollRevealed(element, () => {
+        const kind = element.matches("h1, h2, h3") ? "heading"
+          : element.matches(".section-label") ? "line"
+            : element.matches("img") ? "image" : "rise";
+        element.setAttribute("data-motion-enter", kind);
+        played.add(element);
       });
-    };
-    let frame = 0;
-    const queue = () => { frame = requestAnimationFrame(activate); };
-    if (window.scrollY > 0) queue();
-    else window.addEventListener("scroll", queue, { passive: true, once: true });
+    });
     return () => {
-      window.removeEventListener("scroll", queue);
-      cancelAnimationFrame(frame);
-      observer?.disconnect();
+      stops.forEach((stop) => stop?.());
       played.forEach((element) => element.removeAttribute("data-motion-enter"));
     };
   }, [path, reduced]);
