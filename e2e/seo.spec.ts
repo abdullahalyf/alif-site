@@ -22,7 +22,8 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
     ...labRoutes, estimateContent.path,
     travelContent.path,
     ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
-    ...searchContent.pages.map((page) => page.href),
+    ...searchContent.pages.map((page) => page.href.split("#")[0]),
+    ...Object.values(writingContent.filters).map(({ href }) => href),
     ...projects.map((project) => diagramContent.path(project.slug)),
     ...Object.values(seo.pages).map((page) => page.path),
     ...projects.map((project) => shell.projectHref(project.slug)),
@@ -30,7 +31,7 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
       writingContent.postHref(post.slug),
     ),
   ];
-  expect(urls.map((url) => url.pathname).sort()).toEqual(paths.sort());
+  expect(urls.map((url) => url.pathname).sort()).toEqual([...new Set(paths)].sort());
   expect(new Set(urls.map((url) => url.origin)).size).toBe(1);
   const robots = await request.get("/robots.txt");
   expect(await robots.text()).toContain(

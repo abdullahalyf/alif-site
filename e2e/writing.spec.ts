@@ -1,3 +1,4 @@
+import { allTrips, travelContent } from "../src/content/travel";
 import { expect, test } from "@playwright/test";
 import { getPosts } from "../src/content/posts";
 import { seo, site, writingContent } from "../src/content/site";
@@ -25,7 +26,7 @@ test("Now renders the current factual update and is linked from Writing", async 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(writingContent.nowTitle);
   for (const item of site.now) await expect(page.getByText(item, { exact: true })).toBeVisible();
 });
-test("RSS is valid XML and includes only published posts", async ({ request, page }) => {
+test("RSS is valid XML and includes published tech and travel posts", async ({ request, page }) => {
   const response = await request.get(writingContent.rssPath); expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("application/rss+xml");
   const xml = await response.text();
@@ -34,10 +35,11 @@ test("RSS is valid XML and includes only published posts", async ({ request, pag
     return { errors: document.querySelectorAll("parsererror").length, items: document.querySelectorAll("channel > item").length };
   }, xml);
   expect(parsed.errors).toBe(0);
-  expect(parsed.items).toBe(published.length);
+  expect(parsed.items).toBe(published.length + allTrips.length);
   for (const post of published) expect(xml).toContain(writingContent.postHref(post.slug));
+  for (const trip of allTrips) expect(xml).toContain(travelContent.tripHref(trip.slug));
   for (const post of drafts) expect(xml).not.toContain(writingContent.postHref(post.slug));
-  expect((xml.match(/<item>/g) || []).length).toBe(published.length);
+  expect((xml.match(/<item>/g) || []).length).toBe(published.length + allTrips.length);
 });
 test.describe("development draft article", () => {
   test.use({ baseURL: "http://localhost:3100" });
@@ -53,4 +55,23 @@ test.describe("development draft article", () => {
     await page.getByRole("link", { name: writingContent.back, exact: true }).click();
     await expect(page.getByRole("link", { name: post.title, exact: true })).toBeVisible();
   });
+});
+
+test("Writing filters tech and travel and links back from a trip", async ({ page }) => {
+  const { filters, filterLabel } = writingContent;
+  await page.goto(filters.all.href);
+  const nav = page.getByRole("navigation", { name: filterLabel });
+  const list = page.locator(".post-list");
+  await nav.getByRole("link", { name: filters.travel.label }).click();
+  await expect(page).toHaveURL(filters.travel.href);
+  await expect(list.locator(":scope > li")).toHaveCount(allTrips.length);
+  for (const trip of allTrips) {
+    await expect(list.getByRole("link", { name: trip.title })).toHaveAttribute("href", travelContent.tripHref(trip.slug));
+  }
+  await list.getByRole("link", { name: allTrips[0].title }).click();
+  await expect(page.getByRole("heading", { name: travelContent.moreStories })).toBeVisible();
+  await page.getByRole("link", { name: travelContent.writingTravelLink }).click();
+  await expect(page).toHaveURL(filters.travel.href);
+  await nav.getByRole("link", { name: filters.tech.label }).click();
+  await expect(list.locator(":scope > li")).toHaveCount(published.length);
 });

@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...projects.map((project) => diagramContent.path(project.slug)),
     ...Object.values(seo.pages).map((page) => page.path),
     ...projects.map((project) => shell.projectHref(project.slug)),
+    ...Object.values(writingContent.filters).map(({ href }) => href),
     ...getPosts({ includeDrafts: false }).map((post) =>
       writingContent.postHref(post.slug),
     ),

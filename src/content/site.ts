@@ -412,6 +412,12 @@ export const writingContent = {
   title: "Writing",
   intro: "Notes on building software, asking questions and learning along the way.",
   empty: "No published posts yet. Check back soon.",
+  filterLabel: "Filter writing by topic",
+  filters: {
+    all: { label: "All", href: "/writing" },
+    tech: { label: "Tech", href: "/writing/category/tech" },
+    travel: { label: "Travel", href: "/writing/category/travel" },
+  },
   rssLabel: "RSS feed",
   rssPath: "/writing/rss.xml",
   nowLabel: "Now",

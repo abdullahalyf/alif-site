@@ -27,23 +27,23 @@ export async function waitForHydration(page: Page) {
 }
 
 
-export const pageRoutes = [
+export const pageRoutes = [...new Set([
   ...labRoutes, estimateContent.path,
   travelContent.path,
   ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
-  ...searchContent.pages.map((page) => page.href),
+  ...searchContent.pages.map((page) => page.href.split("#")[0]),
+  ...Object.values(writingContent.filters).map(({ href }) => href),
   ...projects.map((project) => diagramContent.path(project.slug)),
   "/",
   "/about",
   "/approach",
   "/work",
-  "/writing",
   "/now",
   ...getPosts({ includeDrafts: false }).map((post) =>
     writingContent.postHref(post.slug),
   ),
   ...projects.map((project) => shell.projectHref(project.slug)),
-];
+])];
 
 export const previewRoutes = getPosts({ includeDrafts: true })
   .filter((post) => post.draft)
