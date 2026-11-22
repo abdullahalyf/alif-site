@@ -11,19 +11,22 @@ for (const [mode, routes] of [["production", pageRoutes], ["preview", previewRou
     expect(response?.status()).toBe(200);
     await page.evaluate(() => document.fonts.ready);
 
-    const results = await new AxeBuilder({ page }).analyze();
-    await testInfo.attach("axe-results", {
-      body: JSON.stringify(results, null, 2),
-      contentType: "application/json",
-    });
+    for (const theme of ["dark", "light"]) {
+      await page.evaluate(value => { document.documentElement.dataset.theme = value; }, theme);
+      const results = await new AxeBuilder({ page }).setLegacyMode().analyze();
+      await testInfo.attach(`axe-${theme}`, {
+        body: JSON.stringify({ violations: results.violations }, null, 2),
+        contentType: "application/json",
+      });
 
-    const violations = results.violations
-      .filter(({ impact }) => impact === "serious" || impact === "critical")
-      .map(({ id, impact, help, helpUrl, nodes }) => ({
-        id, impact, help, helpUrl,
-        nodes: nodes.map(({ target, failureSummary }) => ({ target, failureSummary })),
-      }));
-    expect(violations, `Accessibility violations on ${path}`).toEqual([]);
+      const violations = results.violations
+        .filter(({ impact }) => impact === "serious" || impact === "critical")
+        .map(({ id, impact, help, helpUrl, nodes }) => ({
+          id, impact, help, helpUrl,
+          nodes: nodes.map(({ target, failureSummary }) => ({ target, failureSummary })),
+        }));
+      expect.soft(violations, `Accessibility violations on ${path} in ${theme}`).toEqual([]);
+    }
   });
 }
 

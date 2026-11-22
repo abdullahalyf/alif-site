@@ -10,7 +10,7 @@ export const usesContent = usesSchema.parse({
       items: [
         {
           name: "Lenovo Legion 5",
-          why: "Ryzen 7 8745H, RTX 4060 8GB, 16GB DDR5-5600, 1TB SSD. Runs local builds, tests and client demos.", // TODO(alif): confirm GPU and SSD.
+          why: "Ryzen 7 8745H, RTX 4060 8GB, 16GB DDR5-5600, 1TB SSD. Runs local builds, tests and client demos.",
         },
       ],
     },

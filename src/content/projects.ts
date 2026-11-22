@@ -6,7 +6,7 @@ export const projects = [
   {
     slug: "multi-branch-pos",
     title: "Multi-Branch POS & Operations Platform",
-    client: "A multi-branch boba tea brand in Dhaka", // TODO(alif): confirm the brand name (spelling) before naming the client.
+    client: "A multi-branch boba tea brand in Dhaka",
     year: 2026,
     role: "System architect · Directed Codex and Claude · Reviewed and tested",
     category: "Client work",
@@ -33,7 +33,6 @@ export const projects = [
       "Cloudflare",
       "GitHub Actions",
     ],
-    // TODO(alif): add measured results (uptime, time saved, cost) once you have real numbers.
     results: [
       "Live in 3 branches today",
       "Built to scale to 9 branches on a single codebase",

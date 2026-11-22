@@ -16,11 +16,12 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   const close = menu.getByRole("button", { name: shell.closeMenu });
   await expect(close).toBeFocused();
   await page.keyboard.press("Shift+Tab");
-  await expect(menu.getByRole("link", { name: shell.contact.label, exact: true })).toBeFocused();
+  const lastLink = footerGroups.at(-1)!.links.at(-1)!;
+  await expect(menu.getByRole("link", { name: lastLink.label, exact: true })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(menu.getByRole("button", { name: shell.useDarkTheme })).toBeFocused();
+  await expect(menu.getByRole("button", { name: shell.useLightTheme })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(search).toBeFocused();
   await page.keyboard.press("Escape");

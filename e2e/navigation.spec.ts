@@ -60,3 +60,30 @@ test("page content and navigation work without JavaScript", async ({ browser, is
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(shell.aboutTitle);
   await context.close();
 });
+
+test("desktop Work opens by hover or keyboard and links to each Work section", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Desktop navigation only");
+  await page.goto("/about");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const navigation = page.getByRole("banner").getByRole("navigation");
+  const work = navigation.getByRole("link", { name: shell.workTitle, exact: true });
+  const projects = navigation.getByRole("link", { name: workNavigation.links[0].label });
+  await expect(navigation.getByRole("link")).toHaveCount(4);
+  await work.hover();
+  await expect(projects).toBeVisible();
+  await page.mouse.move(0, 120);
+  await expect(projects).toBeHidden();
+  await work.focus();
+  await page.keyboard.press("Tab");
+  await expect(projects).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(projects).toBeHidden();
+  await expect(work).toBeFocused();
+  await page.keyboard.press("Enter");
+  const subnav = page.getByRole("navigation", { name: workNavigation.label });
+  for (const { label, href } of workNavigation.links) {
+    await subnav.getByRole("link", { name: label }).click();
+    await expect(page).toHaveURL(href);
+    await expect(subnav.getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
+  }
+});

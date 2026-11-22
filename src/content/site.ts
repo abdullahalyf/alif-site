@@ -45,7 +45,6 @@ export const site = {
     { title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Dec 31, 2026 – ~May 31, 2027", text: "Selected by Daffodil International University for a one-semester exchange at IIT Bombay." },
     { title: "Research paper submitted", org: "Traffic accident injury prediction", year: 2026, text: "Second author on \"Explainable Machine Learning for Traffic Accident Injury Prediction: A Leakage-Aware and Statistically Validated Framework\". Status: submitted." },
   ],
-  // TODO(alif): add start/end years for each education entry; replace the demo photos in Session 4.
   education: [
     { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
     { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "GPA 5.00", text: "Science group.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
@@ -68,7 +67,7 @@ export const site = {
   stats: [{ value: "3", label: "Branches live on my POS" }, { value: "9", label: "Branches the POS is built to scale to" }, { value: "24/64", label: "Districts travelled in Bangladesh" }],
   // Draft from Alif's notes. Nothing renders while `published` is false — set it to true only after Asad approves.
   testimonials: [
-    { name: "Md. Asaduzzaman", role: "Managing Director", quote: "Alif built our POS from the ground up. We now run every branch from one system — the counters work smoothly in-shop, and we can check sales and reports online from anywhere. It's made managing our outlets much easier.", published: false }, // TODO(alif): confirm Asad's title and get his approval.
+    { name: "Md. Asaduzzaman", role: "Managing Director", quote: "Alif built our POS from the ground up. We now run every branch from one system — the counters work smoothly in-shop, and we can check sales and reports online from anywhere. It's made managing our outlets much easier.", published: false },
   ],
   about: [
     "I'm a software systems architect in Bangladesh. I map out the data, roles, failure cases and costs, explain the trade-offs to clients, then guide AI agents through implementation. I review the changes and test what happens when things go wrong.",
@@ -134,29 +133,28 @@ export const site = {
     {
       slug: "understand-the-business",
       title: "Understand the business",
-      details: [], // TODO(alif): write the full detail for this step.
+      details: [],
       text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
     },
     {
       slug: "design-the-system",
       title: "Design the system",
-      details: [], // TODO(alif): write the full detail for this step.
+      details: [],
       text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
     },
     {
       slug: "build-in-small-releases",
       title: "Build in small releases",
-      details: [], // TODO(alif): write the full detail for this step.
+      details: [],
       text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
       slug: "launch-and-look-after-it",
       title: "Launch and look after it",
-      details: [], // TODO(alif): write the full detail for this step.
+      details: [],
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
-  // TODO(alif): replace each chapter photo (Session 4).
   story: [
     {
       label: "Jhenaidah",
@@ -185,7 +183,6 @@ export const site = {
   ],
 } satisfies Site;
 
-// TODO(alif): fill from 08b-hackathons/links.txt (name, role, result, github, live). The section stays hidden while this is empty.
 export const hackathons: Hackathon[] = [];
 
 export const hackathonContent = {
@@ -280,12 +277,11 @@ export const menuGroups = [
   { label: "More", links: [navigationLinks.uses, navigationLinks.now] },
 ];
 
-export const footerGroups = [
-  { label: "Explore", links: [navigationLinks.work, navigationLinks.services, navigationLinks.approach, navigationLinks.about, navigationLinks.travel] },
-  { label: "Resources", links: [navigationLinks.writing, navigationLinks.resume, navigationLinks.uses, navigationLinks.now, { label: "Writing RSS", href: "/writing/rss.xml" }] },
-  { label: "Try", links: [{ ...navigationLinks.lab, label: "Lab demos" }, navigationLinks.estimate] },
-  { label: "Connect", links: [{ ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
-];
+export const footerGroups = menuGroups;
+export const aboutSiteLinks = {
+  title: "Also on this site",
+  links: [navigationLinks.uses, navigationLinks.now, navigationLinks.lab, navigationLinks.estimate, navigationLinks.travel],
+};
 
 /**
  * Looks a navigation link up by its path.
@@ -365,7 +361,6 @@ export const aboutContent = {
   email: { ...shell.email, label: "Email" },
   resume: navigationLinks.resume,
   signature: site.name,
-  // TODO(alif): write your mission and vision (1–2 sentences each). The block stays hidden while both are empty.
   missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",

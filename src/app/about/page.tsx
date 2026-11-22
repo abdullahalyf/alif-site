@@ -1,7 +1,8 @@
 import { AboutDetails } from "@/components/demo/sections";
 import Image from "next/image";
+import Link from "next/link";
 import { ButtonLink } from "@/components/button";
-import { aboutContent, shell, site, seo } from "@/content/site";
+import { aboutContent, aboutSiteLinks, shell, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
@@ -56,5 +57,11 @@ export default function About() {
       </div>
     </section>
     <TravelTeaser />
+    <section className="container section-space about-site-links" aria-labelledby="about-site-links-title">
+      <h2 id="about-site-links-title">{aboutSiteLinks.title}</h2>
+      <ul>{aboutSiteLinks.links.map(({ href, label }) =>
+        <li key={href}><Link className="text-link" href={href}>{label}</Link></li>
+      )}</ul>
+    </section>
   </>;
 }
