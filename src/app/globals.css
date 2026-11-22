@@ -108,6 +108,7 @@ button:disabled { cursor: not-allowed; opacity: 0.6; }
   .button--secondary:hover { background: var(--ink); color: var(--bg); }
 }
 /* SVG lettering keeps the decorative sequence out of text LCP candidates. */
+.bg-dots { position: fixed; inset: 0; z-index: -1; width: 100vw; height: 100vh; height: 100lvh; pointer-events: none; color: var(--ink); opacity: 0.22; }
 .intro-overlay { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: var(--bg); animation: intro-exit cubic-bezier(0.76, 0, 0.24, 1) forwards; }
 .intro-words { display: block; fill: var(--ink); }
 .intro-word { visibility: hidden; font-family: var(--font-instrument), serif; font-size: clamp(3rem, 13vw, 10rem); animation: intro-show steps(1, end); }

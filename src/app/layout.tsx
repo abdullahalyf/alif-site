@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import { PageMotion } from "@/components/motion/PageMotion";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { BackgroundDots } from "@/components/BackgroundDots";
 import { SmoothScroll } from "@/components/motion";
 import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body>
+        <BackgroundDots />
         <SmoothScroll>
           <a className="skip-link" href={shell.mainHref}>{shell.skip}</a>
           <Header />
