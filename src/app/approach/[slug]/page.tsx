@@ -27,7 +27,7 @@ export default async function ApproachStep({ params }: PageProps<"/approach/[slu
   const { step, index } = found;
   const next = site.approach[(index + 1) % site.approach.length];
   return <article className="container section-space approach-detail">
-    <WorkSubnav current="/approach" />
+    <WorkSubnav current={c.href(step.slug)} />
     <SectionLabel>{c.stepLabel(index)}</SectionLabel>
     <div className="page-intro"><Reveal><h1>{step.title}</h1></Reveal><Reveal><p>{step.text}</p></Reveal></div>
     <div className="prose">

@@ -1,6 +1,7 @@
 import { waitForHydration } from "./helpers/routes";
 import { expect, test } from "@playwright/test";
-import { navHref, shell, site, workNavigation } from "../src/content/site";
+import { approachDetail, navHref, shell, site, workNavigation } from "../src/content/site";
+import { diagramContent } from "../src/content/diagrams";
 import { projects } from "../src/content/projects";
 
 for (const link of shell.nav) {
@@ -88,5 +89,15 @@ test("desktop Services opens by hover or keyboard and links to each Services sec
     await subnav.getByRole("link", { name: label }).click();
     await expect(page).toHaveURL(href);
     await expect(subnav.getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
+    await expect(work).toHaveAttribute("data-active", "true");
+  }
+  for (const [path, label] of [
+    [shell.projectHref(projects[0].slug), "Projects"],
+    [diagramContent.path(projects[0].slug), "Projects"],
+    [approachDetail.href(site.approach[0].slug), "Approach"],
+  ]) {
+    await page.goto(path);
+    await expect(work).toHaveAttribute("data-active", "true");
+    await expect(subnav.getByRole("link", { name: label, exact: true })).toHaveAttribute("aria-current", "location");
   }
 });

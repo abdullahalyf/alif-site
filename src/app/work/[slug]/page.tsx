@@ -43,7 +43,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
   ];
 
   return <article className="container section-space case-study">
-    <WorkSubnav current="/work" />
+    <WorkSubnav current={shell.projectHref(project.slug)} />
     <SectionLabel>{shell.caseStudyLabel}</SectionLabel>
     <header className="case-hero">
       <div className="case-hero__copy">

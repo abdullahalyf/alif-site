@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import { shell } from "@/content/site";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -29,6 +30,7 @@ export default async function ArchitecturePage({
   const diagram = diagrams[slug];
   return (
     <div className="container page-shell architecture-page">
+      <WorkSubnav current={c.path(slug)} />
       <p className="label">{c.title}</p>
       <h1>{diagram.title}</h1>
       <ArchitectureDiagram diagram={diagram} />
