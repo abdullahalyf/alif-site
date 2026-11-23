@@ -62,6 +62,7 @@ test.describe("development draft article", () => {
 test("Writing filters tech and travel and links back from a trip", async ({ page }) => {
   const { filters, filterLabel } = writingContent;
   await page.goto(filters.all.href);
+  await waitForHydration(page);
   const nav = page.getByRole("navigation", { name: filterLabel });
   const list = page.locator(".post-list:visible");
   await nav.getByRole("link", { name: filters.travel.label }).click();

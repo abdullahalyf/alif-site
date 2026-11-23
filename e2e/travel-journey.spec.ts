@@ -1,3 +1,4 @@
+import { waitForHydration } from "./helpers/routes";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { trips, travelContent as c } from "../src/content/travel";
@@ -24,7 +25,7 @@ test("gallery supports keyboard, swipe, dismissal and focus restoration", async 
   await opener.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
-  const scan = await new AxeBuilder({ page }).analyze();
+  const scan = await new AxeBuilder({ page }).setLegacyMode().analyze();
   expect(scan.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
   await expect(dialog.getByRole("button", { name: c.closeGallery })).toBeFocused();
   await dialog.press("ArrowRight");
@@ -68,7 +69,8 @@ test("travel stats and combined filters describe the actual demo dataset", async
 
 test("map progress, pin selection and place atmosphere follow the horizontal book", async ({ page }) => {
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
+  await waitForHydration(page);
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free", { timeout: 15_000 });
   const atmosphere = page.locator(".journey-atmosphere");
   const color = () => atmosphere.evaluate(element => getComputedStyle(element).backgroundColor);
   const startingColor = await color();

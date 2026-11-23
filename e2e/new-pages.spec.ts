@@ -79,7 +79,7 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   await expect(input).toHaveAttribute("aria-activedescendant", /result-1$/);
   await page.keyboard.press("ArrowUp");
   const violations = (
-    await new AxeBuilder({ page }).analyze()
+    await new AxeBuilder({ page }).setLegacyMode().analyze()
   ).violations.filter(
     (item) => item.impact === "serious" || item.impact === "critical",
   );

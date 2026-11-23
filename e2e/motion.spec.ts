@@ -47,7 +47,7 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await expect(section.getByRole("heading", { level: 2 })).toHaveCSS("opacity", "1");
   const { default: AxeBuilder } = await import("@axe-core/playwright");
-  const { violations } = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
+  const { violations } = await new AxeBuilder({ page }).setLegacyMode().withRules(["color-contrast"]).analyze();
   expect(violations).toEqual([]);
   await testInfo.attach("dark-panel-mid-transition", { body: await page.screenshot(), contentType: "image/png" });
 });
