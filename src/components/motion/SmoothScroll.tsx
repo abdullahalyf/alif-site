@@ -1,10 +1,9 @@
 "use client";
 
-import Lenis from "lenis";
+import type Lenis from "lenis";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { connectNativeHorizontalAreas } from "@/lib/horizontal-wheel";
-import { syncWithLenis } from "@/lib/gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 import { SmoothScrollContext } from "./smooth-scroll-context";
 
@@ -88,15 +87,25 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     // server snapshot until React swaps it for the real value.
     if (prefersReducedMotion() || window.matchMedia("(pointer: coarse)").matches) return;
 
-    const instance = new Lenis({ autoRaf: false });
-    instanceRef.current = instance;
-
-    const cleanup = syncWithLenis(instance);
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
+    void Promise.all([import("lenis"), import("@/lib/gsap")]).then(([{ default: Lenis }, { syncWithLenis }]) => {
+      if (cancelled || prefersReducedMotion()) return;
+      const instance = new Lenis({ autoRaf: false });
+      instanceRef.current = instance;
+      const disconnect = syncWithLenis(instance);
+      cleanup = () => {
+        disconnect();
+        instance.destroy();
+        instanceRef.current = null;
+      };
+    }, () => {
+      // Native scrolling remains available.
+    });
 
     return () => {
-      cleanup();
-      instance.destroy();
-      instanceRef.current = null;
+      cancelled = true;
+      cleanup?.();
     };
   }, [reducedMotion]);
 

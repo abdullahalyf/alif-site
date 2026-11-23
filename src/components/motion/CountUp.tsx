@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getGsap } from "@/lib/gsap";
-import { whenNearViewport } from "@/lib/when-near-viewport";
+import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type CountUpProps = {
@@ -45,8 +44,7 @@ export function CountUp({ value, duration = 1.2, className }: CountUpProps) {
     if (!target) return;
     const suffix = match[2];
 
-    return whenNearViewport(root, () => {
-      const gsap = getGsap();
+    return whenNearViewportWithGsap(root, (gsap) => {
       const counter = { value: 0 };
       const tween = gsap.to(counter, {
         value: target,

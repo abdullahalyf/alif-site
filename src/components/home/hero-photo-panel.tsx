@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { HeroStripes } from "@/components/motion/HeroStripes";
-import { getGsap } from "@/lib/gsap";
-import { whenNearViewport } from "@/lib/when-near-viewport";
+import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
 export function HeroPhotoPanel({
@@ -33,8 +32,7 @@ export function HeroPhotoPanel({
     const first = row?.firstElementChild;
     if (!wrapper || !frame || !card || !row || !photo || !first) return;
 
-    return whenNearViewport(frame, () => {
-      const gsap = getGsap();
+    return whenNearViewportWithGsap(frame, (gsap) => {
       const motion = gsap.matchMedia(wrapper);
       motion.add({ wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" }, ({ conditions }) => {
         const wide = conditions?.wide;

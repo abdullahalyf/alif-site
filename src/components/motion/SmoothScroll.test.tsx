@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mockMatchMedia } from "@/lib/test-match-media";
 
@@ -51,14 +51,14 @@ describe("SmoothScroll", () => {
     expect(screen.getByText("Page content")).toBeInTheDocument();
   });
 
-  it("creates a Lenis instance when motion is allowed", () => {
+  it("creates a Lenis instance when motion is allowed", async () => {
     mockMatchMedia(false);
     render(
       <SmoothScroll>
         <p>Page content</p>
       </SmoothScroll>,
     );
-    expect(lenisMocks.constructor).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(lenisMocks.constructor).toHaveBeenCalledTimes(1));
   });
 
   it("does nothing under reduced motion", () => {
