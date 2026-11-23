@@ -16,7 +16,7 @@ export function Hero() {
         <p className="hero-intro">{site.intro}</p>
         <div className="button-row">
           <ButtonLink href={shell.email.href}>{shell.email.label}</ButtonLink>
-          <ButtonLink href={navHref("/work")} variant="secondary">{shell.workLabel}</ButtonLink>
+          <ButtonLink href={navHref("/work")} prefetch={false} variant="secondary">{shell.workLabel}</ButtonLink>
         </div>
         <p className="location"><span aria-hidden="true" />{site.location}</p>
       </div>

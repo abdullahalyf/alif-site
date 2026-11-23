@@ -14,6 +14,6 @@
 .travel-teaser-progress[hidden] { display: none; }
 
 .travel-teaser--compact .travel-teaser-card { flex-basis: clamp(14rem, 72vw, 19rem); }
-.travel-teaser--compact .travel-teaser-photo { height: auto; aspect-ratio: 16 / 9; max-height: 11rem; }
+.travel-teaser--compact .travel-teaser-photo { height: auto; aspect-ratio: 16 / 9; max-height: 11rem; content-visibility: auto; }
 .travel-teaser--compact h3 { font-size: 1.5rem; }
 @media (min-width: 900px) { .travel-teaser--compact .travel-teaser-card { flex-basis: 36%; } }

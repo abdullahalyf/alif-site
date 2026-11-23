@@ -14,7 +14,7 @@ import { defaultTheme, themeBootstrap } from "@/lib/theme";
 import { introBootstrap } from "@/lib/intro";
 import "./globals.css";
 
-const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap" });
+const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false });
 const instrument = localFont({ src: "../fonts/instrument-serif-latin-400-normal.woff2", variable: "--font-instrument", weight: "400", display: "swap" });
 
 export const metadata: Metadata = {

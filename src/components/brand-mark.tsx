@@ -37,6 +37,7 @@ export function BrandMark() {
       ref={topRef}
       className="brand-mark"
       href="/"
+      prefetch={isHome ? false : undefined}
       onClick={scrollHome}
     >
       <span className="brand-mark__monogram" aria-hidden="true">
