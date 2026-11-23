@@ -12,10 +12,14 @@ test("pages send the required security headers without a CSP", async ({ request 
   expect(headers["x-frame-options"]).toBe("DENY");
   expect(headers["content-security-policy"]).toBeUndefined();
 });
-test("local images and emitted fonts are cached immutably", async ({ request, page }) => {
-  const image = await request.get(site.heroPhoto.src);
-  expect(image.status()).toBe(200);
-  expect(image.headers()["cache-control"]).toBe("public, max-age=31536000, immutable");
+test("photo slots revalidate and existing assets stay immutable", async ({ request, page }) => {
+  const slot = await request.get(site.heroPhoto.src);
+  expect(slot.status()).toBe(200);
+  expect(slot.headers()["cache-control"]).toBe("public, max-age=0, must-revalidate");
+
+  const original = await request.get("/images/alif-portrait.jpg");
+  expect(original.status()).toBe(200);
+  expect(original.headers()["cache-control"]).toBe("public, max-age=31536000, immutable");
   await page.goto("/");
   const font = await page.locator('link[rel="preload"][as="font"]').first().getAttribute("href");
   expect(font).toBeTruthy();
