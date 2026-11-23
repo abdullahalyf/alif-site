@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { greetingIntro } from "@/content/site";
-import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
+import { prefersReducedMotion } from "@/lib/use-reduced-motion";
 import { INTRO_PENDING_ATTR, introStorageKey } from "@/lib/intro";
 
 export { introStorageKey };
@@ -14,36 +14,28 @@ function shouldPlayIntro() {
   return document.documentElement.hasAttribute(INTRO_PENDING_ATTR);
 }
 
+/** Server-rendered so CSS plays it from first paint; hydration only removes it. */
 export function IntroOverlay() {
-  const reduced = useReducedMotion();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const reveal = () => document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
-    if (prefersReducedMotion()) return reveal();
-    const play = shouldPlayIntro();
-    let dismiss: ReturnType<typeof setTimeout> | undefined;
-    const frame = requestAnimationFrame(() => {
-      if (!play) return reveal();
-      setVisible(true);
-      dismiss = setTimeout(() => setVisible(false), INTRO_DURATION);
-    });
+    const play = !prefersReducedMotion() && shouldPlayIntro();
+    const dismiss = setTimeout(() => setVisible(false), play ? Math.max(0, INTRO_DURATION + 150 - performance.now()) : 0);
     const skip = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.key === "Tab") setVisible(false);
     };
     window.addEventListener("keydown", skip);
     return () => {
-      cancelAnimationFrame(frame);
       clearTimeout(dismiss);
       window.removeEventListener("keydown", skip);
     };
   }, []);
 
   useEffect(() => {
-    if (visible) document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
+    if (!visible) document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
   }, [visible]);
 
-  if (reduced || !visible) return null;
+  if (!visible) return null;
 
   return (
     <div className="intro-overlay" aria-hidden="true" data-intro="playing"

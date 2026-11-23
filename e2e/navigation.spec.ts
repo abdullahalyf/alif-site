@@ -68,7 +68,7 @@ test("desktop Work opens by hover or keyboard and links to each Work section", a
   await page.goto("/about");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   const navigation = page.getByRole("banner").getByRole("navigation");
-  const work = navigation.getByRole("link", { name: shell.workTitle, exact: true });
+  const work = navigation.getByRole("link", { name: shell.workNavLabel, exact: true }).first();
   const projects = navigation.getByRole("link", { name: workNavigation.links[0].label });
   await expect(navigation.getByRole("link")).toHaveCount(4);
   await work.hover();

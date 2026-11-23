@@ -34,9 +34,9 @@ describe("IntroOverlay", () => {
     await waitFor(() => expect(screen.queryByText("Hello")).toBeNull());
   });
 
-  it("skips the overlay under reduced motion and in server markup", async () => {
+  it("ships in server markup so CSS can play it before hydration, and skips under reduced motion", async () => {
     mockMatchMedia(true);
-    expect(renderToStaticMarkup(<IntroOverlay />)).toBe("");
+    expect(renderToStaticMarkup(<IntroOverlay />)).toContain("Hello");
     render(<IntroOverlay />);
     await waitFor(() => expect(screen.queryByText("Hello")).toBeNull());
   });

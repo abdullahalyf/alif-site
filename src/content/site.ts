@@ -231,7 +231,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    navigationLinks.work, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    { ...navigationLinks.work, label: "Services" }, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -248,6 +248,7 @@ export const shell = {
   aboutTitle: "About me",
   approachTitle: "Approach",
   workTitle: "Work",
+  workNavLabel: "Services",
   caseStudyLabel: "Case study",
   notFoundTitle: "Page not found",
   notFoundText: "This page isn't here. Let's get you back home.",
@@ -270,7 +271,7 @@ export const workNavigation = {
 };
 
 export const menuGroups = [
-  { label: navigationLinks.work.label, links: workNavigation.links },
+  { label: "Services", links: workNavigation.links },
   { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel, { label: "Writing RSS", href: "/writing/rss.xml" }] },
   { label: "About", links: [navigationLinks.about] },
   { label: "Contact & CV", links: [navigationLinks.contact, navigationLinks.resume, { ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
