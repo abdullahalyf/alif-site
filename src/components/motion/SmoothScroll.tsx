@@ -91,7 +91,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     let cleanup: (() => void) | undefined;
     void Promise.all([import("lenis"), import("@/lib/gsap")]).then(([{ default: Lenis }, { syncWithLenis }]) => {
       if (cancelled || prefersReducedMotion()) return;
-      const instance = new Lenis({ autoRaf: false });
+      const instance = new Lenis({ autoRaf: false, lerp: 0.14 });
       instanceRef.current = instance;
       const disconnect = syncWithLenis(instance);
       cleanup = () => {
