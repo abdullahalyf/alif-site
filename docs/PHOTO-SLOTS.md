@@ -56,3 +56,15 @@ Replace the listed JPEG with a photo of the same dimensions, keeping its path an
 | travel-kuala-lumpur-1 | Travel / Kuala Lumpur | `public/images/slots/travel-kuala-lumpur-1.jpg` | 1200×900, 4:3 | Petronas Twin Towers from KLCC Park |
 | travel-kuala-lumpur-2 | Travel / Kuala Lumpur | `public/images/slots/travel-kuala-lumpur-2.jpg` | 1200×900, 4:3 | A covered Kuala Lumpur market lane |
 | work-setup | Uses | `public/images/slots/work-setup.jpg` | 1200×900, 4:3 | Alif’s laptop and desk setup |
+
+## Text to replace
+
+| Demo item | File | Field |
+| --- | --- | --- |
+| Hackathon entries (awaiting details) | `src/content/site.ts` | `hackathons` |
+| Mission (awaiting copy) | `src/content/site.ts` | `aboutContent.missionVision.mission` |
+| Vision (awaiting copy) | `src/content/site.ts` | `aboutContent.missionVision.vision` |
+| Understand the business | `src/content/site.ts` | `site.approach[0].title`, `.text`, `.details` |
+| Design the system | `src/content/site.ts` | `site.approach[1].title`, `.text`, `.details` |
+| Build in small releases | `src/content/site.ts` | `site.approach[2].title`, `.text`, `.details` |
+| Launch and look after it | `src/content/site.ts` | `site.approach[3].title`, `.text`, `.details` |

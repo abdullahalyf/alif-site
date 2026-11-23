@@ -109,25 +109,25 @@ export const site = {
   approach: [
     {
       slug: "understand-the-business",
-      title: "Understand the business",
+      title: "Understand the business", // DEMO
       details: [],
       text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
     },
     {
       slug: "design-the-system",
-      title: "Design the system",
+      title: "Design the system", // DEMO
       details: [],
       text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
     },
     {
       slug: "build-in-small-releases",
-      title: "Build in small releases",
+      title: "Build in small releases", // DEMO
       details: [],
       text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
       slug: "launch-and-look-after-it",
-      title: "Launch and look after it",
+      title: "Launch and look after it", // DEMO
       details: [],
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
@@ -160,7 +160,7 @@ export const site = {
   ],
 } satisfies Site;
 
-export const hackathons: Hackathon[] = [];
+export const hackathons: Hackathon[] = []; // DEMO: awaiting event details.
 
 export const hackathonContent = {
   label: "Hackathons",
@@ -349,6 +349,7 @@ export const aboutContent = {
   email: { ...shell.email, label: "Email" },
   resume: navigationLinks.resume,
   signature: site.name,
+  // DEMO: awaiting mission and vision copy.
   missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
