@@ -1,11 +1,17 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mockMatchMedia } from "@/lib/test-match-media";
 import { greetingIntro } from "@/content/site";
 import { INTRO_DURATION, IntroOverlay } from "./IntroOverlay";
 
-afterEach(() => { cleanup(); sessionStorage.clear(); document.documentElement.removeAttribute("data-intro-pending"); });
+beforeEach(() => { vi.spyOn(performance, "now").mockReturnValue(0); });
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+  sessionStorage.clear();
+  document.documentElement.removeAttribute("data-intro-pending");
+});
 const pending = () => document.documentElement.setAttribute("data-intro-pending", "");
 
 describe("IntroOverlay", () => {
