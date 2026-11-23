@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { LINK_DISTANCE, linkAlpha, resizeDots, stepDots, type Dot, type Pointer } from "@/lib/dots";
+import { INTRO_PENDING_ATTR } from "@/lib/intro";
 import { REDUCED_MOTION_QUERY } from "@/lib/use-reduced-motion";
 
 const MAX_DPR = 2;
@@ -156,15 +157,22 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
       : (callback: () => void) => window.setTimeout(callback, 200);
     const cancel = window.cancelIdleCallback ?? window.clearTimeout;
     const scheduleStart = () => {
-      if (!started && visible && idle === undefined && document.readyState === "complete") {
+      if (!started && visible && idle === undefined && document.readyState === "complete"
+        && !document.documentElement.hasAttribute(INTRO_PENDING_ATTR)) {
         idle = schedule(begin);
       }
     };
     if (document.readyState === "complete") scheduleStart();
     else window.addEventListener("load", scheduleStart, { once: true });
 
-    const themeObserver = new MutationObserver(onThemeChange);
-    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class", "style"] });
+    const rootObserver = new MutationObserver((mutations) => {
+      if (mutations.some(({ attributeName }) => attributeName === INTRO_PENDING_ATTR)) scheduleStart();
+      onThemeChange();
+    });
+    rootObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme", "class", "style", INTRO_PENDING_ATTR],
+    });
     const onResize = () => {
       if (started) resize();
     };
@@ -194,7 +202,7 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
       window.removeEventListener("load", scheduleStart);
       if (idle !== undefined) cancel(idle);
       stopMotion();
-      themeObserver.disconnect();
+      rootObserver.disconnect();
       sizeObserver?.disconnect();
       visibilityObserver?.disconnect();
       window.removeEventListener("resize", onResize);
