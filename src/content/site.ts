@@ -1,4 +1,4 @@
-import { demoImage } from "./demo-images";
+import { photoSlot } from "./photo-slots";
 import type { Hackathon, Site } from "./schema";
 
 export const skillProfile = {
@@ -46,9 +46,9 @@ export const site = {
     { title: "Research paper submitted", org: "Traffic accident injury prediction", year: 2026, text: "Second author on \"Explainable Machine Learning for Traffic Accident Injury Prediction: A Leakage-Aware and Statistically Validated Framework\". Status: submitted." },
   ],
   education: [
-    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
-    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "2024 · GPA 5.00", text: "Science group.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
-    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "2022 · GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
+    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: photoSlot("education-university", 640, 480, "Daffodil International University campus") },
+    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "2024 · GPA 5.00", text: "Science group.", image: photoSlot("education-college", 640, 480, "Dhaka Commerce College") },
+    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "2022 · GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: photoSlot("education-school", 640, 480, "Central Laboratory School & College") },
   ],
   skills: [
     { title: "Working knowledge", icon: "data", items: [
@@ -83,33 +83,10 @@ export const site = {
     { label: "GitHub", href: "https://github.com/abdullahalyf" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
-  heroPhoto: {
-    src: "/images/alif-portrait.jpg",
-    width: 2400,
-    height: 1350,
-    alt: "Abdullah Alif standing against a grey wall",
-  },
-  avatar: {
-    src: "/images/alif-avatar.jpg",
-    width: 400,
-    height: 400,
-    alt: "Portrait of Abdullah Alif",
-  },
-  aboutPhoto: {
-    src: "/images/alif-about.jpg",
-    width: 1200,
-    height: 1500,
-    alt: "Abdullah Alif in a patterned shirt, hands in pockets",
-  },
-  // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
-  //
-  // Keep this same-origin so the image optimiser can resize it to the viewport.
-  heroSide: {
-    src: "/images/alif-hero-side.jpg",
-    width: 900,
-    height: 1100,
-    alt: "DEMO photograph — replace with a real portrait of Alif",
-  },
+  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Alif against a grey wall"),
+  avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
+  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Alif in a patterned shirt"),
+  heroSide: photoSlot("home-hero-side", 900, 1100, "Alif at work"),
   statusCard: {
     availability: "Available for work",
     timezone: "Asia/Dhaka",
@@ -160,25 +137,25 @@ export const site = {
       label: "Jhenaidah",
       title: "Where it started",
       text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
-      image: demoImage("alif-story-1", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      image: photoSlot("story-jhenaidah", 440, 330, "Childhood in Jhenaidah"),
     },
     {
       label: "School & college",
       title: "Learning to build",
       text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
-      image: demoImage("alif-story-2", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      image: photoSlot("story-school", 440, 330, "First laptop or a school memory"),
     },
     {
       label: "Daffodil International University",
       title: "Computer Science & Engineering",
       text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: demoImage("alif-story-3", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      image: photoSlot("story-university", 440, 330, "University or research team"),
     },
     {
       label: "Dhaka",
       title: "Now",
       text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
-      image: demoImage("alif-story-4", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      image: photoSlot("story-dhaka", 440, 330, "Present-day Dhaka or freelance work"),
     },
   ],
 } satisfies Site;
@@ -445,7 +422,7 @@ export const demoContent = {
   educationLabel: "Education",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
-  interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
+  interestsPhoto: photoSlot("about-interests", 1200, 900, "Travel in Bangladesh"),
   aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
   statsNotice: "A few facts, no padding.",
@@ -458,11 +435,10 @@ export const demoContent = {
 export const heroPhotos = {
   label: "A few photos",
   images: [
-    // DEMO: existing local travel placeholders, to be replaced with personal photos.
-    { src: "/images/travel/sundarbans/1.jpg", width: 1200, height: 900, alt: "Demo photograph of the Sundarbans" },
-    { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900, alt: "Demo landscape photograph" },
-    { src: "/images/travel/sylhet-tea/1.jpg", width: 1200, height: 900, alt: "Demo travel photograph" },
-    { src: "/images/travel/bandarban/1.jpg", width: 1200, height: 900, alt: "Demo outdoor photograph" },
+    photoSlot("travel-sundarbans-1", 1200, 900, "Sundarbans"),
+    photoSlot("travel-jhenaidah-home-1", 1200, 900, "Jhenaidah"),
+    photoSlot("travel-sylhet-tea-1", 1200, 900, "Sylhet tea gardens"),
+    photoSlot("travel-bandarban-1", 1200, 900, "Bandarban hills"),
   ],
 };
 
@@ -480,10 +456,10 @@ export const contactNext = {
 export const homeServices = {
   learn: "Learn more",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: "/images/demo/sync-inspector-overview.jpg" },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: "/images/demo/stockroom-operations-overview.jpg" },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: "/images/demo/field-service-overview.jpg" },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: "/images/demo/clinic-booking-overview.jpg" },
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: photoSlot("sync-inspector-overview", 440, 330, "") },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: photoSlot("stockroom-operations-overview", 440, 330, "") },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: photoSlot("field-service-overview", 440, 330, "") },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: photoSlot("clinic-booking-overview", 440, 330, "") },
   ] as const,
 };
 

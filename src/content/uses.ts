@@ -1,3 +1,4 @@
+import { photoSlot } from "./photo-slots";
 import { site, skillProfile } from "./site";
 import { usesSchema } from "./schemas/uses";
 export const usesContent = usesSchema.parse({
@@ -24,3 +25,5 @@ export const usesContent = usesSchema.parse({
     })),
   ],
 });
+
+export const workSetupPhoto = photoSlot("work-setup", 1200, 900, "Alif’s laptop and desk setup");

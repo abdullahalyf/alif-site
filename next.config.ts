@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
         { key: "X-Frame-Options", value: "DENY" },
       ] },
       { source: "/images/:path*", headers: immutable },
+      { source: "/images/slots/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }] },
       { source: "/fonts/:path*", headers: immutable },
     ];
   },

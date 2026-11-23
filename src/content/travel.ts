@@ -1,7 +1,9 @@
 import type { Trip } from "./schemas/travel";
-// DEMO: local seeded Picsum placeholders (1200×900, JPEG quality 75), not photographs of the named destinations.
+import { photoSlot } from "./photo-slots";
+
 function photo(slug: string, index: number, place: string) {
-  return { src: `/images/travel/${slug}/${index}.jpg`, width: 1200, height: 900, alt: `DEMO photograph for the ${place} travel note`, caption: `DEMO · ${place} · ${String(index).padStart(2, "0")}` };
+  const number = String(index).padStart(2, "0");
+  return { ...photoSlot(`travel-${slug}-${index}`, 1200, 900, `${place}, photograph ${index}`), caption: `${place} · ${number}` };
 }
 
 export const trips = [
@@ -143,7 +145,7 @@ export const trips = [
 ] satisfies Trip[];
 
 export const internationalTrips = [
-  // DEMO: imagined story and generated photographs for Kuala Lumpur.
+  // DEMO: imagined story for Kuala Lumpur.
   {
     scope: "international", country: "Malaysia", slug: "kuala-lumpur",
     lat: 3.1579, lng: 101.7123, color: "#e7e9d7", district: "Kuala Lumpur",
@@ -152,8 +154,8 @@ export const internationalTrips = [
     story: "DEMO — In this imagined visit, the towers come into view across the park before the city gets busy. Later, I follow the covered market lanes past the old shophouses and stop for breakfast.",
     tags: ["city", "walking"],
     photos: [
-      { ...photo("kuala-lumpur", 1, "Kuala Lumpur"), alt: "Illustrated view of the Petronas Twin Towers from KLCC Park", caption: "DEMO · KLCC Park · generated image" },
-      { ...photo("kuala-lumpur", 2, "Kuala Lumpur"), alt: "Illustration of a quiet covered market lane in Kuala Lumpur", caption: "DEMO · Market lane · generated image" },
+      { ...photo("kuala-lumpur", 1, "Kuala Lumpur"), alt: "Petronas Twin Towers from KLCC Park", caption: "KLCC Park" },
+      { ...photo("kuala-lumpur", 2, "Kuala Lumpur"), alt: "A quiet covered market lane in Kuala Lumpur", caption: "Market lane" },
     ],
   },
 ] satisfies Trip[];
@@ -186,7 +188,7 @@ export const travelContent = {
   intro: "Across Bangladesh, I travel to see how people live, hear their stories and come home with better questions.",
   closing: "Some journeys take me somewhere new. Others help me see home a little more clearly.", // DEMO
   description: "A photo-book of travel notes, people and places across Bangladesh and beyond.", // DEMO
-  demoNotice: "DEMO travel notes and illustrative photographs.",
+  demoNotice: "DEMO travel notes.",
   bookTitle: "A few pages from the road",
   bookLabel: "Travel photo-book",
   desktopHint: "Scroll or drag to browse. At either end, keep scrolling to move down or up the page. Use the arrow keys when the book is focused.",

@@ -5,13 +5,13 @@ import { allTrips, internationalTrips, trips } from "@/content/travel";
 import { tripsSchema, tripSchema } from "@/content/schemas/travel";
 import { frameRotation, formatTripDate } from "./book";
 
-it("validates eight unique demo journeys with dated stories and one to three local demo photos", () => {
+it("validates eight unique demo journeys with dated stories and one to three local photo slots", () => {
   expect(tripsSchema.parse(trips)).toHaveLength(8);
   for (const trip of trips) {
     expect(trip.photos.length).toBeGreaterThanOrEqual(1);
     expect(trip.photos.length).toBeLessThanOrEqual(3);
     for (const [index, photo] of trip.photos.entries()) {
-      expect(photo.src).toBe(`/images/travel/${trip.slug}/${index + 1}.jpg`);
+      expect(photo.src).toBe(`/images/slots/travel-${trip.slug}-${index + 1}.jpg`);
       if (photo.src.startsWith("/")) expect(existsSync(join(process.cwd(), "public", photo.src))).toBe(true);
     }
   }

@@ -163,7 +163,7 @@ test("international travel links the Malaysia demo and maps the Dhaka route", as
   await section.getByRole("link", { name: "A morning in Kuala Lumpur" }).click();
   await expect(page).toHaveURL(c.tripHref("kuala-lumpur"));
   await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
-  const photo = await request.get("/images/travel/kuala-lumpur/1.jpg");
+  const photo = await request.get("/images/slots/travel-kuala-lumpur-1.jpg");
   expect(photo.ok()).toBe(true);
   expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("kuala-lumpur"));
 });

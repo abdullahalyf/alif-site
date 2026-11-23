@@ -18,7 +18,7 @@ export function Services() {
           <p>{service.description}</p>
           <span className="home-service__link">{homeServices.learn}<ArrowRight /></span>
           <span className="home-service__image">
-            <Image src={service.image} alt="" width={440} height={330} sizes="9rem" />
+            <Image {...service.image} alt="" sizes="9rem" />
           </span>
         </Link>
       </li>)}</StaggerIn>
