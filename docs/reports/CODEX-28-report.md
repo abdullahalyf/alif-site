@@ -1,6 +1,6 @@
 # CODEX-28 report
 
-**Implementation pushed.** The Home Lighthouse performance target remains open.
+**Implementation pushed.** The Lighthouse performance target remains open for Home and Contact.
 
 ## Check
 
@@ -10,12 +10,14 @@
 
 | Run | Passed | Skipped | Failed |
 | --- | ---: | ---: | ---: |
-| 1 | Running on the latest build | — | — |
+| 1 | Rechecking | — | — |
 | 2 | Queued | — | — |
+
+Earlier attempts exposed an obsolete image cache assertion and navigation timeouts under concurrent browser load. The cache test now verifies slot revalidation and immutable original assets. The affected navigation tests wait for hydration before interacting. The recheck uses warmed preview routes and a 15-second assertion timeout.
 
 ## Axe
 
-An initial dedicated audit found zero serious or critical violations in 56 checks, covering 13 routes and the open Services navigation at 390 px and 1440 px in both themes. The final-build audit is running.
+The final production build passed 56 dedicated axe checks with zero serious or critical violations. The audit covered 13 routes and the open Services navigation at 390 px and 1440 px in both themes.
 
 ## Lighthouse
 
