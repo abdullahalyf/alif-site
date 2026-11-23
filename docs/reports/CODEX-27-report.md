@@ -8,7 +8,7 @@ All eight implementation parts are on `codex-27`. Browser regression verificatio
 
 ## E2E ×2
 
-An earlier full Playwright run reported 701 passes, 14 skips, and 11 failures. The follow-up changes update stale light-theme assertions, measure curved travel progress, scope the writing list to the current page, and wait for hydration before interacting. The run also exposed timeouts during cold preview compilation and mobile interaction. Two full reruns are queued against the updated tests.
+The first full verification run passed with 712 tests, 14 project-specific skips, and zero failures. The second is in progress. Earlier attempts exposed stale assertions and preview and mobile timing issues, which were resolved before verification.
 
 ## Axe
 
