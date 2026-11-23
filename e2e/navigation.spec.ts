@@ -7,6 +7,7 @@ import { projects } from "../src/content/projects";
 for (const link of shell.nav) {
   test(`navigation: ${link.label}`, async ({ page, isMobile }) => {
     await page.goto("/");
+    await waitForHydration(page);
     if (isMobile) await page.getByRole("button", { name: shell.menu, exact: true }).click();
     const navigation = isMobile ? page.getByRole("dialog").getByRole("navigation") : page.getByRole("banner").getByRole("navigation");
     await navigation.getByRole("link", { name: link.label, exact: true }).click();
@@ -36,6 +37,7 @@ test("every case study opens from Work", async ({ page }) => {
 test("unknown case study returns 404 with a route home", async ({ page }) => {
   const response = await page.goto(`/work/unknown-project-${test.info().project.name}`);
   expect(response?.status()).toBe(404);
+  await waitForHydration(page);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(shell.notFoundTitle);
   await page.getByRole("link", { name: shell.backHome }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
@@ -44,6 +46,7 @@ test("unknown case study returns 404 with a route home", async ({ page }) => {
 test("mobile menu supports keyboard dismissal and focus restoration", async ({ page, isMobile }) => {
   test.skip(!isMobile, "Mobile menu only");
   await page.goto("/");
+  await waitForHydration(page);
   const trigger = page.getByRole("button", { name: shell.menu, exact: true });
   await trigger.focus();
   await page.keyboard.press("Enter");

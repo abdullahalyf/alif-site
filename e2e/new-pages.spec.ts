@@ -284,6 +284,7 @@ test("each service offers a timeline and a link to the estimator", async ({ page
   const presets = { architecture: "web", operations: "pos", offline: "mobile", access: "dashboard" };
   for (const [service, type] of Object.entries(presets)) {
     await page.goto("/services");
+    await waitForHydration(page);
     const block = blocks.and(page.locator(`#${service}`));
     await expect(block.getByText("Typical timeline")).toBeVisible();
     const link = block.getByRole("link", { name: "Estimate this" });
