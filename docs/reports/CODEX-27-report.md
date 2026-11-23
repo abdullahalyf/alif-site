@@ -1,6 +1,6 @@
 # CODEX-27 report
 
-All eight implementation parts are on `codex-27`. Browser regression verification is in progress.
+**DONE.** All eight parts are on `codex-27` and all required checks passed.
 
 ## Check
 
@@ -8,7 +8,12 @@ All eight implementation parts are on `codex-27`. Browser regression verificatio
 
 ## E2E ×2
 
-The first full verification run passed with 712 tests, 14 project-specific skips, and zero failures. The second is in progress. Earlier attempts exposed stale assertions and preview and mobile timing issues, which were resolved before verification.
+| Run | Passed | Skipped | Failed |
+| --- | ---: | ---: | ---: |
+| 1 | 712 | 14 | 0 |
+| 2 | 712 | 14 | 0 |
+
+Both full `pnpm test:e2e` runs covered desktop, mobile, and reduced motion. The skips are scenarios specific to a different Playwright project. Both suites ran with four workers and a 90-second per-test timeout for the cloud runner. Earlier attempts exposed stale assertions and preview and mobile timing issues, which were resolved before these runs.
 
 ## Axe
 
