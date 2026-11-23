@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { ServiceIcon } from "@/components/service-icon";
 import { ApproachStack } from "./approach-stack";
 import Link from "next/link";
-import { navHref, site, workContent } from "@/content/site";
+import { approachDetail, navHref, site, workContent } from "@/content/site";
 import { SectionLabel } from "@/components/section-label";
 import { BackgroundShift } from "@/components/motion";
 
@@ -24,6 +24,7 @@ export function HowIWork() {
             <article className="night-step">
               <div className="night-step__marker" aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span><ServiceIcon name={icons[index % icons.length]} /></div>
               <h3>{step.title}</h3><p>{step.text}</p>
+              <Link className="text-link night-step__link" href={approachDetail.href(step.slug)}>{workContent.stepLink}<ArrowUpRight /></Link>
               <span className="night-step__shade" aria-hidden="true" />
             </article>
           </li>)}</ApproachStack>

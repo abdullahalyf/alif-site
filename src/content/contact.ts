@@ -1,11 +1,10 @@
 import { contactContentSchema } from "./schemas/contact";
 export const contactContent = contactContentSchema.parse({
-  title: "Let’s talk about your project.",
+  title: "Contact & CV",
   intro:
     "Tell me what needs to work better. Your brief stays in your browser until you send it through your chosen app.",
-  // DEMO: response time and availability must be confirmed by Alif.
-  response: "DEMO — usually replies within two business days.",
-  availability: "DEMO — availability to be confirmed when we talk.",
+  response: "Send a short brief and I will reply by email.",
+  availability: "Available for work.",
   fallback: "Email me directly",
   emailButton: "Send brief by email",
   whatsappButton: "Send brief by WhatsApp",

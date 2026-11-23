@@ -5,7 +5,7 @@ import { estimateContent as estimate } from "../src/content/estimate";
 import { site } from "../src/content/site";
 
 async function checkActiveAccessibility(page: Page) {
-  const results = await new AxeBuilder({ page }).analyze();
+  const results = await new AxeBuilder({ page }).setLegacyMode().analyze();
   expect(results.violations.filter(({ impact }) => impact === "serious" || impact === "critical").map(({ id, nodes }) => ({ id, targets: nodes.map(node => node.target) }))).toEqual([]);
 }
 

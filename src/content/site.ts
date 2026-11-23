@@ -1,5 +1,5 @@
-import { demoImage } from "./demo-images";
-import type { Site } from "./schema";
+import { photoSlot } from "./photo-slots";
+import type { Hackathon, Site } from "./schema";
 
 export const skillProfile = {
   label: "Skills",
@@ -35,23 +35,20 @@ export const site = {
   intro:
     "I design reliable software for businesses, direct AI agents to build it, and review and test the work before launch.",
   now: [
-    "Designing client systems and directing AI implementation, reviews and tests.",
-    "Studying Computer Science and Engineering at Daffodil International University.",
-    "Researching traffic accident risk prediction with a university team.",
+    "5th semester, BSc in Computer Science and Engineering at Daffodil International University.",
+    "Selected for the DIU–IIT Bombay exchange semester, Dec 31, 2026 to about May 31, 2027.",
+    "Research paper on explainable machine learning for traffic accident injury prediction — second author, submitted.",
+    "Freelancing as a software systems architect: designing client systems and directing AI implementation, reviews and tests.",
     "Learning basic Japanese through a DILC course.",
   ],
   achievements: [
-    { title: "Semester exchange at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Spring 2027", text: "Nominated by Daffodil International University for a one-semester exchange at IIT Bombay." },
-    // DEMO: replace this entire illustrative achievement.
-    { title: "DEMO — Student systems showcase", org: "DEMO — Campus technology forum", year: 2026, text: "Presented an offline-first software concept at an illustrative student showcase.", demo: true },
-    // DEMO: replace this entire illustrative achievement.
-    { title: "DEMO — Community project recognition", org: "DEMO — Local developer circle", year: 2025, text: "Recognised for a sample community tool and a practical approach to documentation.", demo: true },
+    { title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Dec 31, 2026 – ~May 31, 2027", text: "Selected by Daffodil International University for a one-semester exchange at IIT Bombay." },
+    { title: "Research paper submitted", org: "Traffic accident injury prediction", year: 2026, text: "Second author on \"Explainable Machine Learning for Traffic Accident Injury Prediction: A Leakage-Aware and Statistically Validated Framework\". Status: submitted." },
   ],
-  // DEMO: the entire education timeline uses illustrative dates/details; replace before publication.
   education: [
-    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University", years: "2023–present · DEMO dates", text: "DEMO — coursework in software engineering, databases and intelligent systems.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
-    { title: "Higher Secondary Certificate", org: "DEMO — Riverbend College", years: "2020–2022 · DEMO dates", text: "DEMO — a science-focused programme with mathematics and computing.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
-    { title: "Secondary School Certificate", org: "DEMO — Northview High School", years: "2015–2020 · DEMO dates", text: "DEMO — early experiments with programming and small school projects.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
+    { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: photoSlot("education-university", 640, 480, "Daffodil International University campus") },
+    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "2024 · GPA 5.00", text: "Science group.", image: photoSlot("education-college", 640, 480, "Dhaka Commerce College") },
+    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "2022 · GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: photoSlot("education-school", 640, 480, "Central Laboratory School & College") },
   ],
   skills: [
     { title: "Working knowledge", icon: "data", items: [
@@ -64,61 +61,34 @@ export const site = {
   ],
   languages: [
     { name: "Bangla", level: "Fluent" }, { name: "English", level: "Fluent" },
-    { name: "Hindi", level: "Speaking" }, { name: "Japanese", level: "Basic · DILC course" },
+    { name: "Hindi", level: "Conversational" }, { name: "Japanese", level: "Basic · DILC course" },
   ],
-  // DEMO: illustrative interests to replace or confirm.
-  interests: ["Travelling across Bangladesh", "Street photography", "Football", "Reading about how cities work"],
-  // DEMO: every number below is illustrative, not a claim about completed client work.
-  stats: [{ value: "12+", label: "Demo projects explored" }, { value: "4", label: "Demo systems domains" }, { value: "3", label: "Demo years of building" }],
-  // DEMO: all quotes, names and roles are fictional examples, not client endorsements.
+  interests: ["Travelling across Bangladesh (24 of 64 districts) and Malaysia"],
+  stats: [{ value: "3", label: "Branches live on my POS" }, { value: "9", label: "Branches the POS is built to scale to" }, { value: "24/64", label: "Districts travelled in Bangladesh" }],
+  // Draft from Alif's notes. Nothing renders while `published` is false — set it to true only after Asad approves.
   testimonials: [
-    { name: "DEMO — Maya Rahman", role: "DEMO — Operations lead", quote: "The best part was seeing the messy process become a system everyone could understand." },
-    { name: "DEMO — Arif Hasan", role: "DEMO — Small-business owner", quote: "Clear questions, a thoughtful plan and a tool that made the daily work feel simpler." },
-    { name: "DEMO — Nina Chowdhury", role: "DEMO — Project collaborator", quote: "Every decision came back to the people using the software and what they needed next." },
+    { name: "Md. Asaduzzaman", role: "Managing Director", quote: "Alif built our POS from the ground up. We now run every branch from one system — the counters work smoothly in-shop, and we can check sales and reports online from anywhere. It's made managing our outlets much easier.", published: false },
   ],
   about: [
     "I'm a software systems architect in Bangladesh. I map out the data, roles, failure cases and costs, explain the trade-offs to clients, then guide AI agents through implementation. I review the changes and test what happens when things go wrong.",
-    "I'm studying Computer Science and Engineering at Daffodil International University and do research on traffic accident risk prediction.",
-    "Outside work I travel across Bangladesh and talk to whoever I meet along the way — it's the best way I know to understand what people actually need. And yes, I'm a lifelong Cristiano Ronaldo fan.",
+    "I was born in Jhenaidah and grew up in Dhaka. I got my first laptop in Class 9, during COVID online classes, and started building from there.",
+    "I'm studying Computer Science and Engineering at Daffodil International University, and I'm part of a research team working on traffic accident risk prediction.",
   ],
   email: "abdullahaylif@gmail.com",
   whatsapp: {
-    display: "+880 1629-889764",
+    display: "WhatsApp",
     href: "https://wa.me/8801629889764",
   },
   socials: [
     { label: "GitHub", href: "https://github.com/abdullahalyf" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
-  heroPhoto: {
-    src: "/images/alif-portrait.jpg",
-    width: 2400,
-    height: 1350,
-    alt: "Abdullah Alif standing against a grey wall",
-  },
-  avatar: {
-    src: "/images/alif-avatar.jpg",
-    width: 400,
-    height: 400,
-    alt: "Portrait of Abdullah Alif",
-  },
-  aboutPhoto: {
-    src: "/images/alif-about.jpg",
-    width: 1200,
-    height: 1500,
-    alt: "Abdullah Alif in a patterned shirt, hands in pockets",
-  },
-  // DEMO: placeholder photograph for the hero side panel — replace with a real photo.
-  //
-  // Keep this same-origin so the image optimiser can resize it to the viewport.
-  heroSide: {
-    src: "/images/alif-hero-side.jpg",
-    width: 900,
-    height: 1100,
-    alt: "DEMO photograph — replace with a real portrait of Alif",
-  },
+  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Alif against a grey wall"),
+  avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
+  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Alif in a patterned shirt"),
+  heroSide: photoSlot("home-hero-side", 900, 1100, "Alif at work"),
   statusCard: {
-    availability: "Available for new projects",
+    availability: "Available for work",
     timezone: "Asia/Dhaka",
     timezoneLabel: "Dhaka",
     buildingLabel: "Currently building",
@@ -138,52 +108,69 @@ export const site = {
   tagline: "Systems first, screens second.",
   approach: [
     {
-      title: "Understand the business",
+      slug: "understand-the-business",
+      title: "Understand the business", // DEMO
+      details: [],
       text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
     },
     {
-      title: "Design the system",
+      slug: "design-the-system",
+      title: "Design the system", // DEMO
+      details: [],
       text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
     },
     {
-      title: "Build in small releases",
+      slug: "build-in-small-releases",
+      title: "Build in small releases", // DEMO
+      details: [],
       text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
-      title: "Launch and look after it",
+      slug: "launch-and-look-after-it",
+      title: "Launch and look after it", // DEMO
+      details: [],
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
   ],
-  // DEMO: review the story copy and replace each chapter photo.
   story: [
     {
       label: "Jhenaidah",
       title: "Where it started",
-      text: "DEMO — Growing up in Jhenaidah, curiosity about everyday tools became a curiosity about computers and how they work.", // DEMO story copy.
-      image: demoImage("alif-story-1", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
+      image: photoSlot("story-jhenaidah", 1200, 900, "Childhood in Jhenaidah"),
     },
     {
       label: "School & college",
       title: "Learning to build",
-      text: "DEMO — School and college were a time for small experiments: simple pages, tiny programs and a growing habit of learning by building.", // DEMO story copy.
-      image: demoImage("alif-story-2", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
+      image: photoSlot("story-school", 1200, 900, "First laptop or a school memory"),
     },
     {
       label: "Daffodil International University",
       title: "Computer Science & Engineering",
       text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: demoImage("alif-story-3", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      image: photoSlot("story-university", 1200, 900, "University or research team"),
     },
     {
-      label: "Savar, Dhaka",
+      label: "Dhaka",
       title: "Now",
-      text: "I live in Savar and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
-      image: demoImage("alif-story-4", "DEMO story photograph — replace with Alif’s own photo"), // DEMO image.
+      text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
+      image: photoSlot("story-dhaka", 1200, 900, "Present-day Dhaka or freelance work"),
     },
   ],
 } satisfies Site;
 
-export const resumeLink = { label: "Resume / CV", href: "/resume" };
+export const hackathons: Hackathon[] = []; // DEMO: awaiting event details.
+
+export const hackathonContent = {
+  label: "Hackathons",
+  title: "Built against the clock.",
+  github: "GitHub",
+  live: "Live",
+};
+
+export const cvId = "cv";
+export const resumeLink = { label: "CV", href: `/contact#${cvId}` };
 
 const navigationLinks = {
   work: { label: "Work", href: "/work" },
@@ -193,7 +180,7 @@ const navigationLinks = {
   about: { label: "About me", href: "/about" },
   contact: { label: "Contact", href: "/contact" },
   travel: { label: "Travel", href: "/travel" },
-  lab: { label: "Lab", href: "/lab" },
+  lab: { label: "Lab demos", href: "/lab" },
   estimate: { label: "Estimate a project", href: "/estimate" },
   resume: resumeLink,
   uses: { label: "Uses", href: "/uses" },
@@ -221,8 +208,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    navigationLinks.work, navigationLinks.services, navigationLinks.approach,
-    navigationLinks.writing, navigationLinks.about, navigationLinks.resume, navigationLinks.contact,
+    navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -234,11 +220,12 @@ export const shell = {
   copyright: (year: number) => `© ${year} ${site.name}`,
   footerTitle: "Let's build something that keeps working.",
   email: { label: "Email me", href: `mailto:${site.email}` },
-  whatsappLabel: "WhatsApp",
+  whatsappLabel: site.whatsapp.display,
   workLabel: "See my work",
   aboutTitle: "About me",
   approachTitle: "Approach",
   workTitle: "Work",
+  workNavLabel: "Services",
   caseStudyLabel: "Case study",
   notFoundTitle: "Page not found",
   notFoundText: "This page isn't here. Let's get you back home.",
@@ -255,12 +242,34 @@ export const shell = {
   footerNavigation: "Footer navigation",
 };
 
-export const footerGroups = [
-  { label: "Explore", links: [navigationLinks.work, navigationLinks.services, navigationLinks.approach, navigationLinks.about, navigationLinks.travel] },
-  { label: "Resources", links: [navigationLinks.writing, navigationLinks.resume, navigationLinks.uses, navigationLinks.now, { label: "Writing RSS", href: "/writing/rss.xml" }] },
-  { label: "Try", links: [{ ...navigationLinks.lab, label: "Lab demos" }, navigationLinks.estimate] },
-  { label: "Connect", links: [{ ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
+const serviceDestinations = [
+  { ...navigationLinks.work, label: "Projects" },
+  navigationLinks.approach,
+  navigationLinks.lab,
 ];
+
+export const workNavigation = {
+  label: "Services sections",
+  dropdown: [...serviceDestinations, navigationLinks.estimate],
+  links: [navigationLinks.services, ...serviceDestinations, { ...navigationLinks.estimate, label: "Estimate" }],
+};
+
+export const menuGroups = [
+  { label: navigationLinks.services.label, links: workNavigation.links },
+  { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel, { label: "Writing RSS", href: "/writing/rss.xml" }] },
+  { label: "About", links: [navigationLinks.about] },
+  { label: "Contact & CV", links: [navigationLinks.contact, navigationLinks.resume, { ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
+  { label: "More", links: [navigationLinks.uses, navigationLinks.now] },
+];
+
+export const footerGroups = menuGroups.map((group) => ({
+  ...group,
+  links: group.links.filter(({ href }) => href !== site.whatsapp.href),
+}));
+export const aboutSiteLinks = {
+  title: "Also on this site",
+  links: [navigationLinks.uses, navigationLinks.now, navigationLinks.lab, navigationLinks.estimate, navigationLinks.travel],
+};
 
 /**
  * Looks a navigation link up by its path.
@@ -296,6 +305,21 @@ export const homeContent = {
   aboutLink: "More about me",
   servicesLabel: "What I do",
   servicesTitle: "Software built around your business.",
+  currentlyLabel: "Currently",
+  currently: "5th semester CSE at DIU · IIT Bombay exchange from Dec 31, 2026 · research paper submitted",
+  currentlyLink: "More on Now",
+};
+
+export const availability = {
+  status: "Available for work",
+  offersLabel: "What I take on",
+  offers: [
+    "POS systems (my own POS, available to new shops)",
+    "Business websites",
+    "Inventory management",
+    "Business OS and back-office systems",
+    "Custom software",
+  ],
 };
 
 export const workContent = {
@@ -303,6 +327,7 @@ export const workContent = {
   approachTitle: "Good systems start with good questions.",
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that keeps working.",
   approachLink: "Explore my approach",
+  stepLink: "Read more",
   selectedLabel: "Selected work",
   selectedTitle: "Built to keep working.",
   allWork: "View all work",
@@ -314,17 +339,28 @@ export const workContent = {
 export const aboutContent = {
   intro: "I design business software, explain the trade-offs, and direct AI agents to build it.",
   facts: [
-    { label: "Based in", value: "Savar, Dhaka" },
+    { label: "Based in", value: "Dhaka, Bangladesh" },
     { label: "From", value: "Jhenaidah, Bangladesh" },
     { label: "Studying", value: "CSE at Daffodil International University" },
+    { label: "Exchange", value: "IIT Bombay, Dec 31, 2026 – ~May 31, 2027" },
     { label: "Languages", value: site.languages.map(({ name }) => name).join(" · ") },
     { label: site.statusCard.buildingLabel, value: site.statusCard.building },
   ],
   email: { ...shell.email, label: "Email" },
   resume: navigationLinks.resume,
   signature: site.name,
+  // DEMO: awaiting mission and vision copy.
+  missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
+};
+
+export const approachDetail = {
+  href: (slug: string) => `/approach/${slug}`,
+  stepLabel: (index: number) => `Step ${String(index + 1).padStart(2, "0")}`,
+  pending: "The full write-up for this step is coming soon.",
+  back: "All steps",
+  next: "Next step",
 };
 
 export const pageContent = {
@@ -360,6 +396,12 @@ export const writingContent = {
   title: "Writing",
   intro: "Notes on building software, asking questions and learning along the way.",
   empty: "No published posts yet. Check back soon.",
+  filterLabel: "Filter writing by topic",
+  filters: {
+    all: { label: "All", href: "/writing" },
+    tech: { label: "Tech", href: "/writing/category/tech" },
+    travel: { label: "Travel", href: "/writing/category/travel" },
+  },
   rssLabel: "RSS feed",
   rssPath: "/writing/rss.xml",
   nowLabel: "Now",
@@ -381,13 +423,12 @@ export const demoContent = {
   educationLabel: "Education",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
-  interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
-  aboutDemoNotice: "Demo education details and interests — to be confirmed by Alif.",
+  interestsPhoto: photoSlot("about-interests", 1200, 900, "Travel in Bangladesh"),
+  aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
-  statsNotice: "Demo figures · illustrative only",
+  statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",
   testimonialsTitle: "A little outside perspective.",
-  testimonialsNotice: "Demo quotes from fictional people · not client endorsements",
   latestLabel: "Latest writing",
   latestTitle: "Notes from the workbench.",
 };
@@ -395,11 +436,10 @@ export const demoContent = {
 export const heroPhotos = {
   label: "A few photos",
   images: [
-    // DEMO: existing local travel placeholders, to be replaced with personal photos.
-    { src: "/images/travel/sundarbans/1.jpg", width: 1200, height: 900, alt: "Demo photograph of the Sundarbans" },
-    { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900, alt: "Demo landscape photograph" },
-    { src: "/images/travel/sylhet-tea/1.jpg", width: 1200, height: 900, alt: "Demo travel photograph" },
-    { src: "/images/travel/bandarban/1.jpg", width: 1200, height: 900, alt: "Demo outdoor photograph" },
+    photoSlot("travel-sundarbans-1", 1200, 900, "Sundarbans"),
+    photoSlot("travel-jhenaidah-home-1", 1200, 900, "Jhenaidah"),
+    photoSlot("travel-sylhet-tea-1", 1200, 900, "Sylhet tea gardens"),
+    photoSlot("travel-bandarban-1", 1200, 900, "Bandarban hills"),
   ],
 };
 
@@ -417,10 +457,10 @@ export const contactNext = {
 export const homeServices = {
   learn: "Learn more",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: "/images/demo/sync-inspector-overview.jpg" },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: "/images/demo/stockroom-operations-overview.jpg" },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: "/images/demo/field-service-overview.jpg" },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: "/images/demo/clinic-booking-overview.jpg" },
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: photoSlot("sync-inspector-overview", 1280, 960, "") },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: photoSlot("stockroom-operations-overview", 1280, 960, "") },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: photoSlot("field-service-overview", 1280, 960, "") },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: photoSlot("clinic-booking-overview", 1280, 960, "") },
   ] as const,
 };
 

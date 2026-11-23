@@ -4,12 +4,15 @@ import { greetingIntro, homeContent, shell, site } from "../src/content/site";
 import { waitForHydration } from "./helpers/routes";
 
 test("the header and drawer share a theme choice that survives reload", async ({ page }) => {
-  await page.emulateMedia({ colorScheme: "dark", reducedMotion: "reduce" });
+  await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
   await page.goto("/about");
   const root = page.locator("html");
   await expect(root).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await waitForHydration(page);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.emulateMedia({ colorScheme: "light" });
+  await expect(root).toHaveAttribute("data-theme", "dark");
 
   await page.getByRole("banner").getByRole("button", { name: shell.useLightTheme }).click();
   await expect(root).toHaveAttribute("data-theme", "light");
@@ -25,19 +28,20 @@ test("the header and drawer share a theme choice that survives reload", async ({
 });
 
 for (const colorScheme of ["light", "dark"] as const) {
-  for (const route of ["/", "/about", "/travel", "/resume", "/uses"]) {
+  for (const route of ["/", "/about", "/travel", "/contact", "/uses", "/work", "/writing"]) {
     test(`${colorScheme} theme passes axe on ${route}`, async ({ page }) => {
-      await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.addInitScript(theme => localStorage.setItem("alif-theme", theme), colorScheme);
       await page.goto(route);
       await waitForHydration(page);
       await expect(page.locator("html")).toHaveAttribute("data-theme", colorScheme);
       await page.evaluate(() => document.fonts.ready);
-      expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+      expect((await new AxeBuilder({ page }).setLegacyMode().analyze()).violations).toEqual([]);
     });
   }
 }
 
-test("the greeting plays on arrival, skips an immediate reload, and replays when returning to Home", async ({ page }) => {
+test("the greeting plays once per visit, only when the visit starts on Home", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/", { waitUntil: "commit" });
   const overlay = page.locator("[data-intro]");
@@ -45,21 +49,16 @@ test("the greeting plays on arrival, skips an immediate reload, and replays when
   await expect(overlay).toHaveAttribute("aria-hidden", "true");
   await page.keyboard.press("Escape");
   await expect(overlay).toHaveCount(0);
+  await expect(page.locator("html")).not.toHaveAttribute("data-intro-pending", "");
 
-  const playedAt = () => page.evaluate(() => sessionStorage.getItem("alif-intro-played-at"));
-  const first = await playedAt();
-  expect(first).toBeTruthy();
   await page.reload();
   await waitForHydration(page);
   await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
-  expect(await playedAt()).toBe(first);
   await expect(overlay).toHaveCount(0);
 
   await page.getByRole("link", { name: homeContent.aboutLink }).click();
   await expect(page).toHaveURL(/\/about$/);
   await page.getByRole("link", { name: site.logoText }).click();
-  await expect(overlay).toBeVisible();
-  await overlay.click();
+  await expect(page).toHaveURL(/\/$/);
   await expect(overlay).toHaveCount(0);
-  expect(await playedAt()).not.toBe(first);
 });

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getGsap } from "@/lib/gsap";
-import { whenNearViewport } from "@/lib/when-near-viewport";
+import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type HeroStripesProps = {
@@ -63,11 +62,10 @@ export function HeroStripes({
     const root = rootRef.current;
     if (!root) return;
 
-    return whenNearViewport(root, () => {
+    return whenNearViewportWithGsap(root, (gsap) => {
       const lines = Array.from(root.querySelectorAll<SVGLineElement>("line"));
       if (!lines.length) return;
 
-      const gsap = getGsap();
 
       const draw = gsap.fromTo(
         lines,

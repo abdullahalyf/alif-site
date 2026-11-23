@@ -8,7 +8,7 @@ import { trips as defaultTrips, travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { formatTripDate, frameRotation } from "./book";
 import { BOOK_EDGE_TOLERANCE, connectBook } from "./book-scroll";
-import { project } from "./map/geo";
+import { project, routeCurves } from "./map/geo";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 import { RouteMap } from "./map/RouteMap";
 import "./travel.css";
@@ -42,10 +42,11 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
     const counter = numbers.current;
     if (!element || !view || !area || !pages || !tint || !overlay || !route || !bar || !counter) return;
 
-    const points = trips.map(project);
+    const measuringPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     const lengths = [0];
-    for (let index = 1; index < points.length; index++) {
-      lengths.push(lengths[index - 1] + Math.hypot(points[index].x - points[index - 1].x, points[index].y - points[index - 1].y));
+    for (const leg of routeCurves(trips.map(project)).legs) {
+      measuringPath.setAttribute("d", leg);
+      lengths.push(lengths[lengths.length - 1] + measuringPath.getTotalLength());
     }
 
     const skipMotion = prefersReducedMotion();

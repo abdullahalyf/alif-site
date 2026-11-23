@@ -39,7 +39,7 @@ All text/background pairs must pass WCAG AA.
 - Scale (fluid with `clamp`): h1 48→96px, h2 36→64px, h3 24→32px.
 
 ## Global elements
-- **Header**: wordmark on the left and navigation on wide screens. The Menu button opens a side drawer that fills small screens. Both the header and drawer offer a theme control. The site follows the system theme until a visitor makes a choice. The header stays fixed, compacts as visitors scroll down, and expands as they scroll up.
+- **Header**: wordmark on the left and navigation on wide screens. The Menu button opens a side drawer that fills small screens. Both the header and drawer offer a theme control. Dark is the default, and the site remembers the visitor’s theme choice. The header stays fixed, compacts as visitors scroll down, and expands as they scroll up.
 - **Buttons**: pill shape, `--ink` background with `--bg` text (primary); 1px `--ink` outline (secondary). Hover: slight lift + colour swap.
 - **Section label**: small uppercase label + hairline rule above each section.
 - **Footer**: `--night` background. Big serif line "Let's build something that keeps working.", email + WhatsApp buttons, socials, location, © year.
@@ -72,7 +72,7 @@ Every animation: skipped when `prefers-reduced-motion: reduce` (final state show
 1. **Smooth scroll** — Lenis site-wide.
 2. **Intro** — see Home 1.
 3. **Photo reveal (signature effect, from Steno)** — images start soft: `blur(12px)`, `saturate(0.4)`, `opacity 0.6`, scale 1.06; as they scroll into view they sharpen to normal (scrubbed with scroll). Applies only to the Home hero photo in the wide panel.
-4. **Text reveal** — headings rise 24px + fade in, line by line; paragraphs fade in. Once per element.
+4. **Text reveal** — content stays readable at full opacity. A short rise starts when an element reaches 92% of the viewport. The initial viewport and the next 15% appear immediately.
 5. **Hero stripes** — diagonal lines draw in (stroke-dashoffset) on load, then drift slowly with scroll (parallax).
 6. **Card row** — cards slide in from the right with a small stagger when the section enters.
 7. **Dark section** — the dark “How I work” panel grows from inset to full width as it enters.

@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { HeroStripes } from "@/components/motion/HeroStripes";
-import { getGsap } from "@/lib/gsap";
-import { whenNearViewport } from "@/lib/when-near-viewport";
+import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
 export function HeroPhotoPanel({
@@ -33,16 +32,15 @@ export function HeroPhotoPanel({
     const first = row?.firstElementChild;
     if (!wrapper || !frame || !card || !row || !photo || !first) return;
 
-    return whenNearViewport(frame, () => {
-      const gsap = getGsap();
+    return whenNearViewportWithGsap(frame, (gsap) => {
       const motion = gsap.matchMedia(wrapper);
       motion.add({ wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" }, ({ conditions }) => {
         const wide = conditions?.wide;
         gsap.fromTo(photo,
-          { filter: wide ? "blur(16px) saturate(0.38)" : "blur(5px) saturate(0.75)", opacity: wide ? 0.76 : 0.88, y: wide ? 28 : 14 },
+          { filter: wide ? "blur(10px) saturate(0.5)" : "blur(4px) saturate(0.8)", opacity: wide ? 0.85 : 0.92, y: wide ? 20 : 10 },
           {
             filter: "blur(0px) saturate(1)", opacity: 1, y: 0, ease: "none",
-            scrollTrigger: { trigger: frame, start: "top 92%", end: "top 18%", scrub: true },
+            scrollTrigger: { trigger: frame, start: "top 96%", end: "top 66%", scrub: true },
           },
         );
 

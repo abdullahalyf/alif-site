@@ -1,11 +1,12 @@
-.travel-route-map { position: sticky; top: 6rem; align-self: start; min-width: 0; padding: 1rem 0.25rem; }
-.travel-map-drawing { position: relative; width: min(100%, 22rem); margin-inline: auto; }
+.travel-route-map { display: flex; flex-direction: column; gap: 0.65rem; min-width: 0; padding: 0.75rem 0.25rem; }
+.travel-map-drawing { position: relative; width: min(94%, 15rem); margin-inline: auto; }
 .travel-map-svg { display: block; width: 100%; height: auto; overflow: visible; }
 .bangladesh-outline { fill: var(--bg); fill-opacity: 0.55; stroke: var(--ink-muted); stroke-width: 1; stroke-opacity: 0.45; }
 .bangladesh-divisions { fill: none; stroke: var(--ink-muted); stroke-width: 0.65; stroke-opacity: 0.58; }
-.route-upcoming, .route-visited { fill: none; stroke: var(--ink-muted); stroke-width: 2; }
-.route-upcoming { opacity: 0.25; stroke-dasharray: 3 6; }
-.route-visited { stroke: var(--ink); }
+.route-upcoming, .route-progress, .international-map-route { fill: none; stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
+.route-upcoming { stroke: var(--ink-muted); opacity: 0.4; }
+.route-progress { stroke: var(--ink); }
+.route-visited { fill: none; stroke: white; stroke-width: 4; }
 .route-pin-target { fill: transparent; }
 .route-pin-dot { stroke: var(--ink); stroke-width: 1.5; fill: var(--bg); }
 .route-pin[data-state="visited"] .route-pin-dot, .route-pin[data-state="active"] .route-pin-dot { fill: var(--ink); }
@@ -18,8 +19,13 @@
 .route-thumbnail { position: absolute; width: 4.5rem; aspect-ratio: 4 / 3; padding: 0.2rem; background: var(--surface-2); box-shadow: 0 3px 14px color-mix(in srgb, var(--shadow) 20%, transparent); transform: translate(-50%, calc(-100% - 1.25rem)) rotate(-3deg); pointer-events: none; }
 .route-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
 .travel-book[data-in-view="true"] .route-thumbnail { animation: travel-map-photo 0.35s ease-out both; }
-.route-current-place { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.1; margin-top: 0.75rem; }
-.route-map-note { color: var(--ink-muted); font-size: 0.75rem; margin-top: 0.75rem; }
+.route-current-place { font-family: var(--font-serif); font-size: 1.75rem; line-height: 1.1; }
+.route-current { padding: 0.85rem; border-radius: 0.5rem; background: var(--bg); display: grid; gap: 0.5rem; font-size: 0.8125rem; }
+.route-current time { color: var(--ink-muted); }
+.route-current dl { display: flex; gap: 1.25rem; border-top: 1px solid var(--line); padding-top: 0.5rem; }
+.route-current dt { color: var(--ink-muted); }
+.route-current dd { font-weight: 600; }
+.route-map-note { color: var(--ink-muted); font-size: 0.75rem; margin-top: auto; }
 @keyframes travel-pin-pulse { 50% { opacity: 0.12; transform: scale(1.5); } }
 @keyframes travel-map-photo { from { translate: 0 0.4rem; } to { translate: 0 0; } }
 @media (min-width: 1100px) {
@@ -28,7 +34,7 @@
   .travel-book-hint, .travel-book-viewport, .travel-book-controls { grid-column: 2; min-width: 0; }
 }
 @media (max-width: 1099px) {
-  .travel-route-map { position: relative; top: auto; width: min(100%, 18rem); margin-inline: auto; }
+  .travel-route-map { width: min(100%, 18rem); margin-inline: auto; }
   .travel-map-drawing { max-width: 13rem; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -41,7 +47,7 @@
 .international-map svg { display: block; width: 100%; border: 1px solid var(--line); border-radius: 1rem; background: var(--tint-a); }
 .international-map figcaption { margin-top: 0.75rem; }
 .international-map-land { fill: var(--bg); stroke: var(--ink-muted); stroke-width: 0.55; stroke-opacity: 0.7; }
-.international-map-route { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 5 4; }
+.international-map-route { stroke: var(--accent); }
 .international-map-stop { fill: var(--ink); }
 .international-map-stop circle { stroke: var(--bg); stroke-width: 0.25; }
 .international-map-stop text { font-family: var(--font-sans); font-weight: 600; paint-order: stroke; stroke: var(--bg); stroke-width: 0.45; stroke-linejoin: round; }

@@ -2,13 +2,15 @@ import { expect, test } from "@playwright/test";
 import { demoContent, skillProfile, site, shell } from "../src/content/site";
 import { projects } from "../src/content/projects";
 
-test("Home shows highlights, demo stats and clearly fictional testimonials", async ({ page }) => {
+test("Home shows highlights and stats, and hides unpublished testimonials", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: demoContent.highlightsTitle, exact: true })).toBeVisible();
   await expect(page.getByRole("heading", { name: site.achievements[0].title, exact: true })).toBeVisible();
   await expect(page.getByText(demoContent.statsNotice, { exact: true })).toBeVisible();
-  await expect(page.getByText(demoContent.testimonialsNotice, { exact: true })).toBeVisible();
-  for (const item of site.testimonials) await expect(page.getByText(item.name, { exact: true })).toBeVisible();
+  for (const item of site.testimonials) {
+    if (item.published) await expect(page.getByText(item.name, { exact: true })).toBeVisible();
+    else await expect(page.getByText(item.quote, { exact: false })).toHaveCount(0);
+  }
 });
 
 test("About includes education, skills, languages, interests and achievements", async ({ page }) => {

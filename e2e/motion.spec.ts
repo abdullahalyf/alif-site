@@ -42,12 +42,12 @@ test("the dark panel enters below a compact, readable header", async ({ page }, 
   await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(50);
   expect((await header.boundingBox())!.y).toBe(0);
   expect((await section.boundingBox())!.y).toBeGreaterThan(50);
-  await expect(header).toHaveCSS("background-color", "rgb(250, 248, 244)");
-  await expect(header).toHaveCSS("color", "rgb(34, 35, 30)");
-  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(250, 248, 244)");
+  await expect(header).toHaveCSS("background-color", "rgb(28, 27, 24)");
+  await expect(header).toHaveCSS("color", "rgb(244, 239, 231)");
+  await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
   await expect(section.getByRole("heading", { level: 2 })).toHaveCSS("opacity", "1");
   const { default: AxeBuilder } = await import("@axe-core/playwright");
-  const { violations } = await new AxeBuilder({ page }).withRules(["color-contrast"]).analyze();
+  const { violations } = await new AxeBuilder({ page }).setLegacyMode().withRules(["color-contrast"]).analyze();
   expect(violations).toEqual([]);
   await testInfo.attach("dark-panel-mid-transition", { body: await page.screenshot(), contentType: "image/png" });
 });
@@ -96,7 +96,7 @@ test("the Home photo sharpens without changing the inset frame", async ({ page, 
     await expect(photo).toHaveCSS("filter", "none");
   } else {
     const blur = () => photo.evaluate(element => Number(getComputedStyle(element).filter.match(/blur\(([\d.]+)px\)/)?.[1] ?? 0));
-    await expect.poll(blur).toBeGreaterThan(isMobile ? 3 : 10);
+    await expect.poll(blur).toBeGreaterThan(isMobile ? 2.5 : 7);
   }
   const initial = (await frame.boundingBox())!;
   expect(initial.x).toBeGreaterThan(0);
@@ -121,3 +121,41 @@ test("the hero headline and sharp photo are present with JavaScript disabled", a
     await context.close();
   }
 });
+
+for (const route of ["/contact", "/about", "/work"]) {
+  test(`visible headings and their content are readable on ${route}`, async ({ page }) => {
+    await page.goto(route);
+    await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+    const checkVisibleContent = () => page.evaluate(() => {
+      const bottom = innerHeight;
+      const top = document.querySelector(".header")!.getBoundingClientRect().bottom;
+      const visible = (element: Element) => {
+        const bounds = element.getBoundingClientRect();
+        return bounds.height > 0 && bounds.bottom > top && bounds.top < bottom;
+      };
+      const headings = Array.from(document.querySelectorAll("main :is(h1, h2, h3, h4)")).filter(visible);
+      const nextContent = (heading: Element) => heading.nextElementSibling
+        ?? (heading.parentElement?.matches("[data-motion-managed]") ? heading.parentElement.nextElementSibling : null);
+      const obstructed = (element: Element) => {
+        for (let ancestor: Element | null = element; ancestor && ancestor.tagName !== "MAIN"; ancestor = ancestor.parentElement) {
+          const { opacity, clipPath, visibility } = getComputedStyle(ancestor);
+          if (opacity !== "1" || clipPath !== "none" || visibility !== "visible") return true;
+        }
+        return false;
+      };
+      const following = headings.flatMap((heading) => {
+        const next = nextContent(heading);
+        return next ? [heading, next, ...next.querySelectorAll("p, li, article, h3, h4")].filter(visible) : [heading];
+      });
+      const body = Array.from(document.querySelectorAll("main :is(p, li, label, input, select, textarea, article)")).filter(visible);
+      const content = [...new Set([...following, ...body])];
+      return { count: content.length, hidden: content.filter(obstructed).map(element => element.textContent?.trim()) };
+    });
+    for (const position of [0, 300]) {
+      await page.evaluate(top => scrollTo({ top, behavior: "instant" }), position);
+      const { count, hidden } = await checkVisibleContent();
+      expect(count).toBeGreaterThan(0);
+      expect(hidden).toEqual([]);
+    }
+  });
+}

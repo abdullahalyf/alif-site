@@ -1,10 +1,12 @@
 import { footerGroups, shell, site } from "@/content/site";
 import { ButtonLink } from "./button";
+import { BackgroundDots } from "./BackgroundDots";
 
 export async function Footer() {
   "use cache";
   return (
     <footer id={shell.contactId} className="footer">
+      <BackgroundDots variant="night" />
       <div className="container footer-inner">
         <h2>{shell.footerTitle}</h2>
         <div className="button-row">

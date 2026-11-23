@@ -1,14 +1,17 @@
 import Image from "next/image";
+import { useId } from "react";
+import { formatTripDate } from "../book";
 import { travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
 import { BangladeshOutline } from "./BangladeshOutline";
-import { MAP_VIEWBOX, project, routePath } from "./geo";
+import { MAP_VIEWBOX, project, routeCurves } from "./geo";
 import "./map.css";
 
 export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; current: number; onNavigate: (index: number) => void }) {
   const active = trips[current];
   const point = project(active);
-  const path = routePath(trips);
+  const { path } = routeCurves(trips.map(project));
+  const progressId = useId();
   return <><svg className="journey-route-backdrop" viewBox={MAP_VIEWBOX} aria-hidden="true">
     <BangladeshOutline />
   </svg><aside className="travel-route-map" aria-label={c.mapLabel}>
@@ -17,7 +20,12 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
       <svg viewBox={MAP_VIEWBOX} className="travel-map-svg" aria-label={c.mapLabel}>
         <BangladeshOutline />
         <path className="route-upcoming" d={path} />
-        <path className="route-visited" d={path} pathLength="1" strokeDasharray="1" />
+        <defs>
+          <mask id={progressId} maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="520">
+            <path className="route-visited" d={path} pathLength="1" strokeDasharray="1" />
+          </mask>
+        </defs>
+        <path className="route-progress" d={path} mask={`url(#${progressId})`} />
         {trips.map((trip, index) => {
           const position = project(trip);
           const state = index === current ? "active" : index < current ? "visited" : "upcoming";
@@ -32,7 +40,15 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
         <Image src={active.photos[0].src} width={active.photos[0].width} height={active.photos[0].height} sizes="72px" unoptimized={active.photos[0].src.startsWith("https://")} alt="" loading="lazy" />
       </div>
     </div>
-    <p className="route-current-place" aria-live="polite">{active.place}</p>
+    <div className="route-current" aria-live="polite">
+      <p className="route-current-place">{active.place}</p>
+      <time dateTime={active.date}>{formatTripDate(active.date)}</time>
+      <p>{active.story.split(/(?<=[.!?।])\s+/)[0]}</p>
+      <dl>
+        <div><dt>{c.mapStopLabel}</dt><dd>{current + 1} / {trips.length}</dd></div>
+        <div><dt>{c.mapPhotosLabel}</dt><dd>{active.photos.length}</dd></div>
+      </dl>
+    </div>
     <p className="route-map-note">{c.mapNote}</p>
   </aside></>;
 }

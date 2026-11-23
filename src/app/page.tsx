@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+import { TravelTeaser } from "@/features/travel/TravelTeaser";
 import { Highlights, AtAGlance, Testimonials, LatestWriting } from "@/components/demo/sections";
 import { seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
@@ -16,5 +18,25 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <><IntroOverlay /><PersonJsonLd /><Hero /><AtAGlance /><AboutTeaser /><div className="band-surface"><Highlights /></div><HowIWork /><Services /><ToolsMarquee /><SelectedWork /><div className="tint-b"><Testimonials /></div><div className="tint-a"><LatestWriting /></div></>;
+  return <>
+    <IntroOverlay />
+    <PersonJsonLd />
+    <Hero />
+    <Suspense>
+      <AtAGlance />
+      <AboutTeaser />
+      <TravelTeaser compact />
+      <div className="band-surface"><Highlights /></div>
+    </Suspense>
+    <Suspense>
+      <HowIWork />
+      <Services />
+      <ToolsMarquee />
+    </Suspense>
+    <Suspense>
+      <SelectedWork />
+      <div className="tint-b"><Testimonials /></div>
+      <div className="tint-a"><LatestWriting /></div>
+    </Suspense>
+  </>;
 }

@@ -1,4 +1,5 @@
-import { usesContent as c } from "@/content/uses";
+import { usesContent as c, workSetupPhoto } from "@/content/uses";
+import Image from "next/image";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal, StaggerIn } from "@/components/motion";
 import "./uses.css";
@@ -10,6 +11,7 @@ export default function UsesPage() {
         <Reveal><h1>{c.title}</h1></Reveal>
         <Reveal><p className="lead">{c.intro}</p></Reveal>
       </header>
+      <Image {...workSetupPhoto} alt={workSetupPhoto.alt} className="uses-setup" sizes="(min-width: 64rem) 36rem, calc(100vw - 3rem)" />
       {c.groups.map((group) => (
         <section key={group.title}>
           <Reveal><h2>{group.title}</h2></Reveal>

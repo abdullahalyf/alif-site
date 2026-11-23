@@ -10,7 +10,7 @@ export function AboutTeaser() {
       <SectionLabel>{homeContent.aboutLabel}</SectionLabel>
       <div className="split-section">
         <Reveal><h2 id="about-teaser-title">{homeContent.aboutTitle}</h2></Reveal>
-        <div className="prose"><Reveal><p>{site.about[0]}</p></Reveal><Reveal><Link className="text-link" href={navHref("/about")}>{homeContent.aboutLink}<ArrowUpRight /></Link></Reveal></div>
+        <div className="prose"><Reveal><p>{site.about[0]}</p></Reveal><Reveal><p className="label">{homeContent.currentlyLabel}</p><p>{homeContent.currently} · <Link href="/now">{homeContent.currentlyLink}</Link></p></Reveal><Reveal><Link className="text-link" href={navHref("/about")}>{homeContent.aboutLink}<ArrowUpRight /></Link></Reveal></div>
       </div>
     </div>
   </section>;

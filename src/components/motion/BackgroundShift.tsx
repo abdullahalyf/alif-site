@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { whenNearViewport } from "@/lib/when-near-viewport";
-import { getGsap } from "@/lib/gsap";
+import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
+import { BackgroundDots } from "@/components/BackgroundDots";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 export function BackgroundShift({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -14,8 +14,7 @@ export function BackgroundShift({ children, className }: { children: React.React
     if (prefersReducedMotion() || !root.current || !panel.current) return;
     const target = panel.current;
     const wrapper = root.current;
-    return whenNearViewport(wrapper, () => {
-      const gsap = getGsap();
+    return whenNearViewportWithGsap(wrapper, (gsap) => {
       const context = gsap.context(() => {
         gsap.fromTo(target, { scaleX: 0.965, y: 20, borderRadius: 24 }, {
           scaleX: 1,
@@ -30,7 +29,7 @@ export function BackgroundShift({ children, className }: { children: React.React
   }, [reducedMotion]);
 
   return <div ref={root} className={className}>
-    <div ref={panel} className="night-section__panel" aria-hidden="true" />
+    <div ref={panel} className="night-section__panel" aria-hidden="true"><BackgroundDots variant="night" /></div>
     {children}
   </div>;
 }

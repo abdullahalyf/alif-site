@@ -2,52 +2,40 @@
 
 import { useEffect, useState } from "react";
 import { greetingIntro } from "@/content/site";
-import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
+import { prefersReducedMotion } from "@/lib/use-reduced-motion";
+import { INTRO_PENDING_ATTR, introStorageKey } from "@/lib/intro";
 
-export const introStorageKey = "alif-intro-played-at";
-const RELOAD_WINDOW = 10_000;
+export { introStorageKey };
 const WORD_INTERVAL = 112;
 const EXIT_DURATION = 230;
 const EXIT_START = (greetingIntro.length - 1) * WORD_INTERVAL;
 export const INTRO_DURATION = EXIT_START + EXIT_DURATION;
-let enteredHome = false;
-
 function shouldPlayIntro() {
-  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-  const homeReload = !enteredHome && navigation?.type === "reload" && new URL(navigation.name).pathname === location.pathname;
-  enteredHome = true;
-  try {
-    const now = Date.now();
-    if (homeReload && now - Number(sessionStorage.getItem(introStorageKey)) < RELOAD_WINDOW) return false;
-    sessionStorage.setItem(introStorageKey, String(now));
-  } catch {}
-  return true;
+  return document.documentElement.hasAttribute(INTRO_PENDING_ATTR);
 }
 
+/** Server-rendered so CSS plays it from first paint; hydration only removes it. */
 export function IntroOverlay() {
-  const reduced = useReducedMotion();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
-    let dismiss: ReturnType<typeof setTimeout> | undefined;
-    const frame = requestAnimationFrame(() => {
-      if (!shouldPlayIntro()) return;
-      setVisible(true);
-      dismiss = setTimeout(() => setVisible(false), INTRO_DURATION);
-    });
+    const play = !prefersReducedMotion() && shouldPlayIntro();
+    const dismiss = setTimeout(() => setVisible(false), play ? Math.max(0, INTRO_DURATION + 150 - performance.now()) : 0);
     const skip = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.key === "Tab") setVisible(false);
     };
     window.addEventListener("keydown", skip);
     return () => {
-      cancelAnimationFrame(frame);
       clearTimeout(dismiss);
       window.removeEventListener("keydown", skip);
     };
   }, []);
 
-  if (reduced || !visible) return null;
+  useEffect(() => {
+    if (!visible) document.documentElement.removeAttribute(INTRO_PENDING_ATTR);
+  }, [visible]);
+
+  if (!visible) return null;
 
   return (
     <div className="intro-overlay" aria-hidden="true" data-intro="playing"

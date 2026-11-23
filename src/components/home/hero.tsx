@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import { heroPhotos, navHref, shell, site } from "@/content/site";
 import { ButtonLink } from "@/components/button";
@@ -15,20 +16,22 @@ export function Hero() {
         <p className="hero-intro">{site.intro}</p>
         <div className="button-row">
           <ButtonLink href={shell.email.href}>{shell.email.label}</ButtonLink>
-          <ButtonLink href={navHref("/work")} variant="secondary">{shell.workLabel}</ButtonLink>
+          <ButtonLink href={navHref("/work")} prefetch={false} variant="secondary">{shell.workLabel}</ButtonLink>
         </div>
         <p className="location"><span aria-hidden="true" />{site.location}</p>
       </div>
       <HeroSide />
     </div>
-    <HeroPhotoPanel
-      label={heroPhotos.label}
-      floatingPhoto={<Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} draggable={false} />}
-      photoStrip={heroPhotos.images.map((photo) => <li key={photo.src}>
-        <Image {...photo} alt={photo.alt} sizes={photoCardSizes} draggable={false} />
-      </li>)}
-    >
-      <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" className="hero-photo" />
-    </HeroPhotoPanel>
+    <Suspense>
+      <HeroPhotoPanel
+        label={heroPhotos.label}
+        floatingPhoto={<Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />}
+        photoStrip={heroPhotos.images.map((photo) => <li key={photo.src}>
+          <Image {...photo} alt={photo.alt} sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />
+        </li>)}
+      >
+        <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" quality={68} className="hero-photo" />
+      </HeroPhotoPanel>
+    </Suspense>
   </section>;
 }

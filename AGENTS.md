@@ -27,7 +27,7 @@ Next.js 16 App Router + TypeScript (strict), Tailwind CSS 4, GSAP + Lenis for mo
 - All copy, links and image paths live ONLY in `src/content/site.ts` and `src/content/projects.ts`. Components import from there; no hard-coded text in components (aria-labels for icons excepted).
 - Don't change the shape of `src/content/schema.ts` unless the task says so. If you must add a field, update schema + content + tests together.
 - Every animation must respect `prefers-reduced-motion` (no Lenis, no GSAP motion, content fully visible). Content must be readable with JS disabled — never hide content with CSS that only JS can reveal.
-- No 3D, WebGL, canvas, or video backgrounds. No `next/font/google` (builds may run offline) — fonts go in `src/fonts/` and load with `next/font/local`.
+- No 3D, WebGL, or video backgrounds. Canvas 2D is allowed only for `BackgroundDots` (Alif approved, 2026-11-23). No `next/font/google` (builds may run offline) — fonts go in `src/fonts/` and load with `next/font/local`.
 - Images: `next/image` with explicit width/height from content. Never re-process files in `public/images/`.
 - Accessibility: semantic landmarks, one `h1` per page, visible focus styles, colour contrast AA, keyboard-usable nav.
 - Targets: Lighthouse mobile Performance ≥ 90, Accessibility ≥ 95. Keep client JS small; prefer Server Components, use `"use client"` only where needed.

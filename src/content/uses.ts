@@ -1,6 +1,6 @@
+import { photoSlot } from "./photo-slots";
 import { site, skillProfile } from "./site";
 import { usesSchema } from "./schemas/uses";
-// DEMO hardware below is illustrative and should be confirmed.
 export const usesContent = usesSchema.parse({
   title: "Tools for thoughtful work.",
   intro:
@@ -10,12 +10,8 @@ export const usesContent = usesSchema.parse({
       title: "Hardware",
       items: [
         {
-          name: "DEMO — Everyday laptop",
-          why: "A portable machine to review builds, run local tests and show client demos.",
-        },
-        {
-          name: "DEMO — External monitor",
-          why: "Space for a data model beside the interface.",
+          name: "Lenovo Legion 5",
+          why: "Ryzen 7 8745H, RTX 4060 8GB, 16GB DDR5-5600, 1TB SSD. Runs local builds, tests and client demos.",
         },
       ],
     },
@@ -27,18 +23,7 @@ export const usesContent = usesSchema.parse({
       title: group.title,
       items: group.items.map(({ name, note }) => ({ name, why: note })),
     })),
-    {
-      title: "Productivity",
-      items: [
-        {
-          name: "DEMO — Plain Markdown notes",
-          why: "Portable decisions that stay close to the code.",
-        },
-        {
-          name: "DEMO — A weekly review",
-          why: "A short pause to check priorities and unfinished work.",
-        },
-      ],
-    },
   ],
 });
+
+export const workSetupPhoto = photoSlot("work-setup", 1200, 900, "Alif’s laptop and desk setup");

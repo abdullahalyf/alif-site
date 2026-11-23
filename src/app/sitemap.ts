@@ -15,13 +15,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...labRoutes, estimateContent.path,
     travelContent.path,
     ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
-    ...searchContent.pages.map((page) => page.href),
+    ...searchContent.pages.map((page) => page.href.split("#")[0]),
     ...projects.map((project) => diagramContent.path(project.slug)),
     ...Object.values(seo.pages).map((page) => page.path),
     ...projects.map((project) => shell.projectHref(project.slug)),
+    ...Object.values(writingContent.filters).map(({ href }) => href),
     ...getPosts({ includeDrafts: false }).map((post) =>
       writingContent.postHref(post.slug),
     ),
   ];
-  return paths.map((path) => ({ url: new URL(path, getBaseUrl()).href }));
+  return [...new Set(paths)].map((path) => ({ url: new URL(path, getBaseUrl()).href }));
 }

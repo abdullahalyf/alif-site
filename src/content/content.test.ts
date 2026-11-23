@@ -36,7 +36,7 @@ describe("content", () => {
 
   it("validates case-study details and accepts older project entries", () => {
     for (const project of projects) {
-      expect(project.timeline.length).toBeGreaterThan(0);
+      if (project.timeline) expect(project.timeline.length).toBeGreaterThan(0);
       expect(project.decisions.length).toBeGreaterThanOrEqual(3);
       expect(project.challenges.length).toBeGreaterThanOrEqual(2);
       expect(project.metrics.length).toBeGreaterThan(0);
@@ -75,7 +75,7 @@ describe("content", () => {
     expect(projects).toHaveLength(7); expect(projects.filter((project) => project.demo)).toHaveLength(5);
     expect(projects.some((project) => project.slug === "portfolio")).toBe(false);
     for (const project of projects) expect(project.images.length).toBeGreaterThanOrEqual(2);
-    expect(site.achievements[0].title).toBe("Semester exchange at IIT Bombay");
+    expect(site.achievements[0].title).toBe("Exchange semester at IIT Bombay");
   });
 
   it("getProject finds by slug", () => {

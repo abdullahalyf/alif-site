@@ -39,7 +39,7 @@ export const siteSchema = z.object({
   languages: z.array(z.object({ name: z.string().min(1), level: z.string().min(1) })).min(1),
   interests: z.array(z.string().min(1)).min(1),
   stats: z.array(z.object({ value: z.string().min(1), label: z.string().min(1) })).min(1),
-  testimonials: z.array(z.object({ name: z.string().min(1), role: z.string().min(1), quote: z.string().min(1) })).min(2),
+  testimonials: z.array(z.object({ name: z.string().min(1), role: z.string().min(1), quote: z.string().min(1), published: z.boolean().optional() })),
   about: z.array(z.string().min(1)).min(1),
   email: z.email(),
   whatsapp: z.object({ display: z.string().min(1), href: z.url() }),
@@ -63,7 +63,12 @@ export const siteSchema = z.object({
   services: z.array(z.string().min(1)).min(1),
   tagline: z.string().min(1),
   approach: z
-    .array(z.object({ title: z.string().min(1), text: z.string().min(1) }))
+    .array(z.object({
+      slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+      title: z.string().min(1),
+      text: z.string().min(1),
+      details: z.array(z.string().min(1)),
+    }))
     .min(1),
   story: z
     .array(
@@ -108,6 +113,15 @@ export const projectsSchema = z
   .refine((list) => new Set(list.map((p) => p.slug)).size === list.length, {
     message: "Project slugs must be unique",
   });
+
+export const hackathonSchema = z.object({
+  name: z.string().min(1),
+  role: z.string().min(1),
+  result: z.string().min(1),
+  github: z.url().optional(),
+  live: z.url().optional(),
+});
+export type Hackathon = z.infer<typeof hackathonSchema>;
 
 export type Site = z.infer<typeof siteSchema>;
 export type Project = z.infer<typeof projectSchema>;

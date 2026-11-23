@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, expect, it, vi } from "vitest";
 import { mockMatchMedia } from "@/lib/test-match-media";
@@ -14,13 +14,13 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-it("animates only the section backdrop and restores it on unmount", () => {
+it("animates only the section backdrop and restores it on unmount", async () => {
   mockMatchMedia(false);
   const { container, unmount } = render(<BackgroundShift><p>Section</p></BackgroundShift>);
   expect(screen.getByText("Section")).toBeInTheDocument();
   const panel = container.querySelector(".night-section__panel");
   expect(panel).toHaveAttribute("aria-hidden", "true");
-  expect(fromTo).toHaveBeenCalledWith(panel, expect.objectContaining({ scaleX: expect.any(Number) }), expect.objectContaining({ scaleX: 1 }));
+  await waitFor(() => expect(fromTo).toHaveBeenCalledWith(panel, expect.objectContaining({ scaleX: expect.any(Number) }), expect.objectContaining({ scaleX: 1 })));
   unmount();
   expect(revert).toHaveBeenCalled();
 });

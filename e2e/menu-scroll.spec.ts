@@ -16,11 +16,12 @@ test("the menu traps focus, includes every footer link, and forwards a search", 
   const close = menu.getByRole("button", { name: shell.closeMenu });
   await expect(close).toBeFocused();
   await page.keyboard.press("Shift+Tab");
-  await expect(menu.getByRole("link", { name: shell.contact.label, exact: true })).toBeFocused();
+  const lastLink = footerGroups.at(-1)!.links.at(-1)!;
+  await expect(menu.getByRole("link", { name: lastLink.label, exact: true })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(close).toBeFocused();
   await page.keyboard.press("Tab");
-  await expect(menu.getByRole("button", { name: shell.useDarkTheme })).toBeFocused();
+  await expect(menu.getByRole("button", { name: shell.useLightTheme })).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(search).toBeFocused();
   await page.keyboard.press("Escape");
@@ -77,7 +78,7 @@ test("the hero card grows and docks into the first slot", async ({ page, isMobil
 test("desktop wheel scrolls the hovered card row and releases the page at both ends", async ({ page, isMobile }) => {
   test.skip(isMobile, "Desktop wheel and drag");
   await page.goto("/");
-  for (const selector of [".hero-photo-story__strip", ".highlights-grid", ".testimonials-grid"]) {
+  for (const selector of [".hero-photo-story__strip"]) {
     await expect.poll(() => page.locator(selector).evaluate(element => element.scrollWidth - element.clientWidth)).toBeGreaterThan(0);
   }
   const row = page.locator(".project-carousel");

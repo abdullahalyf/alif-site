@@ -1,11 +1,15 @@
-import { cleanup, render } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { mockMatchMedia } from "@/lib/test-match-media";
 import { HeroStripes } from "./HeroStripes";
 
+const { fromTo } = vi.hoisted(() => ({ fromTo: vi.fn(() => ({ kill() {} })) }));
+vi.mock("@/lib/gsap", () => ({ getGsap: () => ({ fromTo, to: () => ({ kill() {} }) }) }));
+
 afterEach(() => {
   cleanup();
+  fromTo.mockClear();
 });
 
 describe("HeroStripes", () => {
@@ -57,15 +61,15 @@ describe("HeroStripes", () => {
     expect(line?.getAttribute("style") ?? "").not.toContain("stroke-dashoffset");
   });
 
-  it("starts the lines fully offset so they can be drawn in", () => {
+  it("starts the lines fully offset so they can be drawn in", async () => {
     mockMatchMedia(false);
     const { container } = render(<HeroStripes count={2} />);
 
     const line = container.querySelector("line");
     const dashArray = Number(line?.getAttribute("stroke-dasharray"));
-    const style = line?.getAttribute("style") ?? "";
-
     expect(dashArray).toBeGreaterThan(0);
-    expect(style).toContain(`stroke-dashoffset: ${dashArray}`);
+    await waitFor(() => expect(fromTo).toHaveBeenCalledWith(
+      expect.arrayContaining([line]), { strokeDashoffset: dashArray }, expect.any(Object),
+    ));
   });
 });

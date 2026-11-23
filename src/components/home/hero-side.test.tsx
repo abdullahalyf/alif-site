@@ -28,13 +28,14 @@ describe("HeroSide", () => {
     expect(screen.getByAltText(site.heroSide.alt)).toBeInTheDocument();
   });
 
-  it("sizes the photo to the space it actually takes", () => {
+  it("serves the fixed-size JPEG directly", () => {
     mockMatchMedia(false);
     const { container } = render(<HeroSide />);
 
     const photo = container.querySelector<HTMLImageElement>(".hero-side__photo");
-    // `100vw` would ask for a wider candidate than the photo is ever drawn at.
-    expect(photo?.getAttribute("sizes")).toBe("(max-width: 35rem) calc(100vw - 4rem), (max-width: 47.999rem) 31rem, (max-width: 63.999rem) 32rem, min(30rem, calc(39.8vw - 1.25rem))");
+    expect(photo).toHaveAttribute("src", site.heroSide.src);
+    expect(photo).toHaveAttribute("width", String(site.heroSide.width));
+    expect(photo).toHaveAttribute("height", String(site.heroSide.height));
   });
 
   it("renders the card and the diagram over the photo", () => {

@@ -1,7 +1,8 @@
+import { waitForHydration } from "./helpers/routes";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { trips, travelContent as c } from "../src/content/travel";
-import { project } from "../src/features/travel/map/geo";
+import { project, routeCurves } from "../src/features/travel/map/geo";
 
 for (const trip of trips) {
   test(`trip page ${trip.slug} has content, canonical metadata and a mini map`, async ({ page, request }) => {
@@ -24,7 +25,7 @@ test("gallery supports keyboard, swipe, dismissal and focus restoration", async 
   await opener.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
-  const scan = await new AxeBuilder({ page }).analyze();
+  const scan = await new AxeBuilder({ page }).setLegacyMode().analyze();
   expect(scan.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
   await expect(dialog.getByRole("button", { name: c.closeGallery })).toBeFocused();
   await dialog.press("ArrowRight");
@@ -68,7 +69,11 @@ test("travel stats and combined filters describe the actual demo dataset", async
 
 test("map progress, pin selection and place atmosphere follow the horizontal book", async ({ page }) => {
   await page.goto(c.path);
-  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free");
+  await waitForHydration(page);
+  await expect(page.locator(".travel-book")).toHaveAttribute("data-layout", "free", { timeout: 15_000 });
+  const atmosphere = page.locator(".journey-atmosphere");
+  const color = () => atmosphere.evaluate(element => getComputedStyle(element).backgroundColor);
+  const startingColor = await color();
   const index = 5;
   const pin = page.getByRole("link", { name: c.mapPinLabel(trips[index].place) });
   await pin.click();
@@ -77,13 +82,21 @@ test("map progress, pin selection and place atmosphere follow the horizontal boo
   const book = page.getByRole("region", { name: c.bookLabel });
   await expect(book.getByRole("heading", { name: trips[index].title })).toBeInViewport();
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
-  const points = trips.map(project);
-  const routeLengths = points.slice(1).map((point, step) => Math.hypot(point.x - points[step].x, point.y - points[step].y));
+  const { path, legs } = routeCurves(trips.map(project));
+  await expect(page.locator(".route-upcoming")).toHaveAttribute("d", path);
+  expect(path).toContain("Q");
+  const routeLengths = await page.evaluate(segments => {
+    const leg = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    return segments.map(segment => {
+      leg.setAttribute("d", segment);
+      return leg.getTotalLength();
+    });
+  }, legs);
   const length = (segments: number[]) => segments.reduce((sum, segment) => sum + segment, 0);
   const offset = () => page.locator(".travel-route-map .route-visited").evaluate(element => parseFloat(getComputedStyle(element).strokeDashoffset));
   await expect.poll(offset).toBeCloseTo(reduced ? 0 : 1 - length(routeLengths.slice(0, index)) / length(routeLengths), 2);
-  const rgb = trips[index].color.match(/[0-9a-f]{2}/g)!.map(part => parseInt(part, 16)).join(", ");
-  await expect(page.locator(".journey-atmosphere")).toHaveCSS("background-color", `rgb(${rgb})`);
+  await expect.poll(() => atmosphere.evaluate(element => element.style.getPropertyValue("--journey-tint"))).toBe(trips[index].color);
+  await expect.poll(color).not.toBe(startingColor);
   if (reduced) {
     await expect(page.locator('.route-pin[data-state="active"] .route-pin-halo')).toHaveCSS("animation-name", "none");
   }
@@ -150,7 +163,7 @@ test("international travel links the Malaysia demo and maps the Dhaka route", as
   await section.getByRole("link", { name: "A morning in Kuala Lumpur" }).click();
   await expect(page).toHaveURL(c.tripHref("kuala-lumpur"));
   await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
-  const photo = await request.get("/images/travel/kuala-lumpur/1.jpg");
+  const photo = await request.get("/images/slots/travel-kuala-lumpur-1.jpg");
   expect(photo.ok()).toBe(true);
   expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("kuala-lumpur"));
 });

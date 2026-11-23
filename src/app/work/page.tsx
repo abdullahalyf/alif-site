@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import { ArrowUpRight } from "@/components/arrows";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { projects } from "@/content/projects";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { HoverPreview } from "@/components/motion";
+import { Hackathons } from "@/components/hackathons";
 import { ProjectFilter } from "./ProjectFilter";
 import "./work-index.css";
 
@@ -37,9 +39,12 @@ export default function Work() {
   });
 
   return <div className="container section-space">
+      <WorkSubnav current="/work" />
+
     <SectionLabel>{site.name}</SectionLabel>
     <div className="page-intro"><h1>{shell.workTitle}</h1><p>{pageContent.workIntro}</p></div>
     <noscript><style>{".work-filter { display: none; }"}</style></noscript>
     <ProjectFilter label={pageContent.workFilter} allLabel={pageContent.allWorkCategories} emptyLabel={pageContent.workEmpty} entries={entries} />
+    <Hackathons />
   </div>;
 }

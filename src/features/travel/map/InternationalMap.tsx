@@ -1,6 +1,6 @@
 import { travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
-import type { Coordinates } from "./geo";
+import { routeCurves, type Coordinates } from "./geo";
 import { worldOutline } from "./world-paths";
 import "./map.css";
 
@@ -21,10 +21,7 @@ export function InternationalMap({ trips }: { trips: Trip[] }) {
   return <figure className="international-map">
     <svg viewBox={`${minX - padding} ${minY} ${width} ${maxY - minY}`} role="img" aria-label={c.internationalRouteLabel(destinations)}>
       <path className="international-map-land" d={worldOutline} vectorEffect="non-scaling-stroke" />
-      {stops.map(({ x, y, slug }) => {
-        const distance = Math.hypot(x - from.x, y - from.y);
-        return <path key={slug} className="international-map-route" d={`M${from.x},${from.y} Q${(from.x + x) / 2 + distance * 0.35},${(from.y + y) / 2 - distance * 0.3} ${x},${y}`} vectorEffect="non-scaling-stroke" />;
-      })}
+      {stops.map(stop => <path key={stop.slug} className="international-map-route" d={routeCurves([from, stop]).path} vectorEffect="non-scaling-stroke" />)}
       {[{ ...from, slug: "origin", label: c.internationalOrigin.place }, ...stops].map(({ x, y, label, slug }) =>
         <g key={slug} className="international-map-stop" aria-hidden="true">
           <circle cx={x} cy={y} r={marker} />

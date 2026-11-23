@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ComponentProps, type ElementType } from "react";
-import { getGsap } from "@/lib/gsap";
-import { whenNearViewport } from "@/lib/when-near-viewport";
+import { whenScrollRevealed } from "@/lib/when-scroll-revealed";
 import { useReducedMotion, prefersReducedMotion } from "@/lib/use-reduced-motion";
 
 type StaggerInProps = {
@@ -11,8 +10,6 @@ type StaggerInProps = {
   stagger?: number;
   /** How far each child slides in, in pixels. */
   distance?: number;
-  /** ScrollTrigger start position. */
-  start?: string;
   /** Element to render. Use `li` when the group is a list. */
   as?: ElementType;
   /** Ref to the rendered element, for scrolling or measuring. */
@@ -20,19 +17,10 @@ type StaggerInProps = {
   className?: string;
 } & Omit<ComponentProps<"div">, "children" | "className" | "ref">;
 
-/**
- * Slides a group of children in from the right, one after another, when the
- * group enters the viewport (DESIGN.md animation 6).
- *
- * The children are fully visible in the server-rendered markup — the start
- * state is applied by JS only. Under `prefers-reduced-motion: reduce` nothing
- * animates and the children stay in place.
- */
 export function StaggerIn({
   children,
   stagger = 0.09,
   distance = 20,
-  start = "top 85%",
   as: Component = "div",
   listRef,
   className,
@@ -42,41 +30,24 @@ export function StaggerIn({
   const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // Read the preference here rather than from the render: the hook returns
-    // the server snapshot until React swaps it for the real value, and an
-    // effect would otherwise start an animation the user asked not to see.
-    if (prefersReducedMotion()) return;
-
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || prefersReducedMotion()) return;
 
-    return whenNearViewport(root, () => {
-      const targets = Array.from(root.children);
-      if (!targets.length) return;
-
-      const gsap = getGsap();
-      // The cards slide in and are un-covered by a clip rather than fading: the
-      // text inside them stays at full opacity the whole time, so its contrast
-      // is never reduced mid-animation.
-      const tween = gsap.from(targets, {
-        x: distance,
-        clipPath: "inset(0 100% 0 0)",
-        duration: 0.7,
-        ease: "power3.out",
-        stagger,
-        clearProps: "transform,clipPath",
-        scrollTrigger: { trigger: root, start, once: true },
-      });
-
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-        // Undo the entrance start state, so a tween that never ran cannot leave
-        // the cards clipped or shifted.
-        gsap.set(targets, { clearProps: "transform,clipPath" });
-      };
+    let animations: Animation[] = [];
+    const stop = whenScrollRevealed(root, () => {
+      animations = Array.from(root.children, (child, index) =>
+        child.animate([{ translate: `${distance}px 0` }, { translate: "none" }], {
+          duration: 260,
+          delay: Math.min(index * stagger * 1000, 120),
+          easing: "cubic-bezier(0.2, 0.65, 0.3, 1)",
+        })
+      );
     });
-  }, [reducedMotion, stagger, distance, start]);
+    return () => {
+      stop?.();
+      animations.forEach((animation) => animation.cancel());
+    };
+  }, [reducedMotion, stagger, distance]);
 
   const setRefs = (element: HTMLElement | null) => {
     rootRef.current = element;

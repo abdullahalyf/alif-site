@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import Link from "next/link";
 import { servicesContent as c, serviceDetails as details } from "@/content/services";
 import { estimateContent } from "@/content/estimate";
@@ -16,6 +17,8 @@ export default function ServicesPage() {
 
   return (
     <div className="container page-shell services-page">
+      <WorkSubnav current="/services" />
+
       <header className="service-hero">
         <div className="service-hero__copy">
           <p className="label">{c.label}</p>

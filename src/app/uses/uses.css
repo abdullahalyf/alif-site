@@ -24,3 +24,5 @@
     grid-template-columns: 1fr;
   }
 }
+
+.uses-setup { width: min(100%, 36rem); height: auto; border-radius: 1rem; }

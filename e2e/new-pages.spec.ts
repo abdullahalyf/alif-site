@@ -79,7 +79,7 @@ test("search supports shortcut, focus trap, arrow selection, escape and navigati
   await expect(input).toHaveAttribute("aria-activedescendant", /result-1$/);
   await page.keyboard.press("ArrowUp");
   const violations = (
-    await new AxeBuilder({ page }).analyze()
+    await new AxeBuilder({ page }).setLegacyMode().analyze()
   ).violations.filter(
     (item) => item.impact === "serious" || item.impact === "critical",
   );
@@ -151,12 +151,22 @@ test("search index is public JSON without drafts", async ({ request }) => {
     ),
   ).toBe(false);
 });
-test("resume print styles hide navigation and footer", async ({ page }) => {
+test("resume redirects permanently to the printable CV", async ({ page, request }) => {
+  const redirect = await request.get("/resume", { maxRedirects: 0 });
+  expect(redirect.status()).toBe(308);
+  expect(redirect.headers().location).toBe("/contact#cv");
   await page.goto("/resume");
+  await expect(page).toHaveURL(/\/contact#cv$/);
+  const download = page.getByRole("link", { name: "Download CV (PDF)" });
+  await expect(download).toHaveAttribute("download", "");
+  const pdf = await request.get((await download.getAttribute("href"))!);
+  expect(pdf.headers()["content-type"]).toContain("application/pdf");
+  expect((await pdf.body()).subarray(0, 5).toString()).toBe("%PDF-");
   await page.emulateMedia({ media: "print" });
   await expect(page.locator(".header")).toBeHidden();
   await expect(page.locator(".footer")).toBeHidden();
-  await expect(page.getByRole("button", { name: "Download PDF" })).toBeHidden();
+  await expect(page.locator(".contact-details")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Print CV" })).toBeHidden();
   await expect(
     page.getByRole("heading", { name: site.fullName, exact: true }),
   ).toBeVisible();
@@ -274,6 +284,7 @@ test("each service offers a timeline and a link to the estimator", async ({ page
   const presets = { architecture: "web", operations: "pos", offline: "mobile", access: "dashboard" };
   for (const [service, type] of Object.entries(presets)) {
     await page.goto("/services");
+    await waitForHydration(page);
     const block = blocks.and(page.locator(`#${service}`));
     await expect(block.getByText("Typical timeline")).toBeVisible();
     const link = block.getByRole("link", { name: "Estimate this" });
