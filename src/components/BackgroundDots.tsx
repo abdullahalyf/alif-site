@@ -12,8 +12,8 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context || typeof window.matchMedia !== "function") return;
+    if (!canvas || typeof window.matchMedia !== "function") return;
+    let context: CanvasRenderingContext2D | null = null;
     const container = variant === "night" ? canvas.parentElement : null;
 
     const motionQuery = window.matchMedia(REDUCED_MOTION_QUERY);
@@ -24,7 +24,7 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     let color = "rgb(0 0 0)";
     let frame = 0;
     let last = 0;
-    let idle = 0;
+    let idle: number | undefined;
     let running = false;
     let started = false;
     let visible = variant === "page";
@@ -34,6 +34,7 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     };
 
     const draw = () => {
+      if (!context) return;
       context.clearRect(0, 0, width, height);
       context.fillStyle = color;
       context.strokeStyle = color;
@@ -42,8 +43,11 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
         const a = dots[i];
         for (let j = i + 1; j < dots.length; j += 1) {
           const b = dots[j];
-          const alpha = linkAlpha(Math.hypot(a.x - b.x, a.y - b.y), LINK_DISTANCE);
-          if (alpha <= 0) continue;
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distanceSquared = dx * dx + dy * dy;
+          if (distanceSquared >= LINK_DISTANCE * LINK_DISTANCE) continue;
+          const alpha = linkAlpha(Math.sqrt(distanceSquared), LINK_DISTANCE);
           context.globalAlpha = alpha * 0.4 * Math.max(a.weight, b.weight);
           context.beginPath();
           context.moveTo(a.x, a.y);
@@ -61,6 +65,7 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     };
 
     const resize = () => {
+      if (!context) return;
       const nextWidth = container ? container.clientWidth : window.innerWidth;
       const nextHeight = container ? container.clientHeight : window.innerHeight;
       if (!nextWidth || !nextHeight) return;
@@ -137,6 +142,10 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     };
 
     const begin = () => {
+      idle = undefined;
+      if (!visible) return;
+      context = canvas.getContext("2d");
+      if (!context) return;
       started = true;
       readColor();
       resize();
@@ -146,7 +155,11 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
       ? (callback: () => void) => window.requestIdleCallback(callback, { timeout: 1500 })
       : (callback: () => void) => window.setTimeout(callback, 200);
     const cancel = window.cancelIdleCallback ?? window.clearTimeout;
-    const scheduleStart = () => { idle = schedule(begin); };
+    const scheduleStart = () => {
+      if (!started && visible && idle === undefined && document.readyState === "complete") {
+        idle = schedule(begin);
+      }
+    };
     if (document.readyState === "complete") scheduleStart();
     else window.addEventListener("load", scheduleStart, { once: true });
 
@@ -161,21 +174,25 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     const visibilityObserver = container && typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
-        if (!started) return;
-        if (!visible) pause();
+        if (!started) {
+          scheduleStart();
+        } else if (!visible) pause();
         else if (motionQuery.matches) draw();
         else play();
       })
       : null;
     if (container) visibilityObserver?.observe(container);
     else visible = true;
-    if (container && !visibilityObserver) visible = true;
+    if (container && !visibilityObserver) {
+      visible = true;
+      scheduleStart();
+    }
     const onMotionChange = () => { if (started) apply(); };
     motionQuery.addEventListener("change", onMotionChange);
 
     return () => {
       window.removeEventListener("load", scheduleStart);
-      cancel(idle);
+      if (idle !== undefined) cancel(idle);
       stopMotion();
       themeObserver.disconnect();
       sizeObserver?.disconnect();
