@@ -63,3 +63,5 @@ One task = one Codex run = one PR. Do them in order. Read `docs/DESIGN.md` for e
 - [x] Task 22: Side drawer, About layout, visual skills, travel scrubber, Work and Services polish, local demo images, Writing and hardening. See [the report](reports/CODEX-22-report.md).
 
 - [x] Task 27: Simplified navigation, Contact & CV, readable motion, default dark, and Travel on Home and in Writing. See [the report](reports/CODEX-27-report.md).
+
+- [ ] Task 28: Services navigation, confirmed facts, WhatsApp, photo slots and Home performance. The Lighthouse performance target remains open. See [the report](reports/CODEX-28-report.md).
