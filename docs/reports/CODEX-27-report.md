@@ -8,7 +8,7 @@ All eight implementation parts are on `codex-27`. Browser regression verificatio
 
 ## E2E ×2
 
-The full Playwright suite is running. An earlier check exposed a photo assertion that expected the old light default. The assertion now verifies the dark palette’s brightness filter and the absence of a scroll transform.
+An earlier full Playwright run reported 701 passes, 14 skips, and 11 failures. The follow-up changes update stale light-theme assertions, measure curved travel progress, scope the writing list to the current page, and wait for hydration before interacting. The run also exposed timeouts during cold preview compilation and mobile interaction. Two full reruns are queued against the updated tests.
 
 ## Axe
 
