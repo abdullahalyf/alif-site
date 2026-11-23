@@ -10,7 +10,7 @@
 
 | Run | Passed | Skipped | Failed |
 | --- | ---: | ---: | ---: |
-| 1 | Running | — | — |
+| 1 | Running on the latest build | — | — |
 | 2 | Queued | — | — |
 
 ## Axe
@@ -23,17 +23,27 @@ Mobile, default dark theme, production server on localhost. Scores are performan
 
 | Page | Run 1 | Run 2 | Run 3 | Median |
 | --- | ---: | ---: | ---: | ---: |
-| Home | 72 / 100 | 83 / 100 | 75 / 100 | **75 / 100** |
-| About | 95 / 100 | 91 / 100 | 96 / 100 | **95 / 100** |
-| Contact | 93 / 100 | 74 / 100 | 79 / 100 | **79 / 100** |
+| Home | 88 / 100 | 77 / 100 | 87 / 100 | **87 / 100** |
+| About | 92 / 100 | 85 / 100 | 92 / 100 | **92 / 100** |
+| Contact | 68 / 100 | 84 / 100 | 84 / 100 | **84 / 100** |
 
-The CODEX-27 Home baseline was 63 / 100, 93 / 100, and 91 / 100 (median 91 / 100). After the first CODEX-28 optimization pass, Home measured 76 / 100, 96 / 100, and 93 / 100. The intermediate Lighthouse traces attributed the largest blocking tasks to JavaScript, including the eagerly loaded animation bundle. After deferring GSAP and limiting canvas work, Home measured 68 / 100, 86 / 100, and 89 / 100. Initial script transfer fell from 220,376 bytes to 170,754 bytes. The final pass split Home hydration into sections and served the fixed-size lead JPEG directly. Home still missed the 90 target in all three runs. Its largest contentful paint ranged from 2.2 to 3.5 seconds and total blocking time from 360 to 1,480 ms. The dot canvases initialize on idle once visible and stop rendering offscreen. Below-the-fold photo requests use lazy loading. The first-visit intro is still CSS-driven from first paint.
+Home missed the minimum performance score of 90 in all three final runs. The Contact median also missed 90. All nine accessibility scores were 100.
+
+| Home build | Runs (performance / accessibility) | Median |
+| --- | --- | --- |
+| CODEX-27 baseline | 63 / 100, 93 / 100, 91 / 100 | 91 / 100 |
+| Initial CODEX-28 optimization | 76 / 100, 96 / 100, 93 / 100 | 93 / 100 |
+| Deferred animation loading | 68 / 100, 86 / 100, 89 / 100 | 86 / 100 |
+| Separate Home hydration and direct lead JPEG | 72 / 100, 83 / 100, 75 / 100 | 75 / 100 |
+| Final startup request changes | 88 / 100, 77 / 100, 87 / 100 | 87 / 100 |
+
+The traces attributed the longest blocking tasks to JavaScript, including the initial animation bundle and framework hydration. Home now loads GSAP as animations approach the viewport and transfers 169,387 bytes of initial scripts, down from 220,376. At mobile width, startup dropped from 11 image requests to 5 and stopped prefetching Home and Work during the greeting. The visible dots start on idle after the greeting, and offscreen dot canvases stop rendering. The greeting still starts from CSS on first paint. Final Home largest contentful paint ranged from 2.2 to 2.9 seconds and total blocking time from 360 to 890 ms.
 
 ## Parts
 
 | Part | Result |
 | --- | --- |
-| 1 | Services opens /services, stays visibly active throughout the section, and exposes Projects, Approach, Lab demos and Estimate a project in its desktop dropdown. The drawer and section tabs share the five ordered destinations. |
+| 1 | Services opens /services, stays visibly active throughout the section, and exposes Projects, Approach, Lab demos and Estimate a project in its desktop dropdown. The drawer and section tabs share the five ordered destinations, including on nested project architecture and Approach pages. |
 | 2 | HSC 2024 and SSC 2022 appear on About and in the CV. The printable two-page tagged PDF retains the production case-study link. The case study names Alez. The existing Legion 5 configuration and the unpublished Managing Director testimonial already matched the brief. |
 | 3 | Contact and the footer use a single WhatsApp URL from site content and display the accessible name WhatsApp. The Contact CV, menu and existing forms reuse the same destination. |
 | 4 | 52 documented JPEG slots cover portraits, education, About chapters, travel, project images and the work setup. All JPEG files match their documented dimensions. |
@@ -46,7 +56,7 @@ The CODEX-27 Home baseline was 63 / 100, 93 / 100, and 91 / 100 (median 91 / 100
 - The three approved portraits were copied byte-for-byte into their slots. The remaining slots use labelled placeholders. Replacing the JPEG removes the label without code changes. Existing originals remain in the repository.
 - Reused a destination’s travel image slot in its Home and Travel cards. Also reused project overview slots in their corresponding Home Services cards.
 - Used the installed Chromium 156.0.8078.79 after the Playwright browser CDN returned HTTP 403. Cleared a stale generated build cache after finding the global stylesheet omitted from its output.
-- Stabilized motion unit tests for asynchronous loading and the intro unit test for runner timing.
+- Stabilized motion unit tests for asynchronous loading and the intro unit test for runner timing. Stopped the superseded Playwright attempt after the rerun changed the build.
 
 ## Screenshots
 
