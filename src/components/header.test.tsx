@@ -15,7 +15,11 @@ it("renders all navigation destinations and marks the current page", () => {
   render(<Header />);
   const nav = screen.getAllByRole("navigation")[0];
   for (const link of shell.nav) expect(within(nav).getAllByRole("link", { name: link.label })[0]).toHaveAttribute("href", link.href);
-  expect(within(nav).getAllByRole("link", { name: shell.workNavLabel })[0]).toHaveAttribute("aria-current", "page");
+  expect(within(nav).getByRole("link", { name: shell.workNavLabel, exact: true })).toHaveAttribute("data-active", "true");
+  expect(within(nav).getByRole("list").querySelectorAll("a")).toHaveLength(4);
+  for (const { label, href } of workNavigation.dropdown) {
+    expect(within(nav).getByRole("link", { name: label, exact: true })).toHaveAttribute("href", href);
+  }
 });
 
 it("opens the menu, closes on a link, and restores trigger focus", () => {

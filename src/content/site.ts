@@ -231,7 +231,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    { ...navigationLinks.work, label: "Services" }, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -265,13 +265,20 @@ export const shell = {
   footerNavigation: "Footer navigation",
 };
 
+const serviceDestinations = [
+  { ...navigationLinks.work, label: "Projects" },
+  navigationLinks.approach,
+  navigationLinks.lab,
+];
+
 export const workNavigation = {
-  label: "Work sections",
-  links: [{ ...navigationLinks.work, label: "Projects" }, navigationLinks.services, navigationLinks.approach, navigationLinks.lab, navigationLinks.estimate],
+  label: "Services sections",
+  dropdown: [...serviceDestinations, navigationLinks.estimate],
+  links: [navigationLinks.services, ...serviceDestinations, { ...navigationLinks.estimate, label: "Estimate" }],
 };
 
 export const menuGroups = [
-  { label: "Services", links: workNavigation.links },
+  { label: navigationLinks.services.label, links: workNavigation.links },
   { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel, { label: "Writing RSS", href: "/writing/rss.xml" }] },
   { label: "About", links: [navigationLinks.about] },
   { label: "Contact & CV", links: [navigationLinks.contact, navigationLinks.resume, { ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },

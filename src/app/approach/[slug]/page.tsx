@@ -1,3 +1,4 @@
+import { WorkSubnav } from "@/components/work-subnav";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { approachDetail as c, site } from "@/content/site";
@@ -26,6 +27,7 @@ export default async function ApproachStep({ params }: PageProps<"/approach/[slu
   const { step, index } = found;
   const next = site.approach[(index + 1) % site.approach.length];
   return <article className="container section-space approach-detail">
+    <WorkSubnav current="/approach" />
     <SectionLabel>{c.stepLabel(index)}</SectionLabel>
     <div className="page-intro"><Reveal><h1>{step.title}</h1></Reveal><Reveal><p>{step.text}</p></Reveal></div>
     <div className="prose">

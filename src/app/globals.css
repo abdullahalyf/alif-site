@@ -152,7 +152,7 @@ body:has(.fallback-nav) { padding-top: 0; }
 }
 .desktop-nav { display: flex; gap: clamp(0.75rem, 2.2vw, 2rem); }
 .desktop-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; white-space: nowrap; }
-[aria-current="page"] { text-decoration: underline; }
+[aria-current="page"], .desktop-nav a[data-active] { text-decoration: underline; }
 /* The search button and the menu trigger sit together on the right. */
 .header-actions { display: flex; align-items: center; gap: clamp(0.35rem, 1.3vw, 1rem); }
 .theme-toggle { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; flex: none; border: 1px solid var(--line); border-radius: 50%; }

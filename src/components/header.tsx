@@ -14,6 +14,9 @@ const COMPACT_THRESHOLD = 40;
 
 export function Header() {
   const pathname = usePathname();
+  const services = shell.nav[0];
+  const servicesActive = workNavigation.links.some(({ href }) => pathname === href)
+    || pathname.startsWith("/work/") || pathname.startsWith("/approach/");
   const header = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const pressedBackdrop = useRef(false);
@@ -92,8 +95,8 @@ export function Header() {
               workTrigger.current?.focus();
               setDismissedWork(true);
             }}>
-            <Link ref={workTrigger} href={shell.nav[0].href} aria-current={pathname === shell.nav[0].href ? "page" : undefined}>{shell.nav[0].label}</Link>
-            <ul className="work-dropdown__links">{workNavigation.links.map((link) =>
+            <Link ref={workTrigger} href={services.href} data-active={servicesActive || undefined} aria-current={pathname === services.href ? "page" : undefined}>{services.label}</Link>
+            <ul className="work-dropdown__links">{workNavigation.dropdown.map((link) =>
               <li key={link.href} onClick={() => setDismissedWork(true)}>{linkItem(link)}</li>
             )}</ul>
           </div>

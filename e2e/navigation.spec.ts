@@ -8,7 +8,7 @@ for (const link of shell.nav) {
     await page.goto("/");
     if (isMobile) await page.getByRole("button", { name: shell.menu, exact: true }).click();
     const navigation = isMobile ? page.getByRole("dialog").getByRole("navigation") : page.getByRole("banner").getByRole("navigation");
-    await navigation.getByRole("link", { name: isMobile && link.href === "/work" ? workNavigation.links[0].label : link.label, exact: true }).click();
+    await navigation.getByRole("link", { name: link.label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`${link.href.replace("/", "\\/")}$`));
     if (link.href.startsWith("#")) await expect(page.getByRole("contentinfo")).toBeInViewport();
     // A page carries its own heading, which does not have to repeat the
@@ -63,13 +63,13 @@ test("page content and navigation work without JavaScript", async ({ browser, is
   await context.close();
 });
 
-test("desktop Work opens by hover or keyboard and links to each Work section", async ({ page, isMobile }) => {
+test("desktop Services opens by hover or keyboard and links to each Services section", async ({ page, isMobile }) => {
   test.skip(isMobile, "Desktop navigation only");
   await page.goto("/about");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
   const navigation = page.getByRole("banner").getByRole("navigation");
   const work = navigation.getByRole("link", { name: shell.workNavLabel, exact: true }).first();
-  const projects = navigation.getByRole("link", { name: workNavigation.links[0].label });
+  const projects = navigation.getByRole("link", { name: workNavigation.dropdown[0].label });
   await expect(navigation.getByRole("link")).toHaveCount(4);
   await work.hover();
   await expect(projects).toBeVisible();
@@ -82,6 +82,7 @@ test("desktop Work opens by hover or keyboard and links to each Work section", a
   await expect(projects).toBeHidden();
   await expect(work).toBeFocused();
   await page.keyboard.press("Enter");
+  await expect(page).toHaveURL("/services");
   const subnav = page.getByRole("navigation", { name: workNavigation.label });
   for (const { label, href } of workNavigation.links) {
     await subnav.getByRole("link", { name: label }).click();
