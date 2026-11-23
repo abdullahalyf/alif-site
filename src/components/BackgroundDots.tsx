@@ -5,6 +5,7 @@ import { LINK_DISTANCE, linkAlpha, resizeDots, stepDots, type Dot, type Pointer 
 import { REDUCED_MOTION_QUERY } from "@/lib/use-reduced-motion";
 
 const MAX_DPR = 2;
+const FRAME_INTERVAL = 1000 / 30;
 
 export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night" }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -75,13 +76,11 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     };
 
     const tick = (now: number) => {
-      if (visible) {
+      if (!last || now - last >= FRAME_INTERVAL - 1) {
         const dt = last ? (now - last) / 1000 : 0;
         last = now;
         stepDots(dots, dt, width, height, pointer);
         draw();
-      } else {
-        last = 0;
       }
       frame = requestAnimationFrame(tick);
     };
@@ -99,7 +98,7 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     };
 
     const play = () => {
-      if (running || document.hidden) return;
+      if (running || !visible || document.hidden) return;
       running = true;
       last = 0;
       frame = requestAnimationFrame(tick);
@@ -147,7 +146,9 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
       ? (callback: () => void) => window.requestIdleCallback(callback, { timeout: 1500 })
       : (callback: () => void) => window.setTimeout(callback, 200);
     const cancel = window.cancelIdleCallback ?? window.clearTimeout;
-    idle = schedule(begin);
+    const scheduleStart = () => { idle = schedule(begin); };
+    if (document.readyState === "complete") scheduleStart();
+    else window.addEventListener("load", scheduleStart, { once: true });
 
     const themeObserver = new MutationObserver(onThemeChange);
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class", "style"] });
@@ -160,22 +161,27 @@ export function BackgroundDots({ variant = "page" }: { variant?: "page" | "night
     const visibilityObserver = container && typeof IntersectionObserver !== "undefined"
       ? new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
-        if (visible && !running && started) draw();
+        if (!started) return;
+        if (!visible) pause();
+        else if (motionQuery.matches) draw();
+        else play();
       })
       : null;
     if (container) visibilityObserver?.observe(container);
     else visible = true;
     if (container && !visibilityObserver) visible = true;
-    motionQuery.addEventListener("change", apply);
+    const onMotionChange = () => { if (started) apply(); };
+    motionQuery.addEventListener("change", onMotionChange);
 
     return () => {
+      window.removeEventListener("load", scheduleStart);
       cancel(idle);
       stopMotion();
       themeObserver.disconnect();
       sizeObserver?.disconnect();
       visibilityObserver?.disconnect();
       window.removeEventListener("resize", onResize);
-      motionQuery.removeEventListener("change", apply);
+      motionQuery.removeEventListener("change", onMotionChange);
     };
   }, [variant]);
 

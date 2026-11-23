@@ -19,7 +19,7 @@ export function TravelTeaser({ compact = false }: { compact?: boolean }) {
           const [note] = trip.story.split(/(?<=[.!?।])\s+/);
           return <figure className="travel-teaser-card" key={trip.slug}>
             <div className="travel-teaser-photo">
-              <Image src={photo.src} width={photo.width} height={photo.height} alt={photo.alt} sizes={compact ? "(min-width: 80rem) 27rem, (min-width: 56.25rem) 36vw, 72vw" : "(min-width: 80rem) 34rem, (min-width: 56.25rem) 44vw, 84vw"} unoptimized={photo.src.startsWith("https://")} />
+              <Image src={photo.src} width={photo.width} height={photo.height} alt={photo.alt} loading="lazy" fetchPriority="low" quality={68} sizes={compact ? "(min-width: 80rem) 27rem, (min-width: 56.25rem) 36vw, 72vw" : "(min-width: 80rem) 34rem, (min-width: 56.25rem) 44vw, 84vw"} unoptimized={photo.src.startsWith("https://")} />
             </div>
             <figcaption>
               <p className="travel-teaser-label">{trip.place} · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></p>
