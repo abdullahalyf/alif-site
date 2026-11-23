@@ -10,8 +10,8 @@
 
 | Run | Passed | Skipped | Failed |
 | --- | ---: | ---: | ---: |
-| 1 | Rechecking | — | — |
-| 2 | Queued | — | — |
+| 1 | 712 | 14 | 0 |
+| 2 | Running | — | — |
 
 Earlier attempts exposed an obsolete image cache assertion and navigation timeouts under concurrent browser load. The cache test now verifies slot revalidation and immutable original assets. The affected navigation tests wait for hydration before interacting. The recheck uses warmed preview routes and a 15-second assertion timeout.
 
