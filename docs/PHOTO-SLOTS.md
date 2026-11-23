@@ -11,30 +11,30 @@ Replace the listed JPEG with a photo of the same dimensions, keeping its path an
 | education-university | About | `public/images/slots/education-university.jpg` | 640×480, 4:3 | Daffodil International University campus |
 | education-college | About | `public/images/slots/education-college.jpg` | 640×480, 4:3 | Dhaka Commerce College |
 | education-school | About | `public/images/slots/education-school.jpg` | 640×480, 4:3 | Central Laboratory School & College |
-| story-jhenaidah | About | `public/images/slots/story-jhenaidah.jpg` | 440×330, 4:3 | Childhood in Jhenaidah |
-| story-school | About | `public/images/slots/story-school.jpg` | 440×330, 4:3 | First laptop or a school memory |
-| story-university | About | `public/images/slots/story-university.jpg` | 440×330, 4:3 | University or research team |
-| story-dhaka | About | `public/images/slots/story-dhaka.jpg` | 440×330, 4:3 | Present-day Dhaka or freelance work |
+| story-jhenaidah | About | `public/images/slots/story-jhenaidah.jpg` | 1200×900, 4:3 | Childhood in Jhenaidah |
+| story-school | About | `public/images/slots/story-school.jpg` | 1200×900, 4:3 | First laptop or a school memory |
+| story-university | About | `public/images/slots/story-university.jpg` | 1200×900, 4:3 | University or research team |
+| story-dhaka | About | `public/images/slots/story-dhaka.jpg` | 1200×900, 4:3 | Present-day Dhaka or freelance work |
 | about-interests | About | `public/images/slots/about-interests.jpg` | 1200×900, 4:3 | Travel in Bangladesh |
-| pos-overview | Work and case study | `public/images/slots/pos-overview.jpg` | 440×330, 4:3 | Alez POS checkout screen |
-| pos-detail | Work and case study | `public/images/slots/pos-detail.jpg` | 440×330, 4:3 | Alez POS reporting or back-office screen |
-| research-overview | Work and case study | `public/images/slots/research-overview.jpg` | 440×330, 4:3 | Traffic risk research overview |
-| research-detail | Work and case study | `public/images/slots/research-detail.jpg` | 440×330, 4:3 | Traffic risk evaluation detail |
-| stockroom-operations-overview | Work and case study; Home services | `public/images/slots/stockroom-operations-overview.jpg` | 440×330, 4:3 | Overview of Stockroom Operations Hub |
-| stockroom-operations-detail | Work and case study | `public/images/slots/stockroom-operations-detail.jpg` | 440×330, 4:3 | Detail from Stockroom Operations Hub |
-| stockroom-operations-context | Work and case study | `public/images/slots/stockroom-operations-context.jpg` | 440×330, 4:3 | Workflow for Stockroom Operations Hub |
-| clinic-booking-overview | Work and case study; Home services | `public/images/slots/clinic-booking-overview.jpg` | 440×330, 4:3 | Overview of Clinic Booking & Care Portal |
-| clinic-booking-detail | Work and case study | `public/images/slots/clinic-booking-detail.jpg` | 440×330, 4:3 | Detail from Clinic Booking & Care Portal |
-| clinic-booking-context | Work and case study | `public/images/slots/clinic-booking-context.jpg` | 440×330, 4:3 | Workflow for Clinic Booking & Care Portal |
-| field-service-overview | Work and case study; Home services | `public/images/slots/field-service-overview.jpg` | 440×330, 4:3 | Overview of Field Service Dispatch |
-| field-service-detail | Work and case study | `public/images/slots/field-service-detail.jpg` | 440×330, 4:3 | Detail from Field Service Dispatch |
-| field-service-context | Work and case study | `public/images/slots/field-service-context.jpg` | 440×330, 4:3 | Workflow for Field Service Dispatch |
-| learning-dashboard-overview | Work and case study | `public/images/slots/learning-dashboard-overview.jpg` | 440×330, 4:3 | Overview of Learning Progress Dashboard |
-| learning-dashboard-detail | Work and case study | `public/images/slots/learning-dashboard-detail.jpg` | 440×330, 4:3 | Detail from Learning Progress Dashboard |
-| learning-dashboard-context | Work and case study | `public/images/slots/learning-dashboard-context.jpg` | 440×330, 4:3 | Workflow for Learning Progress Dashboard |
-| sync-inspector-overview | Work and case study; Home services | `public/images/slots/sync-inspector-overview.jpg` | 440×330, 4:3 | Overview of Sync Inspector |
-| sync-inspector-detail | Work and case study | `public/images/slots/sync-inspector-detail.jpg` | 440×330, 4:3 | Detail from Sync Inspector |
-| sync-inspector-context | Work and case study | `public/images/slots/sync-inspector-context.jpg` | 440×330, 4:3 | Workflow for Sync Inspector |
+| pos-overview | Work and case study | `public/images/slots/pos-overview.jpg` | 1280×960, 4:3 | Alez POS checkout screen |
+| pos-detail | Work and case study | `public/images/slots/pos-detail.jpg` | 1280×960, 4:3 | Alez POS reporting or back-office screen |
+| research-overview | Work and case study | `public/images/slots/research-overview.jpg` | 1280×960, 4:3 | Traffic risk research overview |
+| research-detail | Work and case study | `public/images/slots/research-detail.jpg` | 1280×960, 4:3 | Traffic risk evaluation detail |
+| stockroom-operations-overview | Work and case study; Home services | `public/images/slots/stockroom-operations-overview.jpg` | 1280×960, 4:3 | Overview of Stockroom Operations Hub |
+| stockroom-operations-detail | Work and case study | `public/images/slots/stockroom-operations-detail.jpg` | 1280×960, 4:3 | Detail from Stockroom Operations Hub |
+| stockroom-operations-context | Work and case study | `public/images/slots/stockroom-operations-context.jpg` | 1280×960, 4:3 | Workflow for Stockroom Operations Hub |
+| clinic-booking-overview | Work and case study; Home services | `public/images/slots/clinic-booking-overview.jpg` | 1280×960, 4:3 | Overview of Clinic Booking & Care Portal |
+| clinic-booking-detail | Work and case study | `public/images/slots/clinic-booking-detail.jpg` | 1280×960, 4:3 | Detail from Clinic Booking & Care Portal |
+| clinic-booking-context | Work and case study | `public/images/slots/clinic-booking-context.jpg` | 1280×960, 4:3 | Workflow for Clinic Booking & Care Portal |
+| field-service-overview | Work and case study; Home services | `public/images/slots/field-service-overview.jpg` | 1280×960, 4:3 | Overview of Field Service Dispatch |
+| field-service-detail | Work and case study | `public/images/slots/field-service-detail.jpg` | 1280×960, 4:3 | Detail from Field Service Dispatch |
+| field-service-context | Work and case study | `public/images/slots/field-service-context.jpg` | 1280×960, 4:3 | Workflow for Field Service Dispatch |
+| learning-dashboard-overview | Work and case study | `public/images/slots/learning-dashboard-overview.jpg` | 1280×960, 4:3 | Overview of Learning Progress Dashboard |
+| learning-dashboard-detail | Work and case study | `public/images/slots/learning-dashboard-detail.jpg` | 1280×960, 4:3 | Detail from Learning Progress Dashboard |
+| learning-dashboard-context | Work and case study | `public/images/slots/learning-dashboard-context.jpg` | 1280×960, 4:3 | Workflow for Learning Progress Dashboard |
+| sync-inspector-overview | Work and case study; Home services | `public/images/slots/sync-inspector-overview.jpg` | 1280×960, 4:3 | Overview of Sync Inspector |
+| sync-inspector-detail | Work and case study | `public/images/slots/sync-inspector-detail.jpg` | 1280×960, 4:3 | Detail from Sync Inspector |
+| sync-inspector-context | Work and case study | `public/images/slots/sync-inspector-context.jpg` | 1280×960, 4:3 | Workflow for Sync Inspector |
 | travel-sylhet-tea-1 | Travel / Sylhet tea gardens; Home hero strip | `public/images/slots/travel-sylhet-tea-1.jpg` | 1200×900, 4:3 | Sylhet tea gardens, photograph 1 |
 | travel-sylhet-tea-2 | Travel / Sylhet tea gardens | `public/images/slots/travel-sylhet-tea-2.jpg` | 1200×900, 4:3 | Sylhet tea gardens, photograph 2 |
 | travel-sylhet-tea-3 | Travel / Sylhet tea gardens | `public/images/slots/travel-sylhet-tea-3.jpg` | 1200×900, 4:3 | Sylhet tea gardens, photograph 3 |

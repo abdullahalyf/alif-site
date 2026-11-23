@@ -55,7 +55,7 @@ export const projects = [
       { label: "Built to scale to", value: "9 branches" },
       { label: "Adding a branch", value: "Configuration, not new code" },
     ],
-    images: [photoSlot("pos-overview", 440, 330, "Alez POS checkout screen"), photoSlot("pos-detail", 440, 330, "Alez POS reporting or back-office screen")],
+    images: [photoSlot("pos-overview", 1280, 960, "Alez POS checkout screen"), photoSlot("pos-detail", 1280, 960, "Alez POS reporting or back-office screen")],
   },
   {
     slug: "traffic-accident-risk",
@@ -93,7 +93,7 @@ export const projects = [
     metrics: [
       { label: "Research status", value: "Paper submitted" },
     ],
-    images: [photoSlot("research-overview", 440, 330, "Traffic risk research overview"), photoSlot("research-detail", 440, 330, "Traffic risk evaluation detail")],
+    images: [photoSlot("research-overview", 1280, 960, "Traffic risk research overview"), photoSlot("research-detail", 1280, 960, "Traffic risk evaluation detail")],
   },
   // DEMO: every text field and image in this illustrative project is replaceable sample content.
   {
@@ -143,7 +143,7 @@ export const projects = [
         { label: "DEMO duplicate entries", value: "0" },
         { label: "DEMO replenishment prep", value: "45 → 12 minutes" },
       ],
-      images: [photoSlot("stockroom-operations-overview", 440, 330, "Overview of Stockroom Operations Hub"), photoSlot("stockroom-operations-detail", 440, 330, "Detail from Stockroom Operations Hub"), photoSlot("stockroom-operations-context", 440, 330, "Workflow for Stockroom Operations Hub")],
+      images: [photoSlot("stockroom-operations-overview", 1280, 960, "Overview of Stockroom Operations Hub"), photoSlot("stockroom-operations-detail", 1280, 960, "Detail from Stockroom Operations Hub"), photoSlot("stockroom-operations-context", 1280, 960, "Workflow for Stockroom Operations Hub")],
     },
   // DEMO: every text field and image in this illustrative project is replaceable sample content.
   {
@@ -192,7 +192,7 @@ export const projects = [
         { label: "DEMO slot contention", value: "1 booking from 100 requests" },
         { label: "DEMO coverage", value: "36 acceptance scenarios" },
       ],
-      images: [photoSlot("clinic-booking-overview", 440, 330, "Overview of Clinic Booking & Care Portal"), photoSlot("clinic-booking-detail", 440, 330, "Detail from Clinic Booking & Care Portal"), photoSlot("clinic-booking-context", 440, 330, "Workflow for Clinic Booking & Care Portal")],
+      images: [photoSlot("clinic-booking-overview", 1280, 960, "Overview of Clinic Booking & Care Portal"), photoSlot("clinic-booking-detail", 1280, 960, "Detail from Clinic Booking & Care Portal"), photoSlot("clinic-booking-context", 1280, 960, "Workflow for Clinic Booking & Care Portal")],
     },
   // DEMO: every text field and image in this illustrative project is replaceable sample content.
   {
@@ -241,7 +241,7 @@ export const projects = [
         { label: "DEMO replay", value: "500 offline submissions" },
         { label: "DEMO recovery", value: "6-hour outage" },
       ],
-      images: [photoSlot("field-service-overview", 440, 330, "Overview of Field Service Dispatch"), photoSlot("field-service-detail", 440, 330, "Detail from Field Service Dispatch"), photoSlot("field-service-context", 440, 330, "Workflow for Field Service Dispatch")],
+      images: [photoSlot("field-service-overview", 1280, 960, "Overview of Field Service Dispatch"), photoSlot("field-service-detail", 1280, 960, "Detail from Field Service Dispatch"), photoSlot("field-service-context", 1280, 960, "Workflow for Field Service Dispatch")],
     },
   // DEMO: every text field and image in this illustrative project is replaceable sample content.
   {
@@ -290,7 +290,7 @@ export const projects = [
         { label: "DEMO export verification", value: "2,000 records" },
         { label: "DEMO summary target", value: "Under 100 ms" },
       ],
-      images: [photoSlot("learning-dashboard-overview", 440, 330, "Overview of Learning Progress Dashboard"), photoSlot("learning-dashboard-detail", 440, 330, "Detail from Learning Progress Dashboard"), photoSlot("learning-dashboard-context", 440, 330, "Workflow for Learning Progress Dashboard")],
+      images: [photoSlot("learning-dashboard-overview", 1280, 960, "Overview of Learning Progress Dashboard"), photoSlot("learning-dashboard-detail", 1280, 960, "Detail from Learning Progress Dashboard"), photoSlot("learning-dashboard-context", 1280, 960, "Workflow for Learning Progress Dashboard")],
     },
   // DEMO: every text field and image in this illustrative project is replaceable sample content.
   {
@@ -339,7 +339,7 @@ export const projects = [
         { label: "DEMO coverage", value: "48 trace fixtures" },
         { label: "DEMO capture", value: "10,000 events under 1 s" },
       ],
-      images: [photoSlot("sync-inspector-overview", 440, 330, "Overview of Sync Inspector"), photoSlot("sync-inspector-detail", 440, 330, "Detail from Sync Inspector"), photoSlot("sync-inspector-context", 440, 330, "Workflow for Sync Inspector")],
+      images: [photoSlot("sync-inspector-overview", 1280, 960, "Overview of Sync Inspector"), photoSlot("sync-inspector-detail", 1280, 960, "Detail from Sync Inspector"), photoSlot("sync-inspector-context", 1280, 960, "Workflow for Sync Inspector")],
     },
 ] satisfies Project[];
 
