@@ -47,8 +47,8 @@ export const site = {
   ],
   education: [
     { title: "BSc in Computer Science & Engineering", org: "Daffodil International University, Dhaka", years: "Currently 5th semester", text: "Software engineering, databases and intelligent systems, plus research on traffic accident risk prediction.", image: { src: "/images/demo/education-university.jpg", width: 640, height: 480, alt: "Demo photograph of a university campus" } },
-    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "GPA 5.00", text: "Science group.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
-    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
+    { title: "Higher Secondary Certificate (Science)", org: "Dhaka Commerce College, Dhaka", years: "2024 · GPA 5.00", text: "Science group.", image: { src: "/images/demo/education-college.jpg", width: 640, height: 480, alt: "Demo photograph of a college courtyard" } },
+    { title: "Secondary School Certificate (Science)", org: "Central Laboratory School & College, Dhaka", years: "2022 · GPA 5.00", text: "Science group. Government Talent-pool scholarship recipient.", image: { src: "/images/demo/education-school.jpg", width: 640, height: 480, alt: "Demo photograph of a school building" } },
   ],
   skills: [
     { title: "Working knowledge", icon: "data", items: [
@@ -443,7 +443,7 @@ export const demoContent = {
   languagesLabel: "Languages",
   interestsLabel: "Interests",
   interestsPhoto: { src: "/images/travel/jhenaidah-home/1.jpg", width: 1200, height: 900 }, // DEMO
-  aboutDemoNotice: "Demo education details and interests — to be confirmed by Alif.",
+  aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
   statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",

@@ -1,5 +1,5 @@
 import { site, shell, skillProfile } from "@/content/site";
-import { cvDownload, cvProjects, resumeContent as c } from "@/content/resume";
+import { cvDownload, cvEducation, cvProjects, resumeContent as c } from "@/content/resume";
 import { Reveal, StaggerIn } from "@/components/motion";
 import { PrintButton } from "./PrintButton";
 export function Resume({ id }: { id: string }) {
@@ -69,7 +69,7 @@ export function Resume({ id }: { id: string }) {
           <h3>{c.educationTitle}</h3>
         </Reveal>
         <StaggerIn>
-          {site.education.map((item) => (
+          {cvEducation.map((item) => (
             <div key={item.title}>
               <h4>{item.title}</h4>
               <p>

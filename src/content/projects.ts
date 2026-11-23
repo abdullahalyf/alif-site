@@ -6,7 +6,7 @@ export const projects = [
   {
     slug: "multi-branch-pos",
     title: "Multi-Branch POS & Operations Platform",
-    client: "A multi-branch boba tea brand in Dhaka",
+    client: "Alez",
     year: 2026,
     role: "System architect · Directed Codex and Claude · Reviewed and tested",
     category: "Client work",

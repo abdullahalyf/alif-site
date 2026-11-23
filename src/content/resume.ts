@@ -1,4 +1,4 @@
-import { resumeLink } from "./site";
+import { resumeLink, site } from "./site";
 import { resumeSchema } from "./schemas/resume";
 import { projects } from "./projects";
 export const resumeContent = resumeSchema.parse({
@@ -24,3 +24,5 @@ export const resumeContent = resumeSchema.parse({
 export const cvProjects = projects.filter(({ slug }) => slug === "multi-branch-pos");
 
 export const cvDownload = { label: "Download CV (PDF)", href: "/documents/alif-cv.pdf" };
+
+export const cvEducation = site.education.map(({ title, org, years, text }) => ({ title, org, years, text }));
