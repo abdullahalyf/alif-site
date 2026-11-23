@@ -1,5 +1,6 @@
 import { contactContent as c } from "@/content/contact";
 import { availability, contactNext, cvId, site } from "@/content/site";
+import { ButtonLink } from "@/components/button";
 import { BriefForm } from "@/features/contact/BriefForm";
 import { pageMetadata } from "@/seo/metadata";
 import { Reveal } from "@/components/motion";
@@ -21,7 +22,7 @@ export default function ContactPage() {
               <a href={`mailto:${site.email}`}>{site.email}</a>
             </p>
             <p>
-              <a href={site.whatsapp.href}>{site.whatsapp.display}</a>
+              <ButtonLink href={site.whatsapp.href} variant="secondary">{site.whatsapp.display}</ButtonLink>
             </p>
             <p>{site.location}</p>
             <p>{c.response}</p>

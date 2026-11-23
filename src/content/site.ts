@@ -76,7 +76,7 @@ export const site = {
   ],
   email: "abdullahaylif@gmail.com",
   whatsapp: {
-    display: "Message on WhatsApp",
+    display: "WhatsApp",
     href: "https://wa.me/8801629889764",
   },
   socials: [
@@ -243,7 +243,7 @@ export const shell = {
   copyright: (year: number) => `© ${year} ${site.name}`,
   footerTitle: "Let's build something that keeps working.",
   email: { label: "Email me", href: `mailto:${site.email}` },
-  whatsappLabel: "WhatsApp",
+  whatsappLabel: site.whatsapp.display,
   workLabel: "See my work",
   aboutTitle: "About me",
   approachTitle: "Approach",
@@ -285,7 +285,10 @@ export const menuGroups = [
   { label: "More", links: [navigationLinks.uses, navigationLinks.now] },
 ];
 
-export const footerGroups = menuGroups;
+export const footerGroups = menuGroups.map((group) => ({
+  ...group,
+  links: group.links.filter(({ href }) => href !== site.whatsapp.href),
+}));
 export const aboutSiteLinks = {
   title: "Also on this site",
   links: [navigationLinks.uses, navigationLinks.now, navigationLinks.lab, navigationLinks.estimate, navigationLinks.travel],
