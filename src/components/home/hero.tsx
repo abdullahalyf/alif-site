@@ -29,7 +29,7 @@ export function Hero() {
         photoStrip={heroPhotos.images.map((photo) => <li key={photo.src}>
           <Image {...photo} alt={photo.alt} sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />
         </li>)}
-    >
+      >
         <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" quality={68} className="hero-photo" />
       </HeroPhotoPanel>
     </Suspense>
