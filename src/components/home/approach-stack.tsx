@@ -1,10 +1,12 @@
 "use client";
 
+import { useReducedMotion } from "@/lib/use-reduced-motion";
 import { useEffect, useRef, type ReactNode } from "react";
 import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 
 export function ApproachStack({ children }: { children: ReactNode }) {
   const list = useRef<HTMLOListElement>(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const element = list.current;
@@ -31,7 +33,7 @@ export function ApproachStack({ children }: { children: ReactNode }) {
       });
       return () => media.revert();
     });
-  }, []);
+  }, [reducedMotion]);
 
   return <ol className="night-steps" ref={list}>{children}</ol>;
 }
