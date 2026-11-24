@@ -52,7 +52,6 @@ describe("content", () => {
       site.avatar,
       site.aboutPhoto,
       site.heroSide,
-      demoContent.interestsPhoto,
       ...heroPhotos.images,
       ...allTrips.flatMap((trip) => trip.photos),
       ...site.education.map((item) => item.image),

@@ -1,5 +1,5 @@
 import { photoSlot } from "./photo-slots";
-import type { Hackathon, Site } from "./schema";
+import type { Hackathon, ImageAsset, Site } from "./schema";
 
 export const skillProfile = {
   label: "Skills",
@@ -83,10 +83,10 @@ export const site = {
     { label: "GitHub", href: "https://github.com/abdullahalyf" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
-  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Alif against a grey wall"),
+  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Portrait of Abdullah Alif"),
   avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
-  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Alif in a patterned shirt"),
-  heroSide: photoSlot("home-hero-side", 900, 1100, "Alif at work"),
+  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Portrait of Abdullah Alif"),
+  heroSide: photoSlot("home-hero-side", 900, 1100, "Abdullah Alif at a hill viewpoint"),
   statusCard: {
     availability: "Available for work",
     timezone: "Asia/Dhaka",
@@ -137,25 +137,25 @@ export const site = {
       label: "Jhenaidah",
       title: "Where it started",
       text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
-      image: photoSlot("story-jhenaidah", 1200, 900, "Childhood in Jhenaidah"),
+      image: null,
     },
     {
       label: "School & college",
       title: "Learning to build",
       text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
-      image: photoSlot("story-school", 1200, 900, "First laptop or a school memory"),
+      image: photoSlot("story-school", 1200, 900, "A Dell Inspiron laptop, similar to the first one"),
     },
     {
       label: "Daffodil International University",
       title: "Computer Science & Engineering",
       text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: photoSlot("story-university", 1200, 900, "University or research team"),
+      image: photoSlot("story-university", 1200, 900, "Daffodil International University campus"),
     },
     {
       label: "Dhaka",
       title: "Now",
       text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
-      image: photoSlot("story-dhaka", 1200, 900, "Present-day Dhaka or freelance work"),
+      image: null,
     },
   ],
 } satisfies Site;
@@ -423,7 +423,6 @@ export const demoContent = {
   educationLabel: "Education",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
-  interestsPhoto: photoSlot("about-interests", 1200, 900, "Travel in Bangladesh"),
   aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
   statsNotice: "A few facts, no padding.",
@@ -435,12 +434,7 @@ export const demoContent = {
 
 export const heroPhotos = {
   label: "A few photos",
-  images: [
-    photoSlot("travel-sundarbans-1", 1200, 900, "Sundarbans"),
-    photoSlot("travel-jhenaidah-home-1", 1200, 900, "Jhenaidah"),
-    photoSlot("travel-sylhet-tea-1", 1200, 900, "Sylhet tea gardens"),
-    photoSlot("travel-bandarban-1", 1200, 900, "Bandarban hills"),
-  ],
+  images: [] as ImageAsset[],
 };
 
 export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };
@@ -457,10 +451,10 @@ export const contactNext = {
 export const homeServices = {
   learn: "Learn more",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: photoSlot("sync-inspector-overview", 1280, 960, "") },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: photoSlot("stockroom-operations-overview", 1280, 960, "") },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: photoSlot("field-service-overview", 1280, 960, "") },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: photoSlot("clinic-booking-overview", 1280, 960, "") },
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture" },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations" },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline" },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access" },
   ] as const,
 };
 

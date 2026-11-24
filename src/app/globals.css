@@ -404,6 +404,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .story-photo-frame:has(img) { aspect-ratio: auto; }
 .story-photo-frame img { display: block; width: 100%; height: auto; }
 .story-chapter figcaption { display: grid; gap: 0.35rem; margin-top: 1rem; font-size: 0.875rem; }
+.story-chapter--text { grid-template-columns: 1fr; }
 .story-chapter--1 figure { width: 80%; justify-self: end; }
 .story-chapter--2 figure { width: 90%; }
 @media (max-width: 47.999rem) {

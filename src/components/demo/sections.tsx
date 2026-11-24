@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { demoContent, seo, site, skillProfile, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
@@ -53,8 +52,6 @@ export function LatestWriting() {
   </section>;
 }
 export function AboutDetails() {
-  const interestsPhoto = demoContent.interestsPhoto;
-
   return <>
     <div className="tint-a"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
@@ -102,7 +99,6 @@ export function AboutDetails() {
           <h2 id="interests-title">{demoContent.interestsLabel}</h2>
           <ul className="chip-list chip-list--interests">{site.interests.map((interest) => <li key={interest} className="chip">{interest}</li>)}</ul>
         </div>
-        <Image {...interestsPhoto} alt="" sizes="(max-width: 35rem) 80vw, 8rem" />
       </section>
     </div></div>
   </>;

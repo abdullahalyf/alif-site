@@ -25,8 +25,8 @@ export function Hero() {
     <Suspense>
       <HeroPhotoPanel
         label={heroPhotos.label}
-        floatingPhoto={<Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />}
-        photoStrip={heroPhotos.images.map((photo) => <li key={photo.src}>
+        floatingPhoto={heroPhotos.images[0] && <Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />}
+        photoStrip={heroPhotos.images.length > 0 && heroPhotos.images.map((photo) => <li key={photo.src}>
           <Image {...photo} alt={photo.alt} sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />
         </li>)}
       >
