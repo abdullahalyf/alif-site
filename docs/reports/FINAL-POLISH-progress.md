@@ -11,6 +11,7 @@
 - [ ] Section 8 — Extras + verification
 
 Notes
+- Rule from Alif: never remove a section, animation or interaction because content is missing; fill it. Restored: hero photo strip (real photos) and Services hover images (stock + real). Compare with the live site before every push.
 - Download CV button points at /documents/alif-cv.pdf for now; Section 6 switches it to /cv.
 - /travel journal pages still contain demo trips until Section 2 replaces them.
 - Malaysia trip: June 2025 (around Eid).

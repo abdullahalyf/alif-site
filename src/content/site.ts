@@ -176,12 +176,12 @@ export const site = {
     {
       label: "Beyond the screen",
       title: "Travel, and a trip to Malaysia",
-      text: "I travelled to Malaysia in June 2025, around Eid. I like new places and the people I meet in them. Today I live in Dhaka and freelance as a systems architect.",
+      text: "I travelled to Malaysia in June 2025, around Eid, and visited Putrajaya and Langkawi. I like new places and the people I meet in them. Today I live in Dhaka and freelance as a systems architect.",
       images: [
         photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in front of Putra Mosque in Putrajaya"),
+        photoSlot("travel-langkawi", 640, 640, "Abdullah Alif sitting by a tree on a street in Langkawi, Malaysia"),
+        photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif at the Langkawi Sky Bridge viewpoint, with misty hills behind"),
         photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif in a brown hat with a Malaysian flag"),
-        photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at a misty hill viewpoint"),
-        photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
       ],
       quote: { text: "Travel is fatal to prejudice, bigotry, and narrow-mindedness.", by: "Mark Twain" },
     },
@@ -467,7 +467,14 @@ export const demoContent = {
 
 export const heroPhotos = {
   label: "A few photos",
-  images: [] as ImageAsset[],
+  images: [
+    photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in front of Putra Mosque in Putrajaya"),
+    photoSlot("travel-langkawi", 640, 640, "Abdullah Alif sitting by a tree on a street in Langkawi, Malaysia"),
+    photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
+    photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif at the Langkawi Sky Bridge viewpoint, with misty hills behind"),
+    photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif in a brown hat with a Malaysian flag"),
+    photoSlot("travel-bangladesh-snapshots", 640, 360, "Snapshots from trips across Bangladesh"),
+  ] as ImageAsset[],
 };
 
 export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };
@@ -483,11 +490,12 @@ export const contactNext = {
 
 export const homeServices = {
   learn: "Learn more",
+  credit: "Stock photos from Pexels: divinetechygirl (flowchart), Brett Sayles (server racks).",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture" },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations" },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline" },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access" },
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: { src: "/images/stock/service-architecture.jpg", width: 480, height: 600, alt: "A hand drawing a flowchart on a whiteboard" } },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: { src: "/images/slots/service-operations.jpg", width: 360, height: 450, alt: "The Alez POS selling screen" } },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: { src: "/images/stock/service-offline.jpg", width: 480, height: 600, alt: "Rows of server racks in a data centre" } },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: { src: "/images/stock/service-access.jpg", width: 480, height: 600, alt: "Locked server cabinets in a data centre" } },
   ] as const,
 };
 

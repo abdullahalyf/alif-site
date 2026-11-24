@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@/components/arrows";
 import { homeContent, homeServices } from "@/content/site";
@@ -16,8 +17,10 @@ export function Services() {
           <h3>{service.title}</h3>
           <p>{service.description}</p>
           <span className="home-service__link">{homeServices.learn}<ArrowRight /></span>
+          <Image className="home-service__image" {...service.image} alt="" sizes="9rem" loading="lazy" />
         </Link>
       </li>)}</StaggerIn>
+      <p className="home-services__credit">{homeServices.credit}</p>
     </div>
   </section>;
 }

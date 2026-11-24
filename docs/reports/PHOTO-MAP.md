@@ -19,6 +19,17 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 | 08b-hackathons/* | Achievements "View" photos, CloudSentinel gallery (Sections 2 and 4) | |
 | 07-travel/bangladesh-travel-map.png | About travel section (Section 2) | |
 
+| Langkawi street photo (sent in chat, 640 px) | Hero photo strip, About story chapter 5, travel stop (`travel-langkawi`) | Langkawi, Malaysia, June 2025 |
+| 01-profile/2.jpeg (misty viewpoint) | Hero strip, About story chapter 5, travel stop "Langkawi Sky Bridge" (`travel-viewpoint`) | Taken from the original file, not a screenshot |
+
+## Stock photos (Rule 2, not Alif's own; free Pexels licence)
+| File | Used where | Credit |
+|---|---|---|
+| `public/images/stock/service-architecture.jpg` | Home services card hover, System architecture & design | divinetechygirl, Pexels #1181311 |
+| `public/images/stock/service-offline.jpg` | Home services card hover, Offline-first apps | Brett Sayles, Pexels #4508751 |
+| `public/images/stock/service-access.jpg` | Home services card hover, Database design & access control | Brett Sayles, Pexels #5203849 |
+| `slots/service-operations.jpg` | Home services card hover, Business software | Real Alez POS screenshot (crop) |
+
 ## Not used (and why)
 - 08-projects/Screenshot_1.png, Screenshot_2.png — duplicates of the client-site shots already in the repo.
 - 02-birthplace-jhenaidah/images.jpg, 02b-childhood-jessore/images.jpg — web images (text overlay / unknown licence), not Alif's own.

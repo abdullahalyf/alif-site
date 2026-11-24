@@ -512,7 +512,8 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .home-service { position: relative; isolation: isolate; display: grid; align-content: start; gap: 0.65rem; height: 100%; min-width: 0; padding: clamp(1rem, 2.4vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-1); }
 .home-service__icon { width: fit-content; padding: 0.5rem; border-radius: 0.6rem; background: var(--tint-a); }
 .home-service__link { color: var(--accent); display: flex; align-items: center; gap: 0.4rem; }
-.home-service__image { display: none; }
+.home-service__image { display: none; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.home-services__credit { margin-top: 0.75rem; font-size: 0.75rem; color: var(--ink-muted); }
 @media (min-width: 64rem) and (hover: hover) {
   .home-service { padding-right: 25%; }
   .home-service__image { display: block; position: absolute; right: 0.75rem; bottom: 0.75rem; width: 21%; clip-path: inset(0 0 0 100% round 0.55rem); }

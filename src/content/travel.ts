@@ -176,14 +176,19 @@ export const travelStops: TravelStop[] = [
     image: photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in sunglasses in front of Putra Mosque in Putrajaya, Malaysia"),
   },
   {
+    slug: "langkawi", place: "Langkawi, Malaysia", title: "A quiet stop in Langkawi",
+    note: "A short break on the street in Langkawi, in June 2025.",
+    image: photoSlot("travel-langkawi", 640, 640, "Abdullah Alif sitting by a tree on a street in Langkawi, Malaysia"),
+  },
+  {
     slug: "malaysia-hat", place: "Malaysia", title: "Hat on, map off",
     note: "Somewhere between sights, with a Malaysian flag in the background.",
     image: photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif wearing a brown hat, with a Malaysian flag behind him"),
   },
   {
-    slug: "viewpoint", place: "Above the clouds", title: "A misty viewpoint",
+    slug: "viewpoint", place: "Langkawi, Malaysia", title: "Langkawi Sky Bridge",
     note: "Cable cars in the distance and green hills fading into cloud.",
-    image: photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at a misty hill viewpoint"),
+    image: photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at the Langkawi Sky Bridge viewpoint, with misty hills behind"),
   },
   {
     slug: "bangladesh-snapshots", place: "Across Bangladesh", title: "Rivers, beaches and golden domes",
