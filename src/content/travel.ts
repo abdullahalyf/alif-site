@@ -162,6 +162,36 @@ export const internationalTrips = [
 
 export const allTrips: Trip[] = [...trips, ...internationalTrips];
 
+export type TravelStop = {
+  slug: string; place: string; title: string; note: string;
+  quote?: { text: string; by: string };
+  image: { src: string; width: number; height: number; alt: string };
+};
+
+export const travelStops: TravelStop[] = [
+  {
+    slug: "putrajaya", place: "Putrajaya, Malaysia", title: "In front of Putra Mosque",
+    note: "The pink dome of Putra Mosque behind me.",
+    quote: { text: "A journey of a thousand miles begins with a single step.", by: "Lao Tzu" },
+    image: photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in sunglasses in front of Putra Mosque in Putrajaya, Malaysia"),
+  },
+  {
+    slug: "malaysia-hat", place: "Malaysia", title: "Hat on, map off",
+    note: "Somewhere between sights, with a Malaysian flag in the background.",
+    image: photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif wearing a brown hat, with a Malaysian flag behind him"),
+  },
+  {
+    slug: "viewpoint", place: "Above the clouds", title: "A misty viewpoint",
+    note: "Cable cars in the distance and green hills fading into cloud.",
+    image: photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at a misty hill viewpoint"),
+  },
+  {
+    slug: "bangladesh-snapshots", place: "Across Bangladesh", title: "Rivers, beaches and golden domes",
+    note: "Snapshots from a few of the places I have visited.",
+    image: photoSlot("travel-bangladesh-snapshots", 640, 360, "Four snapshots: by a wide river, on a beach, in front of golden domes, and holding a flag in a field"),
+  },
+];
+
 export const travelContent = {
   path: "/travel",
   title: "Travel",
@@ -188,7 +218,6 @@ export const travelContent = {
   intro: "Across Bangladesh, I travel to see how people live, hear their stories and come home with better questions.",
   closing: "Some journeys take me somewhere new. Others help me see home a little more clearly.", // DEMO
   description: "A photo-book of travel notes, people and places across Bangladesh and beyond.", // DEMO
-  demoNotice: "DEMO travel notes.",
   bookTitle: "A few pages from the road",
   bookLabel: "Travel photo-book",
   desktopHint: "Scroll or drag to browse. At either end, keep scrolling to move down or up the page. Use the arrow keys when the book is focused.",
@@ -222,6 +251,7 @@ export const travelContent = {
   placesTitle: "Places I've been",
   teaserIntro: "Places I've been and people I've met",
   teaserTitle: "A few notes from the road",
+  demoNotice: "DEMO travel notes.",
   homeTeaserTitle: "I travel",
   homeTeaserIntro: "I travel across Bangladesh and talk to people — it shapes how I design systems.",
   moreStories: "More travel stories",

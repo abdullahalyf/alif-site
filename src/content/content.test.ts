@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projectSchema, projectsSchema, siteSchema } from "./schema";
-import { demoContent, heroPhotos, site } from "./site";
+import { heroPhotos, site } from "./site";
 import { allTrips } from "./travel";
 import { getProject, projects } from "./projects";
 

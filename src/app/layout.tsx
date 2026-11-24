@@ -15,6 +15,7 @@ import { introBootstrap } from "@/lib/intro";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false });
+const bricolage = localFont({ src: "../fonts/bricolage-grotesque-latin-wdth-normal.woff2", variable: "--font-bricolage", weight: "200 800", display: "swap" });
 const instrument = localFont({ src: "../fonts/instrument-serif-latin-400-normal.woff2", variable: "--font-instrument", weight: "400", display: "swap" });
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" data-theme={defaultTheme} suppressHydrationWarning className={`${inter.variable} ${instrument.variable}`}>
+    <html lang="en" data-theme={defaultTheme} suppressHydrationWarning className={`${inter.variable} ${instrument.variable} ${bricolage.variable}`}>
       <head>
         {/* A parser-blocking inline script sets the root theme before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />

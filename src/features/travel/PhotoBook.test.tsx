@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen, within } from "@testing-library/rea
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { PhotoBook } from "./PhotoBook";
 import { TravelTeaser } from "./TravelTeaser";
-import { trips, travelContent as c } from "@/content/travel";
+import { trips, travelStops, travelContent as c } from "@/content/travel";
 
 const mocks = vi.hoisted(() => ({ reduced: false, desktop: false, getGsap: vi.fn(), revert: vi.fn(), timeline: vi.fn() }));
 vi.mock("@/lib/gsap", () => ({ getGsap: mocks.getGsap }));
@@ -82,12 +82,11 @@ it("consumes wheel events only while the book can move, and passes both edges th
   book.scrollLeft = 200;
   expect(wheel(100).defaultPrevented).toBe(false);
 });
-it("provides a teaser for exactly the three latest journeys", () => {
+it("shows every travel stop in the teaser with its photo", () => {
   mocks.reduced = true;
   render(<TravelTeaser />);
-  const latest = [...trips].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
-  for (const trip of latest) expect(screen.getByRole("heading", { name: trip.title })).toBeInTheDocument();
-  expect(screen.getAllByRole("img")).toHaveLength(3);
+  for (const stop of travelStops) expect(screen.getByRole("heading", { name: stop.title })).toBeInTheDocument();
+  expect(screen.getAllByRole("img")).toHaveLength(travelStops.length);
   expect(screen.getByRole("link", { name: c.openJournal })).toHaveAttribute("href", c.path);
 });
 

@@ -23,10 +23,10 @@ afterEach(() => {
 });
 
 describe("BrandMark", () => {
-  it("shows the monogram initial and the wordmark", () => {
-    render(<BrandMark />);
+  it("shows the face photo and the wordmark", () => {
+    const { container } = render(<BrandMark />);
 
-    expect(screen.getByText(site.logoInitial)).toBeInTheDocument();
+    expect(container.querySelector("img.brand-mark__face")).toHaveAttribute("alt", "");
     expect(screen.getByText(site.logoText)).toBeInTheDocument();
   });
 

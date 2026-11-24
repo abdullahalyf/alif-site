@@ -83,7 +83,7 @@ export const site = {
     { label: "GitHub", href: "https://github.com/abdullahalyf" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
-  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Portrait of Abdullah Alif"),
+  heroPhoto: { src: "/images/alif-portrait.jpg", width: 2400, height: 1350, alt: "Portrait of Abdullah Alif against a grey wall" },
   avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
   aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Portrait of Abdullah Alif"),
   heroSide: photoSlot("home-hero-side", 900, 1100, "Abdullah Alif at a hill viewpoint"),
@@ -308,6 +308,9 @@ export const homeContent = {
   currentlyLabel: "Currently",
   currently: "5th semester CSE at DIU · IIT Bombay exchange from Dec 31, 2026 · research paper submitted",
   currentlyLink: "More on Now",
+  aboutPhoto: photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
+  aboutPhotoQuote: { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
+  heroActions: { email: "Email me", work: "See my work", cv: "Download CV", cvHref: "/documents/alif-cv.pdf", socials: "Find me online" },
 };
 
 export const availability = {

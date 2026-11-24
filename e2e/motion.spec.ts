@@ -5,7 +5,7 @@ test("home page shows its heading and footer immediately", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(site.role);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(site.name);
   await expect(page.getByRole("contentinfo")).toBeVisible();
 });
 
@@ -78,7 +78,7 @@ test("the Home photo sharpens without changing the inset frame", async ({ page, 
   const panel = page.locator(".hero-panel");
   const frame = panel.locator(".hero-panel__frame");
   const photo = panel.locator(".hero-photo");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
 
   async function scrollPanel(fraction: number) {
     await panel.evaluate((element, offset) => scrollTo({
@@ -115,7 +115,7 @@ test("the hero headline and sharp photo are present with JavaScript disabled", a
   try {
     const page = await context.newPage();
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
     await expect(page.locator(".hero-photo")).toHaveCSS("filter", "none");
   } finally {
     await context.close();
