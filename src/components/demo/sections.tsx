@@ -56,7 +56,7 @@ export function AboutDetails() {
     <div className="tint-a"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
         <SectionLabel>{demoContent.educationLabel}</SectionLabel>
-        <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
+        <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2></Reveal>
         <EducationTimeline items={site.education} />
       </section>
       <Highlights standalone={false} />

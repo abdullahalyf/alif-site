@@ -55,7 +55,7 @@ describe("content", () => {
       ...heroPhotos.images,
       ...allTrips.flatMap((trip) => trip.photos),
       ...site.education.map((item) => item.image),
-      ...site.story.map((c) => c.image),
+      ...site.story.flatMap((c) => c.images),
       ...projects.flatMap((p) => p.images),
     ]
       .filter((img) => img !== null)

@@ -44,7 +44,7 @@ test("the story chapters alternate sides and carry a bracketed label", async ({ 
 
 test("About photos display without a blur or scroll transform", async ({ page }) => {
   await page.goto("/about");
-  const photos = page.locator(".about-photo-wrap img, .education-timeline__photo img, .story-photo-frame img");
+  const photos = page.locator(".about-top__photo img, .education-timeline__photo img, .story-photo-frame img");
   expect(await photos.count()).toBeGreaterThan(1);
   for (const photo of await photos.all()) {
     await photo.scrollIntoViewIfNeeded();

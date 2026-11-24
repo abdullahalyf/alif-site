@@ -13,11 +13,14 @@ export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.desc
 export default function About() {
   return <>
     <section className="container section-space about-opening" aria-labelledby="about-title">
-      <SectionLabel>{site.name}</SectionLabel>
-      <div className="about-heading">
-        <h1 id="about-title" className="section-title">{shell.aboutTitle}</h1>
-        <div>
-          <p className="about-heading__intro">{aboutContent.intro}</p>
+      <SectionLabel>{aboutContent.label}</SectionLabel>
+      <div className="about-top">
+        <figure className="about-top__photo">
+          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), 34rem" quality={80} loading="eager" fetchPriority="high" />
+        </figure>
+        <div className="about-top__copy">
+          <h1 id="about-title" className="about-name">{aboutContent.heading}</h1>
+          <p className="about-top__brief">{aboutContent.brief}</p>
           <dl className="about-facts">
             {aboutContent.facts.map(({ label, value }) => <div key={label}><dt className="label">{label}</dt><dd>{value}</dd></div>)}
           </dl>
@@ -28,15 +31,12 @@ export default function About() {
         </div>
       </div>
       <div className="about-intro">
-        <div className="about-photo-wrap">
-          <Image {...site.aboutPhoto} alt={site.aboutPhoto.alt} sizes="(max-width: 47.999rem) calc(100vw - 3rem), (max-width: 79rem) calc(43vw - 1.25rem), 33rem" quality={68} loading="eager" fetchPriority="high" />
+        <div className="about-signature">
+          <p>{aboutContent.signature}</p>
+          <ul>{site.socials.map(({ href, label }) => <li key={href}><a className="text-link" href={href}>{label}</a></li>)}</ul>
         </div>
         <div className="about-intro__copy">
           {site.about.map((text) => <p key={text}>{text}</p>)}
-          <div className="about-signature">
-            <p>{aboutContent.signature}</p>
-            <ul>{site.socials.map(({ href, label }) => <li key={href}><a className="text-link" href={href}>{label}</a></li>)}</ul>
-          </div>
         </div>
       </div>
     </section>

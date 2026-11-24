@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { whenScrollRevealed } from "@/lib/when-scroll-revealed";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
 
-const candidates = "h1, h2, h3, p, figure img, .project-media img, .about-photo-wrap img, section > article, section > ul > li";
+const candidates = "h1, h2, h3, p, figure img, .project-media img, .about-top__photo img, section > article, section > ul > li";
 const excluded = "[data-motion-managed], .stagger-in, .hero-photo-story, .night-steps, .tools-marquee, .status-card, .intro-overlay, [role=log], [aria-live], form";
 
 export function PageMotion() {

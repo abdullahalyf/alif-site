@@ -76,7 +76,8 @@ export const siteSchema = z.object({
         label: z.string().min(1),
         title: z.string().min(1),
         text: z.string().min(1),
-        image: image.nullable(),
+        images: z.array(image),
+        quote: z.object({ text: z.string().min(1), by: z.string().min(1) }).optional(),
       }),
     )
     .min(1),

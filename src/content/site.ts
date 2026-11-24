@@ -84,9 +84,9 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
   heroPhoto: { src: "/images/alif-portrait.jpg", width: 2400, height: 1350, alt: "Portrait of Abdullah Alif against a grey wall" },
-  avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
-  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Portrait of Abdullah Alif"),
-  heroSide: photoSlot("home-hero-side", 900, 1100, "Abdullah Alif at a hill viewpoint"),
+  avatar: photoSlot("profile-avatar-face", 440, 440, "Portrait of Abdullah Alif"),
+  aboutPhoto: photoSlot("about-airport-full", 960, 1280, "Abdullah Alif at an airport, wearing a backpack"),
+  heroSide: photoSlot("home-hero-airport", 960, 1173, "Abdullah Alif at an airport with a red and white backpack"),
   statusCard: {
     availability: "Available for work",
     timezone: "Asia/Dhaka",
@@ -134,28 +134,56 @@ export const site = {
   ],
   story: [
     {
-      label: "Jhenaidah",
-      title: "Where it started",
-      text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
-      image: null,
-    },
-    {
-      label: "School & college",
-      title: "Learning to build",
-      text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
-      image: photoSlot("story-school", 1200, 900, "A Dell Inspiron laptop, similar to the first one"),
-    },
-    {
-      label: "Daffodil International University",
-      title: "Computer Science & Engineering",
-      text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: photoSlot("story-university", 1200, 900, "Daffodil International University campus"),
-    },
-    {
       label: "Dhaka",
-      title: "Now",
-      text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
-      image: null,
+      title: "School, and a first laptop",
+      text: "I was born in Jhenaidah and grew up in Dhaka from Class 1. In Class 9, during COVID online classes, I got my first laptop. That is where building started.",
+      images: [
+        photoSlot("story-assembly", 513, 389, "Students lined up for the morning assembly at school"),
+        photoSlot("story-school", 1200, 900, "A Dell Inspiron laptop, similar to the first one"),
+      ],
+      quote: { text: "Education is the most powerful weapon which you can use to change the world.", by: "Nelson Mandela" },
+    },
+    {
+      label: "College",
+      title: "Dhaka Commerce College",
+      text: "I studied Science for my Higher Secondary Certificate here and finished with a GPA of 5.00. Most of my self-taught programming happened alongside it.",
+      images: [
+        photoSlot("story-college-1", 1200, 900, "The Dhaka Commerce College building seen from the street"),
+        photoSlot("story-college-2", 387, 516, "The entrance of Dhaka Commerce College"),
+      ],
+      quote: { text: "I have no special talent. I am only passionately curious.", by: "Albert Einstein" },
+    },
+    {
+      label: "University",
+      title: "Computer Science & Engineering at DIU",
+      text: "I study CSE at Daffodil International University and work with a research team on traffic accident risk prediction. The degree gave me the vocabulary for system design.",
+      images: [
+        photoSlot("story-diu-aerial", 1400, 638, "An aerial view of the Daffodil International University campus"),
+        photoSlot("story-diu-campus", 1000, 1165, "The Daffodil International University main entrance"),
+      ],
+      quote: { text: "Simplicity is prerequisite for reliability.", by: "Edsger W. Dijkstra" },
+    },
+    {
+      label: "Building",
+      title: "From practice projects to real clients",
+      text: "My first real client was a boba tea company, for which I designed Alez POS: a point-of-sale system that keeps selling when the internet drops. I also compete in hackathons with teammates.",
+      images: [
+        photoSlot("pos-overview", 1280, 960, "The Alez POS selling screen"),
+        photoSlot("pos-detail", 1280, 960, "A detail of the Alez POS order flow"),
+      ],
+      quote: { text: "Talk is cheap. Show me the code.", by: "Linus Torvalds" },
+    },
+    {
+      label: "Beyond the screen",
+      title: "Travel, and a trip to Malaysia",
+      text: "I travelled to Malaysia in June 2025, around Eid. I like new places and the people I meet in them. Today I live in Dhaka and freelance as a systems architect.",
+      images: [
+        photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in front of Putra Mosque in Putrajaya"),
+        photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif in a brown hat with a Malaysian flag"),
+        photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at a misty hill viewpoint"),
+        photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
+      ],
+      quote: { text: "Travel is fatal to prejudice, bigotry, and narrow-mindedness.", by: "Mark Twain" },
     },
   ],
 } satisfies Site;
@@ -340,6 +368,9 @@ export const workContent = {
 };
 
 export const aboutContent = {
+  label: "About me",
+  heading: site.name,
+  brief: "I'm a CSE student in Dhaka who likes to understand a system before building it. I start with the questions behind a business — who uses it, what can go wrong, what it costs to run — and turn the answers into software people can rely on. I'm curious by default, patient with hard problems, and I would rather ship one thing that works than five that almost do.",
   intro: "I design business software, explain the trade-offs, and direct AI agents to build it.",
   facts: [
     { label: "Based in", value: "Dhaka, Bangladesh" },
@@ -426,7 +457,6 @@ export const demoContent = {
   educationLabel: "Education",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
-  aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
   statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",

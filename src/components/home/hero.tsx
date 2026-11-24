@@ -13,7 +13,7 @@ export function Hero() {
     <div className="container hero-layout">
       <div className="hero-copy">
         <p className="tagline"><Image {...site.avatar} width={32} height={32} sizes="32px" alt="" />{site.tagline}</p>
-        <h1 id="hero-title" className="hero-name" aria-label={site.name}>{site.name.split(" ").map((part) => <span key={part} className="hero-name__line" aria-hidden="true">{part}</span>)}</h1>
+        <h1 id="hero-title" className="hero-name">{site.name}</h1>
         <p className="hero-role">{site.role}</p>
         <p className="hero-intro">{site.intro}</p>
         <div className="button-row">

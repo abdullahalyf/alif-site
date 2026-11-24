@@ -40,7 +40,7 @@ test("unknown case study returns 404 with a route home", async ({ page }) => {
   await waitForHydration(page);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(shell.notFoundTitle);
   await page.getByRole("link", { name: shell.backHome }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
 });
 
 test("mobile menu supports keyboard dismissal and focus restoration", async ({ page, isMobile }) => {
@@ -60,10 +60,10 @@ test("page content and navigation work without JavaScript", async ({ browser, is
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: isMobile ? { width: 390, height: 844 } : { width: 1280, height: 800 } });
   const page = await context.newPage();
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
   const about = page.getByRole("banner").getByRole("link", { name: shell.aboutTitle, exact: true });
   await about.filter({ visible: true }).first().click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(shell.aboutTitle);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
   await context.close();
 });
 
