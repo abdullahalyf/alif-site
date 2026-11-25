@@ -84,6 +84,7 @@ export const site = {
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
   heroPhoto: { src: "/images/alif-portrait.jpg", width: 2400, height: 1350, alt: "Portrait of Abdullah Alif against a grey wall" },
+  heroPhotoCutout: { src: "/images/alif-portrait-cutout.webp", width: 1920, height: 1080, alt: "Cut-out of the hero portrait, used to layer the orbit behind him" },
   avatar: photoSlot("profile-avatar-face", 440, 440, "Portrait of Abdullah Alif"),
   aboutPhoto: photoSlot("about-airport-full", 960, 1280, "Abdullah Alif at an airport, wearing a backpack"),
   heroSide: photoSlot("home-hero-airport", 960, 1173, "Abdullah Alif at an airport with a red and white backpack"),
@@ -447,6 +448,7 @@ export const homeContent = {
   currentlyLink: "More on Now",
   aboutPhoto: photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
   aboutPhotoQuote: { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
+  heroOrbit: { coordinates: "23.8103° N / 90.4125° E" },
   heroActions: { email: "Email me", work: "See my work", cv: "Download CV", cvHref: "/cv", socials: "Find me online" },
 };
 

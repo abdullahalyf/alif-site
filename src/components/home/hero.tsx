@@ -29,12 +29,14 @@ export function Hero() {
     <Suspense>
       <HeroPhotoPanel
         label={heroPhotos.label}
+        orbitLabel={site.heroPhotoCutout ? homeContent.heroOrbit.coordinates : undefined}
         floatingPhoto={heroPhotos.images[0] && <Image {...heroPhotos.images[0]} alt="" sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />}
         photoStrip={heroPhotos.images.length > 0 && heroPhotos.images.map((photo) => <li key={photo.src}>
           <Image {...photo} alt={photo.alt} sizes={photoCardSizes} loading="lazy" fetchPriority="low" quality={68} draggable={false} />
         </li>)}
       >
         <Image {...site.heroPhoto} alt={site.heroPhoto.alt} sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" quality={68} className="hero-photo" />
+        {site.heroPhotoCutout && <Image {...site.heroPhotoCutout} alt="" aria-hidden="true" sizes="(max-width: 78rem) calc(100vw - 3rem), 76rem" loading="lazy" quality={68} className="hero-photo hero-photo--cutout" draggable={false} />}
       </HeroPhotoPanel>
     </Suspense>
   </section>;

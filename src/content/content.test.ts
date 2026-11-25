@@ -47,6 +47,7 @@ describe("content", () => {
   it("every referenced image exists in public/", () => {
     const srcs = [
       site.heroPhoto,
+      ...(site.heroPhotoCutout ? [site.heroPhotoCutout] : []),
       site.avatar,
       site.aboutPhoto,
       site.heroSide,

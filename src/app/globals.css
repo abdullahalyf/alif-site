@@ -311,8 +311,19 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .hero-photo-story { position: relative; --hero-card-size: clamp(18rem, 26vw, 22rem); }
 .hero-panel { margin-top: clamp(1.5rem, 3.6vw, 3.15rem); }
 .hero-panel__frame { position: relative; isolation: isolate; overflow: clip; border-radius: 24px; background: var(--surface-2); }
-.hero-panel__image { overflow: clip; }
+.hero-panel__image { position: relative; overflow: clip; }
 .hero-photo { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 35%; }
+.hero-photo--cutout { position: absolute; inset: 0; height: 100%; z-index: 2; pointer-events: none; }
+.hero-orbit { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.hero-orbit--tall { display: none; }
+.hero-orbit__arch, .hero-orbit__ring { fill: none; stroke: var(--ink); stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.hero-orbit__arch { stroke-opacity: 0.32; }
+.hero-orbit__ring { stroke-opacity: 0.4; }
+.hero-orbit { --orbit-dot: color-mix(in srgb, var(--accent) 45%, #12c26a); }
+.hero-orbit__dot { filter: drop-shadow(0 0 8px var(--orbit-dot)); }
+.hero-orbit__halo { fill: var(--orbit-dot); fill-opacity: 0.34; }
+.hero-orbit__core { fill: var(--orbit-dot); stroke: #fff; stroke-opacity: 0.95; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.hero-orbit__coordinates { position: absolute; left: clamp(0.9rem, 2vw, 1.5rem); bottom: clamp(0.8rem, 1.8vw, 1.25rem); z-index: 3; margin: 0; color: #1d1d1b; font: 0.6875rem/1 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
 .hero-stripes { position: absolute; inset: 0 0 auto; height: clamp(5rem, 12vw, 11rem); overflow: hidden; pointer-events: none; opacity: 0.8; }
 .hero-stripes svg { display: block; width: 100%; height: 100%; }
 .hero-photo-story__floating, .hero-photo-story__strip li { width: var(--hero-card-size); aspect-ratio: 4 / 3; padding: 0.4rem; background: var(--surface-2); border: 1px solid var(--line); border-radius: 0.9rem; overflow: clip; }
@@ -344,6 +355,9 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
   .split-section { grid-template-columns: 1fr; }
   .hero-photo-story { --hero-card-size: 64vw; }
   .hero-photo { aspect-ratio: 4 / 5; object-position: 52% center; }
+  .hero-orbit--wide { display: none; }
+  .hero-orbit--tall { display: block; }
+  .hero-orbit__coordinates { bottom: auto; top: 0.9rem; }
   .service-list li { grid-template-columns: 1.5rem 1fr auto; gap: 0.5rem; }
   .hero-layout { gap: 2rem; }
   .hero-copy { gap: 1.35rem; }
