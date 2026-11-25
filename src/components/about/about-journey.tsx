@@ -11,6 +11,7 @@ export function AboutJourney() {
       <p className="profile-card__name">{site.name}</p>
       <p className="profile-card__role">{site.role}</p>
       <dl>{profile.rows.map(({ label, value }) => <div key={label}><dt className="label">{label}</dt><dd>{value}</dd></div>)}</dl>
+      <ul className="profile-card__links">{site.socials.map(({ href, label }) => <li key={href}><a className="text-link" href={href} rel="noopener noreferrer" target="_blank">{label}</a></li>)}</ul>
       <a className="button button--secondary" href={profile.cv.href} download>{profile.cv.label}</a>
     </aside>
     <div className="about-journey__main">

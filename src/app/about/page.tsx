@@ -22,22 +22,10 @@ export default function About() {
         <div className="about-top__copy">
           <h1 id="about-title" className="about-name">{aboutContent.heading}</h1>
           <p className="about-top__brief">{aboutContent.brief}</p>
-          <dl className="about-facts">
-            {aboutContent.facts.map(({ label, value }) => <div key={label}><dt className="label">{label}</dt><dd>{value}</dd></div>)}
-          </dl>
           <div className="button-row">
             <ButtonLink href={aboutContent.email.href}>{aboutContent.email.label}</ButtonLink>
             <ButtonLink variant="secondary" href={aboutContent.resume.href}>{aboutContent.resume.label}</ButtonLink>
           </div>
-        </div>
-      </div>
-      <div className="about-intro">
-        <div className="about-signature">
-          <p>{aboutContent.signature}</p>
-          <ul>{site.socials.map(({ href, label }) => <li key={href}><a className="text-link" href={href}>{label}</a></li>)}</ul>
-        </div>
-        <div className="about-intro__copy">
-          {site.about.map((text) => <p key={text}>{text}</p>)}
         </div>
       </div>
     </section>

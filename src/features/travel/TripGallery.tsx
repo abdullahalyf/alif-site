@@ -13,7 +13,7 @@ export function TripGallery({ trip }: { trip: Trip }) {
   return <PhotoGallery photos={trip.photos} place={trip.place} title={c.galleryTitle} hint={c.galleryHint} />;
 }
 
-export function PhotoGallery({ photos, place, title, hint, className = "trip-gallery", sectionClassName = "trip-gallery-section", titleClassName, sizes = "(min-width: 900px) 45vw, 90vw" }: { photos: GalleryPhoto[]; place: string; title: string; hint: string; className?: string; sectionClassName?: string; titleClassName?: string; sizes?: string }) {
+export function PhotoGallery({ photos, place, title, hint, className = "trip-gallery", sectionClassName = "trip-gallery-section", titleClassName, sizes = "(min-width: 900px) 45vw, 90vw", eager = false }: { photos: GalleryPhoto[]; place: string; title: string; hint: string; className?: string; sectionClassName?: string; titleClassName?: string; sizes?: string; eager?: boolean }) {
   const trip = { photos, place };
   const [active, setActive] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -52,7 +52,7 @@ export function PhotoGallery({ photos, place, title, hint, className = "trip-gal
     <h2 id={`${id}-gallery`} className={titleClassName}>{title}</h2>
     <p className="travel-label">{hint}</p>
     <div className={className}>{trip.photos.map((image, index) => <figure key={image.src} data-large={image.large || undefined}>
-      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} unoptimized={image.src.startsWith("https://")} loading="lazy" /></a>
+      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} unoptimized={image.src.startsWith("https://")} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "low" : undefined} /></a>
       <figcaption>{image.caption}</figcaption>
     </figure>)}</div>
     <dialog ref={dialog} className="trip-lightbox" aria-labelledby={`${id}-lightbox`} onKeyDown={keyboard} onCancel={event => { event.preventDefault(); setActive(null); }} onClick={event => { if (event.target === event.currentTarget) setActive(null); }}>

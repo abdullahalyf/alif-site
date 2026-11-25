@@ -12,7 +12,7 @@ export function OutsideWork() {
     <SectionLabel>{o.label}</SectionLabel>
     <Reveal><h2 id="outside-title" className="section-title">{o.title}</h2></Reveal>
     <ul className="outside-grid">{o.items.map((item) => <li key={item.title} className="outside-card">
-      <div className="outside-card__photo"><Image {...item.image} alt={item.image.alt} sizes="(max-width: 48rem) 90vw, 22rem" loading="lazy" /></div>
+      <div className="outside-card__photo"><Image {...item.image} alt={item.image.alt} sizes="(max-width: 48rem) 45vw, 18rem" loading="eager" fetchPriority="low" /></div>
       <h3>{item.title}</h3>
       <p>{item.text}</p>
     </li>)}</ul>
@@ -24,7 +24,7 @@ export function Moments() {
   const m = aboutPage.moments;
   return <div className="container section-space moments">
     <SectionLabel>{m.label}</SectionLabel>
-    <PhotoGallery photos={m.photos} place={m.place} title={m.title} hint={m.hint} className="moments-grid" sectionClassName="moments-section" titleClassName="section-title" sizes="(max-width: 48rem) 50vw, 26rem" />
+    <PhotoGallery photos={m.photos} place={m.place} title={m.title} hint={m.hint} className="moments-grid" sectionClassName="moments-section" titleClassName="section-title" sizes="(max-width: 48rem) 50vw, 26rem" eager />
   </div>;
 }
 

@@ -14,8 +14,9 @@ export function StoryPhotos({ chapter }: { chapter: Chapter }) {
             width={image.width}
             height={image.height}
             alt={image.alt}
-            sizes="(max-width: 768px) 100vw, 30vw"
-            loading="lazy"
+            sizes="(max-width: 768px) 50vw, 30vw"
+            loading="eager"
+            fetchPriority="low"
           />
         </div>
       ))}
@@ -30,6 +31,7 @@ export function StoryCaption({ chapter }: { chapter: Chapter }) {
         <p>{chapter.quote.text}</p>
         <footer>{chapter.quote.by}</footer>
       </blockquote>}
+      {chapter.credit && <span className="photo-credit">{chapter.credit}</span>}
     </figcaption>
   );
 }

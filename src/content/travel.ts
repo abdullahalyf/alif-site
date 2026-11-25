@@ -87,9 +87,14 @@ export const travelStops: TravelStop[] = [
     image: photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif leaning on a railing at the Langkawi Sky Bridge viewpoint, with misty hills behind"),
   },
   {
+    slug: "putrajaya", place: "Malaysia", title: "Hat on, map off",
+    note: "Somewhere between sights, with a Malaysian flag behind me, June 2025.",
+    image: photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif wearing a brown hat, with a Malaysian flag behind him"),
+  },
+  {
     slug: "sitakunda", place: "Sitakunda · Hatiya · Tangail", title: "Coasts, islands and golden domes",
-    note: "Sitakunda, the beach on Hatiya island, the 201 Dome Mosque in Tangail, and Jahangirnagar.",
-    image: photoSlot("travel-bangladesh-snapshots", 640, 360, "Four snapshots: in shallow water at Sitakunda, on the beach at Hatiya, looking at the 201 Dome Mosque in Tangail, and holding a flag at Jahangirnagar"),
+    note: "Sitakunda, the beach on Hatiya island, and the 201 Dome Mosque in Tangail.",
+    image: photoSlot("travel-bangladesh-trio", 618, 206, "Three snapshots: in shallow water at Sitakunda, on the beach at Hatiya, and looking at the 201 Dome Mosque in Tangail"),
   },
 ];
 

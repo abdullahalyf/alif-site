@@ -30,12 +30,20 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 | Langkawi street photo (sent in chat, 640 px) | Hero photo strip, About story chapter 5, travel stop (`travel-langkawi`) | Langkawi, Malaysia, June 2025 |
 | 01-profile/2.jpeg (misty viewpoint) | Hero strip, About story chapter 5, travel stop "Langkawi Sky Bridge" (`travel-viewpoint`) | Taken from the original file, not a screenshot |
 
+| Kurta HD (sent in chat) | Moments, Home strip (`moment-savar-resort-hd`) | Savar resort — replaces 205 px copy |
+| Metro Rail HD (sent in chat) | Moments, Home strip (`moment-metro-rail-hd`) | Feb 2024 — replaces 206 px copy |
+| Boat under glass dome (sent in chat) | Moments (`moment-boat-dome`) | place not named yet |
+| 07-travel/bangladesh-travel-map.png | About outside-work "Travel" (`outside-travel-map`) | |
+| 08b-hackathons/923286563, 927313544, 928194210 | Chapter 4, outside-work, Work (`projects/cloudsentinel/*`) | |
+
 ## Stock photos (Rule 2, not Alif's own; free Pexels licence)
 | File | Used where | Credit |
 |---|---|---|
 | `public/images/stock/service-architecture.jpg` | Home services card hover, System architecture & design | divinetechygirl, Pexels #1181311 |
 | `public/images/stock/service-offline.jpg` | Home services card hover, Offline-first apps | Brett Sayles, Pexels #4508751 |
 | `public/images/stock/japanese-study.jpg` | About outside-work card, Learning Japanese | Gu Ko, Pexels #35376343 |
+| `public/images/stock/online-class.jpg` | About chapter 1 | Julia M Cameron, Pexels #4144923 |
+| `public/images/stock/research-road.jpg` | About outside-work, Research | Tyler Casey, Unsplash (unfefW2kxEU) |
 | `public/images/stock/service-access.jpg` | Home services card hover, Database design & access control | Brett Sayles, Pexels #5203849 |
 | `slots/service-operations.jpg` | Home services card hover, Business software | Real Alez POS screenshot (crop) |
 
