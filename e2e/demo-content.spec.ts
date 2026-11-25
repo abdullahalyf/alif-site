@@ -20,8 +20,8 @@ test("About includes education, skills, languages, interests and achievements", 
   await expect(page.getByText("Basic · DILC course", { exact: true })).toBeVisible();
 });
 
-test("Work lists seven complete projects and the retired portfolio route is 404", async ({ page, request }) => {
+test("Work lists the eight real projects and the retired portfolio route is 404", async ({ page, request }) => {
   await page.goto("/work");
-  for (const project of projects) await expect(page.getByRole("link").filter({ has: page.getByRole("heading", { name: project.title, exact: true }) })).toHaveAttribute("href", shell.projectHref(project.slug));
+  for (const project of projects) await expect(page.locator(".work-card").getByRole("link", { name: project.title, exact: true })).toHaveAttribute("href", shell.projectHref(project.slug));
   expect((await request.get("/work/portfolio")).status()).toBe(404);
 });

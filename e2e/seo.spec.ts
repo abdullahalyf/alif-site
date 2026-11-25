@@ -2,7 +2,7 @@ import { allTrips, travelContent } from "../src/content/travel";
 import { labRoutes } from "../src/content/lab";
 import { estimateContent } from "../src/content/estimate";
 import { searchContent } from "../src/content/search";
-import { diagramContent } from "../src/content/diagrams";
+import { diagramContent, diagrams } from "../src/content/diagrams";
 import { expect, test } from "@playwright/test";
 import { seo, shell, site } from "../src/content/site";
 import { getPosts } from "../src/content/posts";
@@ -24,7 +24,7 @@ test("sitemap lists all pages and case studies with absolute canonical URLs", as
     ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
     ...searchContent.pages.map((page) => page.href.split("#")[0]),
     ...Object.values(writingContent.filters).map(({ href }) => href),
-    ...projects.map((project) => diagramContent.path(project.slug)),
+    ...projects.filter((project) => diagrams[project.slug]).map((project) => diagramContent.path(project.slug)),
     ...Object.values(seo.pages).map((page) => page.path),
     ...projects.map((project) => shell.projectHref(project.slug)),
     ...getPosts({ includeDrafts: false }).map((post) =>
