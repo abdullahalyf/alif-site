@@ -14,7 +14,7 @@ const COMPACT_THRESHOLD = 40;
 
 export function Header() {
   const pathname = usePathname();
-  const services = shell.nav[0];
+  const [home, services, ...otherLinks] = shell.nav;
   const servicesActive = workNavigation.links.some(({ href }) => pathname === href)
     || pathname.startsWith("/work/") || pathname.startsWith("/approach/");
   const header = useRef<HTMLElement>(null);
@@ -87,6 +87,7 @@ export function Header() {
       <div className="container header-inner">
         <BrandMark />
         <nav className="desktop-nav" aria-label={shell.navigation}>
+          {linkItem(home)}
           <div className="work-dropdown" data-dismissed={dismissedWork || undefined}
             onMouseEnter={() => setDismissedWork(false)}
             onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setDismissedWork(false); }}
@@ -100,7 +101,7 @@ export function Header() {
               <li key={link.href} onClick={() => setDismissedWork(true)}>{linkItem(link)}</li>
             )}</ul>
           </div>
-          {shell.nav.slice(1).map(linkItem)}
+          {otherLinks.map(linkItem)}
         </nav>
         <div className="header-actions">
           <SearchTrigger />

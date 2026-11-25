@@ -25,15 +25,6 @@ test("RSS opens as a readable page in a browser and the footer links to it", asy
   await page.goto(seo.pages.writing.path);
   await expect(page.getByRole("link", { name: writingContent.rssLabel })).toHaveAttribute("href", writingContent.rssPath);
 });
-test("Now renders the current factual update and is linked from Writing", async ({ page }) => {
-  await page.goto(seo.pages.writing.path);
-  await waitForHydration(page);
-  // The footer also links to Now, so the link in the page body is the one
-  // that should be followed.
-  await page.locator("main").getByRole("link", { name: writingContent.nowLabel, exact: true }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(writingContent.nowTitle);
-  for (const item of site.now) await expect(page.getByText(item, { exact: true })).toBeVisible();
-});
 test("RSS is valid XML and includes published tech and travel posts", async ({ request, page }) => {
   const response = await request.get(writingContent.rssPath); expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("application/rss+xml");
@@ -49,22 +40,16 @@ test("RSS is valid XML and includes published tech and travel posts", async ({ r
   for (const post of drafts) expect(xml).not.toContain(writingContent.postHref(post.slug));
   expect((xml.match(/<item>/g) || []).length).toBe(published.length + datedTrips.length);
 });
-test.describe("development draft article", () => {
-  test.use({ baseURL: "http://localhost:3100" });
-  test("renders the sample Markdown article with metadata, body and a route back", async ({ page }) => {
-    const post = drafts.find((post) => post.slug === "nvidia-and-the-ai-hardware-race")!;
-    await page.goto(writingContent.postHref(post.slug));
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText(post.title);
-    await expect(page.locator("body")).toHaveCSS("background-color", "rgb(28, 27, 24)");
-    await expect(page).toHaveTitle(`${post.title} — ${site.name}`);
-    await expect(page.locator(".post-prose")).toContainText("not investment advice");
-    await expect(page.getByText(writingContent.draft, { exact: true })).toBeVisible();
-    await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
-    await waitForHydration(page);
-    await page.getByRole("link", { name: writingContent.back, exact: true }).click();
-    await expect(page).toHaveURL(seo.pages.writing.path, { timeout: 15_000 });
-    await expect(page.getByRole("link", { name: post.title, exact: true })).toBeVisible();
-  });
+test("a post opens with its cover, read time and a route back", async ({ page }) => {
+  const post = published[0];
+  await page.goto(writingContent.postHref(post.slug));
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(post.title);
+  await expect(page).toHaveTitle(`${post.title} — ${site.name}`);
+  await expect(page.locator(".post-cover img")).toBeVisible();
+  await expect(page.getByText(writingContent.draft, { exact: true })).toHaveCount(0);
+  await waitForHydration(page);
+  await page.getByRole("link", { name: writingContent.back, exact: true }).click();
+  await expect(page).toHaveURL(seo.pages.writing.path, { timeout: 15_000 });
 });
 
 test("Writing filters tech and travel and links back from a trip", async ({ page }) => {

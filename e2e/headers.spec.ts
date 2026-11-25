@@ -13,7 +13,7 @@ test("pages send the required security headers without a CSP", async ({ request 
   expect(headers["content-security-policy"]).toBeUndefined();
 });
 test("photo slots revalidate and existing assets stay immutable", async ({ request, page }) => {
-  const slot = await request.get(site.heroPhoto.src);
+  const slot = await request.get(site.avatar.src);
   expect(slot.status()).toBe(200);
   expect(slot.headers()["cache-control"]).toBe("public, max-age=0, must-revalidate");
 

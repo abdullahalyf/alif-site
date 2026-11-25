@@ -3,7 +3,7 @@ title: "NVIDIA and the AI hardware race"
 date: "2026-11-25"
 summary: "Why one chip company sits at the centre of the AI boom, and what could change that. My opinion, not investment advice."
 tags: [ai, hardware, opinion]
-draft: true
+draft: false
 category: tech-economy
 cover: "/images/stock/writing-chips.jpg"
 coverAlt: "Close-up of a computer motherboard with an exposed processor"

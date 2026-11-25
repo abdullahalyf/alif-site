@@ -11,7 +11,6 @@ export function WritingIndex({ category }: { category: WritingCategory }) {
   const posts = getWritingEntries().filter((post) => category === "all" || post.category === category);
   return <div className="container writing-page">
     <header className="writing-heading"><Reveal><h1>{writingContent.title}</h1></Reveal><Reveal><p>{writingContent.intro}</p></Reveal>
-      <Reveal><div className="writing-links"><Link href={writingContent.nowPath}>{writingContent.nowLabel}</Link></div></Reveal>
     </header>
     <nav className="writing-filters" aria-label={writingContent.filterLabel}>
       {Object.entries(writingContent.filters).map(([key, { label, href }]) =>

@@ -26,7 +26,7 @@ it("sorts published posts newest first with deterministic ties and ignores non-M
     { name: "ignore.txt", source: "ignore" },
   ];
   expect(loadPosts(files, { includeDrafts: false }).map((post) => post.slug)).toEqual(["another", "new", "old"]);
-  expect(getPost("nvidia-and-the-ai-hardware-race", { includeDrafts: false })).toBeUndefined();
+  expect(getPost("draft", { includeDrafts: false })).toBeUndefined();
   expect(getPost("../private")).toBeUndefined();
 });
 it("shows drafts on Vercel preview deployments only", () => {
@@ -49,12 +49,9 @@ it("renders readable Markdown without injecting HTML or unsafe links", () => {
   expect(html).toContain('<pre tabindex="0">');
   expect(html).toContain('<code class="language-ts">'); expect(html).not.toContain("<script>"); expect(html).not.toContain('href="javascript:'); expect(html).toContain('href="/now"');
 });
-it("validates the repository posts and keeps the sample draft unpublished", () => {
+it("validates the repository posts and keeps demo text out of them", () => {
   const posts = getPosts({ includeDrafts: true }); expect(posts.length).toBeGreaterThan(0);
-  for (const slug of ["nvidia-and-the-ai-hardware-race", "ai-agents-are-changing-how-software-is-built", "why-bangladesh-can-build-world-class-software"]) {
-    expect(posts.find((post) => post.slug === slug)?.draft).toBe(true);
-    expect(getPosts({ includeDrafts: false }).some((post) => post.slug === slug)).toBe(false);
-  }
+  expect(posts.every((post) => !post.draft)).toBe(true);
   expect(posts.some((post) => /DEMO|TODO\(/.test(post.body))).toBe(false);
 });
 

@@ -217,7 +217,7 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .footer .button--primary:hover { background: var(--night); color: var(--night-text); }
 .footer .button--secondary:hover { background: var(--night-text); color: var(--night); }
 .footer :focus-visible { outline-color: var(--night-text); }
-.footer-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: clamp(1rem, 4vw, 3rem); row-gap: 1.75rem; align-items: start; padding-block: 1.75rem 0.75rem; margin-top: 0.65rem; border-top: 1px solid var(--night-line); }
+.footer-links { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); column-gap: clamp(1rem, 4vw, 3rem); row-gap: 1.75rem; align-items: start; padding-block: 1.75rem 0.75rem; margin-top: 0.65rem; border-top: 1px solid var(--night-line); }
 .footer-links__group h3 { font: 400 clamp(1.5rem, 2vw, 1.9rem)/1.15 var(--font-serif); color: var(--night-text); letter-spacing: 0; }
 .footer-links__group ul { display: grid; gap: 0.2rem; margin-top: 0.85rem; padding: 0; list-style: none; }
 .footer-links__group a { display: inline-flex; align-items: center; min-height: 2.25rem; font-size: 1rem; color: var(--night-muted); }

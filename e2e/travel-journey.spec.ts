@@ -1,7 +1,7 @@
 import { waitForHydration } from "./helpers/routes";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { trips, travelContent as c } from "../src/content/travel";
+import { allTrips, trips, travelContent as c } from "../src/content/travel";
 import { project, routeCurves } from "../src/features/travel/map/geo";
 
 for (const trip of trips) {
@@ -19,7 +19,8 @@ for (const trip of trips) {
 }
 
 test("gallery supports keyboard, swipe, dismissal and focus restoration", async ({ page }) => {
-  const trip = trips[0];
+  const trip = allTrips.find((item) => item.photos.length >= 2)!;
+  const count = trip.photos.length;
   await page.goto(c.tripHref(trip.slug));
   const opener = page.getByRole("link", { name: c.openPhoto(1, trip.place) });
   await opener.click();
@@ -29,14 +30,14 @@ test("gallery supports keyboard, swipe, dismissal and focus restoration", async 
   expect(scan.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
   await expect(dialog.getByRole("button", { name: c.closeGallery })).toBeFocused();
   await dialog.press("ArrowRight");
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("2 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`2 / ${count}`);
   await dialog.press("End");
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("3 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`${count} / ${count}`);
   await dialog.press("Home");
   const photo = dialog.locator(".trip-lightbox-photo");
   await photo.dispatchEvent("pointerdown", { pointerType: "touch", clientX: 250, clientY: 150 });
   await photo.dispatchEvent("pointerup", { pointerType: "touch", clientX: 100, clientY: 155 });
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("2 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`2 / ${count}`);
   await dialog.press("Escape");
   await expect(dialog).not.toBeVisible();
   await expect(opener).toBeFocused();

@@ -225,7 +225,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    { label: "Home", href: "/" }, navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -272,6 +272,7 @@ export const workNavigation = {
 };
 
 export const menuGroups = [
+  { label: "Home", links: [{ label: "Home", href: "/" }] },
   { label: navigationLinks.services.label, links: workNavigation.links },
   { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel] },
   { label: "About", links: [navigationLinks.about] },

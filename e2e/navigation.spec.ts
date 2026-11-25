@@ -74,7 +74,7 @@ test("desktop Services opens by hover or keyboard and links to each Services sec
   const navigation = page.getByRole("banner").getByRole("navigation");
   const work = navigation.getByRole("link", { name: shell.workNavLabel, exact: true }).first();
   const projectsLink = navigation.getByRole("link", { name: workNavigation.dropdown[0].label });
-  await expect(navigation.getByRole("link")).toHaveCount(4);
+  await expect(navigation.getByRole("link")).toHaveCount(5);
   await work.hover();
   await expect(projectsLink).toBeVisible();
   await page.mouse.move(0, 120);

@@ -4,7 +4,7 @@ import { projects } from "../src/content/projects";
 
 test("Home includes every section and working selected-work links", async ({ page, isMobile }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.role);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
   for (const title of [homeContent.aboutTitle, workContent.approachTitle, homeContent.servicesTitle, workContent.selectedTitle]) await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
   for (const service of site.services) await expect(page.getByRole("heading", { name: service, exact: true })).toBeVisible();
   const row = page.getByRole("list", { name: workContent.carouselLabel });
@@ -50,7 +50,7 @@ test("Home shows the hero side photo, status card and system diagram", async ({ 
   await page.goto(shell.home.href);
 
   await expect(page.getByRole("img", { name: site.heroSide.alt })).toBeVisible();
-  await expect(page.getByText(site.name, { exact: true })).toBeVisible();
+  await expect(page.locator(".status-card__name")).toBeVisible();
   await expect(page.getByText(site.statusCard.availability, { exact: true })).toBeVisible();
   await expect(page.getByText(site.statusCard.building, { exact: true })).toBeVisible();
   for (const item of site.statusCard.stack) await expect(page.getByText(item, { exact: true })).toBeVisible();

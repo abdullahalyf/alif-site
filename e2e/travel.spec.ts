@@ -87,7 +87,7 @@ test("keyboard paging works in desktop, touch and reduced-motion modes", async (
   await expect(page.locator(".travel-book-counter")).toHaveText("02 / 03");
   await book.press("End");
   await expect(page.locator(".travel-book-counter")).toHaveText("03 / 03");
-  await expect(book.getByRole("heading", { name: trips[7].title })).toBeInViewport({ timeout: 15_000 });
+  await expect(book.getByRole("heading", { name: trips[trips.length - 1].title })).toBeInViewport({ timeout: 15_000 });
   await book.press("Home");
   await expect(page.locator(".travel-book-counter")).toHaveText("01 / 03");
   await page.getByRole("link", { name: c.aboutLink, exact: true }).click();

@@ -6,13 +6,11 @@ test("the About page splits the intro between the photo and the copy", async ({ 
   await page.goto("/about");
 
   // The heading is a serif display line above the split.
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("About me");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
   await expect(page.getByRole("img", { name: site.aboutPhoto.alt })).toBeVisible();
 
   // Every paragraph of the intro is on the page, in order.
-  for (const paragraph of site.about) {
-    await expect(page.getByText(paragraph, { exact: true })).toBeVisible();
-  }
+  await expect(page.getByText(aboutContent.brief, { exact: true })).toBeVisible();
 });
 
 test("the story chapters alternate sides and carry a bracketed label", async ({ page }) => {
@@ -107,11 +105,11 @@ test("skills show the workflow and honest levels alongside language chips", asyn
   }
 });
 
-test("the achievements are cards", async ({ page }) => {
+test("the achievements are a table with one row per entry", async ({ page }) => {
   await page.goto("/about");
-  const cards = page.locator(".highlight-card");
-  await expect(cards).toHaveCount(site.achievements.length);
-  await expect(cards.first()).toContainText(site.achievements[0].title);
+  const rows = page.locator(".achievements-table tbody tr");
+  await expect(rows).toHaveCount(aboutPage.achievements.rows.length);
+  await expect(rows.first()).toContainText(aboutPage.achievements.rows[0].title);
   const dimensions = await page.evaluate(() => ({
     page: document.documentElement.scrollWidth,
     viewport: document.documentElement.clientWidth,

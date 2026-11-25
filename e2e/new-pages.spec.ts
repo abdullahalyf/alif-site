@@ -147,7 +147,7 @@ test("search index is public JSON without drafts", async ({ request }) => {
   ).toBe(true);
   expect(
     entries.some(
-      (entry: { href: string }) => entry.href === "/writing/hello-im-alif",
+      (entry: { type: string; title: string; description: string }) => entry.type === "post" && /DEMO|illustrative/i.test(`${entry.title} ${entry.description}`),
     ),
   ).toBe(false);
 });

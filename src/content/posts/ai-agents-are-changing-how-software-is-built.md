@@ -3,7 +3,7 @@ title: "AI agents are changing how software is built"
 date: "2026-11-25"
 summary: "How I use coding agents as a developer who reads code more than he writes it, and where I still do the thinking myself."
 tags: [ai, agents, workflow]
-draft: true
+draft: false
 category: tech
 cover: "/images/stock/writing-code-glasses.jpg"
 coverAlt: "Glasses resting in front of monitors full of code"

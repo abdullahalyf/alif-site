@@ -3,7 +3,7 @@ title: "Why Bangladesh can build world-class software"
 date: "2026-11-25"
 summary: "A young country, a strong freelancing habit and real local problems to solve. My view, with the obstacles included."
 tags: [bangladesh, career, opinion]
-draft: true
+draft: false
 category: my-take
 cover: "/images/stock/writing-dhaka-night.jpg"
 coverAlt: "Dhaka city lights reflected on still water at night"

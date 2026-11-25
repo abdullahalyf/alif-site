@@ -5,8 +5,8 @@ summary: "A practical design for keeping a shop selling during an outage, withou
 tags: [system-design, offline-first, retail]
 draft: false
 category: tech
-cover: "/images/slots/service-operations.jpg"
-coverAlt: "A crop of the Alez POS counter screen"
+cover: "/images/slots/pos-overview.jpg"
+coverAlt: "The Alez POS selling screen"
 ---
 
 A shop does not stop having customers because its connection disappears. Someone still needs a receipt, a cashier still needs to finish a shift, and the owner still needs to know what happened. That is the starting point for offline-first design: decide which business promises remain true when the server cannot be reached. A cached screen is useful, but it is not a complete answer.

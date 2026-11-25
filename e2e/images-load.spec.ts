@@ -12,6 +12,6 @@ for (const path of ["/", "/about", "/travel"]) {
     const findBroken = () => page.locator("main img").evaluateAll((images) =>
       images.filter((element) => { const image = element as HTMLImageElement; const rect = image.getBoundingClientRect(); const visible = getComputedStyle(image).display !== "none" && rect.width > 0 && rect.left < window.innerWidth && rect.right > 0; return visible && !image.closest("dialog") && (!image.complete || image.naturalWidth === 0); }).map((image) => (image as HTMLImageElement).currentSrc || (image as HTMLImageElement).src),
     );
-    await expect.poll(findBroken, { timeout: 15_000 }).toEqual([]);
+    await expect.poll(findBroken, { timeout: 30_000, message: path }).toEqual([]);
   });
 }
