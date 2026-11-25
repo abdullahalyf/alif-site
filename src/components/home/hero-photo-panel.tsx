@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { HeroOrbit } from "./hero-orbit";
 import { HeroStripes } from "@/components/motion/HeroStripes";
 import { whenNearViewportWithGsap } from "@/lib/when-near-viewport-with-gsap";
 import { prefersReducedMotion, useReducedMotion } from "@/lib/use-reduced-motion";
@@ -10,11 +11,13 @@ export function HeroPhotoPanel({
   floatingPhoto,
   photoStrip,
   label,
+  orbitLabel,
 }: {
   children: ReactNode;
   floatingPhoto?: ReactNode;
   photoStrip?: ReactNode;
   label: string;
+  orbitLabel?: string;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const panel = useRef<HTMLDivElement>(null);
@@ -28,21 +31,29 @@ export function HeroPhotoPanel({
     const frame = panel.current;
     const card = floating.current;
     const row = strip.current;
-    const photo = frame?.querySelector(".hero-photo");
+    const photos = frame?.querySelectorAll(".hero-photo");
+    const orbits = frame?.querySelectorAll(".hero-orbit");
     const first = row?.firstElementChild;
-    if (!wrapper || !frame || !card || !row || !photo || !first) return;
+    if (!wrapper || !frame || !card || !row || !photos?.length || !first) return;
 
     return whenNearViewportWithGsap(frame, (gsap) => {
       const motion = gsap.matchMedia(wrapper);
       motion.add({ wide: "(min-width: 48rem)", narrow: "(max-width: 47.999rem)" }, ({ conditions }) => {
         const wide = conditions?.wide;
-        gsap.fromTo(photo,
+        gsap.fromTo(photos,
           { filter: wide ? "blur(10px) saturate(0.5)" : "blur(4px) saturate(0.8)", opacity: wide ? 0.85 : 0.92, y: wide ? 20 : 10 },
           {
             filter: "blur(0px) saturate(1)", opacity: 1, y: 0, ease: "none",
             scrollTrigger: { trigger: frame, start: "top 96%", end: "top 66%", scrub: true },
           },
         );
+
+        if (orbits?.length) {
+          gsap.fromTo(orbits, { yPercent: -2.5, scale: 1.02 }, {
+            yPercent: 2.5, scale: 1, ease: "none", transformOrigin: "50% 50%",
+            scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true },
+          });
+        }
 
         const dock = gsap.timeline({
           defaults: { ease: "none" },
@@ -86,7 +97,7 @@ export function HeroPhotoPanel({
   return <div ref={root} className="hero-photo-story">
     <div className="container hero-panel" ref={panel}>
       <div className="hero-panel__frame">
-        <div className="hero-panel__image">{children}</div>
+        <div className="hero-panel__image">{children}{orbitLabel ? <HeroOrbit coordinates={orbitLabel} /> : null}</div>
         <HeroStripes className="hero-stripes" color="var(--bg)" drift={36} />
       </div>
     </div>

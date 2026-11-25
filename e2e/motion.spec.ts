@@ -79,7 +79,7 @@ test("the Home photo sharpens without changing the inset frame", async ({ page, 
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
   const panel = page.locator(".hero-panel");
   const frame = panel.locator(".hero-panel__frame");
-  const photo = panel.locator(".hero-photo");
+  const photo = panel.locator(".hero-photo").first();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
 
   async function scrollPanel(fraction: number) {
@@ -118,7 +118,7 @@ test("the hero headline and sharp photo are present with JavaScript disabled", a
     const page = await context.newPage();
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
-    await expect(page.locator(".hero-photo")).toHaveCSS("filter", "none");
+    await expect(page.locator(".hero-photo").first()).toHaveCSS("filter", "none");
   } finally {
     await context.close();
   }

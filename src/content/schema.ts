@@ -45,6 +45,7 @@ export const siteSchema = z.object({
   whatsapp: z.object({ display: z.string().min(1), href: z.url() }),
   socials: z.array(link).min(1),
   heroPhoto: image,
+  heroPhotoCutout: image.optional(),
   avatar: image,
   aboutPhoto: image,
   heroSide: image,
