@@ -6,39 +6,16 @@ import { site } from "@/content/site";
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
 
-const serif = Uint8Array.from(await readFile(join(process.cwd(), "src/fonts/instrument-serif-share.ttf"))).buffer;
+const face = await readFile(join(process.cwd(), "public", "images", "alif-avatar.jpg"));
 
-/** The favicon: the brand monogram in a circle, matching the header brand mark. */
+/** The favicon: Alif's face, cropped tight and cut to a circle. */
 export default function Icon() {
   return new ImageResponse(
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
-        background: "#F2EDE3",
-        color: "#1E1C19",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: 52,
-          height: 52,
-          border: "2px solid #1E1C19",
-          borderRadius: 9999,
-          fontFamily: "Instrument Serif",
-          fontSize: 34,
-          lineHeight: 1,
-        }}
-      >
-        {site.logoInitial}
-      </div>
+    <div style={{ display: "flex", width: "100%", height: "100%", alignItems: "center", justifyContent: "center" }}>
+      {/* ImageResponse needs a native image to draw into the generated PNG. */}
+      <img src={`data:image/jpeg;base64,${face.toString("base64")}`} alt={site.avatar.alt} width={96} height={96}
+        style={{ width: 64, height: 64, borderRadius: 9999, objectFit: "cover", objectPosition: "50% 38%" }} />
     </div>,
-    { ...size, fonts: [{ name: "Instrument Serif", data: serif, weight: 400 }] },
+    size,
   );
 }

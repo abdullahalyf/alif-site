@@ -12,6 +12,7 @@ import { SearchDialog } from "@/features/search/SearchDialog";
 import "@/features/search/search.css";
 import { defaultTheme, themeBootstrap } from "@/lib/theme";
 import { introBootstrap } from "@/lib/intro";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false });
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main" tabIndex={-1}>{children}<PageMotion /></main>
           <Footer />
           <SearchDialog />
+          {process.env.VERCEL === "1" && <Analytics />}
         </SmoothScroll>
       </body>
     </html>
