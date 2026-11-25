@@ -134,3 +134,10 @@ After TTFB (sandbox, US edge): / 0.15 s · /about 0.11 s · /work 0.10 s · /con
 Lighthouse mobile live `/` x3: 85, 91, 92 (a11y 100, LCP 2.0-2.3 s, TBT 320-500 ms). Local before: 81-89.
 Image warm-up: 46 URLs x 3 viewports loaded once on live after deploy.
 Note: PERF-plan step 2 premise (/work, /contact "no-store") was a sandbox-proxy 403 artefact; real responses were already cached.
+
+## Mobile polish (branch `mobile-polish`)
+- Header on phones: logo · Services · About me · Menu (search + theme live in the drawer); drawer full width up to 48rem; brand link keeps an aria-label when the wordmark is hidden (<30rem).
+- Home hero on phones: photo full width, status card below the photo (no overlap), diagram below.
+- Services: one column up to 48rem; every service card has a credited 16:9 photo (POS uses Alif's own Alez POS screen); Home service cards show their image at the top on phones.
+- Gate: tsc/eslint/vitest OK; gate (overflow + images) OK on 12 pages at 1440 and 390; overflow check at 360/390/414; e2e navigation/menu/pages/a11y/smoke/new-pages/images/demo OK; Lighthouse mobile `/` local x3: 86/91/90 (a11y 100).
+- Before/after: `docs/reports/shots/mobile-polish/`.

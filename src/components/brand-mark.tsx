@@ -37,6 +37,7 @@ export function BrandMark() {
     <Link
       ref={topRef}
       className="brand-mark"
+      aria-label={site.logoText}
       href="/"
       prefetch={isHome ? false : undefined}
       onClick={scrollHome}

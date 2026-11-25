@@ -45,6 +45,15 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 | `public/images/stock/online-class.jpg` | About chapter 1 | Julia M Cameron, Pexels #4144923 |
 | `public/images/stock/research-road.jpg` | About outside-work, Research | Tyler Casey, Unsplash (unfefW2kxEU) |
 | `public/images/stock/service-access.jpg` | Home services card hover, Database design & access control | Brett Sayles, Pexels #5203849 |
+| `public/images/stock/service-custom.jpg` | Services + Home card, Custom software | Kevin Ku, Pexels #577585 |
+| `public/images/stock/service-backoffice.jpg` | Services + Home card, Back-office & inventory | Tiger Lily, Pexels #4483610 |
+| `public/images/stock/service-business.jpg` | Services, Business websites | Mateusz Dach, Pexels #450035 |
+| `public/images/stock/service-landing.jpg` | Services, Landing pages | Jakub Zerdzicki, Pexels #34170828 |
+| `public/images/stock/service-portfolio.jpg` | Services, Personal & portfolio websites | Daniil Komov, Pexels #34804003 |
+| `public/images/stock/service-ecommerce.jpg` | Services, E-commerce | Nataliya Vaitkevich, Pexels #6214478 |
+| `public/images/stock/service-dashboard.jpg` | Services + Home card, Dashboards & web apps | Lukas Blazek, Pexels #577195 |
+| `public/images/stock/service-mobile.jpg` | Services, Mobile-first apps | Atahan Demir, Pexels #16168372 |
+| `public/images/slots/service-pos-screen.jpg` | Services + Home card, POS software (Alif's own Alez POS screen, cropped from pos-overview.jpg) | own |
 | `public/images/stock/writing-architecture.jpg` | Writing: cover "database before screens" | divinetechygirl, Pexels #1181311 |
 | `public/images/stock/writing-servers.jpg` | Writing: cover SQLite/Postgres, inline in offline-first | Brett Sayles, Pexels #4508751 |
 | `public/images/stock/writing-cables.jpg` | Writing: cover idempotent sync, inline SQLite/Postgres | Brett Sayles, Pexels #2881229 |
