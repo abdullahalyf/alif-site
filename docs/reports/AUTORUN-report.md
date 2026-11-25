@@ -128,3 +128,9 @@ Before numbers (live, from sandbox, GET): / ttfb 0.14–0.33 s · /about 0.12–
 
 **Step 1+3+4+5 (PR perf-1)**: `regions: ["bom1"]` (Mumbai) in vercel.json; achievement photo lightbox image lazy (was loading at w=1920/3840 while hidden); extra image size 2560 so large screens skip 3840; Bricolage font pinned to the one style used and subset (78 KB → 17 KB, pixel-identical hero); intro shortened from ~1.6 s to 1.2 s.
 **Step 2 (Campus Navigator link)**: GitHub link removed from `/cv` until you confirm the real URL.
+
+**PERF live (16:06)**: PR #28 merged; deployment region confirmed `bom1` via Vercel API; `x-vercel-cache: HIT` on /, /about, /work, /contact (GET, 200 only).
+After TTFB (sandbox, US edge): / 0.15 s · /about 0.11 s · /work 0.10 s · /contact 0.10–0.19 s (all HIT). Before: / 0.14 · /about 0.12 · /work 0.11 · /contact 0.10 (also cached). Mumbai only helps uncached work (ISR regeneration, image optimisation); I cannot measure from Bangladesh.
+Lighthouse mobile live `/` x3: 85, 91, 92 (a11y 100, LCP 2.0-2.3 s, TBT 320-500 ms). Local before: 81-89.
+Image warm-up: 46 URLs x 3 viewports loaded once on live after deploy.
+Note: PERF-plan step 2 premise (/work, /contact "no-store") was a sandbox-proxy 403 artefact; real responses were already cached.
