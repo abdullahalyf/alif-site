@@ -8,7 +8,7 @@ import { ArchitectureDiagram } from "@/features/diagram/ArchitectureDiagram";
 import { pageMetadata } from "@/seo/metadata";
 import "./architecture.css";
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return projects.filter((project) => diagrams[project.slug]).map((project) => ({ slug: project.slug }));
 }
 export async function generateMetadata({
   params,
@@ -28,6 +28,7 @@ export default async function ArchitecturePage({
   const { slug } = await params;
   if (!getProject(slug)) notFound();
   const diagram = diagrams[slug];
+  if (!diagram) notFound();
   return (
     <div className="container page-shell architecture-page">
       <WorkSubnav current={c.path(slug)} />

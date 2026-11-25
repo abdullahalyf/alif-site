@@ -9,6 +9,7 @@ import { ArchitectureDiagram } from "@/features/diagram/ArchitectureDiagram";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { ProjectMedia } from "@/components/project-media";
+import { ProjectGallery } from "@/components/project-gallery";
 import { ButtonLink } from "@/components/button";
 import { Reveal, StaggerIn } from "@/components/motion";
 import "./architecture/architecture.css";
@@ -33,21 +34,25 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
   const diagram = diagrams[project.slug];
   const demo = shell.liveDemos[project.slug];
   const contents = [
-    { id: "problem", label: c.problem, show: true },
+    { id: "problem", label: c.problem, show: project.problem },
     { id: "decisions", label: c.decisions, show: project.decisions?.length },
     { id: "system-design", label: c.systemDesign, show: diagram },
+    { id: "solution", label: c.solution, show: project.solution.length },
     { id: "timeline", label: c.timeline, show: project.timeline?.length },
     { id: "challenges", label: c.challenges, show: project.challenges?.length },
     { id: "results", label: c.results, show: project.results.length },
-    { id: "stack", label: c.stack, show: true },
+    { id: "gallery", label: c.screens, show: project.images.length },
+    { id: "stack", label: c.stack, show: project.stack.length || project.link || demo },
   ];
+  const galleryLabels = { ...c.lightbox, open: c.openImage };
+  const galleryImages = project.images.map((image) => ({ ...image, caption: image.caption ?? image.alt }));
 
   return <article className="container section-space case-study">
     <WorkSubnav current={shell.projectHref(project.slug)} />
     <SectionLabel>{shell.caseStudyLabel}</SectionLabel>
     <header className="case-hero">
       <div className="case-hero__copy">
-        <p className="label">{project.client} · {project.year}</p>
+        <p className="label">{[project.client, project.year].filter(Boolean).join(" · ")}</p>
         <h1>{project.title}</h1>
         <p className="lead">{project.summary}</p>
         <p className="case-role">{project.role}</p>
@@ -67,14 +72,13 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
       </nav>
 
       <div className="case-body">
-        <section className="case-block" id="problem" aria-labelledby="problem-title">
+        {project.problem && <section className="case-block" id="problem" aria-labelledby="problem-title">
           <Reveal><h2 id="problem-title">{c.problem}</h2></Reveal>
           <Reveal><p>{project.problem}</p></Reveal>
-        </section>
+        </section>}
 
         {project.decisions?.length && <section className="case-block" id="decisions" aria-labelledby="decisions-title">
           <Reveal><h2 id="decisions-title">{c.decisions}</h2></Reveal>
-          {project.category === "Research" && <p className="demo-caption">{c.researchNote}</p>}
           <StaggerIn className="case-decisions">{project.decisions.map(({ decision, alternatives, why }) => <article key={decision}>
             <h3>{decision}</h3>
             <dl><dt>{c.alternatives}</dt><dd>{alternatives}</dd><dt>{c.reasoning}</dt><dd>{why}</dd></dl>
@@ -85,7 +89,10 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
           <Reveal><h2 id="system-design-title">{c.systemDesign}</h2></Reveal>
           <ArchitectureDiagram diagram={diagram} legendHeading="h3" />
           <Link className="text-link" href={diagramContent.path(project.slug)}>{c.systemDesignLink}<ArrowUpRight /></Link>
-          <h3>{c.solution}</h3>
+        </section>}
+
+        {project.solution.length > 0 && <section className="case-block" id="solution" aria-labelledby="solution-title">
+          <Reveal><h2 id="solution-title">{c.solution}</h2></Reveal>
           <ul className="detail-list">{project.solution.map((text) => <li key={text}>{text}</li>)}</ul>
         </section>}
 
@@ -104,18 +111,26 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
         {project.results.length > 0 && <section className="case-block" id="results" aria-labelledby="results-title">
           <Reveal><h2 id="results-title">{c.results}</h2></Reveal>
           <ul className="detail-list">{project.results.map((text) => <li key={text}>{text}</li>)}</ul>
-          {project.images.length > 1 && <div className="case-gallery">{project.images.slice(1).map((image) => <ProjectMedia key={image.src} image={image} sizes="(max-width: 768px) 85vw, 35vw" />)}</div>}
         </section>}
 
-        <section className="case-block" id="stack" aria-labelledby="stack-title">
+        {project.images.length > 0 && <section className="case-block" id="gallery" aria-labelledby={project.galleries ? "gallery-title" : "gallery-0-title"}>
+          {project.galleries
+            ? <>
+              <Reveal><h2 id="gallery-title">{c.screens}</h2></Reveal>
+              <div className="case-galleries">{project.galleries.map((gallery, index) => <ProjectGallery key={gallery.title} id={`gallery-${index}`} {...gallery} labels={galleryLabels} />)}</div>
+            </>
+            : <ProjectGallery id="gallery-0" headingLevel="h2" title={c.screens} images={galleryImages} labels={galleryLabels} />}
+        </section>}
+
+        {(project.stack.length > 0 || project.link || demo) && <section className="case-block" id="stack" aria-labelledby="stack-title">
           <Reveal><h2 id="stack-title">{c.stack}</h2></Reveal>
-          <ul className="stack-pills">{project.stack.map((item) => <li key={item}>{item}</li>)}</ul>
-          <p>{c.orchestrated}</p>
+          {project.stack.length > 0 && <ul className="stack-pills">{project.stack.map((item) => <li key={item}>{item}</li>)}</ul>}
+          {project.builtWith && <p>{project.builtWith}</p>}
           {(project.link || demo) && <div className="button-row">
             {project.link && <ButtonLink href={project.link}>{c.projectLink}</ButtonLink>}
             {demo && <ButtonLink href={demo.href}>{demo.label}</ButtonLink>}
           </div>}
-        </section>
+        </section>}
       </div>
     </div>
 

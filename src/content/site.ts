@@ -177,7 +177,14 @@ export const site = {
   ],
 } satisfies Site;
 
-export const hackathons: Hackathon[] = []; // DEMO: awaiting event details.
+export const hackathons: Hackathon[] = [
+  { name: "CloudSentinel · International AI Builders Congress 2026", role: "Lead architect · Team Hectors", result: "Finalist · final on 26 December 2026", live: "https://cloudsentinel-sigma.vercel.app/fleet" },
+  { name: "Jomi Barta · DIU LandTech Hackathon", role: "Lead architect · Team TreeTweet", result: "Finalist · final on 12 December 2026", live: "https://jomibarta.vercel.app/" },
+  { name: "OptiNode · AI Innovation Hackathon 2026, DIU", role: "Team member", result: "Concept finalist · 25 July 2026" },
+  { name: "Vibe coding contest · AI Dev Fest 2026", role: "Participant", result: "73rd place" },
+  { name: "12th ICT Fest hackathon · IUT", role: "Participant", result: "Preliminary round" },
+  { name: "CSE Fest hackathon · BUP", role: "Participant", result: "Preliminary round" },
+];
 
 export const hackathonContent = {
   label: "Hackathons",
@@ -484,11 +491,15 @@ export const approachDetail = {
 
 export const pageContent = {
   approachIntro: "From the first conversation to life after launch, here's how I turn a business problem into software that works.",
-  workFilter: "Filter by category",
+  workFilter: "Filter projects by category",
   featuredProject: "Featured project",
+  viewCaseStudy: "View case study",
+  screens: "Screens",
+  openImage: "Open image",
+  lightbox: { close: "Close", previous: "Previous image", next: "Next image", hint: "Use the arrow keys or swipe to move between images. Press Esc to close." },
   workEmpty: "No projects match this category.",
-  allWorkCategories: "All categories",
-  workIntro: "Client work, independent projects and research. A closer look at the problems I solve and the systems behind them.",
+  allWorkCategories: "All",
+  workIntro: "Client work, hackathons, university projects and research. Click a card for the full case study, or an image to see it larger.",
   contents: "In this case study",
   decisions: "Key decisions & trade-offs",
   alternatives: "Options considered",
@@ -496,11 +507,9 @@ export const pageContent = {
   timeline: "Delivery timeline",
   challenges: "Challenges",
   metrics: "Project outcomes",
-  researchNote: "The research decisions and delivery phases below are illustrative and pending confirmation.",
   problem: "Problem",
   solution: "Solution",
   stack: "Built with (via AI agents)",
-  orchestrated: "Orchestrated with: Codex, Claude",
   results: "Results",
   nextProject: "Next project",
   projectLink: "Visit project",

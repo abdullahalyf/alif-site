@@ -5,6 +5,7 @@ import { contactContent as c } from "../src/content/contact";
 import { site, shell, pageContent } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
 import { diagrams, diagramContent } from "../src/content/diagrams";
+import { projects } from "../src/content/projects";
 import { waitForHydration } from "./helpers/routes";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
@@ -263,18 +264,42 @@ test("new pages fit the viewport with a single main heading", async ({
   }
 });
 
-test("Work filters its project rows by category", async ({ page }) => {
+test("Work filters its project cards by category chip", async ({ page }) => {
   await page.goto("/work");
-  const filter = page.getByRole("combobox", { name: "Filter by category" });
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
-  const rows = page.locator(".work-row");
-  const count = await rows.count();
-  await filter.selectOption("Research");
-  await expect(rows).toHaveCount(1);
-  await expect(rows.first()).toContainText("Traffic Accident Risk Prediction");
-  await expect(rows.first().locator("img")).toBeVisible();
-  await filter.selectOption("");
-  await expect(rows).toHaveCount(count);
+  const cards = page.locator(".work-card");
+  const count = await cards.count();
+  expect(count).toBe(projects.length);
+  const filter = page.getByRole("group", { name: pageContent.workFilter });
+  await filter.getByRole("button", { name: "Research", exact: true }).click();
+  await expect(cards).toHaveCount(1);
+  await expect(cards.first()).toContainText("Traffic accident injury prediction");
+  await filter.getByRole("button", { name: "Hackathons", exact: true }).click();
+  await expect(cards).toHaveCount(3);
+  await filter.getByRole("button", { name: pageContent.allWorkCategories, exact: true }).click();
+  await expect(cards).toHaveCount(count);
+});
+
+test("a Work card opens the case study, and its images open a lightbox", async ({ page }) => {
+  await page.goto("/work");
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  const featured = page.locator(".work-card[data-featured]");
+  const first = featured.locator(".work-card__media button").first();
+  await first.click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(dialog.locator("img")).toBeVisible();
+  await page.keyboard.press("ArrowRight");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("2 /");
+  await page.keyboard.press("Escape");
+  await expect(dialog).toHaveCount(0);
+  await featured.getByRole("link", { name: "Alez POS" }).click();
+  await expect(page).toHaveURL(/\/work\/multi-branch-pos$/);
+});
+
+test("the Alez case study has three titled galleries", async ({ page }) => {
+  await page.goto("/work/multi-branch-pos");
+  for (const title of ["In-shop POS software", "Online management portal", "POS output"]) await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
 });
 
 test("each service offers a timeline and a link to the estimator", async ({ page }) => {

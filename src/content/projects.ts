@@ -1,12 +1,17 @@
-import { photoSlot } from "./photo-slots";
 import type { Project } from "./schema";
+
+function shot(name: string, width: number, height: number, alt: string): { src: string; width: number; height: number; alt: string };
+function shot(name: string, width: number, height: number, alt: string, caption: string): { src: string; width: number; height: number; alt: string; caption: string };
+function shot(name: string, width: number, height: number, alt: string, caption?: string) {
+  return { src: `/images/projects/${name}.jpg`, width, height, alt, ...(caption && { caption }) };
+}
 
 // Single source of truth for all project copy. Edit text here, never in components.
 export const projects = [
   {
     slug: "multi-branch-pos",
-    title: "Multi-Branch POS & Operations Platform",
-    client: "Alez",
+    title: "Alez POS",
+    client: "Yaucha Food & Beverage",
     year: 2026,
     role: "System architect · Directed Codex and Claude · Reviewed and tested",
     category: "Client work",
@@ -22,6 +27,7 @@ export const projects = [
       "Desktop POS (Electron) with a local SQLite database that syncs to the cloud, using branch- and device-prefixed order IDs so no sale is counted twice.",
       "Role-based access enforced at the database level with Postgres row-level security.",
       "Recipe-based inventory: every cup sold deducts its raw ingredients automatically.",
+      "A virtual printer that previews receipts and cup stickers on screen, so printing can be built and tested without a physical printer.",
     ],
     stack: [
       "Electron",
@@ -39,6 +45,7 @@ export const projects = [
       "Adding a branch is configuration, not new code",
     ],
     link: null,
+    builtWith: "Orchestrated with: Codex, Claude",
     decisions: [
       { decision: "Keep a local SQLite copy at each counter", alternatives: "A cloud-only checkout or a local store with automatic sync", why: "Counter sales must continue during outages. Local persistence makes the sale durable immediately, at the cost of designing a sync path." },
       { decision: "Give each sale a stable, branch- and device-prefixed ID", alternatives: "Rely on each server request as a new write or deduplicate by operation ID", why: "The same sale can be sent again after a lost response. Retrying the same ID avoids adding a duplicate to the ledger." },
@@ -55,292 +62,214 @@ export const projects = [
       { label: "Built to scale to", value: "9 branches" },
       { label: "Adding a branch", value: "Configuration, not new code" },
     ],
-    images: [photoSlot("pos-overview", 1280, 960, "Alez POS checkout screen"), photoSlot("pos-detail", 1280, 960, "Alez POS reporting or back-office screen")],
+    images: [
+      shot("alez-pos/pos-sell", 1600, 846, "The Alez POS sell screen with the drink menu and the current order"),
+      shot("alez-pos/portal-menu", 1600, 754, "The Alez online portal, menu and prices for a branch"),
+      shot("alez-pos/output-receipts-stickers", 1079, 865, "Cup stickers and receipts previewed in the Alez virtual printer"),
+      shot("alez-pos/pos-reports", 1600, 846, "The Alez POS sales report for the last seven days"),
+    ],
+    galleries: [
+      {
+        title: "In-shop POS software",
+        text: "The screens a cashier uses at the counter. The figures shown come from a test till, not a real branch.",
+        images: [
+          shot("alez-pos/pos-sell", 1600, 846, "The Alez POS sell screen", "Sell screen: the drink menu with the branch discount, and the current order on the right."),
+          shot("alez-pos/pos-customize", 1600, 861, "Customising a drink in the Alez POS", "Customising a drink: size, sugar level, ice and toppings."),
+          shot("alez-pos/pos-sale-complete", 1600, 854, "The sale complete screen in the Alez POS", "Sale complete: the order number and the amount paid, ready for the next order."),
+          shot("alez-pos/pos-shift", 1600, 860, "The shift screen in the Alez POS", "Shift: opening cash, bKash balance, expenses and the cash count when the day closes."),
+          shot("alez-pos/pos-reports", 1600, 846, "The Alez POS sales report", "Reports: sales by payment method and by order type for the last seven days (test data)."),
+        ],
+      },
+      {
+        title: "Online management portal",
+        text: "Where owners and managers control every branch from one place.",
+        images: [
+          shot("alez-pos/portal-menu", 1600, 754, "The Alez portal menu and prices page", "Menu and prices: company prices, branch prices and discounts for each drink size."),
+          shot("alez-pos/portal-access", 1600, 762, "The Alez portal account access page", "Account access: the signed-in role and the actions it is allowed to take."),
+        ],
+      },
+      {
+        title: "POS output",
+        text: "What the system prints and shows to customers. The virtual printer lets me check all of it on screen.",
+        images: [
+          shot("alez-pos/output-receipts-stickers", 1079, 865, "Cup stickers and receipts in the virtual printer", "Virtual printer: cup stickers and receipts previewed on screen, no physical printer needed."),
+          shot("alez-pos/output-customer-display", 1600, 860, "The customer display showing an order", "Customer display: the order, discount and total shown to the customer."),
+          shot("alez-pos/output-welcome-screen", 1600, 900, "The customer display welcome screen", "Customer display: the welcome screen while the counter is idle."),
+        ],
+      },
+    ],
+  },
+  {
+    slug: "cloudsentinel",
+    title: "CloudSentinel",
+    client: "International AI Builders Congress 2026 · CloudCamp Bangladesh",
+    year: 2026,
+    role: "Lead architect · System and infrastructure design, task planning (Team Hectors, 5 members)",
+    category: "Hackathons",
+    summary:
+      "A web control tower for watching cloud and fleet infrastructure in one place. Finalist at the International AI Builders Congress 2026; the final is on 26 December at DIU.",
+    solution: [
+      "A web control tower with a fleet overview, a graph of agents, tools and models, and a session replay.",
+      "I led the architecture, the infrastructure design and the team's task plan.",
+      "It is the rebuilt successor of our OptiNode concept.",
+    ],
+    stack: [],
+    results: ["Finalist · final on 26 December 2026 at DIU"],
+    link: "https://cloudsentinel-sigma.vercel.app/fleet",
+    images: [
+      shot("cloudsentinel/overview", 843, 382, "The CloudSentinel fleet overview dashboard", "Fleet overview: the state of the whole fleet on one screen."),
+      shot("cloudsentinel/fleet-graph", 843, 380, "The CloudSentinel fleet graph of agents, tools and models", "Fleet graph: how agents, tools and models connect."),
+      shot("cloudsentinel/session-replay", 843, 381, "The CloudSentinel session replay", "Session replay: stepping back through what happened in a session."),
+    ],
+  },
+  {
+    slug: "jomi-barta",
+    title: "Jomi Barta (জমিবার্তা)",
+    client: "DIU LandTech Hackathon · Team TreeTweet",
+    year: 2026,
+    role: "Lead architect · System design (team lead: Irfanul Haque Tasin)",
+    category: "Hackathons",
+    summary:
+      "A bilingual guide that helps people in Bangladesh check a piece of land before they buy it. Finalist at the DIU LandTech Hackathon; the final is on 12 December.",
+    problem:
+      "Buying land in Bangladesh means checking ownership, mutation, cases, khas land and acquisition, and most buyers do not know where to start or which papers to ask for.",
+    solution: [
+      "Five clear checks: ownership, mutation, cases, khas land and acquisition.",
+      "A checklist of the papers to ask the seller for at each step.",
+      "Links to the official government portals for each check.",
+      "Bangla and English versions of every page.",
+    ],
+    stack: [],
+    results: ["Finalist · final on 12 December 2026"],
+    link: "https://jomibarta.vercel.app/",
+    images: [
+      shot("jomibarta/home-hero", 1200, 600, "The Jomi Barta home page in Bangla", "Home page: the promise and the first step, in Bangla."),
+      shot("jomibarta/five-checks", 1200, 925, "The five checks on the Jomi Barta home page", "The five checks to make before buying land."),
+    ],
+  },
+  {
+    slug: "optinode",
+    title: "OptiNode",
+    client: "AI Innovation Hackathon 2026 · Dept. of CSE, DIU",
+    year: 2026,
+    role: "Team member · Concept and slides",
+    category: "Hackathons",
+    summary:
+      "A concept for the theme “AI for Cluster Intelligence: Making Computers Faster, Cheaper, and More Reliable”. It reached the finals as a concept; the team did not take it further, and CloudSentinel is its rebuilt successor.",
+    solution: [
+      "A concept and a slide deck for the hackathon. The team did not build it.",
+      "Its idea lives on in CloudSentinel.",
+    ],
+    stack: [],
+    results: ["Concept finalist, 25 July 2026"],
+    link: null,
+    images: [
+      { src: "/images/achievements/diu-ai-innovation-hackathon-2026.jpg", width: 526, height: 526, alt: "Poster for the DIU AI Innovation Hackathon 2026", caption: "The hackathon poster." },
+    ],
+  },
+  {
+    slug: "client-sites",
+    title: "Personal websites for friends",
+    client: "Yousha Ahmad · Fahmida Jannat Shruty · Ratul Hasan",
+    year: 2026,
+    role: "Designer and developer",
+    category: "Client work",
+    summary:
+      "Three personal portfolio sites for fellow DIU students, each with a home page, an about page, projects, a blog and a contact page.",
+    solution: [
+      "Each person gets a home page, an about page, projects, a blog and a contact page.",
+      "The sites are built with Hugo and published on GitHub Pages.",
+    ],
+    stack: ["Hugo", "GitHub Pages"],
+    results: ["Three sites live on GitHub Pages"],
+    link: null,
+    images: [
+      shot("client-sites/yousha-home-hero", 1200, 1071, "The home page of Yousha Ahmad's website"),
+      shot("client-sites/shruty-home-main", 1200, 1071, "The home page of Fahmida Jannat Shruty's website"),
+      shot("client-sites/ratul-home-hero", 1200, 857, "The home page of Ratul Hasan's website"),
+    ],
+    galleries: [
+      {
+        title: "Yousha Ahmad",
+        link: { label: "Visit the site", href: "https://abdullahalyf.github.io/yusha-site/" },
+        images: [
+          shot("client-sites/yousha-home-hero", 1200, 1071, "The home page of Yousha Ahmad's website", "Home: name, role, photo and a short intro."),
+          shot("client-sites/yousha-home-work", 1200, 669, "Projects and recent writing on Yousha Ahmad's home page", "Home: projects and recent writing."),
+          shot("client-sites/yousha-about-intro", 1200, 1269, "The about page of Yousha Ahmad's website", "About: story, education and experience."),
+          shot("client-sites/yousha-about-moments", 1200, 553, "The Moments photo gallery on Yousha Ahmad's about page", "About: a gallery of moments."),
+          shot("client-sites/yousha-blog-list", 1200, 1029, "The blog page of Yousha Ahmad's website", "Blog: a list of posts with a cover image, date and reading time."),
+        ],
+      },
+      {
+        title: "Fahmida Jannat Shruty",
+        link: { label: "Visit the site", href: "https://252-15-826-sketch.github.io/shruti/" },
+        images: [
+          shot("client-sites/shruty-home-main", 1200, 1071, "The home page of Fahmida Jannat Shruty's website", "Home: intro, semester results, selected project and moments."),
+          shot("client-sites/shruty-blog-list", 1200, 1020, "The blog page of Fahmida Jannat Shruty's website", "Blog: notes on web development, systems and study."),
+        ],
+      },
+      {
+        title: "Ratul Hasan",
+        link: { label: "Visit the site", href: "https://252-15-826-sketch.github.io/ratul-hasan/" },
+        images: [
+          shot("client-sites/ratul-home-hero", 1200, 857, "The home page of Ratul Hasan's website", "Home: intro, skills, selected project and moments."),
+          shot("client-sites/ratul-home-results", 1200, 591, "Achievements and semester results on Ratul Hasan's home page", "Home: achievements and semester results."),
+          shot("client-sites/ratul-about-intro", 1200, 1059, "The about page of Ratul Hasan's website", "About: background, results and education."),
+          shot("client-sites/ratul-about-moments", 1200, 651, "The Moments photo gallery on Ratul Hasan's about page", "About: a gallery of moments with captions."),
+        ],
+      },
+    ],
+  },
+  {
+    slug: "campus-navigator",
+    title: "Campus Navigator",
+    client: "University course project · Daffodil International University",
+    role: "Developer · Course project",
+    category: "University",
+    summary:
+      "A campus navigation project for a university course. The course teacher was very pleased with it.",
+    solution: [],
+    stack: [],
+    results: ["Praised by the course teacher"],
+    link: null,
+    images: [],
+  },
+  {
+    slug: "console-ecommerce",
+    title: "Console-based e-commerce system",
+    client: "University course project · Daffodil International University",
+    role: "Developer · Course project",
+    category: "University",
+    summary:
+      "A full e-commerce system that runs entirely in the console, built for a university course. The course teacher highly appreciated how complete a system it was.",
+    solution: [],
+    stack: [],
+    results: ["Highly appreciated by the course teacher"],
+    link: null,
+    images: [],
   },
   {
     slug: "traffic-accident-risk",
-    title: "Traffic Accident Risk Prediction",
-    client: "Research — Daffodil International University",
+    title: "Traffic accident injury prediction",
+    client: "Research · Daffodil International University",
     year: 2026,
-    role: "Research team member · Research and evaluation", // DEMO: confirm exact role
+    role: "Second author · Research team member",
     category: "Research",
     summary:
-      "Research on predicting traffic accident risk to support intelligent transportation systems.",
+      "Machine learning research on predicting traffic accident injuries, done with a research team at DIU. The paper has been submitted.",
     problem:
-      "Road accidents are a major cost in lives and money. Predicting where and when risk is high lets planners and traffic systems act before accidents happen.",
+      "Road accidents cost lives and money. Predicting where and when injuries are likely helps planners and traffic systems act before accidents happen.",
     solution: [
-      "Compared and evaluated models intended to estimate accident risk from traffic and road data.", // DEMO: confirm method/data
+      "Compared and evaluated models that predict traffic accident injury.",
     ],
-    stack: ["Python", "Machine Learning"], // DEMO: confirm
+    stack: ["Python", "Machine learning"],
     results: ["Paper submitted for publication"],
+    metrics: [{ label: "Research status", value: "Paper submitted" }],
     link: null,
-    // DEMO: candidate decisions and evaluation approach will be confirmed by the team.
-    // DEMO: illustrative sequencing and durations.
-    timeline: [
-      { phase: "Frame the research question", weeks: "DEMO · Weeks 1–2" },
-      { phase: "Compare candidate models", weeks: "DEMO · Weeks 3–5" },
-      { phase: "Review the paper", weeks: "DEMO · Weeks 6–7" },
+    images: [
+      { src: "/images/stock/research-road.jpg", width: 480, height: 600, alt: "An aerial view of cars at a road intersection", caption: "Stock photo, not from the project" },
     ],
-    decisions: [
-      { decision: "Frame the target as accident risk", alternatives: "Count total incidents or estimate where and when risk is higher", why: "The risk framing makes the output more relevant to transportation planning." },
-      { decision: "Compare candidate models", alternatives: "Start with a simple baseline or adopt one complex model immediately", why: "A baseline helps the team evaluate whether added complexity contributes to useful predictions." },
-      { decision: "Keep research and deployment separate", alternatives: "Submit research for review or present it as an operational traffic service", why: "A paper can document evaluation without making claims about live performance." },
-    ],
-    challenges: [
-      { problem: "A useful target must reflect road conditions", resolution: "The evaluation plan compares risk estimates against traffic and road data." },
-      { problem: "Model findings need a clear account of limitations", resolution: "Separate the research outcome from any future deployment claims." },
-    ],
-    metrics: [
-      { label: "Research status", value: "Paper submitted" },
-    ],
-    images: [photoSlot("research-overview", 1280, 960, "Traffic risk research overview"), photoSlot("research-detail", 1280, 960, "Traffic risk evaluation detail")],
   },
-  // DEMO: every text field and image in this illustrative project is replaceable sample content.
-  {
-      "slug": "stockroom-operations",
-      "title": "Stockroom Operations Hub",
-      "client": "DEMO — Distribution business",
-      "year": 2026,
-      "role": "DEMO — Architect · Directed AI agents · Reviewed and tested",
-      "category": "Client work",
-      "demo": true,
-      "summary": "A purchasing and stock-transfer workspace designed for a distributor with six branches and a small central warehouse.",
-      "problem": "In this demo scenario, six branches reconcile stock in separate spreadsheets. A transfer can be deducted at dispatch and again at receipt, while concurrent purchase edits erase the audit trail. The warehouse has intermittent connectivity, and the owner needs a daily replenishment decision without operating a large server estate.",
-      "solution": [
-    "Modelled purchase orders, dispatches and receipts as explicit state transitions; stock changes are append-only ledger entries rather than overwritten balances.",
-    "Used PostgreSQL transactions and unique operation keys to make receipt retries safe, with branch-scoped permissions checked on the server.",
-    "Designed a TypeScript reconciliation worker that compares branch movement totals against the ledger and puts discrepancies into a review queue.",
-    "Kept the interface focused on exceptions: low-stock suggestions, overdue transfers and adjustments requiring a second approval."
-],
-      "stack": [
-          "TypeScript",
-          "React",
-          "PostgreSQL"
-      ],
-      "results": [
-    "DEMO benchmark: replaying 10,000 stock events produced zero duplicate ledger entries.",
-    "DEMO acceptance test: all 24 branch-to-warehouse reconciliation scenarios matched expected balances.",
-    "DEMO workflow estimate: preparing the daily replenishment list fell from 45 minutes to 12 minutes."
-],
-      "link": null,
-      // DEMO: illustrative sequencing and durations.
-      timeline: [
-        { phase: "Map transfers and stock", weeks: "DEMO · Weeks 1–2" },
-        { phase: "Build the ledger and approvals", weeks: "DEMO · Weeks 3–5" },
-        { phase: "Replay and reconcile", weeks: "DEMO · Week 6" },
-      ],
-      decisions: [
-        { decision: "Use an append-only stock ledger", alternatives: "Overwrite a balance or retain each movement", why: "Explicit movement records support reconciliation and explain changes after concurrent edits." },
-        { decision: "Deduplicate receipts in the database", alternatives: "Check once in the UI or enforce unique operation keys in a transaction", why: "Receipts can arrive more than once. Database enforcement protects the ledger regardless of retry source." },
-        { decision: "Put exceptions on the home screen", alternatives: "Show every change equally or surface low stock and overdue transfers", why: "Operators need a short list of decisions, while the ledger remains available for investigation." },
-      ],
-      challenges: [
-        { problem: "Dispatch and receipt can both deduct a transfer", resolution: "Use separate state transitions and test receipt retries against the ledger." },
-        { problem: "Warehouse connectivity is intermittent", resolution: "Allow a receipt to be submitted again under the same operation key." },
-      ],
-      metrics: [
-        { label: "DEMO replay", value: "10,000 events" },
-        { label: "DEMO duplicate entries", value: "0" },
-        { label: "DEMO replenishment prep", value: "45 → 12 minutes" },
-      ],
-      images: [photoSlot("stockroom-operations-overview", 1280, 960, "Overview of Stockroom Operations Hub"), photoSlot("stockroom-operations-detail", 1280, 960, "Detail from Stockroom Operations Hub"), photoSlot("stockroom-operations-context", 1280, 960, "Workflow for Stockroom Operations Hub")],
-    },
-  // DEMO: every text field and image in this illustrative project is replaceable sample content.
-  {
-      "slug": "clinic-booking",
-      "title": "Clinic Booking & Care Portal",
-      "client": "DEMO — Community clinic",
-      "year": 2026,
-      "role": "DEMO — Architect · Directed AI agents · Reviewed and tested",
-      "category": "Client work",
-      "demo": true,
-      "summary": "A scheduling and follow-up portal designed for a four-practitioner clinic with one shared reception desk.",
-      "problem": "The demo clinic takes bookings by telephone and in person. Two receptionists can offer the same slot, cancellations do not reliably release capacity, and follow-up tasks sit in personal notebooks. The design must handle a busy morning on ordinary phones while keeping administrative notes separate from appointment data.",
-      "solution": [
-    "Defined appointment states and an immutable history before building screens; a database exclusion constraint prevents overlapping active bookings for a practitioner.",
-    "Separated scheduling, contact details and follow-up tasks into permission-scoped records; the browser never receives unrestricted patient exports.",
-    "Made booking requests idempotent so reconnecting after a slow response returns the original appointment instead of creating another.",
-    "Delivered a keyboard-friendly daily schedule, explicit cancellation reasons and a task queue with an assigned owner and due date."
-],
-      "stack": [
-          "Next.js",
-          "TypeScript",
-          "PostgreSQL"
-      ],
-      "results": [
-    "DEMO concurrency test: 100 simultaneous requests for one slot resulted in one confirmed booking.",
-    "DEMO usability exercise: a repeat appointment required four interactions instead of nine in the paper-process prototype.",
-    "DEMO acceptance suite: 36 booking, cancellation and follow-up scenarios passed."
-],
-      "link": null,
-      // DEMO: illustrative sequencing and durations.
-      timeline: [
-        { phase: "Observe reception and define roles", weeks: "DEMO · Week 1" },
-        { phase: "Build bookings and follow-up", weeks: "DEMO · Weeks 2–4" },
-        { phase: "Test concurrency and keyboard use", weeks: "DEMO · Week 5" },
-      ],
-      decisions: [
-        { decision: "Protect slots with a database constraint", alternatives: "Check availability in each browser or prevent overlap at write time", why: "Two receptionists may see the same slot. The constraint makes the decision atomic." },
-        { decision: "Separate scheduling from clinical notes", alternatives: "A single shared patient record or permission-scoped records", why: "Reception staff can book visits without loading administrative notes they do not need." },
-        { decision: "Reuse the booking operation ID on retries", alternatives: "Create a fresh attempt each time or return the existing appointment", why: "An interrupted response does not mean the original booking failed." },
-      ],
-      challenges: [
-        { problem: "Concurrent requests target one slot", resolution: "Keep one reservation and make the collision explicit to the second receptionist." },
-        { problem: "Cancelled visits and follow-up tasks can go missing", resolution: "Use explicit state transitions, cancellation reasons and assigned task owners." },
-      ],
-      metrics: [
-        { label: "DEMO slot contention", value: "1 booking from 100 requests" },
-        { label: "DEMO coverage", value: "36 acceptance scenarios" },
-      ],
-      images: [photoSlot("clinic-booking-overview", 1280, 960, "Overview of Clinic Booking & Care Portal"), photoSlot("clinic-booking-detail", 1280, 960, "Detail from Clinic Booking & Care Portal"), photoSlot("clinic-booking-context", 1280, 960, "Workflow for Clinic Booking & Care Portal")],
-    },
-  // DEMO: every text field and image in this illustrative project is replaceable sample content.
-  {
-      "slug": "field-service",
-      "title": "Field Service Dispatch",
-      "client": "DEMO — Maintenance team",
-      "year": 2026,
-      "role": "DEMO — Architect · Directed AI agents · Reviewed and tested",
-      "category": "Client work",
-      "demo": true,
-      "summary": "A dispatch dashboard and offline visit record designed for a maintenance team serving 120 sites.",
-      "problem": "In this demo, dispatchers coordinate eight technicians through chat messages. Job status becomes stale during travel, duplicate submissions create confusing visit records, and a photograph can upload after a job has already been marked complete. Technicians need to finish notes without reception while dispatchers need an honest picture of sync status.",
-      "solution": [
-    "Stored visit notes and pending attachments in a local SQLite queue with stable operation identifiers and explicit pending, acknowledged and rejected states.",
-    "Separated job assignment from visit completion so a late upload cannot silently reassign or reopen a finished job.",
-    "Used a server-side event log and role checks to resolve assignment changes, retaining both the original visit time and the time it reached the server.",
-    "Built a dispatcher exception view for overdue jobs, unsynced visits and missing attachments instead of treating every delay as a failure."
-],
-      "stack": [
-          "React",
-          "TypeScript",
-          "SQLite"
-      ],
-      "results": [
-    "DEMO reliability run: 500 offline visit submissions were replayed three times without duplicate visit records.",
-    "DEMO recovery test: all queued notes survived a process restart during a simulated six-hour outage.",
-    "DEMO workflow target: dispatchers can identify unacknowledged visits from one exception list rather than eight chat threads."
-],
-      "link": null,
-      // DEMO: illustrative sequencing and durations.
-      timeline: [
-        { phase: "Map dispatch and visit states", weeks: "DEMO · Week 1" },
-        { phase: "Implement local notes and events", weeks: "DEMO · Weeks 2–4" },
-        { phase: "Verify offline recovery", weeks: "DEMO · Weeks 5–6" },
-      ],
-      decisions: [
-        { decision: "Use a durable local operation queue", alternatives: "Store notes in memory or persist submissions in SQLite", why: "A process restart should leave pending work intact, even during an outage." },
-        { decision: "Separate assignment and completion", alternatives: "Represent both in a shared status field or model them as distinct changes", why: "Late photos should not reopen jobs or change who is responsible for them." },
-        { decision: "Surface sync exceptions to dispatch", alternatives: "Use one global progress state or show pending and rejected records individually", why: "Dispatchers can tell delayed connectivity apart from records needing action." },
-      ],
-      challenges: [
-        { problem: "A photo upload can arrive after completion", resolution: "Associate it with the visit and keep attachment status separate." },
-        { problem: "Repeated offline submissions can create duplicates", resolution: "Replay stable operation IDs against a server event log." },
-      ],
-      metrics: [
-        { label: "DEMO replay", value: "500 offline submissions" },
-        { label: "DEMO recovery", value: "6-hour outage" },
-      ],
-      images: [photoSlot("field-service-overview", 1280, 960, "Overview of Field Service Dispatch"), photoSlot("field-service-detail", 1280, 960, "Detail from Field Service Dispatch"), photoSlot("field-service-context", 1280, 960, "Workflow for Field Service Dispatch")],
-    },
-  // DEMO: every text field and image in this illustrative project is replaceable sample content.
-  {
-      "slug": "learning-dashboard",
-      "title": "Learning Progress Dashboard",
-      "client": "DEMO — Independent concept",
-      "year": 2026,
-      "role": "DEMO — Architect · Directed AI agents · Reviewed and tested",
-      "category": "Personal",
-      "demo": true,
-      "summary": "A personal learning dashboard that turns course notes and study sessions into an exportable weekly record.",
-      "problem": "The demo learner has five active courses, notes in three tools and a habit of confusing time spent with progress made. The constraint is deliberately small: a responsive web app, no social features, and ownership of the underlying records even if the application is abandoned.",
-      "solution": [
-    "Modelled courses, learning objectives, study sessions and evidence separately so a completed session does not automatically imply a mastered objective.",
-    "Kept durable records in PostgreSQL and derived weekly summaries from sessions; summaries can be rebuilt rather than edited as a second source of truth.",
-    "Built accessible table and text views alongside progress graphics, with plain-language empty states and an explicit unfinished-task queue.",
-    "Added versioned JSON and CSV export, deterministic date handling and tests for sessions spanning month boundaries."
-],
-      "stack": [
-          "Next.js",
-          "TypeScript",
-          "Tailwind CSS"
-      ],
-      "results": [
-    "DEMO round-trip test: 2,000 session records exported and re-imported without losing identifiers or timestamps.",
-    "DEMO accessibility check: the weekly workflow is usable with a keyboard and without relying on chart colours.",
-    "DEMO performance target: a five-course weekly summary stays under 100 ms in a local seeded-data benchmark."
-],
-      "link": null,
-      // DEMO: illustrative sequencing and durations.
-      timeline: [
-        { phase: "Model learning records", weeks: "DEMO · Week 1" },
-        { phase: "Build summaries and export", weeks: "DEMO · Weeks 2–3" },
-        { phase: "Verify round trips and keyboard use", weeks: "DEMO · Week 4" },
-      ],
-      decisions: [
-        { decision: "Separate evidence from course activity", alternatives: "Count time as mastery or store evidence against an objective", why: "Time spent is useful history and offers only one part of the progress picture." },
-        { decision: "Derive reports from durable sessions", alternatives: "Edit weekly summaries separately or rebuild them from source records", why: "Changing a session updates the report without creating inconsistent totals." },
-        { decision: "Support versioned JSON and CSV", alternatives: "Lock data to the dashboard or provide portable records", why: "Readers retain access to their notes and can re-import them if the app changes." },
-      ],
-      challenges: [
-        { problem: "Sessions span weekly boundaries", resolution: "Use deterministic date handling and test boundary cases." },
-        { problem: "Graphics can hide progress from keyboard users", resolution: "Provide accessible table and text views alongside the charts." },
-      ],
-      metrics: [
-        { label: "DEMO export verification", value: "2,000 records" },
-        { label: "DEMO summary target", value: "Under 100 ms" },
-      ],
-      images: [photoSlot("learning-dashboard-overview", 1280, 960, "Overview of Learning Progress Dashboard"), photoSlot("learning-dashboard-detail", 1280, 960, "Detail from Learning Progress Dashboard"), photoSlot("learning-dashboard-context", 1280, 960, "Workflow for Learning Progress Dashboard")],
-    },
-  // DEMO: every text field and image in this illustrative project is replaceable sample content.
-  {
-      "slug": "sync-inspector",
-      "title": "Sync Inspector",
-      "client": "DEMO — Open-source concept",
-      "year": 2026,
-      "role": "DEMO — Architect · Directed AI agents · Reviewed and tested",
-      "category": "Open source",
-      "demo": true,
-      "summary": "An open-source tool concept for tracing local-first operation queues and reproducing difficult synchronisation failures.",
-      "problem": "The demo tool addresses a common debugging gap: an application reports that sync failed but cannot explain which operation was retried, whether the server committed it, or how a conflict was resolved. Debugging should work from a redacted capture without needing a production database or a specific frontend framework.",
-      "solution": [
-    "Defined a versioned event format containing operation identity, state transitions, acknowledgements and correlation IDs, while excluding payload values by default.",
-    "Designed a TypeScript state reducer shared by the CLI and timeline view so both explain an operation using the same rules.",
-    "Used small SQLite captures for reproducible fixtures, with adapters responsible for translating application-specific events into the neutral format.",
-    "Added deterministic replay, schema validation and regression fixtures for late acknowledgements, interrupted retries and out-of-order delivery."
-],
-      "stack": [
-          "TypeScript",
-          "Node.js",
-          "SQLite"
-      ],
-      "results": [
-    "DEMO fixture suite: 48 retry, conflict and recovery traces reduce to their expected terminal states.",
-    "DEMO redaction test: exported captures exclude configured sensitive fields while retaining correlation IDs.",
-    "DEMO benchmark: a 10,000-event capture can be summarised in under one second on the reference development machine."
-],
-      "link": null,
-      // DEMO: illustrative sequencing and durations.
-      timeline: [
-        { phase: "Define the capture format", weeks: "DEMO · Week 1" },
-        { phase: "Build the reader and replay model", weeks: "DEMO · Weeks 2–3" },
-        { phase: "Review redaction and fixtures", weeks: "DEMO · Week 4" },
-      ],
-      decisions: [
-        { decision: "Redact source payloads by default", alternatives: "Collect full payloads or keep identifiers and transitions only", why: "Timing, ordering and acknowledgement can be inspected without copying user records." },
-        { decision: "Share a reducer across the CLI and timeline", alternatives: "Interpret the events separately in each view or use common transition rules", why: "The same capture should tell the same story whichever view is open." },
-        { decision: "Let adapters translate source events", alternatives: "Bind the inspector to one production database or use neutral fixtures", why: "Small local captures are easier to share, replay and test." },
-      ],
-      challenges: [
-        { problem: "Retries and acknowledgements arrive out of order", resolution: "Use correlated operation IDs and fixture replay to explain the terminal state." },
-        { problem: "A capture can expose business data", resolution: "Exclude payload values and test the exported format for redaction." },
-      ],
-      metrics: [
-        { label: "DEMO coverage", value: "48 trace fixtures" },
-        { label: "DEMO capture", value: "10,000 events under 1 s" },
-      ],
-      images: [photoSlot("sync-inspector-overview", 1280, 960, "Overview of Sync Inspector"), photoSlot("sync-inspector-detail", 1280, 960, "Detail from Sync Inspector"), photoSlot("sync-inspector-context", 1280, 960, "Workflow for Sync Inspector")],
-    },
 ] satisfies Project[];
 
 export function getProject(slug: string): Project | undefined {
