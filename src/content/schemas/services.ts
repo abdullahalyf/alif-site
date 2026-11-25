@@ -18,6 +18,7 @@ export const servicesSchema = z.object({
   recommendedModel: text,
   recommendedLabel: text,
   priceLabel: text,
+  credit: text,
   blocks: z
     .array(
       z.object({
@@ -27,6 +28,7 @@ export const servicesSchema = z.object({
         timeline: text,
         range: text,
         rangeNote: text.optional(),
+        image: z.object({ src: text, width: z.number().int().positive(), height: z.number().int().positive(), alt: text }),
       }),
     )
     .length(9),

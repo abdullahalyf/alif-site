@@ -204,8 +204,18 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 }
 @keyframes menu-slide-in { from { transform: translateX(100%); } }
 @keyframes menu-dim-in { from { opacity: 0; } }
-@media (max-width: 35rem) { .site-menu { width: 100%; } }
-@media (max-width: 74.999rem) { .desktop-nav { display: none; } }
+@media (max-width: 47.999rem) { .site-menu { width: 100%; } }
+/* Below the desktop breakpoint the bar keeps only Services and About me beside the menu button. */
+@media (max-width: 74.999rem) {
+  .desktop-nav { margin-inline: auto; gap: clamp(0.4rem, 2.6vw, 1.25rem); font-size: 0.9375rem; }
+  .desktop-nav > a:not([data-phone]) { display: none; }
+  .desktop-nav .work-dropdown__links { display: none !important; }
+  .desktop-nav a { padding-inline: 0.2rem; }
+}
+@media (max-width: 47.999rem) {
+  .header-actions > .search-trigger, .header-actions > .theme-toggle { display: none; }
+}
+@media (max-width: 29.999rem) { .header .brand-mark__text { display: none; } }
 @media (max-width: 22rem) { .header-inner { width: calc(100% - 2rem); } }
 .fallback-nav { display: flex; flex-wrap: wrap; gap: 1rem; padding-bottom: 1rem; }
 .footer { position: relative; isolation: isolate; overflow: clip; background: var(--night); color: var(--night-text); scroll-margin-top: 6rem; }
@@ -339,11 +349,11 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
   .hero-copy { gap: 1.35rem; }
   .hero-copy .button-row { gap: 0.75rem; }
   .hero-side { display: grid; padding-top: 0; padding-bottom: 0; }
-  .hero-side__photo-wrap { margin-inline: 0.5rem; }
+  .hero-side__photo-wrap { margin-inline: 0; }
   .hero-side__photo { aspect-ratio: 4 / 5; object-position: center 30%; }
   .hero-side__diagram { position: static; grid-row: 3; width: 100%; margin-top: 0.75rem; padding: 0.25rem 0.75rem; background: var(--bg); }
   .hero-side__diagram svg { max-width: 22rem; margin-inline: auto; }
-  .hero-side__card { position: relative; left: auto; bottom: auto; width: min(94%, 20rem); margin-top: -2rem; background: var(--bg); }
+  .hero-side__card { position: relative; left: auto; bottom: auto; width: 100%; margin-top: 0.85rem; background: var(--bg); }
   .status-card__zone, .status-card__building-label, .status-card__stack li { font-size: 0.75rem; }
   .section-heading { gap: 1rem; }
   .night-section .night-intro { position: static; }
@@ -496,11 +506,11 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
 .home-service { position: relative; isolation: isolate; display: grid; align-content: start; gap: 0.65rem; height: 100%; min-width: 0; padding: clamp(1rem, 2.4vw, 1.8rem); border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-1); }
 .home-service__icon { width: fit-content; padding: 0.5rem; border-radius: 0.6rem; background: var(--tint-a); }
 .home-service__link { color: var(--accent); display: flex; align-items: center; gap: 0.4rem; }
-.home-service__image { display: none; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+.home-service__image { display: block; order: -1; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 0.6rem; }
 .home-services__credit { margin-top: 0.75rem; font-size: 0.75rem; color: var(--ink-muted); }
 @media (min-width: 64rem) and (hover: hover) {
   .home-service { padding-right: 25%; }
-  .home-service__image { display: block; position: absolute; right: 0.75rem; bottom: 0.75rem; width: 21%; clip-path: inset(0 0 0 100% round 0.55rem); }
+  .home-service__image { order: 0; aspect-ratio: 4 / 5; position: absolute; right: 0.75rem; bottom: 0.75rem; width: 21%; clip-path: inset(0 0 0 100% round 0.55rem); }
   .home-service:is(:hover, :focus-visible) .home-service__image { clip-path: inset(0 round 0.55rem); }
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {

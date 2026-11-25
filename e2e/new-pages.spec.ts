@@ -123,7 +123,13 @@ test("search opens from the keyboard and the header button on any page", async (
     await expect(dialog).not.toBeVisible();
 
     // The header button opens the same dialog.
-    await page.getByRole("button", { name: new RegExp(shell.searchLabel) }).first().click();
+    const headerSearch = page.locator(".header-actions").getByRole("button", { name: new RegExp(shell.searchLabel) });
+    if (await headerSearch.isVisible()) await headerSearch.click();
+    else {
+      // On phones the search field lives in the menu drawer.
+      await page.getByRole("button", { name: shell.menu }).click();
+      await page.locator("#site-menu").getByRole("button", { name: new RegExp(shell.searchLabel) }).click();
+    }
     await expect(dialog).toBeVisible();
     await expect(combobox).toBeFocused();
     await page.keyboard.press("Escape");

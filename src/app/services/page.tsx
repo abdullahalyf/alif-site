@@ -1,4 +1,5 @@
 import { WorkSubnav } from "@/components/work-subnav";
+import Image from "next/image";
 import Link from "next/link";
 import { servicesContent as c, serviceDetails as details } from "@/content/services";
 import { estimateContent } from "@/content/estimate";
@@ -36,6 +37,7 @@ export default function ServicesPage() {
           {c.blocks.map((block) => (
             <li key={block.id}>
               <article className="service-card" id={block.id}>
+                <Image className="service-card__image" {...block.image} alt={block.image.alt} sizes="(min-width: 62rem) 22rem, (min-width: 40rem) 45vw, 92vw" quality={70} />
                 <span className="service-card__icon"><ServiceIcon name={block.id} /></span>
                 <h3>{block.title}</h3>
                 <p>{block.description}</p>
@@ -50,6 +52,7 @@ export default function ServicesPage() {
             </li>
           ))}
         </ul>
+        <p className="service-credit">{c.credit}</p>
       </section>
 
       <section className="service-process" aria-labelledby="service-process-title">

@@ -14,7 +14,14 @@ test("the header and drawer share a theme choice that survives reload", async ({
   await page.emulateMedia({ colorScheme: "light" });
   await expect(root).toHaveAttribute("data-theme", "dark");
 
-  await page.getByRole("banner").getByRole("button", { name: shell.useLightTheme }).click();
+  const headerTheme = page.getByRole("banner").getByRole("button", { name: shell.useLightTheme });
+  if (await headerTheme.isVisible()) await headerTheme.click();
+  else {
+    // On phones the theme switch lives in the menu drawer only.
+    await page.getByRole("button", { name: shell.menu, exact: true }).click();
+    await page.getByRole("dialog", { name: shell.menu }).getByRole("button", { name: shell.useLightTheme }).click();
+    await page.keyboard.press("Escape");
+  }
   await expect(root).toHaveAttribute("data-theme", "light");
   await page.reload({ waitUntil: "commit" });
   await expect(root).toHaveAttribute("data-theme", "light");

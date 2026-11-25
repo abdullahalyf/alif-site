@@ -77,9 +77,10 @@ export function Header() {
     dialog.current?.close();
   }, [routeChanged]);
 
-  function linkItem(link: { href: string; label: string }) {
+  function linkItem(link: { href: string; label: string }, keepOnPhone = false) {
     const props = {
       href: link.href,
+      "data-phone": keepOnPhone || undefined,
       "aria-current": pathname === link.href ? "page" as const : undefined,
       onClick: () => { if (open) close(); },
     };
@@ -102,12 +103,12 @@ export function Header() {
               workTrigger.current?.focus();
               setDismissedWork(true);
             }}>
-            <Link ref={workTrigger} href={services.href} data-active={servicesActive || undefined} aria-current={pathname === services.href ? "page" : undefined}>{services.label}</Link>
+            <Link ref={workTrigger} href={services.href} data-phone={shell.phoneLinks.includes(services.href) || undefined} data-active={servicesActive || undefined} aria-current={pathname === services.href ? "page" : undefined}>{services.label}</Link>
             <ul className="work-dropdown__links">{workNavigation.dropdown.map((link) =>
               <li key={link.href} onClick={() => setDismissedWork(true)}>{linkItem(link)}</li>
             )}</ul>
           </div>
-          {otherLinks.map(linkItem)}
+          {otherLinks.map((link) => linkItem(link, shell.phoneLinks.includes(link.href)))}
         </nav>
         <div className="header-actions">
           <SearchTrigger />
@@ -172,7 +173,7 @@ export function Header() {
             </nav>
           </div>
         </dialog>
-        <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{shell.nav.map(linkItem)}{menuGroups.flatMap((group) => group.links).filter((link) => !shell.nav.some((item) => item.href === link.href)).map(linkItem)}</nav><style>{`.header-actions, .desktop-nav { display: none; }`}</style></noscript>
+        <noscript><nav className="fallback-nav" aria-label={shell.navigation}>{shell.nav.map((link) => linkItem(link))}{menuGroups.flatMap((group) => group.links).filter((link) => !shell.nav.some((item) => item.href === link.href)).map((link) => linkItem(link))}</nav><style>{`.header-actions, .desktop-nav { display: none; }`}</style></noscript>
       </div>
     </header>
   );

@@ -235,6 +235,7 @@ export const shell = {
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
+  phoneLinks: ["/services", "/about"],
   menu: "Menu",
   closeMenu: "Close menu",
   skip: "Skip to content",
@@ -612,12 +613,12 @@ export const contactNext = {
 
 export const homeServices = {
   learn: "Learn more",
-  credit: "Stock photos from Pexels: divinetechygirl (flowchart), Brett Sayles (server racks).",
+  credit: "Stock photos from Pexels: Kevin Ku (code), Tiger Lily (warehouse), Lukas Blazek (dashboard). The POS screen is my own Alez POS.",
   cards: [
-    { icon: "custom", title: site.services[0], description: "Software shaped around how your business really works, from the first sketch to launch.", href: "/services#custom", image: { src: "/images/stock/service-architecture.jpg", width: 480, height: 600, alt: "A hand drawing a flowchart on a whiteboard" } },
-    { icon: "pos", title: site.services[1], description: "Billing, stock and daily reports for shops and cafés, with an offline mode.", href: "/services#pos", image: { src: "/images/slots/service-operations.jpg", width: 360, height: 450, alt: "The Alez POS selling screen" } },
-    { icon: "backoffice", title: site.services[2], description: "Track stock, suppliers and staff work behind the counter.", href: "/services#backoffice", image: { src: "/images/stock/service-offline.jpg", width: 480, height: 600, alt: "Rows of server racks in a data centre" } },
-    { icon: "dashboard", title: site.services[3], description: "Screens that show your numbers, or web tools your team uses every day.", href: "/services#dashboard", image: { src: "/images/stock/service-access.jpg", width: 480, height: 600, alt: "Locked server cabinets in a data centre" } },
+    { icon: "custom", title: site.services[0], description: "Software shaped around how your business really works, from the first sketch to launch.", href: "/services#custom", image: { src: "/images/stock/service-custom.jpg", width: 960, height: 540, alt: "Code on a monitor seen through a pair of glasses" } },
+    { icon: "pos", title: site.services[1], description: "Billing, stock and daily reports for shops and cafés, with an offline mode.", href: "/services#pos", image: { src: "/images/slots/service-pos-screen.jpg", width: 960, height: 514, alt: "The Alez POS selling screen" } },
+    { icon: "backoffice", title: site.services[2], description: "Track stock, suppliers and staff work behind the counter.", href: "/services#backoffice", image: { src: "/images/stock/service-backoffice.jpg", width: 960, height: 540, alt: "A warehouse aisle with shelves of boxes" } },
+    { icon: "dashboard", title: site.services[3], description: "Screens that show your numbers, or web tools your team uses every day.", href: "/services#dashboard", image: { src: "/images/stock/service-dashboard.jpg", width: 960, height: 540, alt: "A laptop showing charts on a dashboard" } },
   ] as const,
 };
 
