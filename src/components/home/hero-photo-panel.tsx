@@ -12,8 +12,8 @@ export function HeroPhotoPanel({
   label,
 }: {
   children: ReactNode;
-  floatingPhoto: ReactNode;
-  photoStrip: ReactNode;
+  floatingPhoto?: ReactNode;
+  photoStrip?: ReactNode;
   label: string;
 }) {
   const root = useRef<HTMLDivElement>(null);
@@ -90,6 +90,7 @@ export function HeroPhotoPanel({
         <HeroStripes className="hero-stripes" color="var(--bg)" drift={36} />
       </div>
     </div>
+    {photoStrip ? <>
     <div ref={floating} className="hero-photo-story__floating" aria-hidden="true">{floatingPhoto}</div>
     <div className="container hero-photo-story__gallery">
       <ul
@@ -102,5 +103,6 @@ export function HeroPhotoPanel({
         {photoStrip}
       </ul>
     </div>
+    </> : null}
   </div>;
 }

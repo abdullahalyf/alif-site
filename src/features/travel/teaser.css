@@ -2,7 +2,8 @@
 .travel-teaser h2 { max-width: 22ch; margin-bottom: 0.65rem; }
 .travel-teaser-intro { font-size: 1.125rem; }
 .travel-teaser-label { font-size: 0.75rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.travel-teaser-notice { margin-top: 0.35rem; font-size: 0.8125rem; color: var(--ink-muted); }
+.travel-teaser-quote { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.3; }
+.travel-teaser-quote cite { display: block; margin-top: 0.15rem; font: 400 0.8125rem/1.4 var(--font-sans); font-style: normal; color: var(--ink-muted); }
 .travel-teaser-strip { display: flex; gap: 1.25rem; overflow-x: auto; padding: 0.85rem 0.25rem; margin-block: 0.5rem; }
 .travel-teaser-card { flex: 0 0 46%; min-width: 0; padding: 0.65rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-2); }
 .travel-teaser-photo { overflow: hidden; height: clamp(320px, 30vw, 440px); border-radius: 0.65rem; }
@@ -14,6 +15,6 @@
 .travel-teaser-progress[hidden] { display: none; }
 
 .travel-teaser--compact .travel-teaser-card { flex-basis: clamp(14rem, 72vw, 19rem); }
-.travel-teaser--compact .travel-teaser-photo { height: auto; aspect-ratio: 16 / 9; max-height: 11rem; content-visibility: auto; }
+.travel-teaser--compact .travel-teaser-photo { height: auto; aspect-ratio: 3 / 2; }
 .travel-teaser--compact h3 { font-size: 1.5rem; }
 @media (min-width: 900px) { .travel-teaser--compact .travel-teaser-card { flex-basis: 36%; } }

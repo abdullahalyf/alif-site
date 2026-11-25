@@ -1,18 +1,16 @@
 import { expect, test } from "@playwright/test";
 import { travelContent } from "../src/content/travel";
-import { aboutContent, site, skillProfile } from "../src/content/site";
+import { aboutContent, aboutPage, site, skillProfile } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
 
   // The heading is a serif display line above the split.
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("About me");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
   await expect(page.getByRole("img", { name: site.aboutPhoto.alt })).toBeVisible();
 
   // Every paragraph of the intro is on the page, in order.
-  for (const paragraph of site.about) {
-    await expect(page.getByText(paragraph, { exact: true })).toBeVisible();
-  }
+  await expect(page.getByText(aboutContent.brief, { exact: true })).toBeVisible();
 });
 
 test("the story chapters alternate sides and carry a bracketed label", async ({ page }) => {
@@ -44,7 +42,7 @@ test("the story chapters alternate sides and carry a bracketed label", async ({ 
 
 test("About photos display without a blur or scroll transform", async ({ page }) => {
   await page.goto("/about");
-  const photos = page.locator(".about-photo-wrap img, .education-timeline__photo img, .story-photo-frame img");
+  const photos = page.locator(".about-top__photo img, .education-timeline__photo img, .story-photo-frame img");
   expect(await photos.count()).toBeGreaterThan(1);
   for (const photo of await photos.all()) {
     await photo.scrollIntoViewIfNeeded();
@@ -70,7 +68,7 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
     expect(page.viewportSize()!.width < 768 ? photo.y < heading.y : photo.x > heading.x).toBe(true);
   }
 
-  expect((await page.getByRole("heading", { name: "Milestones along the way." }).boundingBox())!.y)
+  expect((await page.getByRole("heading", { name: aboutPage.achievements.title }).boundingBox())!.y)
     .toBeGreaterThan((await timeline.boundingBox())!.y + (await timeline.boundingBox())!.height);
 
   // The rule is drawn beside the entries, and it grows as they scroll past.
@@ -107,11 +105,11 @@ test("skills show the workflow and honest levels alongside language chips", asyn
   }
 });
 
-test("the achievements are cards", async ({ page }) => {
+test("the achievements are a table with one row per entry", async ({ page }) => {
   await page.goto("/about");
-  const cards = page.locator(".highlight-card");
-  await expect(cards).toHaveCount(site.achievements.length);
-  await expect(cards.first()).toContainText(site.achievements[0].title);
+  const rows = page.locator(".achievements-table tbody tr");
+  await expect(rows).toHaveCount(aboutPage.achievements.rows.length);
+  await expect(rows.first()).toContainText(aboutPage.achievements.rows[0].title);
   const dimensions = await page.evaluate(() => ({
     page: document.documentElement.scrollWidth,
     viewport: document.documentElement.clientWidth,

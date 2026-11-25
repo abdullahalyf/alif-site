@@ -4,10 +4,14 @@ date: "2026-11-17"
 summary: "A practical design for keeping a shop selling during an outage, without losing control of stock, receipts or reconciliation."
 tags: [system-design, offline-first, retail]
 draft: false
+category: tech
+cover: "/images/slots/pos-overview.jpg"
+coverAlt: "The Alez POS selling screen"
 ---
-<!-- // DEMO: illustrative technical article for Alif to review and replace; examples are not claims about a client deployment. -->
 
 A shop does not stop having customers because its connection disappears. Someone still needs a receipt, a cashier still needs to finish a shift, and the owner still needs to know what happened. That is the starting point for offline-first design: decide which business promises remain true when the server cannot be reached. A cached screen is useful, but it is not a complete answer.
+
+![Rows of server racks in a data centre corridor](/images/stock/writing-servers.jpg "Photo: Brett Sayles / Pexels")
 
 ## Start with the counter, not the network library
 

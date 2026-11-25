@@ -4,12 +4,16 @@ date: "2026-11-19"
 summary: "Build a permission matrix that reflects who can perform each action, at which branches and under what conditions."
 tags: [access-control, databases, system-design]
 draft: false
+category: tech
+cover: "/images/stock/writing-access.jpg"
+coverAlt: "Locked access panel with cables in a server room"
+coverCredit: "Photo: Brett Sayles / Pexels"
 ---
-<!-- // DEMO: editorial draft for Alif; the business workflow and roles are hypothetical. -->
 
-*DEMO article for review. The roles and examples are illustrative.*
 
 In a two-branch shop, the person who manages refunds on Monday might cover the register on Tuesday. A finance contractor may need to read reports for both branches without viewing staff records. A useful permission model should be small enough for the owner to explain, while still distinguishing those situations. I start with the actions people need to complete during a shift.
+
+![Hand-drawn flowchart on a whiteboard showing screens connected by arrows](/images/stock/writing-architecture.jpg "Photo: divinetechygirl / Pexels")
 
 ## Start with decisions people recognise
 
@@ -50,4 +54,4 @@ I prefer to test decisions from a matrix with named examples. A manager can appr
 
 An assignment screen should answer who can use a given role, where, and since when. Temporary cover needs an expiry date or a follow-up owner. Access reviews are easier when role names still match what staff do and when unusual decisions leave a reason in the audit history.
 
-The [access-control lab](/lab/access-control) presents a small fictional policy where you can compare a role and branch against a requested action. Use the examples to start a discussion with the people who would assign and review access in the actual business. They can usually name an exception the initial matrix missed.
+The [access-control lab](/lab/access-control) presents a small example policy where you can compare a role and branch against a requested action. Use the examples to start a discussion with the people who would assign and review access in the actual business. They can usually name an exception the initial matrix missed.

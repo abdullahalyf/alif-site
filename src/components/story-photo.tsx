@@ -1,34 +1,37 @@
 import Image from "next/image";
-import { demoContent } from "@/content/site";
 import type { Site } from "@/content/schema";
 
-export function StoryPhoto({ chapter }: { chapter: Site["story"][number] }) {
+type Chapter = Site["story"][number];
+
+export function StoryPhotos({ chapter }: { chapter: Chapter }) {
+  const count = Math.min(chapter.images.length, 4);
   return (
-    <div className="story-photo-frame">
-      {chapter.image ? (
-        <Image
-          src={chapter.image.src}
-          width={chapter.image.width}
-          height={chapter.image.height}
-          alt={chapter.image.alt}
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-      ) : (
-        <div className="image-placeholder" aria-hidden="true" />
-      )}
+    <div className={`story-gallery story-gallery--${count}`}>
+      {chapter.images.map((image) => (
+        <div className="story-photo-frame" key={image.src}>
+          <Image
+            src={image.src}
+            width={image.width}
+            height={image.height}
+            alt={image.alt}
+            sizes="(max-width: 768px) 50vw, 30vw"
+            loading="eager"
+            fetchPriority="low"
+          />
+        </div>
+      ))}
     </div>
   );
 }
 
-/** The caption under a story photograph, including the demo notice. */
-export function StoryCaption({ chapter }: { chapter: Site["story"][number] }) {
+export function StoryCaption({ chapter }: { chapter: Chapter }) {
   return (
     <figcaption>
-      <span className="label">{chapter.label}</span>
-      <span>{chapter.title}</span>
-      {chapter.image?.demo && (
-        <span className="demo-caption">{demoContent.imageNotice}</span>
-      )}
+      {chapter.quote && <blockquote className="story-quote">
+        <p>{chapter.quote.text}</p>
+        <footer>{chapter.quote.by}</footer>
+      </blockquote>}
+      {chapter.credit && <span className="photo-credit">{chapter.credit}</span>}
     </figcaption>
   );
 }

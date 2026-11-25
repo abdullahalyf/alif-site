@@ -1,5 +1,5 @@
 import { photoSlot } from "./photo-slots";
-import type { Hackathon, Site } from "./schema";
+import type { Hackathon, ImageAsset, Site } from "./schema";
 
 export const skillProfile = {
   label: "Skills",
@@ -39,7 +39,7 @@ export const site = {
     "Selected for the DIU–IIT Bombay exchange semester, Dec 31, 2026 to about May 31, 2027.",
     "Research paper on explainable machine learning for traffic accident injury prediction — second author, submitted.",
     "Freelancing as a software systems architect: designing client systems and directing AI implementation, reviews and tests.",
-    "Learning basic Japanese through a DILC course.",
+    "Completed a basic Japanese course at DILC and keep practising.",
   ],
   achievements: [
     { title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Dec 31, 2026 – ~May 31, 2027", text: "Selected by Daffodil International University for a one-semester exchange at IIT Bombay." },
@@ -83,10 +83,10 @@ export const site = {
     { label: "GitHub", href: "https://github.com/abdullahalyf" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/abdullah-alyf/" },
   ],
-  heroPhoto: photoSlot("home-portrait", 2400, 1350, "Alif against a grey wall"),
-  avatar: photoSlot("profile-avatar", 400, 400, "Portrait of Abdullah Alif"),
-  aboutPhoto: photoSlot("about-portrait", 1200, 1500, "Alif in a patterned shirt"),
-  heroSide: photoSlot("home-hero-side", 900, 1100, "Alif at work"),
+  heroPhoto: { src: "/images/alif-portrait.jpg", width: 2400, height: 1350, alt: "Portrait of Abdullah Alif against a grey wall" },
+  avatar: photoSlot("profile-avatar-face", 440, 440, "Portrait of Abdullah Alif"),
+  aboutPhoto: photoSlot("about-airport-full", 960, 1280, "Abdullah Alif at an airport, wearing a backpack"),
+  heroSide: photoSlot("home-hero-airport", 960, 1173, "Abdullah Alif at an airport with a red and white backpack"),
   statusCard: {
     availability: "Available for work",
     timezone: "Asia/Dhaka",
@@ -134,28 +134,45 @@ export const site = {
   ],
   story: [
     {
-      label: "Jhenaidah",
-      title: "Where it started",
-      text: "Born in Jhenaidah, Bangladesh, with a short early stretch in Jessore. I grew up in Dhaka from Class 1.",
-      image: photoSlot("story-jhenaidah", 1200, 900, "Childhood in Jhenaidah"),
+      label: "COVID, Class 9",
+      title: "A first laptop",
+      text: "When school moved online in Class 9, I chose a laptop over a phone: a Dell Inspiron 15 3000. Between online classes, I started building small things on it.",
+      images: [
+        photoSlot("story-school", 1200, 900, "A Dell Inspiron laptop, similar to the first one"),
+        { src: "/images/stock/online-class.jpg", width: 1200, height: 801, alt: "A student taking notes during an online class (stock photo)" },
+      ],
+      quote: { text: "Education is the most powerful weapon which you can use to change the world.", by: "Nelson Mandela" },
+      credit: "Online class photo: Julia M Cameron on Pexels.",
     },
     {
-      label: "School & college",
-      title: "Learning to build",
-      text: "I got my first laptop in Class 9, during COVID online classes. That is where building started.",
-      image: photoSlot("story-school", 1200, 900, "First laptop or a school memory"),
+      label: "College to university",
+      title: "From Dhaka Commerce College to DIU",
+      text: "After my HSC at Dhaka Commerce College, I chose Computer Science & Engineering at Daffodil International University. There I found the part I enjoy most: system design.",
+      images: [
+        photoSlot("story-college-2", 387, 516, "The entrance of Dhaka Commerce College"),
+        photoSlot("story-diu-campus", 1000, 1165, "The Daffodil International University main entrance"),
+      ],
+      quote: { text: "I have no special talent. I am only passionately curious.", by: "Albert Einstein" },
     },
     {
-      label: "Daffodil International University",
-      title: "Computer Science & Engineering",
-      text: "I study CSE at DIU and work with a research team on traffic accident risk prediction.",
-      image: photoSlot("story-university", 1200, 900, "University or research team"),
+      label: "Real clients",
+      title: "Building for a real business",
+      text: "My first real client was a boba tea company. I designed Alez POS for them: a point of sale that keeps selling when the internet drops and syncs when it returns.",
+      images: [
+        photoSlot("pos-overview", 1280, 960, "The Alez POS selling screen"),
+        photoSlot("pos-detail", 1280, 960, "A detail of the Alez POS order flow"),
+      ],
+      quote: { text: "Simplicity is prerequisite for reliability.", by: "Edsger W. Dijkstra" },
     },
     {
-      label: "Dhaka",
-      title: "Now",
-      text: "I live in Dhaka and freelance as a systems architect. I design software for businesses and direct AI agents to implement it.",
-      image: photoSlot("story-dhaka", 1200, 900, "Present-day Dhaka or freelance work"),
+      label: "Hackathons",
+      title: "Building against the clock",
+      text: "With my teammates I compete in hackathons. For CloudSentinel, a finalist at the International AI Builders Congress, I worked on the architecture, infrastructure design and task plan.",
+      images: [
+        { src: "/images/achievements/ai-builders-congress-final-round.jpg", width: 640, height: 360, alt: "AI Builders Congress final round team list, including team Hectors" },
+        { src: "/images/projects/cloudsentinel/overview.jpg", width: 843, height: 382, alt: "The CloudSentinel fleet overview dashboard" },
+      ],
+      quote: { text: "Talk is cheap. Show me the code.", by: "Linus Torvalds" },
     },
   ],
 } satisfies Site;
@@ -208,7 +225,7 @@ export const shell = {
   useLightTheme: "Use light theme",
   home: { label: "Home", href: "/" },
   nav: [
-    navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
+    { label: "Home", href: "/" }, navigationLinks.services, navigationLinks.writing, navigationLinks.about, navigationLinks.contact,
   ],
   contact: navigationLinks.contact,
   navigation: "Main navigation",
@@ -255,8 +272,9 @@ export const workNavigation = {
 };
 
 export const menuGroups = [
+  { label: "Home", links: [{ label: "Home", href: "/" }] },
   { label: navigationLinks.services.label, links: workNavigation.links },
-  { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel, { label: "Writing RSS", href: "/writing/rss.xml" }] },
+  { label: "Writing & Travel", links: [navigationLinks.writing, navigationLinks.travel] },
   { label: "About", links: [navigationLinks.about] },
   { label: "Contact & CV", links: [navigationLinks.contact, navigationLinks.resume, { ...shell.email, label: "Email" }, { href: site.whatsapp.href, label: shell.whatsappLabel }, ...site.socials] },
   { label: "More", links: [navigationLinks.uses, navigationLinks.now] },
@@ -266,6 +284,101 @@ export const footerGroups = menuGroups.map((group) => ({
   ...group,
   links: group.links.filter(({ href }) => href !== site.whatsapp.href),
 }));
+const achievementPhoto = (name: string, width: number, height: number, alt: string) => ({ src: `/images/achievements/${name}.jpg`, width, height, alt });
+const stockPhoto = (name: string, width: number, height: number, alt: string) => ({ src: `/images/stock/${name}.jpg`, width, height, alt });
+
+export const aboutPage = {
+  profile: {
+    label: "Profile",
+    rows: [
+      { label: "Studying", value: "BSc CSE, Daffodil International University" },
+      { label: "Based in", value: "Dhaka, Bangladesh" },
+      { label: "Exchange", value: "IIT Bombay, spring 2027" },
+      { label: "Builds", value: "POS, business systems, websites" },
+      { label: "Speaks", value: "Bangla, English, Hindi, Japanese (basic)" },
+      { label: "From", value: "Jhenaidah, Bangladesh" },
+    ],
+    cv: { label: "Download CV", href: "/documents/alif-cv.pdf" },
+  },
+  learned: {
+    label: "How I learned to build",
+    title: "A laptop instead of a phone.",
+    paragraphs: [
+      "When COVID moved my Class 9 lessons online, I needed a device. I chose a laptop over a phone: a Dell Inspiron 15 3000 with an i3 and 4 GB of RAM. It was slow, but it was mine, and it was enough to start building.",
+      "I learned by making small things and breaking them. That curiosity led me to Computer Science & Engineering at Daffodil International University, where system design became the part I enjoy most.",
+      "Now I design software for real businesses: I map the data, roles and failure cases, explain the trade-offs, and direct AI agents to build it — then test what happens when things go wrong.",
+    ],
+    quote: { text: "The most damaging phrase in the language is: it's always been done this way.", by: "Grace Hopper" },
+  },
+  experience: {
+    label: "Experience",
+    title: "Where I've put it to work.",
+    items: [
+      { period: "Ongoing", title: "Freelance software systems architect", org: "Independent", text: "Designed Alez POS for Yaucha Food & Beverage — an offline-first point of sale that keeps selling when the internet drops — and built personal websites for clients." },
+      { period: "2026", title: "Research team member, second author", org: "Traffic accident injury prediction, DIU", text: "Explainable machine learning for predicting traffic accident injury severity. The paper has been submitted." },
+      { period: "2026", title: "Lead architect in hackathon teams", org: "Team Hectors · Team TreeTweet", text: "Architecture, infrastructure design and task planning for CloudSentinel and Jomi Barta, both finalists." },
+    ],
+  },
+  achievements: {
+    label: "Achievements",
+    title: "Milestones, hackathons and results.",
+    columns: { year: "Year", title: "What", org: "Organiser", result: "Result", photo: "Photo" },
+    view: "View",
+    rows: [
+      { year: "2027", title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", result: "Selected", photo: null },
+      { year: "2026", title: "CloudSentinel", org: "International AI Builders Congress (CloudCamp Bangladesh)", result: "Finalist · final on 26 Dec", photo: null },
+      { year: "2026", title: "Jomi Barta", org: "DIU LandTech Hackathon", result: "Finalist · final on 12 Dec", photo: null },
+      { year: "2026", title: "Research paper on traffic accident injury prediction", org: "Daffodil International University", result: "Submitted · second author", photo: null },
+      { year: "2026", title: "OptiNode", org: "DIU AI Innovation Hackathon", result: "Concept finalist", photo: achievementPhoto("diu-ai-innovation-hackathon-2026", 526, 526, "Poster for the DIU AI Innovation Hackathon 2026") },
+      { year: "2026", title: "Vibe coding contest", org: "AI Dev Fest", result: "73rd place", photo: null },
+      { year: "2026", title: "12th ICT Fest hackathon", org: "IUT", result: "Preliminary round", photo: null },
+      { year: "2026", title: "CSE Fest hackathon", org: "BUP", result: "Preliminary round", photo: null },
+    ],
+    close: "Close",
+  },
+  outside: {
+    label: "Outside work",
+    title: "What I do when I'm not designing systems.",
+    items: [
+      { title: "Travel", text: "24 of 64 districts in Bangladesh so far, and Malaysia in June 2025.", image: photoSlot("outside-travel-map", 800, 1000, "Map of Bangladesh with the districts Abdullah Alif has visited highlighted") },
+      { title: "Hackathons", text: "Building against the clock with my team, from idea to demo in a weekend.", image: { src: "/images/projects/cloudsentinel/fleet-graph.jpg", width: 843, height: 380, alt: "The CloudSentinel fleet graph of agents, tools and models" } },
+      { title: "Research", text: "Machine learning for traffic accident injury prediction, with a research team at DIU.", image: stockPhoto("research-road", 480, 600, "An aerial view of cars at a road intersection (stock photo)") },
+      { title: "Learning Japanese", text: "Finished a basic Japanese course at DILC; I hope to study in Japan one day.", image: stockPhoto("japanese-study", 480, 600, "Japanese study notes and a pen (stock photo)") },
+    ],
+    credit: "Stock photos: Tyler Casey on Unsplash (Research), Gu Ko on Pexels (Learning Japanese).",
+  },
+  moments: {
+    label: "Moments",
+    title: "Moments along the way.",
+    hint: "Select a photograph to see it larger.",
+    place: "Moments",
+    photos: [
+      { ...photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"), caption: "Behind the wheel — one of my favourite photos", large: true },
+      { ...photoSlot("moment-metro-rail-hd", 756, 736, "Abdullah Alif in a jacket on the Dhaka Metro Rail"), caption: "Dhaka Metro Rail, February 2024", large: true },
+      { ...photoSlot("moment-savar-resort-hd", 957, 960, "Abdullah Alif in a kurta by a pool with palm trees"), caption: "A resort in Savar", large: true },
+      { ...photoSlot("moment-boat-dome", 960, 960, "Abdullah Alif in a jacket in front of a wooden boat at the Military Museum in Dhaka"), caption: "A wooden boat at the Military Museum, Dhaka" },
+      { ...photoSlot("moment-jahangirnagar", 205, 206, "Abdullah Alif holding the flag of Bangladesh in a field"), caption: "Jahangirnagar University, July 2024" },
+      { ...photoSlot("moment-mirror", 200, 200, "Abdullah Alif taking a mirror selfie in a round mirror"), caption: "A quick mirror selfie" },
+    ],
+  },
+  now: {
+    label: "Now",
+    title: "What I'm doing now.",
+    more: "More on the Now page",
+  },
+  alsoOnSite: {
+    label: "Also on this site",
+    cards: [
+      { icon: "architecture", title: "Writing", text: "Notes on systems, travel and technology.", href: "/writing" },
+      { icon: "operations", title: "Travel", text: "Travel notes from Bangladesh and Malaysia.", href: "/travel" },
+      { icon: "operations", title: "Now", text: "What I'm building and learning this season.", href: "/now" },
+      { icon: "operations", title: "Uses", text: "The tools and setup I work with.", href: "/uses" },
+      { icon: "access", title: "Lab demos", text: "Small interactive demos of ideas from my work.", href: "/lab" },
+      { icon: "architecture", title: "Estimate a project", text: "A quick range for time and budget.", href: "/estimate" },
+    ] as const,
+  },
+};
+
 export const aboutSiteLinks = {
   title: "Also on this site",
   links: [navigationLinks.uses, navigationLinks.now, navigationLinks.lab, navigationLinks.estimate, navigationLinks.travel],
@@ -308,6 +421,9 @@ export const homeContent = {
   currentlyLabel: "Currently",
   currently: "5th semester CSE at DIU · IIT Bombay exchange from Dec 31, 2026 · research paper submitted",
   currentlyLink: "More on Now",
+  aboutPhoto: photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
+  aboutPhotoQuote: { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
+  heroActions: { email: "Email me", work: "See my work", cv: "Download CV", cvHref: "/documents/alif-cv.pdf", socials: "Find me online" },
 };
 
 export const availability = {
@@ -337,6 +453,9 @@ export const workContent = {
 };
 
 export const aboutContent = {
+  label: "About me",
+  heading: site.name,
+  brief: "I'm a CSE student in Dhaka who likes to understand a system before building it. I start with the questions behind a business — who uses it, what can go wrong, what it costs to run — and turn the answers into software people can rely on. I'm curious by default, patient with hard problems, and I would rather ship one thing that works than five that almost do.",
   intro: "I design business software, explain the trade-offs, and direct AI agents to build it.",
   facts: [
     { label: "Based in", value: "Dhaka, Bangladesh" },
@@ -401,9 +520,20 @@ export const writingContent = {
     all: { label: "All", href: "/writing" },
     tech: { label: "Tech", href: "/writing/category/tech" },
     travel: { label: "Travel", href: "/writing/category/travel" },
+    "tech-economy": { label: "Tech & economy", href: "/writing/category/tech-economy" },
+    "my-take": { label: "My take", href: "/writing/category/my-take" },
   },
+  readTime: (minutes: number) => `${minutes} min read`,
   rssLabel: "RSS feed",
   rssPath: "/writing/rss.xml",
+  rssPage: {
+    title: "RSS feed",
+    intro: "This is the RSS feed for Abdullah Alif's writing. Copy the address below into a feed reader to follow new posts.",
+    addressLabel: "Feed address",
+    latest: "Latest posts",
+    back: "Back to the site",
+  },
+  coverAlt: (title: string) => `Cover image for ${title}`,
   nowLabel: "Now",
   nowPath: "/now",
   nowTitle: "What I'm doing now",
@@ -423,8 +553,6 @@ export const demoContent = {
   educationLabel: "Education",
   languagesLabel: "Languages",
   interestsLabel: "Interests",
-  interestsPhoto: photoSlot("about-interests", 1200, 900, "Travel in Bangladesh"),
-  aboutDemoNotice: "Some interests and photo captions are illustrative.",
   statsLabel: "At a glance",
   statsNotice: "A few facts, no padding.",
   testimonialsLabel: "Working together",
@@ -436,11 +564,15 @@ export const demoContent = {
 export const heroPhotos = {
   label: "A few photos",
   images: [
-    photoSlot("travel-sundarbans-1", 1200, 900, "Sundarbans"),
-    photoSlot("travel-jhenaidah-home-1", 1200, 900, "Jhenaidah"),
-    photoSlot("travel-sylhet-tea-1", 1200, 900, "Sylhet tea gardens"),
-    photoSlot("travel-bandarban-1", 1200, 900, "Bandarban hills"),
-  ],
+    photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in front of Putra Mosque in Putrajaya"),
+    photoSlot("moment-metro-rail-hd", 756, 736, "Abdullah Alif on the Dhaka Metro Rail"),
+    photoSlot("moment-savar-resort-hd", 957, 960, "Abdullah Alif in a kurta at a resort in Savar"),
+    photoSlot("travel-langkawi", 640, 640, "Abdullah Alif sitting by a tree on a street in Langkawi, Malaysia"),
+    photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
+    photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif at the Langkawi Sky Bridge viewpoint, with misty hills behind"),
+    photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif in a brown hat with a Malaysian flag"),
+    photoSlot("travel-bangladesh-trio", 618, 206, "Sitakunda, Hatiya and the 201 Dome Mosque in Tangail"),
+  ] as ImageAsset[],
 };
 
 export const horizontalContent = { previous: "Previous cards", next: "Next cards", progress: "Scroll through cards" };
@@ -456,11 +588,12 @@ export const contactNext = {
 
 export const homeServices = {
   learn: "Learn more",
+  credit: "Stock photos from Pexels: divinetechygirl (flowchart), Brett Sayles (server racks).",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: photoSlot("sync-inspector-overview", 1280, 960, "") },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: photoSlot("stockroom-operations-overview", 1280, 960, "") },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: photoSlot("field-service-overview", 1280, 960, "") },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: photoSlot("clinic-booking-overview", 1280, 960, "") },
+    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: { src: "/images/stock/service-architecture.jpg", width: 480, height: 600, alt: "A hand drawing a flowchart on a whiteboard" } },
+    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: { src: "/images/slots/service-operations.jpg", width: 360, height: 450, alt: "The Alez POS selling screen" } },
+    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: { src: "/images/stock/service-offline.jpg", width: 480, height: 600, alt: "Rows of server racks in a data centre" } },
+    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: { src: "/images/stock/service-access.jpg", width: 480, height: 600, alt: "Locked server cabinets in a data centre" } },
   ] as const,
 };
 

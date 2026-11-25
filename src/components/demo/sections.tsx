@@ -7,6 +7,7 @@ import { SectionLabel } from "@/components/section-label";
 import { EducationTimeline } from "@/components/education-timeline";
 import { CountUp, Reveal, StaggerIn } from "@/components/motion";
 import { HorizontalRow } from "@/components/horizontal-row";
+import { AchievementsTable } from "@/components/about/achievements-table";
 import "./demo.css";
 
 function Achievement({ entry, featured }: { entry: Site["achievements"][number]; featured: boolean }) {
@@ -48,21 +49,19 @@ export function LatestWriting() {
   if (!posts.length) return null;
   return <section className="container section-space" aria-labelledby="latest-writing-title">
     <SectionLabel>{demoContent.latestLabel}</SectionLabel><Reveal><h2 id="latest-writing-title" className="section-title">{demoContent.latestTitle}</h2></Reveal>
-    <div className="latest-writing-grid">{posts.map((post) => <article key={post.slug}><time dateTime={post.date} className="label">{formatPostDate(post.date)}</time><h3><Link href={writingContent.postHref(post.slug)}>{post.title}</Link></h3><p>{post.summary}</p></article>)}</div>
+    <div className="latest-writing-grid">{posts.map((post) => <article key={post.slug}><Link href={writingContent.postHref(post.slug)} className="latest-writing__cover" tabIndex={-1} aria-hidden="true"><Image src={post.cover} alt="" width={1200} height={800} sizes="(min-width: 48rem) 28rem, 100vw" loading="eager" fetchPriority="low" /></Link><time dateTime={post.date} className="label">{formatPostDate(post.date)}</time><h3><Link href={writingContent.postHref(post.slug)}>{post.title}</Link></h3><p>{post.summary}</p></article>)}</div>
     <Link className="text-link" href={seo.pages.writing.path}>{writingContent.back}</Link>
   </section>;
 }
 export function AboutDetails() {
-  const interestsPhoto = demoContent.interestsPhoto;
-
   return <>
     <div className="tint-a"><div className="container about-milestones section-space">
       <section aria-labelledby="education-title">
         <SectionLabel>{demoContent.educationLabel}</SectionLabel>
-        <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2><p className="demo-notice">{demoContent.aboutDemoNotice}</p></Reveal>
+        <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2></Reveal>
         <EducationTimeline items={site.education} />
       </section>
-      <Highlights standalone={false} />
+      <AchievementsTable />
     </div></div>
     <div className="band-surface"><div className="container about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">
@@ -102,7 +101,6 @@ export function AboutDetails() {
           <h2 id="interests-title">{demoContent.interestsLabel}</h2>
           <ul className="chip-list chip-list--interests">{site.interests.map((interest) => <li key={interest} className="chip">{interest}</li>)}</ul>
         </div>
-        <Image {...interestsPhoto} alt="" sizes="(max-width: 35rem) 80vw, 8rem" />
       </section>
     </div></div>
   </>;

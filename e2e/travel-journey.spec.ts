@@ -1,7 +1,7 @@
 import { waitForHydration } from "./helpers/routes";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
-import { trips, travelContent as c } from "../src/content/travel";
+import { allTrips, trips, travelContent as c } from "../src/content/travel";
 import { project, routeCurves } from "../src/features/travel/map/geo";
 
 for (const trip of trips) {
@@ -19,7 +19,8 @@ for (const trip of trips) {
 }
 
 test("gallery supports keyboard, swipe, dismissal and focus restoration", async ({ page }) => {
-  const trip = trips[0];
+  const trip = allTrips.find((item) => item.photos.length >= 2)!;
+  const count = trip.photos.length;
   await page.goto(c.tripHref(trip.slug));
   const opener = page.getByRole("link", { name: c.openPhoto(1, trip.place) });
   await opener.click();
@@ -29,14 +30,14 @@ test("gallery supports keyboard, swipe, dismissal and focus restoration", async 
   expect(scan.violations.filter(({ impact }) => impact === "serious" || impact === "critical")).toEqual([]);
   await expect(dialog.getByRole("button", { name: c.closeGallery })).toBeFocused();
   await dialog.press("ArrowRight");
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("2 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`2 / ${count}`);
   await dialog.press("End");
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("3 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`${count} / ${count}`);
   await dialog.press("Home");
   const photo = dialog.locator(".trip-lightbox-photo");
   await photo.dispatchEvent("pointerdown", { pointerType: "touch", clientX: 250, clientY: 150 });
   await photo.dispatchEvent("pointerup", { pointerType: "touch", clientX: 100, clientY: 155 });
-  await expect(dialog.locator(".trip-lightbox-caption")).toContainText("2 / 3");
+  await expect(dialog.locator(".trip-lightbox-caption")).toContainText(`2 / ${count}`);
   await dialog.press("Escape");
   await expect(dialog).not.toBeVisible();
   await expect(opener).toBeFocused();
@@ -50,18 +51,18 @@ test("unknown travel slugs return HTTP 404", async ({ request }) => {
   expect((await request.get(c.tripHref("missing-demo-journey"))).status()).toBe(404);
 });
 
-test("travel stats and combined filters describe the actual demo dataset", async ({ page }) => {
+test("travel stats and combined filters describe the real dataset", async ({ page }) => {
   await page.goto(c.path);
   const stats = page.getByRole("region", { name: c.statsTitle });
   await expect(stats.getByText(String(trips.length), { exact: true })).toHaveCount(2);
   const places = page.getByRole("region", { name: c.placesTitle });
   await expect(places.getByRole("article")).toHaveCount(trips.length);
-  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Sylhet");
+  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Chattogram");
   await expect(places.getByRole("article")).toHaveCount(2);
-  await places.getByLabel(c.tagLabel, { exact: true }).selectOption("landscape");
+  await places.getByLabel(c.tagLabel, { exact: true }).selectOption("island");
   await expect(places.getByRole("article")).toHaveCount(1);
-  await expect(places.getByRole("heading", { name: trips[0].place })).toBeVisible();
-  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Khulna");
+  await expect(places.getByRole("heading", { name: trips[1].place })).toBeVisible();
+  await places.getByLabel(c.regionLabel, { exact: true }).selectOption("Dhaka");
   await expect(places.getByText(c.noPlaces)).toBeVisible();
   await places.getByRole("button", { name: c.resetFilters }).click();
   await expect(places.getByRole("article")).toHaveCount(trips.length);
@@ -74,11 +75,11 @@ test("map progress, pin selection and place atmosphere follow the horizontal boo
   const atmosphere = page.locator(".journey-atmosphere");
   const color = () => atmosphere.evaluate(element => getComputedStyle(element).backgroundColor);
   const startingColor = await color();
-  const index = 5;
+  const index = 2;
   const pin = page.getByRole("link", { name: c.mapPinLabel(trips[index].place) });
   await pin.click();
   await expect(pin).toHaveAttribute("aria-current", "location");
-  await expect(page.locator(".travel-book-counter")).toHaveText("06 / 08");
+  await expect(page.locator(".travel-book-counter")).toHaveText("03 / 03");
   const book = page.getByRole("region", { name: c.bookLabel });
   await expect(book.getByRole("heading", { name: trips[index].title })).toBeInViewport();
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -117,7 +118,7 @@ test("mouse dragging turns the book without activating its links", async ({ page
   await page.mouse.down();
   await page.mouse.move(box.x + box.width * 0.1, y, { steps: 12 });
   await page.mouse.up();
-  await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 08");
+  await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 03");
   await expect(page).toHaveURL(c.path);
 });
 
@@ -149,21 +150,20 @@ test("touch swipe scrolls the native book without pinning the document", async (
   for (let index = 1; index <= 8; index++) await client.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: start - box.width * 0.7 * index / 8, y }] });
   await client.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   await expect.poll(() => book.evaluate(element => element.scrollLeft)).toBeGreaterThan(100);
-  await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 08");
+  await expect(page.locator(".travel-book-counter")).not.toHaveText("01 / 03");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await client.detach();
 });
 
-test("international travel links the Malaysia demo and maps the Dhaka route", async ({ page, request }) => {
+test("international travel links the Malaysia trips and maps the Dhaka route", async ({ page, request }) => {
   await page.goto(c.path);
   const section = page.getByRole("region", { name: c.internationalTitle });
-  await expect(section.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
-  await expect(section.getByText(/Kuala Lumpur · Malaysia/)).toBeVisible();
-  await expect(section.getByText(/DEMO — In this imagined visit/)).toBeVisible();
-  await section.getByRole("link", { name: "A morning in Kuala Lumpur" }).click();
-  await expect(page).toHaveURL(c.tripHref("kuala-lumpur"));
-  await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Kuala Lumpur"]) })).toBeVisible();
-  const photo = await request.get("/images/slots/travel-kuala-lumpur-1.jpg");
+  await expect(section.getByRole("img", { name: c.internationalRouteLabel(["Putrajaya", "Langkawi"]) })).toBeVisible();
+  await expect(section.getByText(/Putrajaya · Malaysia/)).toBeVisible();
+  await section.getByRole("link", { name: "In front of Putra Mosque" }).click();
+  await expect(page).toHaveURL(c.tripHref("putrajaya"));
+  await expect(page.getByRole("img", { name: c.internationalRouteLabel(["Putrajaya"]) })).toBeVisible();
+  const photo = await request.get("/images/slots/travel-putrajaya-1.jpg");
   expect(photo.ok()).toBe(true);
-  expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("kuala-lumpur"));
+  expect(await (await request.get("/sitemap.xml")).text()).toContain(c.tripHref("putrajaya"));
 });

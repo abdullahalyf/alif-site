@@ -137,7 +137,7 @@ export const site = {
       "label": "Your chapter label", // REPLACE
       "title": "Your chapter title", // REPLACE
       "text": "Describe this chapter of your life.", // REPLACE
-      "image": null // REPLACE
+      "images": [] // REPLACE
     }
   ] // REPLACE
 } satisfies Site;

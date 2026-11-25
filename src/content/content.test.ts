@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projectSchema, projectsSchema, siteSchema } from "./schema";
-import { demoContent, heroPhotos, site } from "./site";
+import { heroPhotos, site } from "./site";
 import { allTrips } from "./travel";
 import { getProject, projects } from "./projects";
 
@@ -52,11 +52,10 @@ describe("content", () => {
       site.avatar,
       site.aboutPhoto,
       site.heroSide,
-      demoContent.interestsPhoto,
       ...heroPhotos.images,
       ...allTrips.flatMap((trip) => trip.photos),
       ...site.education.map((item) => item.image),
-      ...site.story.map((c) => c.image),
+      ...site.story.flatMap((c) => c.images),
       ...projects.flatMap((p) => p.images),
     ]
       .filter((img) => img !== null)

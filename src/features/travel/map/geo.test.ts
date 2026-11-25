@@ -19,7 +19,7 @@ it("computes great-circle kilometres symmetrically and sums the journey legs", (
   expect(distanceKm(a, b)).toBe(distanceKm(b, a));
   expect(routeDistanceKm([a, b, a])).toBeCloseTo(222.39, 2);
   expect(routeDistanceKm([])).toBe(0);
-  expect(routeDistanceKm(trips)).toBeGreaterThan(1000);
+  expect(routeDistanceKm(trips)).toBeGreaterThan(200);
 });
 it("requires valid coordinates and hex tints that pass AA for all travel text", () => {
   for (const trip of trips) {

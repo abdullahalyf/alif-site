@@ -44,7 +44,7 @@ export function PlacesGrid({ trips = defaultTrips }: { trips?: Trip[] }) {
     <p className="travel-place-count" role="status">{c.resultsCount(visible.length)}</p>
     {visible.length ? <div className="travel-places-grid">{visible.map(trip => <article key={trip.slug} data-trip-card={trip.slug}>
       <Link href={c.tripHref(trip.slug)}><div className="travel-place-photo"><Image src={trip.photos[0].src} alt={trip.photos[0].alt} width={trip.photos[0].width} height={trip.photos[0].height} sizes="(min-width: 900px) 25vw, 90vw" unoptimized={trip.photos[0].src.startsWith("https://")} loading="lazy" /></div><h3>{trip.place}</h3></Link>
-      <p className="travel-label">{trip.region} · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></p><ul className="travel-tags">{trip.tags.map(value => <li key={value}>{value}</li>)}</ul>
+      <p className="travel-label">{trip.region}{trip.date && <> · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></>}</p><ul className="travel-tags">{trip.tags.map(value => <li key={value}>{value}</li>)}</ul>
     </article>)}</div> : <p>{c.noPlaces}</p>}
   </section>;
 }

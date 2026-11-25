@@ -5,8 +5,8 @@ import { allTrips, internationalTrips, trips } from "@/content/travel";
 import { tripsSchema, tripSchema } from "@/content/schemas/travel";
 import { frameRotation, formatTripDate } from "./book";
 
-it("validates eight unique demo journeys with dated stories and one to three local photo slots", () => {
-  expect(tripsSchema.parse(trips)).toHaveLength(8);
+it("validates the real journeys with one to three local photo slots", () => {
+  expect(tripsSchema.parse(trips)).toHaveLength(3);
   for (const trip of trips) {
     expect(trip.photos.length).toBeGreaterThanOrEqual(1);
     expect(trip.photos.length).toBeLessThanOrEqual(3);
@@ -17,7 +17,7 @@ it("validates eight unique demo journeys with dated stories and one to three loc
   }
 });
 it("validates international countries without changing legacy national input", () => {
-  expect(tripsSchema.parse(allTrips)).toHaveLength(9);
+  expect(tripsSchema.parse(allTrips)).toHaveLength(5);
   const [trip] = internationalTrips;
   expect(trip.country).toBe("Malaysia");
   expect(tripSchema.safeParse({ ...trip, country: undefined }).success).toBe(false);

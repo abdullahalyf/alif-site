@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useRef } from "react";
@@ -40,9 +41,7 @@ export function BrandMark() {
       prefetch={isHome ? false : undefined}
       onClick={scrollHome}
     >
-      <span className="brand-mark__monogram" aria-hidden="true">
-        {site.logoInitial}
-      </span>
+      <Image className="brand-mark__face" {...site.avatar} width={36} height={36} sizes="36px" alt="" priority />
       {/* The wordmark is the visible label, so it stays in the accessible name.
           The monogram repeats it as a picture and is hidden from assistive tech. */}
       <span className="brand-mark__text">{site.logoText}</span>

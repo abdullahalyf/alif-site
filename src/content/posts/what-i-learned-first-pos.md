@@ -1,52 +1,32 @@
 ---
 title: "What I learned building my first POS"
 date: "2026-11-18"
-summary: "A sample reflection on checkout speed, receipt recovery, recipe-based stock and safe rollouts for busy counters."
-tags: [retail, field-notes, offline-first]
+summary: "Notes from building Alez POS for Yaucha Food & Beverage: why the counter comes first, why the shop keeps selling offline, and why I built a virtual printer."
+tags: [alez-pos, field-notes, offline-first]
 draft: false
+category: tech
+cover: "/images/slots/service-operations.jpg"
+coverAlt: "A crop of the Alez POS counter screen"
 ---
-<!-- // DEMO: first-person sample for Alif to fact-check and rewrite; sample shift details are fictional. -->
 
-*DEMO article for review. The first-person account and example shift are fictional.*
+Alez POS is the first system I built for a real business: Yaucha Food & Beverage. It runs in 3 branches today, and I am preparing it to grow to 9. Each branch has an in-shop POS at the counter, and the owner manages everything from an online portal. Building it taught me a few things I would not have learned from a tutorial.
 
-In this example I am building a point-of-sale system for a tea shop with more than one branch. The first checkout looks simple at a desk: choose a drink, select a size, enter the payment and print a receipt. At a busy counter the cashier also answers questions, hands over items and resolves mistakes. Seeing that sequence changes which parts of the software deserve the first week of attention.
+## The counter decides the design
 
-## Watch how people recover
+A POS screen looks simple until someone has to use it with a customer waiting. The cashier needs the next action to be obvious, a mistake to be easy to correct, and the total to be right every time. I stopped asking "what can the system do?" and started asking "what does the person at the counter do next?" Everything else, including reports and settings, came after that.
 
-A cashier who selects the wrong size needs a way to correct the item without reentering the entire order. After payment, the same correction may need a refund or a separate adjustment. I learned to make that boundary visible. Before payment the cart is editable. After payment, history becomes part of the financial record and a correction has its own reason.
+## A shop cannot stop selling
 
-The printer surfaces another boundary. A payment can be recorded correctly even when the printer jams. If the till returns to the opening screen without a receipt number, the operator might wonder whether to charge the customer again. I would show that the sale is saved, explain what happened to printing, and offer a reprint from the receipt the system already has. The difference matters when another customer is waiting.
+Internet in a shop is not always steady. If the screen freezes when the connection drops, the shop loses sales, so the POS is built to keep working at the counter and sync with the online portal when it can. That choice shaped the whole design: where data lives, how branches stay consistent and what the owner sees on the portal. I wrote more about the idea in [Offline-first for shops](/writing/offline-first-shops).
 
-## Treat stock as a result of the sale
+## Build a virtual printer
 
-Counting cups is easy when each menu item consumes one cup. A large drink with different toppings can consume several ingredients in different amounts. I would maintain a versioned recipe and record the resulting stock movements with the sale. Later changes to the recipe would then apply to new orders, and a supervisor could still explain a deduction from last week.
+Testing receipts on a real printer is slow, and it is hard to do for every branch. So I built a virtual printer: it receives the same print output, but shows it on screen so I can check the receipt before anything is printed. It sounds like a small tool, but it made testing much easier, because I could check the output of every change without leaving my desk.
 
-A shift can expose the details that a stock spreadsheet leaves implicit:
+## Two parts, one system
 
-- Which sizes or modifiers change the ingredients used.
-- Who records prep, waste or staff drinks.
-- How a branch transfers stock before a delivery arrives.
-- When a discrepancy needs someone to check it.
+There are two parts to the work: the in-shop POS and the online management portal. I try to keep them consistent and not let them drift apart, because the owner trusts the portal for what happened at the counter.
 
-The software can support these actions once the team agrees who owns them. I would review one day's movement records with a supervisor and ask what cannot be explained. That discussion tells us which events or reasons are missing.
+## Still learning
 
-## Show what has reached the office
-
-A branch should keep a local receipt if it goes offline. The back office will see the sale after synchronisation, so its totals can lag behind the register. I would show a last-sync time and an unsent count to make the difference visible. A clear state helps the owner decide whether to use a report immediately or ask the branch to reconnect first.
-
-Here is how I would describe a small shift drill:
-
-```text
-Disconnect the register and record two paid sales.
-Restart the app and reprint the second receipt.
-Reconnect, then interrupt the first sync response.
-Confirm both receipts appear once in the branch report.
-```
-
-The back-office report and the receipts are both part of the drill. Checking only the screen after reconnection could miss a duplicate that appears in the owner's totals.
-
-## Roll out in ordinary working hours
-
-I would update one register at a time and choose a shift where someone can watch the counter and answer questions. The important preparation is knowing which release is running, what was changed, and how to recover if a device cannot finish opening the new version. A backup and a reversible deployment are easier to verify before the shift than to improvise halfway through it.
-
-At the end of the pilot, I would ask staff which actions still make them pause, which reports they trust, and what they do when a receipt gets stuck. Those answers guide the next release more directly than adding another dashboard. The [POS case study](/work/multi-branch-pos) describes the broader system and its operational goals.
+Going from 3 branches to 9 will test the system again. I would rather keep it simple, check it with real use and fix what the shops show me than add features nobody asked for. You can see the system on the [Work page](/work).

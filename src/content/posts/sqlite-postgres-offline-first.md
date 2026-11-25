@@ -4,12 +4,16 @@ date: "2026-11-18"
 summary: "Give the device and server clear ownership, then define how durable local operations become authoritative shared records."
 tags: [offline-first, sqlite, postgresql, databases]
 draft: false
+category: tech
+cover: "/images/stock/writing-servers.jpg"
+coverAlt: "Rows of server racks in a data centre corridor"
+coverCredit: "Photo: Brett Sayles / Pexels"
 ---
-<!-- // DEMO: editorial draft for Alif; the store design is hypothetical. -->
 
-*DEMO article for review. The architecture below uses an illustrative shop.*
 
 For a shop that must keep selling during an outage, I want a completed sale to outlive a closed window, a process restart and an unsuccessful sync. SQLite gives a desktop or mobile app a transactional store on the device. Postgres can hold the shared records across branches. Using both works when they have clear responsibilities and the application defines how it carries a change from one to the other.
+
+![Network cables plugged into a server patch panel](/images/stock/writing-cables.jpg "Photo: Brett Sayles / Pexels")
 
 ## Give the device a narrow job
 

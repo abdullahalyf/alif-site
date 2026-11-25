@@ -13,7 +13,6 @@ export default function TravelPage() {
   return <div className="travel-page">
     <header className="container travel-page-hero">
       <h1>{c.title}</h1><p className="travel-page-intro">{c.intro}</p>
-      <p className="travel-demo-notice">{c.demoNotice}</p>
     </header>
     <TravelStats />
     <PhotoBook />

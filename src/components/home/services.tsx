@@ -17,11 +17,10 @@ export function Services() {
           <h3>{service.title}</h3>
           <p>{service.description}</p>
           <span className="home-service__link">{homeServices.learn}<ArrowRight /></span>
-          <span className="home-service__image">
-            <Image {...service.image} alt="" sizes="9rem" />
-          </span>
+          <Image className="home-service__image" {...service.image} alt="" sizes="9rem" loading="eager" fetchPriority="low" />
         </Link>
       </li>)}</StaggerIn>
+      <p className="home-services__credit">{homeServices.credit}</p>
     </div>
   </section>;
 }

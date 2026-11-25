@@ -13,8 +13,16 @@ export const postSchema = z.object({
   summary: z.string().trim().min(1),
   tags: z.array(z.string().trim().min(1)),
   draft: z.boolean(),
+  category: z.enum(["tech", "tech-economy", "my-take"]),
+  cover: z.string().regex(/^\/images\/[\w./-]+\.(?:jpe?g|png|webp)$/),
+  coverAlt: z.string().trim().min(1),
+  coverCredit: z.string().trim().min(1).optional(),
 });
-export type Post = z.infer<typeof postSchema> & { slug: string; body: string };
+export type Post = z.infer<typeof postSchema> & { slug: string; body: string; readMinutes: number };
+
+export function readingMinutes(body: string): number {
+  return Math.max(1, Math.ceil(body.replace(/<!--[\s\S]*?-->/g, "").split(/\s+/).filter(Boolean).length / 200));
+}
 const postsDirectory = join(process.cwd(), "src/content/posts");
 
 export function parsePost(source: string, slug: string): Post {
@@ -22,10 +30,11 @@ export function parsePost(source: string, slug: string): Post {
   if (!/^---\r?\n/.test(source)) throw new Error("Posts must start with YAML frontmatter");
   const { data, content } = matter(source);
   if (data.date instanceof Date && !Number.isNaN(data.date.valueOf())) data.date = data.date.toISOString().slice(0, 10);
-  return { ...postSchema.parse(data), slug, body: content.trim() };
+  const body = content.trim();
+  return { ...postSchema.parse(data), slug, body, readMinutes: readingMinutes(body) };
 }
 
-export function loadPosts(files: { name: string; source: string }[], { includeDrafts = process.env.NODE_ENV !== "production" } = {}): Post[] {
+export function loadPosts(files: { name: string; source: string }[], { includeDrafts = process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "preview" } = {}): Post[] {
   return files.filter((file) => file.name.endsWith(".md")).map((file) => {
     try { return parsePost(file.source, file.name.slice(0, -3)); }
     catch (error) { throw new Error(`Invalid post ${file.name}`, { cause: error }); }
@@ -53,9 +62,14 @@ const codeRenderer = new Renderer();
 const markdown = new Marked({ renderer: {
   code: (token) => codeRenderer.code(token).replace("<pre>", '<pre tabindex="0">'),
   html: ({ text }) => /^<!--[\s\S]*-->$/.test(text.trim()) ? "" : escapeHtml(text),
+  paragraph({ tokens }) { const html = this.parser.parseInline(tokens); return tokens.length === 1 && tokens[0].type === "image" ? html : `<p>${html}</p>\n`; },
   heading({ tokens, depth }) { const level = Math.max(2, depth); return `<h${level}>${this.parser.parseInline(tokens)}</h${level}>`; },
   link({ href, tokens }) { const text = this.parser.parseInline(tokens); return safeHref(href) ? `<a href="${escapeHtml(href)}">${text}</a>` : text; },
-  image: ({ text }) => escapeHtml(text),
+  image: ({ href, text, title }) => {
+    if (!/^\/images\/[\w./-]+$/.test(href)) return escapeHtml(text);
+    const caption = title ? `<figcaption>${escapeHtml(title)}</figcaption>` : "";
+    return `<figure class="post-figure"><img src="${escapeHtml(href)}" alt="${escapeHtml(text)}" width="1200" height="800" loading="lazy" decoding="async">${caption}</figure>`;
+  },
 } });
 
 export function renderPost(body: string): string {
