@@ -35,12 +35,10 @@ describe("content", () => {
   });
 
   it("validates case-study details and accepts older project entries", () => {
-    for (const project of projects) {
-      if (project.timeline) expect(project.timeline.length).toBeGreaterThan(0);
-      expect(project.decisions.length).toBeGreaterThanOrEqual(3);
-      expect(project.challenges.length).toBeGreaterThanOrEqual(2);
-      expect(project.metrics.length).toBeGreaterThan(0);
-    }
+    const flagship = getProject("multi-branch-pos");
+    expect(flagship?.decisions?.length).toBeGreaterThanOrEqual(3);
+    expect(flagship?.challenges?.length).toBeGreaterThanOrEqual(2);
+    expect(flagship?.metrics?.length).toBeGreaterThan(0);
     const legacy = { ...projects[0], timeline: undefined, decisions: undefined, challenges: undefined, metrics: undefined };
     expect(projectSchema.safeParse(legacy).success).toBe(true);
     expect(projectSchema.safeParse({ ...legacy, decisions: [{ decision: "Use SQLite", why: "Offline", alternatives: "" }] }).success).toBe(false);
@@ -56,7 +54,7 @@ describe("content", () => {
       ...allTrips.flatMap((trip) => trip.photos),
       ...site.education.map((item) => item.image),
       ...site.story.flatMap((c) => c.images),
-      ...projects.flatMap((p) => p.images),
+      ...projects.flatMap((p) => [...p.images, ...(p.galleries ?? []).flatMap((gallery) => gallery.images)]),
     ]
       .filter((img) => img !== null)
       .map((img) => img.src);
@@ -70,15 +68,19 @@ describe("content", () => {
     expect(siteSchema.safeParse({ ...site, heroPhoto: { ...site.heroPhoto, src: "https://example.com/photo.jpg" } }).success).toBe(true);
     for (const src of ["http://example.com/a.jpg", "//example.com/a.jpg", "javascript:alert(1)"]) expect(siteSchema.safeParse({ ...site, heroPhoto: { ...site.heroPhoto, src } }).success).toBe(false);
   });
-  it("has seven complete projects and the supplied real exchange nomination", () => {
-    expect(projects).toHaveLength(7); expect(projects.filter((project) => project.demo)).toHaveLength(5);
-    expect(projects.some((project) => project.slug === "portfolio")).toBe(false);
-    for (const project of projects) expect(project.images.length).toBeGreaterThanOrEqual(2);
+  it("lists the eight real projects, none of them demo content", () => {
+    expect(projects.map((project) => project.slug)).toEqual(["multi-branch-pos", "cloudsentinel", "jomi-barta", "optinode", "client-sites", "campus-navigator", "console-ecommerce", "traffic-accident-risk"]);
+    expect(JSON.stringify(projects)).not.toMatch(/DEMO|Stockroom|Clinic|Field Service|Sync Inspector/);
+    expect(new Set(projects.map((project) => project.category))).toEqual(new Set(["Client work", "Hackathons", "University", "Research"]));
+    const alez = getProject("multi-branch-pos");
+    expect(alez?.galleries?.map((gallery) => gallery.title)).toEqual(["In-shop POS software", "Online management portal", "POS output"]);
+    expect(getProject("client-sites")?.galleries?.map((gallery) => gallery.title)).toEqual(["Yousha Ahmad", "Fahmida Jannat Shruty", "Ratul Hasan"]);
+    for (const project of projects) for (const gallery of project.galleries ?? []) for (const image of gallery.images) expect(image.caption.length).toBeGreaterThan(0);
     expect(site.achievements[0].title).toBe("Exchange semester at IIT Bombay");
   });
 
   it("getProject finds by slug", () => {
-    expect(getProject("multi-branch-pos")?.title).toMatch(/POS/);
+    expect(getProject("multi-branch-pos")?.title).toBe("Alez POS");
     expect(getProject("nope")).toBeUndefined();
   });
 });

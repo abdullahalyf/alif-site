@@ -28,7 +28,7 @@ test("every case study opens from Work", async ({ page }) => {
   for (const project of projects) {
     await page.goto(navHref("/work"));
     await waitForHydration(page);
-    await page.getByRole("link").filter({ has: page.getByRole("heading", { name: project.title, exact: true }) }).click();
+    await page.locator(".work-card").getByRole("link", { name: project.title, exact: true }).click();
     await expect(page).toHaveURL(shell.projectHref(project.slug), { timeout: 15_000 });
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);
   }

@@ -15,13 +15,13 @@ A request for an inventory dashboard tells me what someone wants to see. It leav
 
 ## Trace one real transaction
 
-I ask the team to walk through something that actually happened. For example, in a stockroom project it might be a transfer requested by one branch on Thursday and still missing from its records on Saturday. I ask to see where the request began, who approved it, what left the warehouse, what arrived, and what each person could see. I also ask what they did when the usual approver was unavailable. The gap between the process on paper and this specific transaction usually contains the work the software must handle.
+I ask the team to walk through something that actually happened. For example, in a multi-branch project it might be a transfer requested by one branch on Thursday and still missing from its records on Saturday. I ask to see where the request began, who approved it, what left the warehouse, what arrived, and what each person could see. I also ask what they did when the usual approver was unavailable. The gap between the process on paper and this specific transaction usually contains the work the software must handle.
 
 That walkthrough gives me a roster of people, a sequence of events, and a few records that need owners. I make a note of which steps depend on spreadsheets, phones or unreliable internet. Then I play the sequence back to the team. If two people disagree on when stock should move, I put that disagreement on the agenda before promising a completion date.
 
 ## Define the smallest useful release
 
-I choose a unit of work the team can finish from beginning to end. In the stockroom example, a useful first release might cover a request, dispatch, receipt and discrepancy review. Imported opening balances can be enough for a pilot. Supplier purchasing can wait until the team trusts what a transferred quantity means.
+I choose a unit of work the team can finish from beginning to end. In the multi-branch example, a useful first release might cover a request, dispatch, receipt and discrepancy review. Imported opening balances can be enough for a pilot. Supplier purchasing can wait until the team trusts what a transferred quantity means.
 
 The scope note has four parts:
 

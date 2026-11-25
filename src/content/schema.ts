@@ -8,7 +8,7 @@ const image = z.object({
   width: z.number().int().positive(),
   height: z.number().int().positive(),
   alt: z.string().min(1),
-  demo: z.boolean().optional(),
+  caption: z.string().min(1).optional(),
 });
 
 const link = z.object({
@@ -84,18 +84,20 @@ export const siteSchema = z.object({
     .min(1),
 });
 
+export const projectCategories = ["Client work", "Hackathons", "University", "Research"] as const;
+export type ProjectCategory = (typeof projectCategories)[number];
+
 export const projectSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   title: z.string().min(1),
   client: z.string().min(1),
-  year: z.number().int().min(2000),
+  year: z.number().int().min(2000).optional(),
   role: z.string().min(1),
-  category: z.enum(["Client work", "Research", "Personal", "Open source"]),
-  demo: z.boolean().optional(),
+  category: z.enum(projectCategories),
   summary: z.string().min(1),
-  problem: z.string().min(1),
-  solution: z.array(z.string().min(1)).min(1),
-  stack: z.array(z.string().min(1)).min(1),
+  problem: z.string().min(1).optional(),
+  solution: z.array(z.string().min(1)),
+  stack: z.array(z.string().min(1)),
   results: z.array(z.string().min(1)),
   timeline: z.array(z.object({ phase: z.string().min(1), weeks: z.string().min(1) })).min(1).optional(),
   decisions: z.array(z.object({
@@ -106,7 +108,14 @@ export const projectSchema = z.object({
   challenges: z.array(z.object({ problem: z.string().min(1), resolution: z.string().min(1) })).min(2).max(3).optional(),
   metrics: z.array(z.object({ label: z.string().min(1), value: z.string().min(1) })).min(1).optional(),
   link: z.url().nullable(),
+  builtWith: z.string().min(1).optional(),
   images: z.array(image),
+  galleries: z.array(z.object({
+    title: z.string().min(1),
+    text: z.string().min(1).optional(),
+    link: link.optional(),
+    images: z.array(image.extend({ caption: z.string().min(1) })).min(1),
+  })).optional(),
 });
 
 export const projectsSchema = z

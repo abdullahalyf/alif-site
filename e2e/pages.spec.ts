@@ -30,8 +30,10 @@ test("Approach includes every step, case studies include details and next projec
   for (let index = 0; index < projects.length; index++) {
     const project = projects[index];
     await page.goto(shell.projectHref(project.slug));
-    for (const title of [pageContent.problem, pageContent.solution, pageContent.stack, pageContent.results]) await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
-    await expect(page.getByText(project.problem, { exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(project.title);
+    if (project.problem) await expect(page.getByText(project.problem, { exact: true })).toBeVisible();
+    if (project.solution.length) await expect(page.getByRole("heading", { name: pageContent.solution, exact: true })).toBeVisible();
+    if (project.results.length) await expect(page.getByRole("heading", { name: pageContent.results, exact: true })).toBeVisible();
     const next = projects[(index + 1) % projects.length];
     await page.getByRole("navigation", { name: pageContent.nextProject }).getByRole("link").click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(next.title);

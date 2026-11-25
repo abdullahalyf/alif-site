@@ -2,7 +2,7 @@ import { allTrips, travelContent } from "../../src/content/travel";
 import { labRoutes } from "../../src/content/lab";
 import { estimateContent } from "../../src/content/estimate";
 import { searchContent } from "../../src/content/search";
-import { diagramContent } from "../../src/content/diagrams";
+import { diagramContent, diagrams } from "../../src/content/diagrams";
 import { projects } from "../../src/content/projects";
 import { getPosts } from "../../src/content/posts";
 import { writingContent } from "../../src/content/site";
@@ -33,7 +33,7 @@ export const pageRoutes = [...new Set([
   ...allTrips.map(trip => travelContent.tripHref(trip.slug)),
   ...searchContent.pages.map((page) => page.href.split("#")[0]),
   ...Object.values(writingContent.filters).map(({ href }) => href),
-  ...projects.map((project) => diagramContent.path(project.slug)),
+  ...projects.filter((project) => diagrams[project.slug]).map((project) => diagramContent.path(project.slug)),
   "/",
   "/about",
   "/approach",

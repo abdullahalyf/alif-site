@@ -20,7 +20,7 @@ export function buildSearchIndex() {
       href: `/work/${project.slug}`,
       type: "project",
     })),
-    ...projects.map((project) => ({
+    ...projects.filter((project) => diagrams[project.slug]).map((project) => ({
       title: diagrams[project.slug].title,
       description: diagrams[project.slug].description,
       href: diagramContent.path(project.slug),

@@ -7,7 +7,7 @@ export const projects = [
   "client": "Your client", // REPLACE
   "year": 2026, // REPLACE
   "role": "Your role", // REPLACE
-  "category": "Personal", // REPLACE
+  "category": "Client work", // REPLACE
   "summary": "Your project summary.", // REPLACE
   "problem": "Describe the problem.", // REPLACE
   "solution": [ // REPLACE

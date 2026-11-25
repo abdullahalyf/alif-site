@@ -1,4 +1,3 @@
-import { projects } from "./projects";
 import { diagramSchema, type Diagram } from "./schemas/diagrams";
 export const diagramContent = {
   title: "System architecture",
@@ -47,27 +46,7 @@ const research = diagramSchema.parse({
     { from: "eval", to: "map", label: "Evaluated risk" },
   ],
 });
-// DEMO: generic conceptual diagrams for illustrative projects; replace with verified architecture.
-export const diagrams: Record<string, Diagram> = Object.fromEntries(
-  projects.map((project) => [
-    project.slug,
-    project.slug === "multi-branch-pos"
-      ? pos
-      : project.slug === "traffic-accident-risk"
-        ? research
-        : diagramSchema.parse({
-            title: `DEMO — ${project.title} architecture`,
-            description:
-              "DEMO — illustrative client, service and storage boundaries, not an implemented deployment.",
-            nodes: [
-              { id: "client", label: "User interface", kind: "client" },
-              { id: "service", label: "Application service", kind: "service" },
-              { id: "db", label: "Durable storage", kind: "db" },
-            ],
-            edges: [
-              { from: "client", to: "service", label: "Validated request" },
-              { from: "service", to: "db", label: "Transactional write" },
-            ],
-          }),
-  ]),
-);
+export const diagrams: Record<string, Diagram> = {
+  "multi-branch-pos": pos,
+  "traffic-accident-risk": research,
+};
