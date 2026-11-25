@@ -4,12 +4,14 @@ import { writingContent } from "@/content/site";
 import { formatPostDate } from "@/content/posts";
 import { getWritingEntries, type WritingCategory } from "@/content/writing";
 import { formatTripDate } from "@/features/travel/book";
+import { AboutSubnav } from "@/components/work-subnav";
 import { Reveal } from "@/components/motion";
 import "./writing.css";
 
 export function WritingIndex({ category }: { category: WritingCategory }) {
   const posts = getWritingEntries().filter((post) => category === "all" || post.category === category);
   return <div className="container writing-page">
+    <AboutSubnav current="/writing" />
     <header className="writing-heading"><Reveal><h1>{writingContent.title}</h1></Reveal><Reveal><p>{writingContent.intro}</p></Reveal>
     </header>
     <nav className="writing-filters" aria-label={writingContent.filterLabel}>

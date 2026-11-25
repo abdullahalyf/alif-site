@@ -6,9 +6,9 @@ Started: 2026-11-25 11:34 Dhaka. Updated after every section.
 |---|---|---|
 | 0 — fixes + Sections 1–3 | live ✅ (PR #21) | https://alif-site-flame.vercel.app |
 | 4 — Work | live ✅ (PR #22) | https://alif-site-flame.vercel.app/work |
-| 5 — Services + Estimate + Lab | PR #23 (CI running) | /services, /estimate, /lab |
-| 6 — Contact + /cv | pending | |
-| 7 — Task 29 leftovers | pending | |
+| 5 — Services + Estimate + Lab | live ✅ (PR #23) | https://alif-site-flame.vercel.app/services · /estimate · /lab |
+| 6 — Contact + /cv | live ✅ (PR #24) | https://alif-site-flame.vercel.app/contact · /cv |
+| 7 — Task 29 leftovers | in progress | |
 | 8 — Extras | pending | |
 
 ## Step 0 — live ✅
@@ -50,6 +50,26 @@ Drafts published (no draft labels), POS covers differ, lone "Now" link removed, 
 - POS monthly rent shown as "or rent it monthly" (no rent price invented).
 - Calculator rounds to ৳500; urgency/growth adjust the range.
 
+**Verified live**: gate 1440/390 on /services, /estimate, /lab, /lab/offline-sync. Screenshots: `docs/reports/shots/s5/`.
+
 **Needs Alif**
 - Confirm the BDT ranges and timelines are what you want public.
 - Monthly rent price for POS (not set).
+
+## Section 6 — Contact + /cv
+**Changed**
+- `/contact` is contact-only: big heading, availability badge, 5 cards (Email, WhatsApp, LinkedIn, GitHub, Dhaka), brief form (budget now in ৳, project types match the 9 services), "what happens next" steps, services I take on, link to the CV. The old embedded CV is gone.
+- `/cv`: designed web resume (sticky sidebar with contact, Download PDF, Print, section links; timeline-style entries) built from your CV PDF; print stylesheet.
+- `/resume` redirects (308) to `/cv`. Hero "Download CV", About card, footer/menu and Contact all point to `/cv`.
+- `public/documents/alif-cv.pdf` regenerated from the `/cv` print view (3 pages).
+
+**Decisions taken**
+- The public PDF/web CV leaves out date of birth, DIU registration no., DIU email, phone number, "Savar", the "transport community" line, and the references' phone/email ("References and further details on request"). Your original PDF still has them; it is not published.
+- Added CloudSentinel, Jomi Barta and OptiNode to the CV (they are not in the old PDF) and wrote "Selected" for IIT Bombay (old PDF said "Nominated").
+- Alez is described as "Alez POS and business management system" (PDF said "Alez Business OS").
+
+**Needs Alif**
+- Check the CV text (CGPA 3.48 is shown, as in your PDF) and that you are happy with those exclusions.
+- Confirm the GitHub link for Campus Navigator (guessed from the repo name pattern in your PDF: `abdullahalyf/campus-navigator`).
+
+**Verified live**: gate 1440/390 on /contact, /cv, /resume, /; PDF has no ID/phone/Savar. Screenshots: `docs/reports/shots/s6/`.

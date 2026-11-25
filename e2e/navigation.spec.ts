@@ -1,6 +1,6 @@
 import { waitForHydration } from "./helpers/routes";
 import { expect, test } from "@playwright/test";
-import { approachDetail, navHref, shell, site, workNavigation } from "../src/content/site";
+import { aboutNavigation, approachDetail, navHref, shell, site, workNavigation } from "../src/content/site";
 import { diagramContent } from "../src/content/diagrams";
 import { projects } from "../src/content/projects";
 
@@ -104,3 +104,24 @@ test("desktop Services opens by hover or keyboard and links to each Services sec
     await expect(subnav.getByRole("link", { name: label, exact: true })).toHaveAttribute("aria-current", "location");
   }
 });
+
+test("the Services dropdown closes when the page scrolls", async ({ page, isMobile }) => {
+  test.skip(isMobile, "Desktop navigation only");
+  await page.goto("/services");
+  await waitForHydration(page);
+  const navigation = page.getByRole("banner").getByRole("navigation");
+  const link = navigation.getByRole("link", { name: workNavigation.dropdown[0].label });
+  await navigation.getByRole("link", { name: shell.workNavLabel, exact: true }).first().hover();
+  await expect(link).toBeVisible();
+  await page.evaluate(() => window.scrollBy(0, 400));
+  await expect(link).toBeHidden();
+});
+
+for (const [path, name] of [["/about", "About me"], ["/writing", "Writing"], ["/travel", "Travel"], ["/now", "Now"]] as const) {
+  test(`${path} shows the About sections nav with the current page marked`, async ({ page }) => {
+    await page.goto(path);
+    const nav = page.getByRole("navigation", { name: aboutNavigation.label });
+    await expect(nav.getByRole("link")).toHaveCount(aboutNavigation.links.length);
+    await expect(nav.getByRole("link", { name, exact: true })).toHaveAttribute("aria-current", "page");
+  });
+}

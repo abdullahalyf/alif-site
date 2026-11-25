@@ -16,7 +16,8 @@ export function HeroSide() {
         <Image
           {...site.heroSide}
           alt={site.heroSide.alt}
-          unoptimized
+          sizes="(min-width: 64rem) 640px, 92vw"
+          quality={72}
           loading="eager"
           fetchPriority="high"
           className="hero-side__photo"
