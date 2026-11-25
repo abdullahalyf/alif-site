@@ -16,7 +16,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = localFont({ src: "../fonts/inter-latin-wght-normal.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false });
-const bricolage = localFont({ src: "../fonts/bricolage-grotesque-latin-wdth-normal.woff2", variable: "--font-bricolage", weight: "200 800", display: "swap" });
+const bricolage = localFont({ src: "../fonts/bricolage-grotesque-latin-wdth-normal.woff2", variable: "--font-bricolage", weight: "800", display: "swap" });
 const instrument = localFont({ src: "../fonts/instrument-serif-latin-400-normal.woff2", variable: "--font-instrument", weight: "400", display: "swap" });
 
 export const metadata: Metadata = {

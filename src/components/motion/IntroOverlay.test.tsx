@@ -21,7 +21,7 @@ describe("IntroOverlay", () => {
     const { container } = render(<IntroOverlay />);
     await screen.findByText("Hello");
     expect(Array.from(container.querySelectorAll("text"), (element) => element.textContent)).toEqual(greetingIntro.map(({ word }) => word));
-    expect(INTRO_DURATION).toBeLessThanOrEqual(1600);
+    expect(INTRO_DURATION).toBeLessThanOrEqual(1200);
   });
 
   it.each(["Escape", "click"])("can be skipped with %s", async (method) => {
