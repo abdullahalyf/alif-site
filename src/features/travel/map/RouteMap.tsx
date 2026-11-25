@@ -42,7 +42,7 @@ export function RouteMap({ trips, current, onNavigate }: { trips: Trip[]; curren
     </div>
     <div className="route-current" aria-live="polite">
       <p className="route-current-place">{active.place}</p>
-      <time dateTime={active.date}>{formatTripDate(active.date)}</time>
+      {active.date && <time dateTime={active.date}>{formatTripDate(active.date)}</time>}
       <p>{active.story.split(/(?<=[.!?।])\s+/)[0]}</p>
       <dl>
         <div><dt>{c.mapStopLabel}</dt><dd>{current + 1} / {trips.length}</dd></div>

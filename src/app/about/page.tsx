@@ -1,12 +1,13 @@
 import { AboutDetails } from "@/components/demo/sections";
 import Image from "next/image";
-import Link from "next/link";
 import { ButtonLink } from "@/components/button";
-import { aboutContent, aboutSiteLinks, shell, site, seo } from "@/content/site";
+import { aboutContent, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
 import { TravelTeaser } from "@/features/travel/TravelTeaser";
+import { AboutJourney } from "@/components/about/about-journey";
+import { Moments, NowAndLinks, OutsideWork } from "@/components/about/about-extras";
 
 export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.description, seo.pages.about.path);
 
@@ -40,6 +41,7 @@ export default function About() {
         </div>
       </div>
     </section>
+    <AboutJourney />
     <AboutDetails />
     {(aboutContent.missionVision.mission || aboutContent.missionVision.vision) && <section className="container section-space" aria-labelledby="mission-title">
       <SectionLabel>{aboutContent.missionVision.label}</SectionLabel>
@@ -56,12 +58,9 @@ export default function About() {
         <div className="story-chapters">{site.story.map((chapter, index) => <StoryChapter chapter={chapter} index={index} key={chapter.title} />)}</div>
       </div>
     </section>
+    <OutsideWork />
     <TravelTeaser />
-    <section className="container section-space about-site-links" aria-labelledby="about-site-links-title">
-      <h2 id="about-site-links-title">{aboutSiteLinks.title}</h2>
-      <ul>{aboutSiteLinks.links.map(({ href, label }) =>
-        <li key={href}><Link className="text-link" href={href}>{label}</Link></li>
-      )}</ul>
-    </section>
+    <Moments />
+    <NowAndLinks />
   </>;
 }

@@ -16,7 +16,7 @@ export function InternationalTrips() {
           return <article key={trip.slug} className="travel-international-card">
             <Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(max-width: 800px) 90vw, 460px" />
             <div className="travel-international-card-copy">
-              <p className="travel-label">{trip.place} · {trip.country} · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></p>
+              <p className="travel-label">{trip.place} · {trip.country}{trip.date && <> · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></>}</p>
               <h3><Link href={c.tripHref(trip.slug)}>{trip.title}</Link></h3>
               <p>{trip.story}</p>
             </div>

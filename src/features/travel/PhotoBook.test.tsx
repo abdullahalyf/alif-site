@@ -49,16 +49,16 @@ it("supports arrow keys, Home/End and bounded previous/next controls", () => {
   const book = screen.getByRole("region", { name: c.bookLabel });
   book.focus();
   fireEvent.keyDown(book, { key: "ArrowRight" });
-  expect(screen.getByText("02 / 08")).toBeInTheDocument();
+  expect(screen.getByText("02 / 03")).toBeInTheDocument();
   expect(screen.getByRole("progressbar", { name: c.progress })).toHaveAttribute("aria-valuenow", "2");
   fireEvent.keyDown(book, { key: "End" });
-  expect(screen.getByText("08 / 08")).toBeInTheDocument();
+  expect(screen.getByText("03 / 03")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: c.next })).toBeDisabled();
   fireEvent.keyDown(book, { key: "ArrowRight" });
-  expect(screen.getByText("08 / 08")).toBeInTheDocument();
+  expect(screen.getByText("03 / 03")).toBeInTheDocument();
   fireEvent.keyDown(book, { key: "Home" });
   fireEvent.keyDown(book, { key: "ArrowLeft" });
-  expect(screen.getByText("01 / 08")).toBeInTheDocument();
+  expect(screen.getByText("01 / 03")).toBeInTheDocument();
   expect(screen.getByRole("button", { name: c.previous })).toBeDisabled();
 });
 it("consumes wheel events only while the book can move, and passes both edges through", () => {
@@ -92,9 +92,9 @@ it("shows every travel stop in the teaser with its photo", () => {
 
 it("turns the book to a selected map pin and marks that location current", () => {
   render(<PhotoBook />);
-  const pin = screen.getByRole("link", { name: c.mapPinLabel(trips[5].place) });
+  const pin = screen.getByRole("link", { name: c.mapPinLabel(trips[2].place) });
   fireEvent.click(pin);
-  expect(screen.getByText("06 / 08")).toBeInTheDocument();
+  expect(screen.getByText("03 / 03")).toBeInTheDocument();
   expect(pin).toHaveAttribute("aria-current", "location");
-  expect(screen.getByRole("progressbar", { name: c.progress })).toHaveAttribute("aria-valuenow", "6");
+  expect(screen.getByRole("progressbar", { name: c.progress })).toHaveAttribute("aria-valuenow", "3");
 });

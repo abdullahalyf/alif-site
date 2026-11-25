@@ -23,16 +23,6 @@
 .trip-gallery figure { break-inside: avoid; margin-bottom: 2rem; }
 .trip-gallery figure:nth-child(even) { padding-top: 3rem; }
 .trip-gallery img { display: block; width: 100%; height: auto; border-radius: 0.5rem; }
-.trip-lightbox { border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1rem, 3vw, 2rem); width: min(100% - 2rem, 76rem); max-height: calc(100svh - 2rem); margin: auto; background: var(--bg); color: var(--ink); overscroll-behavior: contain; }
-.trip-lightbox::backdrop { background: color-mix(in srgb, var(--scrim) 90%, transparent); }
-.trip-lightbox-header, .trip-lightbox-controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.trip-lightbox-header { margin-bottom: 1.5rem; }
-.trip-lightbox button { min-width: 44px; min-height: 44px; border: 1px solid var(--ink); border-radius: 999px; padding: 0.5rem 1rem; display: inline-flex; align-items: center; justify-content: center; }
-.trip-lightbox button:disabled { opacity: 0.4; }
-.trip-lightbox-photo { touch-action: pan-y; }
-.trip-lightbox-photo img { width: 100%; height: auto; max-height: 60svh; object-fit: contain; }
-.trip-lightbox-caption { font-size: 0.8125rem; margin-block: 1rem; }
-.trip-lightbox-controls p { font-size: 0.75rem; max-width: 40ch; text-align: center; }
 .trip-neighbors { border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-top: 3rem; }
 .trip-neighbors > a { display: grid; gap: 0.75rem; align-content: start; }
 .trip-neighbors > a > span:last-child { font-family: var(--font-serif); font-size: var(--type-h3); line-height: 1.1; }

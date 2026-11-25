@@ -20,7 +20,7 @@ export const tripSchema = z.object({
   district: z.string().min(1),
   place: z.string().min(1),
   region: z.string().min(1),
-  date: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Use YYYY-MM"),
+  date: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Use YYYY-MM").optional(),
   title: z.string().min(1),
   story: z.string().min(1).refine((value) => {
     const count = value.trim().split(/(?<=[.!?।])\s+/).length;

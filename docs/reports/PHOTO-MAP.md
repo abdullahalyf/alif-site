@@ -10,7 +10,15 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 | 01-profile/3.jpeg (brown hat, Malaysian flag) | Travel card "Hat on, map off" (`travel-malaysia-hat`) | |
 | extra pic/Alif.jpg (Putra Mosque) | Travel card "In front of Putra Mosque" (`travel-malaysia-putrajaya`) | |
 | extra pic/WhatsApp Image 2025-08-09 (red car) | Home "The person behind the systems" (`home-about-car`); About Moments (first, large) | Alif's favourite — keep near the front |
-| 07-travel/bangladesh/* (3 tiny) + extra pic/480955110 (flag) | Travel card "Across Bangladesh" collage (`travel-bangladesh-snapshots`) | ~200 px originals; waiting for larger copies |
+| 07-travel/bangladesh/476845083… | Trip Sitakunda (`travel-sitakunda-1`), Moments, collage | Sitakunda |
+| 07-travel/bangladesh/476918220… | Trip Hatiya (`travel-hatiya-1`), Moments, collage | Hatiya, Noakhali |
+| 07-travel/bangladesh/477782719… | Trip 201 Dome Mosque (`travel-tangail-201-dome-1`), Moments, collage | Tangail |
+| extra pic/476101178… (kurta) | Moments (`moment-savar-resort`) | A resort in Savar — favourite |
+| extra pic/480514699… (mirror) | Moments (`moment-mirror`) | no place named |
+| extra pic/480955110… (flag) | Moments (`moment-jahangirnagar`), collage | Jahangirnagar University, July 2024 |
+| extra pic/903622040… (jacket) | Moments + outside-work card (`moment-metro-rail`) | Dhaka Metro Rail, Feb 2024 — favourite |
+| 08b-hackathons/724134064… (poster) | Achievements "View" + outside-work card (`achievements/diu-ai-innovation-hackathon-2026`) | |
+| 08b-hackathons/924853749… (final round list) | Achievements "View" (`achievements/ai-builders-congress-final-round`) | |
 | 03-school/images.jpg | Education (`education-school`); About story chapter 1 (`story-assembly`) | |
 | 04-college/ঢাকা_কমার্স_কলেজ.jpg, teyrh.jpg | Education (`education-college`); About story chapter 2 (`story-college-1`, `story-college-2`) | |
 | 05-university-diu/daffodil…cover.jpg, es-2.jpg | Education (`education-university`); About story chapter 3 (`story-diu-aerial`, `story-diu-campus`) | |
@@ -27,6 +35,7 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 |---|---|---|
 | `public/images/stock/service-architecture.jpg` | Home services card hover, System architecture & design | divinetechygirl, Pexels #1181311 |
 | `public/images/stock/service-offline.jpg` | Home services card hover, Offline-first apps | Brett Sayles, Pexels #4508751 |
+| `public/images/stock/japanese-study.jpg` | About outside-work card, Learning Japanese | Gu Ko, Pexels #35376343 |
 | `public/images/stock/service-access.jpg` | Home services card hover, Database design & access control | Brett Sayles, Pexels #5203849 |
 | `slots/service-operations.jpg` | Home services card hover, Business software | Real Alez POS screenshot (crop) |
 

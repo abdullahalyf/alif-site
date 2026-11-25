@@ -8,5 +8,5 @@ export const size = shareImageSize;
 export const contentType = "image/png";
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const trip = getTrip((await params).slug); if (!trip) notFound();
-  return shareImage(trip.title, `${trip.place} · ${formatTripDate(trip.date)}`);
+  return shareImage(trip.title, [trip.place, formatTripDate(trip.date)].filter(Boolean).join(" · "));
 }

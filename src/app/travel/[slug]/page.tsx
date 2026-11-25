@@ -24,8 +24,8 @@ export default async function TripPage({ params }: PageProps<"/travel/[slug]">) 
   const moreStories = allTrips.filter(({ slug }) => slug !== trip.slug && slug !== previous?.slug && slug !== next?.slug).slice(0, 3);
   const cover = trip.photos[0];
   return <article className="container trip-page">
-    <header className="trip-intro"><Link className="text-link" href={c.path}>{c.backToTravel}</Link><p className="travel-label">{trip.place} · {formatTripDate(trip.date)} · {trip.scope === "national" ? trip.region : trip.country}</p><h1>{trip.title}</h1><p className="travel-demo-notice">{c.demoNotice}</p></header>
-    <figure className="trip-cover"><div><Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(min-width: 1280px) 1216px, 100vw" unoptimized={cover.src.startsWith("https://")} loading="eager" /></div><figcaption>{cover.caption}</figcaption></figure>
+    <header className="trip-intro"><Link className="text-link" href={c.path}>{c.backToTravel}</Link><p className="travel-label">{[trip.place, formatTripDate(trip.date), trip.scope === "national" ? trip.region : trip.country].filter(Boolean).join(" · ")}</p><h1>{trip.title}</h1></header>
+    <figure className="trip-cover"><div style={cover.width < 600 ? { maxWidth: cover.width * 2, marginInline: "auto" } : undefined}><Image src={cover.src} alt={cover.alt} width={cover.width} height={cover.height} sizes="(min-width: 1280px) 1216px, 100vw" unoptimized={cover.src.startsWith("https://")} loading="eager" /></div><figcaption>{cover.caption}</figcaption></figure>
     <div className="trip-story-layout"><section className="trip-story" aria-labelledby="trip-story-title"><h2 id="trip-story-title">{c.storyTitle}</h2><p>{trip.story}</p>{trip.people && <div className="trip-conversation"><h3>{c.peopleLabel}</h3><p>{trip.people}</p></div>}<ul className="travel-tags">{trip.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></section>{trip.scope === "international" ? <InternationalMap trips={[trip]} /> : <PlaceMap trip={trip} />}</div>
     <TripGallery trip={trip} />
     <section className="trip-related" aria-labelledby="trip-related-title">

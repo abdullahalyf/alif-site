@@ -141,7 +141,7 @@ export function PhotoBook({ trips = defaultTrips }: { trips?: Trip[] }) {
               })}
             </div>
             <div className="travel-book-text">
-              <p className="travel-label">{trip.place} · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></p>
+              <p className="travel-label">{trip.place}{trip.date && <> · <time dateTime={trip.date}>{formatTripDate(trip.date)}</time></>}</p>
               <h3 id={`${id}-${trip.slug}`}>{trip.title}</h3>
               <p>{trip.story}</p>
               {trip.people && <p className="travel-people"><span>{c.peopleLabel}</span>{trip.people}</p>}

@@ -5,8 +5,16 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent, type PointerEve
 import { ArrowLeft, ArrowRight } from "@/components/arrows";
 import { travelContent as c } from "@/content/travel";
 import type { Trip } from "@/content/schemas/travel";
+import "./lightbox.css";
+
+type GalleryPhoto = { src: string; alt: string; width: number; height: number; caption: string; large?: boolean };
 
 export function TripGallery({ trip }: { trip: Trip }) {
+  return <PhotoGallery photos={trip.photos} place={trip.place} title={c.galleryTitle} hint={c.galleryHint} />;
+}
+
+export function PhotoGallery({ photos, place, title, hint, className = "trip-gallery", sectionClassName = "trip-gallery-section", titleClassName, sizes = "(min-width: 900px) 45vw, 90vw" }: { photos: GalleryPhoto[]; place: string; title: string; hint: string; className?: string; sectionClassName?: string; titleClassName?: string; sizes?: string }) {
+  const trip = { photos, place };
   const [active, setActive] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLElement | null>(null);
@@ -40,11 +48,11 @@ export function TripGallery({ trip }: { trip: Trip }) {
     const delta = event.clientX - start.x;
     if (Math.abs(delta) > 50 && Math.abs(delta) > Math.abs(event.clientY - start.y)) move(delta < 0 ? 1 : -1);
   }
-  return <section className="trip-gallery-section" aria-labelledby={`${id}-gallery`}>
-    <h2 id={`${id}-gallery`}>{c.galleryTitle}</h2>
-    <p className="travel-label">{c.galleryHint}</p>
-    <div className="trip-gallery">{trip.photos.map((image, index) => <figure key={image.src}>
-      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 900px) 45vw, 90vw" unoptimized={image.src.startsWith("https://")} loading="lazy" /></a>
+  return <section className={sectionClassName} aria-labelledby={`${id}-gallery`}>
+    <h2 id={`${id}-gallery`} className={titleClassName}>{title}</h2>
+    <p className="travel-label">{hint}</p>
+    <div className={className}>{trip.photos.map((image, index) => <figure key={image.src} data-large={image.large || undefined}>
+      <a href={image.src} aria-label={c.openPhoto(index + 1, trip.place)} onClick={event => { event.preventDefault(); setActive(index); }}><Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} unoptimized={image.src.startsWith("https://")} loading="lazy" /></a>
       <figcaption>{image.caption}</figcaption>
     </figure>)}</div>
     <dialog ref={dialog} className="trip-lightbox" aria-labelledby={`${id}-lightbox`} onKeyDown={keyboard} onCancel={event => { event.preventDefault(); setActive(null); }} onClick={event => { if (event.target === event.currentTarget) setActive(null); }}>

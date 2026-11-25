@@ -6,6 +6,7 @@ import { SectionLabel } from "@/components/section-label";
 import { EducationTimeline } from "@/components/education-timeline";
 import { CountUp, Reveal, StaggerIn } from "@/components/motion";
 import { HorizontalRow } from "@/components/horizontal-row";
+import { AchievementsTable } from "@/components/about/achievements-table";
 import "./demo.css";
 
 function Achievement({ entry, featured }: { entry: Site["achievements"][number]; featured: boolean }) {
@@ -59,7 +60,7 @@ export function AboutDetails() {
         <Reveal><h2 id="education-title" className="section-title">{demoContent.educationLabel}</h2></Reveal>
         <EducationTimeline items={site.education} />
       </section>
-      <Highlights standalone={false} />
+      <AchievementsTable />
     </div></div>
     <div className="band-surface"><div className="container about-bento section-space">
       <section className="about-bento__skills" aria-labelledby="skills-title">

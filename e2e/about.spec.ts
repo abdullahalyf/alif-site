@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { travelContent } from "../src/content/travel";
-import { aboutContent, site, skillProfile } from "../src/content/site";
+import { aboutContent, aboutPage, site, skillProfile } from "../src/content/site";
 
 test("the About page splits the intro between the photo and the copy", async ({ page }) => {
   await page.goto("/about");
@@ -70,7 +70,7 @@ test("the education timeline has a rule that fills as it scrolls", async ({ page
     expect(page.viewportSize()!.width < 768 ? photo.y < heading.y : photo.x > heading.x).toBe(true);
   }
 
-  expect((await page.getByRole("heading", { name: "Milestones along the way." }).boundingBox())!.y)
+  expect((await page.getByRole("heading", { name: aboutPage.achievements.title }).boundingBox())!.y)
     .toBeGreaterThan((await timeline.boundingBox())!.y + (await timeline.boundingBox())!.height);
 
   // The rule is drawn beside the entries, and it grows as they scroll past.

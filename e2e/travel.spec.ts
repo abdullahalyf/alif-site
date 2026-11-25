@@ -73,7 +73,7 @@ test("free travel scroll can stop between trips with interpolated progress", asy
   const counter = page.locator(".travel-book-counter-number");
   const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
   await expect(counter).toHaveText(reduced ? "01" : /^01\.[45]$/);
-  await expect(page.locator(".travel-book-counter")).toHaveText("01 / 08");
+  await expect(page.locator(".travel-book-counter")).toHaveText("01 / 03");
   await expect(page.getByRole("button", { name: c.previous })).toBeEnabled();
   await book.press("ArrowRight");
   await expect.poll(renderedOffset).toBeCloseTo(width, 0);
@@ -84,12 +84,12 @@ test("keyboard paging works in desktop, touch and reduced-motion modes", async (
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   const book = page.getByRole("region", { name: c.bookLabel });
   await book.focus(); await book.press("ArrowRight");
-  await expect(page.locator(".travel-book-counter")).toHaveText("02 / 08");
+  await expect(page.locator(".travel-book-counter")).toHaveText("02 / 03");
   await book.press("End");
-  await expect(page.locator(".travel-book-counter")).toHaveText("08 / 08");
+  await expect(page.locator(".travel-book-counter")).toHaveText("03 / 03");
   await expect(book.getByRole("heading", { name: trips[7].title })).toBeInViewport({ timeout: 15_000 });
   await book.press("Home");
-  await expect(page.locator(".travel-book-counter")).toHaveText("01 / 08");
+  await expect(page.locator(".travel-book-counter")).toHaveText("01 / 03");
   await page.getByRole("link", { name: c.aboutLink, exact: true }).click();
   await expect(page).toHaveURL(c.aboutPath);
   await expect(page.locator(".pin-spacer")).toHaveCount(0);

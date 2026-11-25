@@ -39,7 +39,7 @@ export const site = {
     "Selected for the DIU–IIT Bombay exchange semester, Dec 31, 2026 to about May 31, 2027.",
     "Research paper on explainable machine learning for traffic accident injury prediction — second author, submitted.",
     "Freelancing as a software systems architect: designing client systems and directing AI implementation, reviews and tests.",
-    "Learning basic Japanese through a DILC course.",
+    "Completed a basic Japanese course at DILC and keep practising.",
   ],
   achievements: [
     { title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", year: 2027, period: "Dec 31, 2026 – ~May 31, 2027", text: "Selected by Daffodil International University for a one-semester exchange at IIT Bombay." },
@@ -294,6 +294,106 @@ export const footerGroups = menuGroups.map((group) => ({
   ...group,
   links: group.links.filter(({ href }) => href !== site.whatsapp.href),
 }));
+const achievementPhoto = (name: string, width: number, height: number, alt: string) => ({ src: `/images/achievements/${name}.jpg`, width, height, alt });
+const stockPhoto = (name: string, width: number, height: number, alt: string) => ({ src: `/images/stock/${name}.jpg`, width, height, alt });
+
+export const aboutPage = {
+  profile: {
+    label: "Profile",
+    rows: [
+      { label: "Studying", value: "BSc CSE, Daffodil International University" },
+      { label: "Based in", value: "Dhaka, Bangladesh" },
+      { label: "Exchange", value: "IIT Bombay, spring 2027" },
+      { label: "Builds", value: "POS, business systems, websites" },
+      { label: "Speaks", value: "Bangla, English, Hindi, Japanese (basic)" },
+    ],
+    cv: { label: "Download CV", href: "/documents/alif-cv.pdf" },
+  },
+  learned: {
+    label: "How I learned to build",
+    title: "A laptop instead of a phone.",
+    paragraphs: [
+      "When COVID moved my Class 9 lessons online, I needed a device. I chose a laptop over a phone: a Dell Inspiron 15 3000 with an i3 and 4 GB of RAM. It was slow, but it was mine, and it was enough to start building.",
+      "I learned by making small things and breaking them. That curiosity led me to Computer Science & Engineering at Daffodil International University, where system design became the part I enjoy most.",
+      "Now I design software for real businesses: I map the data, roles and failure cases, explain the trade-offs, and direct AI agents to build it — then test what happens when things go wrong.",
+    ],
+    quote: { text: "The most damaging phrase in the language is: it's always been done this way.", by: "Grace Hopper" },
+  },
+  experience: {
+    label: "Experience",
+    title: "Where I've put it to work.",
+    items: [
+      { period: "Ongoing", title: "Freelance software systems architect", org: "Independent", text: "Designed Alez POS for Yaucha Food & Beverage — an offline-first point of sale that keeps selling when the internet drops — and built personal websites for clients." },
+      { period: "2026", title: "Research team member, second author", org: "Traffic accident injury prediction, DIU", text: "Explainable machine learning for predicting traffic accident injury severity. The paper has been submitted." },
+      { period: "2026", title: "Lead architect in hackathon teams", org: "Team Hectors · Team TreeTweet", text: "Architecture, infrastructure design and task planning for CloudSentinel and Jomi Barta, both finalists." },
+    ],
+  },
+  achievements: {
+    label: "Achievements",
+    title: "Milestones, hackathons and results.",
+    columns: { year: "Year", title: "What", org: "Organiser", result: "Result", photo: "Photo" },
+    view: "View",
+    rows: [
+      { year: "2027", title: "Exchange semester at IIT Bombay", org: "DIU–IIT Bombay MoU", result: "Selected", photo: null },
+      { year: "2026", title: "CloudSentinel", org: "International AI Builders Congress (CloudCamp Bangladesh)", result: "Finalist · final on 26 Dec", photo: achievementPhoto("ai-builders-congress-final-round", 640, 360, "AI Builders Congress final round team list, including team Hectors") },
+      { year: "2026", title: "Jomi Barta", org: "DIU LandTech Hackathon", result: "Finalist · final on 12 Dec", photo: null },
+      { year: "2026", title: "Research paper on traffic accident injury prediction", org: "Daffodil International University", result: "Submitted · second author", photo: null },
+      { year: "2026", title: "OptiNode", org: "DIU AI Innovation Hackathon", result: "Concept finalist", photo: achievementPhoto("diu-ai-innovation-hackathon-2026", 526, 526, "Poster for the DIU AI Innovation Hackathon 2026") },
+      { year: "2026", title: "Vibe coding contest", org: "AI Dev Fest", result: "73rd place", photo: null },
+      { year: "", title: "12th ICT Fest hackathon", org: "IUT", result: "Preliminary round", photo: null },
+      { year: "", title: "CSE Fest hackathon", org: "BUP", result: "Preliminary round", photo: null },
+    ],
+    close: "Close",
+  },
+  outside: {
+    label: "Outside work",
+    title: "What I do when I'm not designing systems.",
+    items: [
+      { title: "Travel", text: "24 of 64 districts in Bangladesh so far, and Malaysia in June 2025.", image: photoSlot("travel-langkawi", 640, 640, "Abdullah Alif on a street in Langkawi") },
+      { title: "City rides", text: "Riding Dhaka's new Metro Rail, February 2024 — one of my favourite photos.", image: photoSlot("moment-metro-rail", 206, 206, "Abdullah Alif on the Dhaka Metro Rail") },
+      { title: "Hackathons", text: "Building against the clock with my team, from idea to demo in a weekend.", image: achievementPhoto("diu-ai-innovation-hackathon-2026", 526, 526, "Poster for the DIU AI Innovation Hackathon 2026") },
+      { title: "Learning Japanese", text: "Finished a basic Japanese course at DILC; I hope to study in Japan one day.", image: stockPhoto("japanese-study", 480, 600, "Japanese study notes and a pen") },
+    ],
+    credit: "Learning Japanese photo: Gu Ko on Pexels.",
+  },
+  moments: {
+    label: "Moments",
+    title: "Moments along the way.",
+    hint: "Select a photograph to see it larger.",
+    place: "Moments",
+    photos: [
+      { ...photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"), caption: "Behind the wheel — one of my favourite photos", large: true },
+      { ...photoSlot("moment-metro-rail", 206, 206, "Abdullah Alif in a jacket on the Dhaka Metro Rail"), caption: "Dhaka Metro Rail, February 2024", large: true },
+      { ...photoSlot("moment-savar-resort", 205, 206, "Abdullah Alif in a kurta in a garden with palm trees"), caption: "A resort in Savar", large: true },
+      { ...photoSlot("travel-malaysia-putrajaya", 1200, 900, "Abdullah Alif in front of Putra Mosque"), caption: "Putra Mosque, Putrajaya, June 2025" },
+      { ...photoSlot("travel-langkawi", 640, 640, "Abdullah Alif on a street in Langkawi"), caption: "A street in Langkawi" },
+      { ...photoSlot("travel-viewpoint", 1200, 900, "Abdullah Alif at the Langkawi Sky Bridge viewpoint"), caption: "Langkawi Sky Bridge" },
+      { ...photoSlot("travel-malaysia-hat", 1200, 900, "Abdullah Alif in a brown hat with a Malaysian flag"), caption: "Hat on, Malaysia, June 2025" },
+      { ...photoSlot("moment-jahangirnagar", 205, 206, "Abdullah Alif holding the flag of Bangladesh in a field"), caption: "Jahangirnagar University, July 2024" },
+      { ...photoSlot("travel-sitakunda-1", 203, 206, "Abdullah Alif in shallow water at Sitakunda"), caption: "Sitakunda" },
+      { ...photoSlot("travel-hatiya-1", 205, 206, "Abdullah Alif on the beach at Hatiya"), caption: "The beach on Hatiya island" },
+      { ...photoSlot("travel-tangail-201-dome-1", 206, 206, "Abdullah Alif looking at the golden domes of the 201 Dome Mosque"), caption: "201 Dome Mosque, Tangail" },
+      { ...photoSlot("moment-mirror", 200, 200, "Abdullah Alif taking a mirror selfie in a round mirror"), caption: "A quick mirror selfie" },
+    ],
+  },
+  now: {
+    label: "Now",
+    title: "What I'm doing now.",
+    more: "More on the Now page",
+  },
+  alsoOnSite: {
+    label: "Also on this site",
+    cards: [
+      { icon: "architecture", title: "Writing", text: "Notes on systems, travel and technology.", href: "/writing" },
+      { icon: "operations", title: "Travel", text: "Travel notes from Bangladesh and Malaysia.", href: "/travel" },
+      { icon: "operations", title: "Now", text: "What I'm building and learning this season.", href: "/now" },
+      { icon: "operations", title: "Uses", text: "The tools and setup I work with.", href: "/uses" },
+      { icon: "access", title: "Lab demos", text: "Small interactive demos of ideas from my work.", href: "/lab" },
+      { icon: "architecture", title: "Estimate a project", text: "A quick range for time and budget.", href: "/estimate" },
+    ] as const,
+  },
+};
+
 export const aboutSiteLinks = {
   title: "Also on this site",
   links: [navigationLinks.uses, navigationLinks.now, navigationLinks.lab, navigationLinks.estimate, navigationLinks.travel],
