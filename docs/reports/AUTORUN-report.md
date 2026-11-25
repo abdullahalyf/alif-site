@@ -8,8 +8,8 @@ Started: 2026-11-25 11:34 Dhaka. Updated after every section.
 | 4 — Work | live ✅ (PR #22) | https://alif-site-flame.vercel.app/work |
 | 5 — Services + Estimate + Lab | live ✅ (PR #23) | https://alif-site-flame.vercel.app/services · /estimate · /lab |
 | 6 — Contact + /cv | live ✅ (PR #24) | https://alif-site-flame.vercel.app/contact · /cv |
-| 7 — Task 29 leftovers | in progress | |
-| 8 — Extras | pending | |
+| 7 — Task 29 leftovers | live ✅ (PR #25) | https://alif-site-flame.vercel.app/about · /writing · /travel · /now |
+| 8 — Extras | live ✅ (PR #26) | https://alif-site-flame.vercel.app/ (favicon, share image, 404) |
 
 ## Step 0 — live ✅
 Drafts published (no draft labels), POS covers differ, lone "Now" link removed, nav = Home · Services · Writing · About me · Contact (desktop, drawer, footer), nav tests updated. Verified live: pages, RSS (13 items), search index, sitemap.
@@ -73,3 +73,52 @@ Drafts published (no draft labels), POS covers differ, lone "Now" link removed, 
 - Confirm the GitHub link for Campus Navigator (guessed from the repo name pattern in your PDF: `abdullahalyf/campus-navigator`).
 
 **Verified live**: gate 1440/390 on /contact, /cv, /resume, /; PDF has no ID/phone/Savar. Screenshots: `docs/reports/shots/s6/`.
+
+## Section 7 — Task 29 leftovers
+**Changed**
+- Services dropdown closes on click (already) and now also when the page scrolls.
+- About sections nav (About · Writing · Travel · Now) on /about, /writing (and its category pages), /travel, /now.
+- Smoother scroll: Lenis lerp 0.14 → 0.09 (desktop only; still off for reduced motion and touch).
+- Home performance: hero photo now served as a responsive optimised image (was one 186 KB file for every screen; now ~68 KB on mobile).
+
+**Decisions taken**
+- Home service thumbnails stay eager: they are hover previews, lazy loading would delay them.
+
+**Needs Alif**
+- Lighthouse mobile for Home measured locally in my sandbox: 82–92, median ≈ 88–91 (it moves a lot between runs; accessibility 100, best-practices 100). I could not reach a reliable 90+. The remaining cost is JavaScript (GSAP/Lenis, ~117 KB) and the many photos. Run PageSpeed on the live link to see the real number; if it is under 90, say so and I will cut the Home animations/photos further.
+
+**Verified live**: gate 1440/390 on /, /about, /writing, /travel, /now; e2e for the new nav and dropdown scroll.
+
+## Section 8 — Extras
+**Changed**
+- Favicon is now your face (cropped circle) instead of the "A" monogram.
+- Share image (OG) = your photo + "Abdullah Alif · Software Systems Architect · Dhaka, Bangladesh".
+- Designed 404 page: big 404, short message, four cards (Services, Work, About me, Contact), Back home.
+- Vercel Web Analytics added (`@vercel/analytics`, runs only on Vercel).
+- Final demo sweep: every one of the 46 sitemap URLs, the search index and RSS contain no DEMO / Photo coming soon / Stockroom / Clinic / Sundarbans / Bandarban / Kuakata / "imagined" text (one legitimate "sample records" in a writing post). Search index and sitemap are generated from real content only.
+
+**Decisions taken**
+- `@vercel/analytics` is the one new dependency (you approved Web Analytics).
+- Hero Download CV etc. unchanged by this step.
+
+**Needs Alif**
+- Turn on Web Analytics in the Vercel dashboard (project → Analytics → Enable). The script is already on the site, but Vercel shows no data until it is enabled.
+- Look at the favicon in a browser tab and the share image (send the home link in WhatsApp/LinkedIn; they cache old previews for a while).
+
+**Verified live**: gate 1440/390 on all pages below; /opengraph-image 200 image/png; icon served; analytics script loads. Screenshots: `docs/reports/shots/final/` (d_ = desktop, m_ = mobile, one pair per page).
+
+## Everything to check, by page
+Live site: https://alif-site-flame.vercel.app
+
+- **Home** — hero "Download CV" now opens `/cv`; Lighthouse number (see Section 7); favicon; share preview.
+- **About** — new About sections nav; profile card "CV" link; confirm no private details (no village, ID, phone).
+- **Writing / Travel / Now** — About sections nav shows on each; opinion posts published at your OK; travel photos ~200px ones need bigger copies (Jahangirnagar, mirror, Sitakunda, Hatiya, Tangail).
+- **Work** — roles/credits on friends' sites and OptiNode ("Team member"); Campus Navigator and Console e-commerce have no year/role/stack/screenshots yet; research card uses a credited stock road photo; Alez client name "Yaucha Food & Beverage" correct?
+- **Alez case study** — captions say test data; confirm the three galleries.
+- **Services** — nine services, BDT ranges and timelines are exactly as in your plan; POS monthly rent price not set.
+- **Estimate** — chips match the services; Custom = "Quote after a short call".
+- **Lab** — now labelled "Simulation, made-up data".
+- **Contact** — five cards; brief form budgets in ৳; the form still sends through your email/WhatsApp (no server).
+- **CV (`/cv`)** — read the text once (CGPA 3.48 is shown); DOB, DIU ID, phone, "Savar" and the referees' contacts are left out on purpose; Campus Navigator GitHub link is a guess (`abdullahalyf/campus-navigator`); PDF download is generated from the page.
+- **Asad's testimonial** — still hidden until he approves.
+- **Vercel** — enable Web Analytics.
