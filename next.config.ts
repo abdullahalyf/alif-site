@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
   images: {
     deviceSizes: [360, 384, 512, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    qualities: [68, 75],
+    qualities: [68, 72, 75, 80],
   },
   cacheComponents: true,
   partialPrefetching: true,

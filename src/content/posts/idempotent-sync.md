@@ -4,10 +4,15 @@ date: "2026-11-15"
 summary: "Stable operation identities, transactional acknowledgements and careful retry handling for reliable offline sales synchronisation."
 tags: [system-design, sync, reliability]
 draft: false
+category: tech
+cover: "/images/stock/writing-cables.jpg"
+coverAlt: "Network cables plugged into a server patch panel"
+coverCredit: "Photo: Brett Sayles / Pexels"
 ---
-<!-- // DEMO: illustrative technical article for Alif to review and replace; the examples describe a hypothetical sales system. -->
 
 A cashier presses finish. The server records the sale, but the response disappears on the way back to the counter. The application waits, shows a timeout and offers a retry. This is a normal failure in a distributed system, not an unusual edge case. The important question is whether retrying creates another sale or finds the one that already exists.
+
+![Glasses resting in front of monitors full of code](/images/stock/writing-code-glasses.jpg "Photo: Kevin Ku / Pexels")
 
 ## Give the action an identity before sending it
 

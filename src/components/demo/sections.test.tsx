@@ -15,7 +15,7 @@ it("omits Latest writing when there are no published posts", () => {
   expect(getPosts).toHaveBeenCalledWith({ includeDrafts: false });
 });
 it("renders only the latest two returned published posts", () => {
-  vi.mocked(getPosts).mockReturnValue(["new", "middle", "old"].map((slug) => ({ slug, title: slug, date: "2026-11-17", summary: "summary", tags: [], draft: false, body: "body" })));
+  vi.mocked(getPosts).mockReturnValue(["new", "middle", "old"].map((slug) => ({ slug, title: slug, date: "2026-11-17", summary: "summary", tags: [], draft: false, body: "body", category: "tech" as const, cover: "/images/x.jpg", coverAlt: "x", readMinutes: 1 })));
   render(<LatestWriting />);
   expect(screen.getByRole("heading", { name: demoContent.latestTitle })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "new" })).toHaveAttribute("href", "/writing/new");

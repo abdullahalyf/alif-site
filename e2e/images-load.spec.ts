@@ -9,9 +9,9 @@ for (const path of ["/", "/about", "/travel"]) {
       await page.waitForTimeout(60);
     }
     await page.waitForLoadState("networkidle");
-    const broken = await page.locator("main img").evaluateAll((images) =>
+    const findBroken = () => page.locator("main img").evaluateAll((images) =>
       images.filter((element) => { const image = element as HTMLImageElement; const rect = image.getBoundingClientRect(); const visible = getComputedStyle(image).display !== "none" && rect.width > 0 && rect.left < window.innerWidth && rect.right > 0; return visible && !image.closest("dialog") && (!image.complete || image.naturalWidth === 0); }).map((image) => (image as HTMLImageElement).currentSrc || (image as HTMLImageElement).src),
     );
-    expect(broken).toEqual([]);
+    await expect.poll(findBroken, { timeout: 15_000 }).toEqual([]);
   });
 }

@@ -16,3 +16,12 @@ Notes
 - /travel journal pages still contain demo trips until Section 2 replaces them.
 - Malaysia trip: June 2025 (around Eid).
 - Open: years for Sitakunda/Hatiya/Tangail trips and IUT/BUP hackathon prelims; larger copies of the ~200 px photos.
+
+## Section 3 — Writing (done, waiting for "ঠিক")
+- Categories: All · Tech · Travel · Tech & economy · My take (frontmatter `category`); category pages added.
+- Cards: cover + date + read time + title + summary + photo credit; covers on every post; inline images with captions (`![alt](/images/... "caption")`).
+- 6 technical posts: DEMO notes removed; "What I learned building my first POS" rewritten from real Alez facts; "Hello, I'm Alif" published.
+- 3 new opinion posts are DRAFTS (NVIDIA, AI agents, Bangladesh) — visible on Vercel preview only (VERCEL_ENV=preview), hidden in production/RSS/sitemap/search until Alif approves.
+- RSS: browsers (Accept: text/html) get a readable feed page, readers get XML (chosen over XSL because Chrome is removing XSLT); RSS link moved to a footer icon; feed only published posts + dated trips.
+- Fixed: next.config image qualities now include 72 and 80 (used by Home/About images).
+- Boat-under-dome photo = Military Museum, Dhaka (Alif).

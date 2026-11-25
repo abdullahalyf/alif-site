@@ -32,7 +32,7 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 
 | Kurta HD (sent in chat) | Moments, Home strip (`moment-savar-resort-hd`) | Savar resort — replaces 205 px copy |
 | Metro Rail HD (sent in chat) | Moments, Home strip (`moment-metro-rail-hd`) | Feb 2024 — replaces 206 px copy |
-| Boat under glass dome (sent in chat) | Moments (`moment-boat-dome`) | place not named yet |
+| Boat under glass dome (sent in chat) | Moments (`moment-boat-dome`) | Military Museum, Dhaka (confirmed by Alif) |
 | 07-travel/bangladesh-travel-map.png | About outside-work "Travel" (`outside-travel-map`) | |
 | 08b-hackathons/923286563, 927313544, 928194210 | Chapter 4, outside-work, Work (`projects/cloudsentinel/*`) | |
 
@@ -45,6 +45,14 @@ Own photos are shown as Alif's. Stock photos (Rule 2) are never presented as his
 | `public/images/stock/online-class.jpg` | About chapter 1 | Julia M Cameron, Pexels #4144923 |
 | `public/images/stock/research-road.jpg` | About outside-work, Research | Tyler Casey, Unsplash (unfefW2kxEU) |
 | `public/images/stock/service-access.jpg` | Home services card hover, Database design & access control | Brett Sayles, Pexels #5203849 |
+| `public/images/stock/writing-architecture.jpg` | Writing: cover "database before screens" | divinetechygirl, Pexels #1181311 |
+| `public/images/stock/writing-servers.jpg` | Writing: cover SQLite/Postgres, inline in offline-first | Brett Sayles, Pexels #4508751 |
+| `public/images/stock/writing-cables.jpg` | Writing: cover idempotent sync, inline SQLite/Postgres | Brett Sayles, Pexels #2881229 |
+| `public/images/stock/writing-access.jpg` | Writing: cover role-based access | Brett Sayles, Pexels #5203849 |
+| `public/images/stock/writing-wireframe.jpg` | Writing: cover "how I scope a project" | picjumbo.com, Pexels #196645 |
+| `public/images/stock/writing-code-glasses.jpg` | Writing: cover AI agents (draft), inline idempotent sync | Kevin Ku, Pexels #577585 |
+| `public/images/stock/writing-chips.jpg` | Writing: cover NVIDIA (draft) | Athena Sandrini, Pexels #2582935 |
+| `public/images/stock/writing-dhaka-night.jpg` | Writing: cover Bangladesh (draft) | Humaied Ullah, Pexels #298366 |
 | `slots/service-operations.jpg` | Home services card hover, Business software | Real Alez POS screenshot (crop) |
 
 ## Not used (and why)

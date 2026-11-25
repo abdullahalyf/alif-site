@@ -678,3 +678,8 @@ html:not([data-theme="dark"]) .theme-toggle__sun, html[data-theme="dark"] .theme
   .about-now { grid-template-columns: 1fr; }
 }
 @media (max-width: 29.999rem) { .also-grid { grid-template-columns: 1fr; } }
+
+.footer-rss { display: inline-flex; align-items: center; justify-content: center; min-width: 2.25rem; min-height: 2.25rem; color: var(--night-muted); }
+.footer-rss:hover { color: var(--night-text); }
+.latest-writing__cover { display: block; overflow: hidden; margin-bottom: 1rem; border-radius: 0.75rem; aspect-ratio: 3 / 2; background: var(--surface-2); }
+.latest-writing__cover img { display: block; width: 100%; height: 100%; object-fit: cover; }

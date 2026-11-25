@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { demoContent, seo, site, skillProfile, writingContent } from "@/content/site";
 import type { Site } from "@/content/schema";
@@ -48,7 +49,7 @@ export function LatestWriting() {
   if (!posts.length) return null;
   return <section className="container section-space" aria-labelledby="latest-writing-title">
     <SectionLabel>{demoContent.latestLabel}</SectionLabel><Reveal><h2 id="latest-writing-title" className="section-title">{demoContent.latestTitle}</h2></Reveal>
-    <div className="latest-writing-grid">{posts.map((post) => <article key={post.slug}><time dateTime={post.date} className="label">{formatPostDate(post.date)}</time><h3><Link href={writingContent.postHref(post.slug)}>{post.title}</Link></h3><p>{post.summary}</p></article>)}</div>
+    <div className="latest-writing-grid">{posts.map((post) => <article key={post.slug}><Link href={writingContent.postHref(post.slug)} className="latest-writing__cover" tabIndex={-1} aria-hidden="true"><Image src={post.cover} alt="" width={1200} height={800} sizes="(min-width: 48rem) 28rem, 100vw" loading="eager" fetchPriority="low" /></Link><time dateTime={post.date} className="label">{formatPostDate(post.date)}</time><h3><Link href={writingContent.postHref(post.slug)}>{post.title}</Link></h3><p>{post.summary}</p></article>)}</div>
     <Link className="text-link" href={seo.pages.writing.path}>{writingContent.back}</Link>
   </section>;
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getPost, getPosts, renderPost, formatPostDate } from "@/content/posts";
 import { writingContent, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
+import Image from "next/image";
 import { Reveal } from "@/components/motion";
 import { PostProse } from "./PostProse";
 import "../writing.css";
@@ -28,10 +29,14 @@ export default async function PostPage({ params }: PageProps<"/writing/[slug]">)
   const next = posts[index - 1];
   return <div className="container writing-page"><article className="post-article">
     <Link href={seo.pages.writing.path}>{writingContent.back}</Link>
-    <header className="writing-heading"><Reveal><time className="post-date" dateTime={post.date}>{formatPostDate(post.date)}</time></Reveal><Reveal><h1>{post.title}</h1></Reveal><Reveal><p>{post.summary}</p></Reveal>
+    <header className="writing-heading"><Reveal><p className="post-meta"><time className="post-date" dateTime={post.date}>{formatPostDate(post.date)}</time><span>{writingContent.readTime(post.readMinutes)}</span></p></Reveal><Reveal><h1>{post.title}</h1></Reveal><Reveal><p>{post.summary}</p></Reveal>
       {post.draft && <p className="label">{writingContent.draft}</p>}
       <Reveal><ul className="post-tags">{post.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></Reveal>
     </header>
+    <figure className="post-cover">
+      <Image src={post.cover} alt={post.coverAlt} width={1200} height={800} sizes="(min-width: 48rem) 65ch, 100vw" priority />
+      {post.coverCredit && <figcaption className="photo-credit">{post.coverCredit}</figcaption>}
+    </figure>
     <PostProse html={renderPost(post.body)} />
     {(previous || next) && <nav className="post-neighbours" aria-label={writingContent.title}>
       {previous && <Link href={writingContent.postHref(previous.slug)}><span className="label">{writingContent.previous}</span>{previous.title}</Link>}

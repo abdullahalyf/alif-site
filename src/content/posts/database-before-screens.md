@@ -4,10 +4,15 @@ date: "2026-11-16"
 summary: "How modelling records, constraints and permissions early makes business software easier to build and harder to misunderstand."
 tags: [system-design, databases, architecture]
 draft: false
+category: tech
+cover: "/images/stock/writing-architecture.jpg"
+coverAlt: "Hand-drawn flowchart on a whiteboard showing screens connected by arrows"
+coverCredit: "Photo: divinetechygirl / Pexels"
 ---
-<!-- // DEMO: illustrative technical article for Alif to review and replace; all business examples are hypothetical. -->
 
 A screen can make an uncertain process look finished. Put a few fields on a form, add a save button, and the team can imagine using it tomorrow. The difficult questions often arrive later: who owns this record, can it change after approval, and what should happen when two people save different versions? I prefer to ask those questions while the system is still cheap to change.
+
+![Rows of server racks in a data centre corridor](/images/stock/writing-servers.jpg "Photo: Brett Sayles / Pexels")
 
 ## A model is a conversation about the business
 

@@ -4,16 +4,18 @@ date: "2026-11-19"
 summary: "Turn a broad request into a first release with an observable outcome, clear boundaries and a testable handover."
 tags: [project-planning, discovery, system-design]
 draft: false
+category: tech
+cover: "/images/stock/writing-wireframe.jpg"
+coverAlt: "A hand-drawn wireframe sketch on paper beside a smartphone"
+coverCredit: "Photo: picjumbo.com / Pexels"
 ---
-<!-- // DEMO: editorial draft for Alif; the example engagement and decisions are hypothetical. -->
 
-*DEMO article for review. The business scenario is illustrative.*
 
 A request for an inventory dashboard tells me what someone wants to see. It leaves open the question of what the team needs to do after seeing it. The answer might be placing a supplier order before a weekly deadline or finding a missing transfer before two branches order the same stock. Those are different jobs. They deserve different first releases, even if both eventually have a dashboard.
 
 ## Trace one real transaction
 
-I ask the team to walk through something that actually happened. In an illustrative stockroom project, that might be a transfer requested by one branch on Thursday and still missing from its records on Saturday. I ask to see where the request began, who approved it, what left the warehouse, what arrived, and what each person could see. I also ask what they did when the usual approver was unavailable. The gap between the process on paper and this specific transaction usually contains the work the software must handle.
+I ask the team to walk through something that actually happened. For example, in a stockroom project it might be a transfer requested by one branch on Thursday and still missing from its records on Saturday. I ask to see where the request began, who approved it, what left the warehouse, what arrived, and what each person could see. I also ask what they did when the usual approver was unavailable. The gap between the process on paper and this specific transaction usually contains the work the software must handle.
 
 That walkthrough gives me a roster of people, a sequence of events, and a few records that need owners. I make a note of which steps depend on spreadsheets, phones or unreliable internet. Then I play the sequence back to the team. If two people disagree on when stock should move, I put that disagreement on the agenda before promising a completion date.
 
