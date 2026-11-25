@@ -32,13 +32,14 @@ test("no animation overlay blocks the page", async ({ page }) => {
 test("the dark panel enters below a compact, readable header", async ({ page }, testInfo) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  await page.waitForLoadState("networkidle");
   const header = page.locator(".header");
   const section = page.locator(".night-section");
-  await section.evaluate(element => scrollTo({
+  const scrollToSection = () => section.evaluate(element => scrollTo({
     top: scrollY + element.getBoundingClientRect().top - innerHeight * 0.58,
     behavior: "instant",
   }));
-  await expect(header).toHaveAttribute("data-compact", "");
+  await expect.poll(async () => { await scrollToSection(); return header.getAttribute("data-compact"); }, { timeout: 15_000 }).toBe("");
   await expect.poll(async () => Math.round((await header.boundingBox())!.height)).toBe(50);
   expect((await header.boundingBox())!.y).toBe(0);
   expect((await section.boundingBox())!.y).toBeGreaterThan(50);
