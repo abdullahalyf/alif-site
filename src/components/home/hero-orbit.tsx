@@ -15,8 +15,8 @@ type Geometry = {
 };
 
 const shapes: Geometry[] = [
-  { name: "wide", box: [1600, 900], arch: "M582 900V330A290 290 0 0 1 1162 330V900", centre: [872, 470], rx: 560, ry: 130, tilt: -12, dot: 9, seconds: 16 },
-  { name: "tall", box: [800, 1000], arch: "M130 1000V370A330 330 0 0 1 790 370V1000", centre: [460, 520], rx: 520, ry: 120, tilt: -12, dot: 8, seconds: 14 },
+  { name: "wide", box: [1600, 900], arch: "M582 900V330A290 290 0 0 1 1162 330V900", centre: [872, 470], rx: 560, ry: 130, tilt: -12, dot: 13, seconds: 16 },
+  { name: "tall", box: [800, 1000], arch: "M130 1000V370A330 330 0 0 1 790 370V1000", centre: [460, 520], rx: 520, ry: 120, tilt: -12, dot: 11, seconds: 14 },
 ];
 
 export function HeroOrbit({ coordinates }: { coordinates: string }) {
@@ -31,7 +31,7 @@ export function HeroOrbit({ coordinates }: { coordinates: string }) {
         <g transform={`translate(${centre[0]} ${centre[1]}) rotate(${tilt})`}>
           <path id={pathId} className="hero-orbit__ring" d={orbit} />
           <g className="hero-orbit__dot" transform={reducedMotion ? `translate(${rx} 0)` : undefined}>
-            <circle r={dot * 2.2} className="hero-orbit__halo" />
+            <circle r={dot * 2.6} className="hero-orbit__halo" />
             <circle r={dot} className="hero-orbit__core" />
             {reducedMotion ? null : <animateMotion dur={`${seconds}s`} repeatCount="indefinite" rotate="0"><mpath href={`#${pathId}`} /></animateMotion>}
           </g>
