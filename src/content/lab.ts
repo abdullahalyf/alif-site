@@ -18,11 +18,11 @@ export const labContent = {
 };
 labSchema.parse(labContent);
 
-// DEMO: illustrative terminals, transactions and amounts; no live client data.
+// Simulated terminals, transactions and amounts; no live client data.
 export const syncContent = {
   ...labContent.demos[0],
   intro: "Turn a counter’s connection off, make a few sales, then reconnect. Each order keeps its identity all the way from the local queue to the owner’s dashboard.",
-  note: "A browser simulation inspired by the POS case study. These are demo transactions, not a connection to a real shop.",
+  note: "A browser simulation inspired by the POS case study. Simulation with made-up orders and numbers, not connected to a real shop.",
   caseStudyPath: "/work/multi-branch-pos",
   caseStudyLink: "Read the POS case study",
   staticNote: "Interactive controls need JavaScript. The system diagram and starting state are readable without it.",
@@ -54,7 +54,7 @@ export const syncContent = {
   doubleSend: "Simulate double-send",
   doubleSendNote: "Replays the latest accepted order with the same ID. It must not add another sale.",
   logTitle: "Follow the events",
-  reset: "Reset the demo",
+  reset: "Reset the simulation",
   money: (amount: number) => new Intl.NumberFormat("en-BD", { style: "currency", currency: syncContent.currency, maximumFractionDigits: 0 }).format(amount / 100),
   eventText: (event: { kind: string; saleId?: string }, branch: string) => {
     const messages: Record<string, string> = {
@@ -74,11 +74,11 @@ export const syncContent = {
   },
 };
 
-// DEMO: an illustrative policy, not the client's actual database rules.
+// An example policy, not the client's actual database rules.
 export const accessContent = {
   ...labContent.demos[1],
   intro: "A role is only the first question. Which branch owns the record, and who created it? Change the context and follow the rule that makes the final decision.",
-  note: "This is an illustrative policy. Real applications enforce access rules in the server or database, not just in the interface.",
+  note: "Simulation with an example policy, not a real client’s rules. Real applications enforce access rules in the server or database, not just in the interface.",
   staticNote: "Interactive controls need JavaScript. The owner’s starting permission matrix remains readable without it.",
   rolePicker: "Choose a role",
   roles: { owner: "Owner", manager: "Manager", cashier: "Cashier", inventory: "Inventory clerk", accountant: "Accountant", auditor: "Auditor" },

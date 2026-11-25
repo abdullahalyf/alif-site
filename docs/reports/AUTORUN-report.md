@@ -5,8 +5,8 @@ Started: 2026-11-25 11:34 Dhaka. Updated after every section.
 | Step | Status | Live link |
 |---|---|---|
 | 0 — fixes + Sections 1–3 | live ✅ (PR #21) | https://alif-site-flame.vercel.app |
-| 4 — Work | PR #22 (CI running) | /work |
-| 5 — Services + Estimate + Lab | pending | |
+| 4 — Work | live ✅ (PR #22) | https://alif-site-flame.vercel.app/work |
+| 5 — Services + Estimate + Lab | PR #23 (CI running) | /services, /estimate, /lab |
 | 6 — Contact + /cv | pending | |
 | 7 — Task 29 leftovers | pending | |
 | 8 — Extras | pending | |
@@ -37,4 +37,19 @@ Drafts published (no draft labels), POS covers differ, lone "Now" link removed, 
 - Larger copies of the ~200px photos (Jahangirnagar, mirror, Sitakunda, Hatiya, Tangail).
 - Asad's approval for the testimonial (still hidden).
 
-**Screenshots**: `/tmp/s4` (local, desktop + mobile) — live screenshots added after deploy.
+**Verified live**: gate at 1440/390 (no broken images, no overflow, one h1, no console errors) on /work, /work/multi-branch-pos, /work/client-sites.
+**Screenshots**: `docs/reports/shots/s4/` (d_ = desktop, m_ = mobile).
+
+## Section 5 — Services + Estimate + Lab
+**Changed**
+- `/services`: 9 service cards (icon, one line, typical BDT range, typical timeline, "Estimate this" link); "DEMO numbers" badge gone; price wording in models/FAQ says "typical range, final quote after a short call".
+- `/estimate`: 9 project-type chips matching the services; ranges in taka from your plan; Custom shows "Quote after a short call"; range notice; summary/email/WhatsApp text updated.
+- `/lab`: honest labels: "Simulation with made-up orders and numbers, not connected to a real shop" / "Simulation with an example policy"; "Reset the simulation".
+
+**Decisions taken**
+- POS monthly rent shown as "or rent it monthly" (no rent price invented).
+- Calculator rounds to ৳500; urgency/growth adjust the range.
+
+**Needs Alif**
+- Confirm the BDT ranges and timelines are what you want public.
+- Monthly rent price for POS (not set).

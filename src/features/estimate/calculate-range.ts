@@ -2,24 +2,29 @@ import type { EstimateInput, EstimateModel } from "@/content/schemas/estimate";
 import { estimateModel } from "@/content/estimate";
 
 export type PhaseId = "discovery" | "architecture" | "build" | "rollout";
-export type EstimateResult = { timeline: { low: number; high: number }; price: { low: number; high: number }; effortWeeks: number; phases: { id: PhaseId; weeks: number; share: number }[] };
+type Range = { low: number; high: number };
+export type EstimateResult = { timeline: Range | null; price: Range | null; effortWeeks: number | null; phases: { id: PhaseId; weeks: number; share: number }[] };
+
+const roundTo = (value: number, step: number) => Math.round(value / step) * step;
+
 export function calculateRange(input: EstimateInput, model: EstimateModel = estimateModel): EstimateResult {
-  const extraBranches = input.branches - 1, extraRoles = Math.max(0, input.roles - 2);
-  const phaseWeeks: Record<PhaseId, number> = {
-    discovery: model.discovery.base + input.roles * model.discovery.perRole + (input.migration ? model.discovery.migration : 0),
-    architecture: model.architecture.base + extraBranches * model.architecture.perExtraBranch + (input.offline ? model.architecture.offline : 0) + input.integrations.length * model.architecture.perIntegration,
-    build: model.baseBuildWeeks[input.projectType] + extraBranches * model.build.perExtraBranch + extraRoles * model.build.perExtraRole + (input.offline ? model.build.offline : 0) + (input.migration ? model.build.migration : 0) + input.integrations.reduce((sum, integration) => sum + model.integrationWeeks[integration], 0),
-    rollout: model.rollout.base + extraBranches * model.rollout.perExtraBranch + (input.migration ? model.rollout.migration : 0),
-  };
-  const effortWeeks = Object.values(phaseWeeks).reduce((sum, weeks) => sum + weeks, 0);
+  const type = model.types[input.projectType];
+  if (!type.price || !type.weeks) return { timeline: null, price: null, effortWeeks: null, phases: [] };
+  const g = model.growth;
+  const growth = Math.min(g.max,
+    (type.counts ? (input.branches - 1) * g.perExtraBranch + Math.max(0, input.roles - 2) * g.perExtraRole : 0)
+    + (type.offline && input.offline ? g.offline : 0)
+    + input.integrations.length * g.perIntegration
+    + (type.migration && input.migration ? g.migration : 0));
   const urgency = model.urgency[input.urgency];
-  const price = effortWeeks * model.weeklyRate * urgency.priceFactor;
-  const lowWeeks = Math.max(1, Math.floor(effortWeeks * model.range.low * urgency.calendarFactor));
-  const lowPrice = Math.max(100, Math.floor(price * model.range.low / 100) * 100);
+  const weeksFactor = 1 + growth * model.calendarGrowth;
+  const effortWeeks = (type.weeks.low + type.weeks.high) / 2 * weeksFactor;
+  const lowWeeks = Math.max(1, Math.floor(type.weeks.low * weeksFactor * urgency.calendarFactor));
+  const lowPrice = Math.max(500, roundTo(type.price.low * (1 + growth) * urgency.priceFactor, 500));
   return {
-    timeline: { low: lowWeeks, high: Math.max(lowWeeks, Math.ceil(effortWeeks * model.range.high * urgency.calendarFactor)) },
-    price: { low: lowPrice, high: Math.max(lowPrice, Math.ceil(price * model.range.high / 100) * 100) },
+    timeline: { low: lowWeeks, high: Math.max(lowWeeks, Math.ceil(type.weeks.high * weeksFactor * urgency.calendarFactor)) },
+    price: { low: lowPrice, high: Math.max(lowPrice, roundTo(type.price.high * (1 + growth) * urgency.priceFactor, 500)) },
     effortWeeks,
-    phases: (Object.entries(phaseWeeks) as [PhaseId, number][]).map(([id, weeks]) => ({ id, weeks, share: weeks / effortWeeks })),
+    phases: (Object.entries(type.shares) as [PhaseId, number][]).map(([id, share]) => ({ id, weeks: effortWeeks * share, share })),
   };
 }

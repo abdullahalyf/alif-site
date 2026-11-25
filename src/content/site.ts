@@ -100,34 +100,34 @@ export const site = {
     steps: ["POS", "Sync", "Cloud DB", "Dashboard"],
   },
   services: [
-    "System architecture & design",
-    "Business software (POS, inventory, dashboards)",
-    "Offline-first desktop & web apps",
-    "Database design & access control",
+    "Custom software",
+    "POS software",
+    "Back-office & inventory",
+    "Dashboards & web apps",
   ],
   tagline: "Systems first, screens second.",
   approach: [
     {
       slug: "understand-the-business",
-      title: "Understand the business", // DEMO
+      title: "Understand the business",
       details: [],
       text: "I start by learning how the business really runs — who does what, where money and stock move, and what breaks today.",
     },
     {
       slug: "design-the-system",
-      title: "Design the system", // DEMO
+      title: "Design the system",
       details: [],
       text: "Before any screen, I map the data, the roles and permissions, the failure cases and the running costs.",
     },
     {
       slug: "build-in-small-releases",
-      title: "Build in small releases", // DEMO
+      title: "Build in small releases",
       details: [],
       text: "I turn the design into a spec and give AI agents small implementation tasks. I review their changes and run tests so you can try each release early.",
     },
     {
       slug: "launch-and-look-after-it",
-      title: "Launch and look after it", // DEMO
+      title: "Launch and look after it",
       details: [],
       text: "I roll out carefully, monitor what happens, and keep the system healthy as your business grows.",
     },
@@ -599,10 +599,10 @@ export const homeServices = {
   learn: "Learn more",
   credit: "Stock photos from Pexels: divinetechygirl (flowchart), Brett Sayles (server racks).",
   cards: [
-    { icon: "architecture", title: site.services[0], description: "Map your data, workflows and failure cases before committing to a build.", href: "/services#architecture", image: { src: "/images/stock/service-architecture.jpg", width: 480, height: 600, alt: "A hand drawing a flowchart on a whiteboard" } },
-    { icon: "operations", title: site.services[1], description: "Give operators a clear way to handle sales, stock and daily exceptions.", href: "/services#operations", image: { src: "/images/slots/service-operations.jpg", width: 360, height: 450, alt: "The Alez POS selling screen" } },
-    { icon: "offline", title: site.services[2], description: "Keep critical work running across outages and reconcile it when connections return.", href: "/services#offline", image: { src: "/images/stock/service-offline.jpg", width: 480, height: 600, alt: "Rows of server racks in a data centre" } },
-    { icon: "access", title: site.services[3], description: "Give every role the access it needs with rules enforced where the data lives.", href: "/services#access", image: { src: "/images/stock/service-access.jpg", width: 480, height: 600, alt: "Locked server cabinets in a data centre" } },
+    { icon: "custom", title: site.services[0], description: "Software shaped around how your business really works, from the first sketch to launch.", href: "/services#custom", image: { src: "/images/stock/service-architecture.jpg", width: 480, height: 600, alt: "A hand drawing a flowchart on a whiteboard" } },
+    { icon: "pos", title: site.services[1], description: "Billing, stock and daily reports for shops and cafés, with an offline mode.", href: "/services#pos", image: { src: "/images/slots/service-operations.jpg", width: 360, height: 450, alt: "The Alez POS selling screen" } },
+    { icon: "backoffice", title: site.services[2], description: "Track stock, suppliers and staff work behind the counter.", href: "/services#backoffice", image: { src: "/images/stock/service-offline.jpg", width: 480, height: 600, alt: "Rows of server racks in a data centre" } },
+    { icon: "dashboard", title: site.services[3], description: "Screens that show your numbers, or web tools your team uses every day.", href: "/services#dashboard", image: { src: "/images/stock/service-access.jpg", width: 480, height: 600, alt: "Locked server cabinets in a data centre" } },
   ] as const,
 };
 

@@ -70,7 +70,7 @@ test("estimator updates live, validates counts, and encodes complete contact sum
   await page.getByLabel(estimate.fields.urgency, { exact: true }).selectOption("urgent");
   await expect(page.locator("[data-estimate-price]")).not.toHaveText(beforePrice!);
   await expect(page.locator("[data-estimate-timeline]")).not.toHaveText(beforeTimeline!);
-  await expect(page.getByText(estimate.demoNotice, { exact: true }).first()).toBeVisible();
+  await expect(page.getByText(estimate.rangeNotice, { exact: true }).first()).toBeVisible();
   const email = new URL((await page.getByRole("link", { name: estimate.emailLink }).getAttribute("href"))!);
   const whatsapp = new URL((await page.getByRole("link", { name: estimate.whatsappLink }).getAttribute("href"))!);
   expect(email.protocol).toBe("mailto:"); expect(email.pathname).toBe(site.email);
@@ -78,7 +78,7 @@ test("estimator updates live, validates counts, and encodes complete contact sum
     expect(body).toContain(`${estimate.summaryLabels.branches}: 8`);
     expect(body).toContain(`${estimate.summaryLabels.roles}: 6`);
     expect(body).toContain(`${estimate.summaryLabels.offline}: ${estimate.yes}`);
-    expect(body).toContain(estimate.demoNotice);
+    expect(body).toContain(estimate.rangeNotice);
   }
   await page.getByLabel(estimate.fields.branches, { exact: true }).fill("101");
   await expect(page.getByLabel(estimate.fields.branches, { exact: true })).toHaveAttribute("aria-invalid", "true");
@@ -114,4 +114,17 @@ test("no-JS demos retain the starting diagram, matrix and usable estimate links"
   await page.goto(access.path); await expect(page.getByRole("table")).toBeVisible();
   await page.goto(sync.path); await expect(page.locator(".sync-diagram svg")).toBeVisible();
   await context.close();
+});
+
+test("estimator shows taka ranges, hides unrelated fields and quotes custom software after a call", async ({ page }) => {
+  await page.goto(estimate.path);
+  await expect(page.locator("html")).toHaveAttribute("data-hydrated", "true");
+  await page.getByRole("radio", { name: estimate.projectTypes.landing }).check();
+  await expect(page.locator("[data-estimate-price]")).toHaveText("৳8,000–৳15,000");
+  await expect(page.getByLabel(estimate.fields.branches, { exact: true })).toHaveCount(0);
+  await expect(page.getByLabel(estimate.fields.offline, { exact: true })).toHaveCount(0);
+  await page.getByRole("radio", { name: estimate.projectTypes.custom }).check();
+  await expect(page.locator("[data-estimate-price]")).toHaveText(estimate.customQuote);
+  await expect(page.locator("[data-estimate-timeline]")).toHaveText(estimate.customQuote);
+  await expect(page.locator("body")).not.toContainText("DEMO");
 });
