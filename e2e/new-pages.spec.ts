@@ -8,6 +8,7 @@ import { diagrams, diagramContent } from "../src/content/diagrams";
 import { projects } from "../src/content/projects";
 import { servicesContent } from "../src/content/services";
 import { estimateContent } from "../src/content/estimate";
+import { resumeContent } from "../src/content/resume";
 import { waitForHydration } from "./helpers/routes";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
@@ -26,7 +27,7 @@ test("contact validates inline errors and prepares both external destinations", 
   await expect(page.getByLabel("Name", { exact: true })).toBeFocused();
   await page.getByLabel("Name", { exact: true }).fill("Test & Partner");
   await page.getByLabel("Email", { exact: true }).fill("test@example.com");
-  await page.getByLabel("Project type").selectOption("Business software");
+  await page.getByLabel("Project type").selectOption("POS software");
   await page.getByLabel("Budget range").selectOption("Not sure yet");
   await page.getByLabel("Timeline").selectOption("Flexible");
   await page
@@ -154,13 +155,13 @@ test("search index is public JSON without drafts", async ({ request }) => {
     ),
   ).toBe(false);
 });
-test("resume redirects permanently to the printable CV", async ({ page, request }) => {
+test("resume redirects permanently to the CV page", async ({ page, request }) => {
   const redirect = await request.get("/resume", { maxRedirects: 0 });
   expect(redirect.status()).toBe(308);
-  expect(redirect.headers().location).toBe("/contact#cv");
+  expect(redirect.headers().location).toBe("/cv");
   await page.goto("/resume");
-  await expect(page).toHaveURL(/\/contact#cv$/);
-  const download = page.getByRole("link", { name: "Download CV (PDF)" });
+  await expect(page).toHaveURL(/\/cv$/);
+  const download = page.getByRole("link", { name: resumeContent.download.label });
   await expect(download).toHaveAttribute("download", "");
   const pdf = await request.get((await download.getAttribute("href"))!);
   expect(pdf.headers()["content-type"]).toContain("application/pdf");
@@ -168,11 +169,20 @@ test("resume redirects permanently to the printable CV", async ({ page, request 
   await page.emulateMedia({ media: "print" });
   await expect(page.locator(".header")).toBeHidden();
   await expect(page.locator(".footer")).toBeHidden();
-  await expect(page.locator(".contact-details")).toBeHidden();
-  await expect(page.getByRole("button", { name: "Print CV" })).toBeHidden();
-  await expect(
-    page.getByRole("heading", { name: site.fullName, exact: true }),
-  ).toBeVisible();
+  await expect(page.locator(".cv-actions")).toBeHidden();
+  await expect(page.getByRole("heading", { level: 1, name: resumeContent.name })).toBeVisible();
+});
+test("every CV link on the site points to the CV page", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Download CV" })).toHaveAttribute("href", "/cv");
+  await page.goto("/contact");
+  await expect(page.getByRole("link", { name: "View my CV" })).toHaveAttribute("href", "/cv");
+  await expect(page.locator('a[href*="alif-cv.pdf"]')).toHaveCount(0);
+});
+test("contact shows a card for every channel", async ({ page }) => {
+  await page.goto("/contact");
+  for (const card of c.cards) await expect(page.locator(".contact-card", { hasText: card.label })).toBeVisible();
+  await expect(page.getByRole("link", { name: /WhatsApp/ }).first()).toHaveAttribute("href", site.whatsapp.href);
 });
 test("diagram exposes its graph as an accessible image and text", async ({
   page,
@@ -251,7 +261,7 @@ test("new pages fit the viewport with a single main heading", async ({
   for (const path of [
     "/services",
     "/contact",
-    "/resume",
+    "/cv",
     "/uses",
     "/search",
     "/work/multi-branch-pos/architecture",

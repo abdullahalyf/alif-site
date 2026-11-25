@@ -193,8 +193,7 @@ export const hackathonContent = {
   live: "Live",
 };
 
-export const cvId = "cv";
-export const resumeLink = { label: "CV", href: `/contact#${cvId}` };
+export const resumeLink = { label: "CV", href: "/cv" };
 
 const navigationLinks = {
   work: { label: "Work", href: "/work" },
@@ -305,7 +304,7 @@ export const aboutPage = {
       { label: "Speaks", value: "Bangla, English, Hindi, Japanese (basic)" },
       { label: "From", value: "Jhenaidah, Bangladesh" },
     ],
-    cv: { label: "Download CV", href: "/documents/alif-cv.pdf" },
+    cv: { label: "Download CV", href: "/cv" },
   },
   learned: {
     label: "How I learned to build",
@@ -430,7 +429,7 @@ export const homeContent = {
   currentlyLink: "More on Now",
   aboutPhoto: photoSlot("home-about-car", 1280, 720, "Abdullah Alif sitting in a red car with his arm on the open door"),
   aboutPhotoQuote: { text: "The best way to predict the future is to invent it.", by: "Alan Kay" },
-  heroActions: { email: "Email me", work: "See my work", cv: "Download CV", cvHref: "/documents/alif-cv.pdf", socials: "Find me online" },
+  heroActions: { email: "Email me", work: "See my work", cv: "Download CV", cvHref: "/cv", socials: "Find me online" },
 };
 
 export const availability = {

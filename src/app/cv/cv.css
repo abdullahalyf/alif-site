@@ -1,0 +1,51 @@
+.cv { display: grid; grid-template-columns: minmax(15rem, 20rem) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; overflow-wrap: anywhere; }
+.cv-side { position: sticky; top: 6rem; display: grid; gap: 1.5rem; }
+.cv-id { display: grid; gap: 0.5rem; }
+.cv-id h1 { font: clamp(2.5rem, 5vw, 3.75rem)/1.02 var(--font-serif); }
+.cv-role { color: var(--ink-muted); }
+.cv-contact { display: grid; gap: 0.35rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.cv-contact a { width: fit-content; }
+.cv-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.cv-toc { display: grid; gap: 0.35rem; border-top: 1px solid var(--line); padding-top: 1rem; color: var(--ink-muted); font-size: 0.95rem; }
+.cv-toc a { text-decoration: none; }
+.cv-toc a:hover, .cv-toc a:focus-visible { color: var(--ink); text-decoration: underline; }
+.cv-main { display: grid; gap: clamp(2rem, 4vw, 3rem); max-width: 48rem; }
+.cv-section { display: grid; gap: 1.25rem; border-top: 1px solid var(--line); padding-top: 1.5rem; scroll-margin-top: 6rem; }
+.cv-section > h2 { font: 1.75rem var(--font-serif); }
+.cv-profile { font-size: 1.125rem; line-height: 1.65; max-width: 62ch; }
+.cv-entry { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.5rem; }
+.cv-entry > div { display: grid; gap: 0.4rem; align-content: start; }
+.cv-entry h3 { font: 1.25rem/1.3 var(--font-serif); }
+.cv-period { color: var(--ink-muted); font-size: 0.95rem; }
+.cv-org { color: var(--ink-muted); }
+.cv-entry ul { display: grid; gap: 0.4rem; padding-left: 1.1rem; list-style: disc; }
+.cv-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.cv-lines { display: grid; gap: 0.6rem; }
+.cv-note { color: var(--ink-muted); }
+@media (max-width: 56rem) {
+  .cv { grid-template-columns: 1fr; }
+  .cv-side { position: static; }
+  .cv-toc { display: none; }
+}
+@media (max-width: 36rem) { .cv-entry { grid-template-columns: 1fr; gap: 0.25rem; } }
+@media print {
+  @page { size: A4; margin: 14mm; }
+  html:has(.cv-page), body:has(.cv-page) { background: white !important; color: black !important; color-scheme: light !important; font-size: 9.5pt; }
+  body:has(.cv-page) > :not(main), body:has(.cv-page) canvas { display: none !important; }
+  .cv-page { padding: 0; width: 100%; max-width: none; }
+  .cv { display: block; }
+  .cv-side { position: static; gap: 0.5rem; margin-bottom: 0.8rem; }
+  .cv-actions, .cv-toc { display: none !important; }
+  .cv-contact { display: block; border: 0; padding: 0; }
+  .cv-contact a { display: inline; margin-right: 0.8rem; }
+  .cv *, .cv a { color: black !important; text-decoration: none; animation: none !important; }
+  .cv-id h1 { font-size: 24pt; }
+  .cv-main { display: block; max-width: none; }
+  .cv-section { display: block; margin-top: 0.7rem; padding-top: 0.3rem; border-color: black; break-inside: auto; }
+  .cv-section > h2 { font-size: 13pt; margin-bottom: 0.3rem; break-after: avoid; }
+  .cv-profile { font-size: 10pt; line-height: 1.4; }
+  .cv-entry { grid-template-columns: 7rem minmax(0, 1fr); gap: 0.75rem; margin-block: 0.4rem; break-inside: avoid; }
+  .cv-entry h3 { font-size: 10.5pt; }
+  .cv-links { display: none; }
+  .cv-lines { gap: 0.2rem; }
+}
