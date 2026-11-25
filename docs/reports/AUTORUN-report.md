@@ -141,3 +141,12 @@ Note: PERF-plan step 2 premise (/work, /contact "no-store") was a sandbox-proxy 
 - Services: one column up to 48rem; every service card has a credited 16:9 photo (POS uses Alif's own Alez POS screen); Home service cards show their image at the top on phones.
 - Gate: tsc/eslint/vitest OK; gate (overflow + images) OK on 12 pages at 1440 and 390; overflow check at 360/390/414; e2e navigation/menu/pages/a11y/smoke/new-pages/images/demo OK; Lighthouse mobile `/` local x3: 86/91/90 (a11y 100).
 - Before/after: `docs/reports/shots/mobile-polish/`.
+
+## Step 4 — Hero orbit (approved by Alif 17:32, merged: PR #32; dot made bigger/brighter with glow)
+- Branch: `hero-orbit` (commit ecf73f1). Preview: https://alif-site-git-hero-orbit-abdullah-alyf-s-projects.vercel.app
+- Added: thin arch frame + tilted orbit ellipse + accent dot (SVG, 14–16 s loop) layered between the hero photo and a transparent cut-out of Alif (`public/images/alif-portrait-cutout.webp`, 69 KB), so the orbit passes behind him. Orbit drifts slightly with scroll (GSAP scrub). Coordinates label 23.8103° N / 90.4125° E.
+- Existing blur→sharp, stripes, dock animation untouched. Reduced motion: static dot, no drift. No-JS: all visible.
+- Decisions: right-side tagline skipped (clutter); stripes kept; schema gets optional `heroPhotoCutout`.
+- Checks: tsc, eslint, vitest, build OK; smoke/images e2e OK; motion e2e updated for 2 `.hero-photo` nodes. The mobile "sharpens" test is flaky (also on live main, ~1 in 4).
+- Screenshots: `docs/reports/shots/orbit/` on the `hero-orbit` branch.
+- Live: https://alif-site-flame.vercel.app/
