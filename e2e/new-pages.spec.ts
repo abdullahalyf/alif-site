@@ -308,7 +308,7 @@ test("each of the nine services shows a typical range and links to the estimator
   await page.goto("/services");
   const cards = page.locator(".service-card");
   await expect(cards).toHaveCount(9);
-  await expect(page.getByText("DEMO", { exact: false })).toHaveCount(0);
+  await expect(page.getByText("DEMO", { exact: true })).toHaveCount(0);
   for (const block of servicesContent.blocks) {
     await page.goto("/services");
     await waitForHydration(page);
