@@ -69,7 +69,7 @@ export const resumeContent = resumeSchema.parse({
         { title: "CloudSentinel", org: "Lead architect · International AI Builders Congress", period: "2026", note: "A control tower for cloud and fleet infrastructure. Finalist; the final is on 26 December.", links: [{ label: "Case study", href: "/work/cloudsentinel" }] },
         { title: "Jomi Barta", org: "Lead architect · DIU LandTech Hackathon", period: "2026", note: "A bilingual guide that helps people in Bangladesh check a piece of land before they buy it. Finalist; the final is on 12 December.", links: [{ label: "Case study", href: "/work/jomi-barta" }] },
         { title: "QueueStorm Investigator", org: "SUST CSE Carnival 2026 Hackathon", period: "2026", note: "An AI-powered FinTech support investigation API. Node.js, Express, Google Gemini API, Zod.", links: [{ label: "GitHub", href: "https://github.com/abdullahalyf/sust-preli-queuestorm" }] },
-        { title: "Campus Navigator", org: "University course project", note: "A C program that applies graph algorithms to navigation around the campus.", links: [{ label: "GitHub", href: "https://github.com/abdullahalyf/campus-navigator" }] },
+        { title: "Campus Navigator", org: "University course project", note: "A C program that applies graph algorithms to navigation around the campus." },
         { title: "Console-based e-commerce", org: "University course project", note: "A console application in C built on core data structures.", links: [{ label: "GitHub", href: "https://github.com/abdullahalyf/Consolebased_Ecommerce" }] },
       ],
     },

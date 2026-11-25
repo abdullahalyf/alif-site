@@ -122,3 +122,9 @@ Live site: https://alif-site-flame.vercel.app
 - **CV (`/cv`)** — read the text once (CGPA 3.48 is shown); DOB, DIU ID, phone, "Savar" and the referees' contacts are left out on purpose; Campus Navigator GitHub link is a guess (`abdullahalyf/campus-navigator`); PDF download is generated from the page.
 - **Asad's testimonial** — still hidden until he approves.
 - **Vercel** — enable Web Analytics.
+
+## PERF plan (started 15:33)
+Before numbers (live, from sandbox, GET): / ttfb 0.14–0.33 s · /about 0.12–0.15 s · /work 0.11–0.14 s · /contact 0.10–0.12 s; functions region iad1 (US). Note: earlier "private, no-store" on /work and /contact was my sandbox proxy's 403, not Vercel; real responses were already HIT/STALE.
+
+**Step 1+3+4+5 (PR perf-1)**: `regions: ["bom1"]` (Mumbai) in vercel.json; achievement photo lightbox image lazy (was loading at w=1920/3840 while hidden); extra image size 2560 so large screens skip 3840; Bricolage font pinned to the one style used and subset (78 KB → 17 KB, pixel-identical hero); intro shortened from ~1.6 s to 1.2 s.
+**Step 2 (Campus Navigator link)**: GitHub link removed from `/cv` until you confirm the real URL.

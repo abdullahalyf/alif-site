@@ -6,8 +6,9 @@ import { prefersReducedMotion } from "@/lib/use-reduced-motion";
 import { INTRO_PENDING_ATTR, introStorageKey } from "@/lib/intro";
 
 export { introStorageKey };
-const WORD_INTERVAL = 112;
 const EXIT_DURATION = 230;
+const TOTAL_DURATION = 1200;
+const WORD_INTERVAL = Math.floor((TOTAL_DURATION - EXIT_DURATION) / (greetingIntro.length - 1));
 const EXIT_START = (greetingIntro.length - 1) * WORD_INTERVAL;
 export const INTRO_DURATION = EXIT_START + EXIT_DURATION;
 function shouldPlayIntro() {
