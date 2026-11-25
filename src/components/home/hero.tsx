@@ -19,7 +19,7 @@ export function Hero() {
         <div className="button-row">
           <ButtonLink href={shell.email.href}>{homeContent.heroActions.email}</ButtonLink>
           <ButtonLink href={navHref("/work")} prefetch={false} variant="secondary">{homeContent.heroActions.work}</ButtonLink>
-          <a className="button button--secondary" href={homeContent.heroActions.cvHref} download>{homeContent.heroActions.cv}</a>
+          <ButtonLink href={homeContent.heroActions.cvHref} prefetch={false} variant="secondary">{homeContent.heroActions.cv}</ButtonLink>
         </div>
         <ul className="hero-socials" aria-label={homeContent.heroActions.socials}>{site.socials.map((link) => <li key={link.href}><a href={link.href} rel="noopener noreferrer" target="_blank"><SocialIcon name={link.label} />{link.label}</a></li>)}</ul>
         <p className="location"><span aria-hidden="true" />{site.location}</p>

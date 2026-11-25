@@ -8,7 +8,7 @@ it("validates required fields and safely encodes special characters", () => {
     name: "A & B",
     email: "a@example.com",
     company: "",
-    projectType: "Other",
+    projectType: "Custom software",
     budget: "Not sure yet",
     timeline: "Flexible",
     message:
