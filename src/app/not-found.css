@@ -1,0 +1,8 @@
+.not-found { display: grid; gap: 1.25rem; justify-items: start; }
+.not-found__code { font: clamp(6rem, 22vw, 14rem)/0.85 var(--font-serif); color: var(--accent); letter-spacing: -0.04em; }
+.not-found h1 { font-size: clamp(2.25rem, 6vw, 4rem); }
+.not-found__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; width: 100%; margin: 0.5rem 0 1rem; }
+.not-found__links a { display: grid; gap: 0.25rem; height: 100%; padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-2); text-decoration: none; transition: border-color 0.2s; }
+.not-found__links a:hover, .not-found__links a:focus-visible { border-color: var(--ink-muted); }
+.not-found__links span { font: 1.4rem var(--font-serif); }
+.not-found__links small { color: var(--ink-muted); font-size: 0.95rem; }

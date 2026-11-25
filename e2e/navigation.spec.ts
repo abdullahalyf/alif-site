@@ -39,6 +39,8 @@ test("unknown case study returns 404 with a route home", async ({ page }) => {
   expect(response?.status()).toBe(404);
   await waitForHydration(page);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(shell.notFoundTitle);
+  for (const link of shell.notFoundLinks)
+    await expect(page.getByRole("main").getByRole("link", { name: new RegExp(`^${link.label}`) })).toHaveAttribute("href", link.href);
   await page.getByRole("link", { name: shell.backHome }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(site.name);
 });

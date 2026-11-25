@@ -17,6 +17,7 @@
     "demo:list": "tsx scripts/list-demo.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "gray-matter": "^4.0.3",
     "gsap": "^3.15.1",
     "lenis": "^1.3.27",

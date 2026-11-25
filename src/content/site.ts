@@ -251,7 +251,14 @@ export const shell = {
   workNavLabel: "Services",
   caseStudyLabel: "Case study",
   notFoundTitle: "Page not found",
-  notFoundText: "This page isn't here. Let's get you back home.",
+  notFoundText: "This page isn’t here, or it has moved. Try one of these instead.",
+  notFoundCode: "404",
+  notFoundLinks: [
+    { label: "Services", href: "/services", text: "What I build and typical prices" },
+    { label: "Work", href: "/work", text: "Projects and case studies" },
+    { label: "About me", href: "/about", text: "Who I am and how I got here" },
+    { label: "Contact", href: "/contact", text: "Email, WhatsApp or a short brief" },
+  ],
   backHome: "Back home",
   projectHref: (slug: string) => `/work/${slug}`,
   /** Interactive demos linked from a case study, keyed by project slug. */
@@ -484,7 +491,7 @@ export const aboutContent = {
   email: { ...shell.email, label: "Email" },
   resume: navigationLinks.resume,
   signature: site.name,
-  // DEMO: awaiting mission and vision copy.
+  // Mission and vision copy is not written yet; the section stays hidden until it is.
   missionVision: { label: "Mission & vision", missionLabel: "Mission", visionLabel: "Vision", mission: "", vision: "" },
   storyLabel: "My story",
   storyTitle: "A few chapters along the way.",
@@ -565,7 +572,6 @@ export const writingContent = {
 
 export const demoContent = {
   demoLabel: "DEMO",
-  imageNotice: "Demo photographs · illustrative, not project screenshots",
   highlightsLabel: "Highlights",
   highlightsTitle: "Milestones along the way.",
   educationLabel: "Education",
