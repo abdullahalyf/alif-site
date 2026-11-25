@@ -1,4 +1,4 @@
-import { serviceMockups as copy } from "@/content/services";
+import { serviceHero } from "@/content/services";
 
 const iconPaths = {
   shop: "M3 10h18l-2-6H5zm2 0v10h14V10m-9 10v-6h4v6M8 4l-1 6m9-6 1 6",
@@ -29,7 +29,7 @@ export function ServiceHeroVisual() {
   return (
     <div className="service-hero-visual" aria-hidden="true">
       <div className="service-flow">
-        {copy.hero.map((label, index) => (
+        {serviceHero.map((label, index) => (
           <div className="service-flow__node" key={label}>
             <span><ServiceGlyph name={icons[index]} /></span>
             <strong>{label}</strong>
@@ -38,101 +38,4 @@ export function ServiceHeroVisual() {
       </div>
     </div>
   );
-}
-
-function ArchitectureMockup() {
-  const { title, nodes, labels } = copy.architecture;
-  const icons = ["shop", "system", "chat"] as const;
-  return (
-    <div className="service-window service-workflow">
-      <strong className="service-window__title">{title}</strong>
-      {nodes.map((node, index) => (
-        <div className="service-workflow__step" key={node}>
-          <span className="service-window__icon"><ServiceGlyph name={icons[index]} /></span>
-          <strong>{node}</strong>
-          <small>{labels[index]}</small>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function OperationsMockup() {
-  const { title, summary, value, order, amount, action, days } = copy.operations;
-  const heights = [36, 50, 43, 68, 57, 85, 74];
-  return (
-    <div className="service-window service-dashboard">
-      <strong className="service-window__title">{title}</strong>
-      <div className="service-dashboard__sales">
-        <small>{summary}</small>
-        <strong>{value}</strong>
-        <div className="service-chart">
-          {heights.map((height, index) => (
-            <span key={height}>
-              <i style={{ height: `${height}%` }} />
-              <small>{days[index]}</small>
-            </span>
-          ))}
-        </div>
-      </div>
-      <div className="service-dashboard__order">
-        <span className="service-window__icon"><ServiceGlyph name="shop" /></span>
-        <small>{order}</small>
-        <strong>{amount}</strong>
-        <span>{action}</span>
-      </div>
-    </div>
-  );
-}
-
-function OfflineMockup() {
-  const { title, connection, statuses } = copy.offline;
-  const icons = ["check", "queue", "sync"] as const;
-  return (
-    <div className="service-window service-phone">
-      <strong className="service-window__title">{title}</strong>
-      <small className="service-phone__status">{connection}</small>
-      {statuses.map((status, index) => (
-        <div className="service-phone__row" key={status}>
-          <ServiceGlyph name={icons[index]} />
-          <span>{status}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function AccessMockup() {
-  const { title, headers, roles } = copy.access;
-  const permissions = [[true, true, true], [true, true, false], [true, false, false]];
-  return (
-    <div className="service-window service-matrix">
-      <strong className="service-window__title">{title}</strong>
-      <div className="service-matrix__grid">
-        {headers.map((header) => <small key={header}>{header}</small>)}
-        {roles.map((role, index) => (
-          <div className="service-matrix__row" key={role}>
-            <strong>{role}</strong>
-            {permissions[index].map((allowed, column) => (
-              <span key={headers[column + 1]} data-allowed={allowed}>
-                <ServiceGlyph name={allowed ? "check" : "minus"} />
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-const mockups = {
-  architecture: ArchitectureMockup,
-  operations: OperationsMockup,
-  offline: OfflineMockup,
-  access: AccessMockup,
-};
-
-export function ServiceMockup({ name }: { name: keyof typeof mockups }) {
-  const Mockup = mockups[name];
-  return <div className="service-mockup" data-mockup={name} aria-hidden="true"><Mockup /></div>;
 }

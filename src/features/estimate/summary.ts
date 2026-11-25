@@ -12,10 +12,10 @@ export function estimateSummary(input: EstimateInput, result: EstimateResult): s
     [c.summaryLabels.integrations, input.integrations.length ? input.integrations.map(value => c.integrationLabels[value]).join(", ") : c.none],
     [c.summaryLabels.migration, input.migration ? c.yes : c.no],
     [c.summaryLabels.urgency, c.urgencyLabels[input.urgency]],
-    [c.summaryLabels.timeline, c.weeksRange(result.timeline)],
-    [c.summaryLabels.price, c.priceRange(result.price)],
+    [c.summaryLabels.timeline, result.timeline ? c.weeksRange(result.timeline) : c.customQuote],
+    [c.summaryLabels.price, result.price ? c.priceRange(result.price) : c.customQuote],
   ];
-  return [...fields.map(([label, value]) => `${label}: ${value}`), c.demoNotice];
+  return [...fields.map(([label, value]) => `${label}: ${value}`), c.rangeNotice];
 }
 /** Same explicit mailto/WhatsApp handoff as the contact brief; no background submission. */
 export function estimateUrl(input: EstimateInput, result: EstimateResult, channel: "email" | "whatsapp"): string {

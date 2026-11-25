@@ -5,7 +5,7 @@ export const servicesSchema = z.object({
   intro: text,
   label: text,
   browseLabel: text,
-  deliverablesLabel: text,
+  allServicesLabel: text,
   timelineLabel: text,
   processTitle: text,
   modelsTitle: text,
@@ -13,24 +13,23 @@ export const servicesSchema = z.object({
   cta: text,
   contactPath: text,
   estimateLabel: text,
-  startingLabel: text,
-  demoNote: text,
+  rangeLabel: text,
+  rangeNote: text,
   recommendedModel: text,
   recommendedLabel: text,
-  demoPriceLabel: text,
+  priceLabel: text,
   blocks: z
     .array(
       z.object({
+        id: z.enum(["custom", "pos", "backoffice", "business", "landing", "portfolio", "ecommerce", "dashboard", "mobile"]),
         title: text,
-        icon: z.enum(["architecture", "operations", "offline", "access"]),
         description: text,
-        deliverables: z.array(text).min(1),
         timeline: text,
-        maxWeeks: z.number().int().positive(),
-        startingPrice: text,
+        range: text,
+        rangeNote: text.optional(),
       }),
     )
-    .length(4),
+    .length(9),
   steps: z.array(z.object({ title: text, text })).length(5),
   models: z
     .array(z.object({ title: text, bestFor: text, price: text }))

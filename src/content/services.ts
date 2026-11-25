@@ -1,77 +1,33 @@
 import { servicesSchema } from "./schemas/services";
 export const servicesContent = servicesSchema.parse({
-  title: "Software built around your business.",
+  title: "Software and websites built around your business.",
   intro:
-    "Give your team one place to run sales, track stock and keep working when the internet drops.",
-  label: "Software services",
-  browseLabel: "Explore services",
-  deliverablesLabel: "Typical deliverables",
+    "From a one-page website to a POS that runs every branch: tell me what you need, and I give you a clear range and a fixed quote after a short call.",
+  label: "Services",
+  browseLabel: "See the services",
+  allServicesLabel: "Nine ways I can help",
   timelineLabel: "Typical timeline",
   processTitle: "How an engagement works",
   recommendedModel: "Fixed-scope project",
-  recommendedLabel: "Recommended for a first build",
-  demoPriceLabel: "Demo price",
+  recommendedLabel: "Best for a first project",
+  priceLabel: "Price",
   modelsTitle: "Ways to work together",
   faqTitle: "Before we begin",
   cta: "Tell me about your project",
   contactPath: "/contact",
   estimateLabel: "Estimate this",
-  startingLabel: "Demo starting point",
-  demoNote: "Demo prices and timelines are examples for planning. I confirm scope and pricing with you before work starts.",
-  // DEMO: indicative scope, timelines and engagement terms; confirm before offering.
+  rangeLabel: "Typical range",
+  rangeNote: "Typical ranges in Bangladeshi taka. The final quote is agreed after a short call, before any work starts.",
   blocks: [
-    {
-      title: "System architecture",
-      icon: "architecture",
-      description: "Map how orders, stock and people fit together before you commit to building.",
-      deliverables: [
-        "A map of your data and workflows",
-        "Risks and what to do if things fail",
-        "A release plan and cost assumptions",
-      ],
-      timeline: "1–2 weeks",
-      maxWeeks: 2,
-      startingPrice: "From $650 USD",
-    },
-    {
-      title: "Business software",
-      icon: "operations",
-      description: "Run sales and stock from one system, and see how each location is doing.",
-      deliverables: [
-        "A tailored checkout, stock or operations workflow",
-        "A dashboard tailored to each role",
-        "Tests, documentation and handover",
-      ],
-      timeline: "6–12 weeks",
-      maxWeeks: 12,
-      startingPrice: "From $3,650 USD",
-    },
-    {
-      title: "Offline-first apps",
-      icon: "offline",
-      description: "Save orders and field updates on the device, then sync when the connection comes back.",
-      deliverables: [
-        "On-device storage and a queue for pending work",
-        "Automatic retries that avoid duplicate updates",
-        "A plan for recovery and conflicting changes",
-      ],
-      timeline: "4–8 weeks",
-      maxWeeks: 8,
-      startingPrice: "From $2,600 USD",
-    },
-    {
-      title: "Database & access control",
-      icon: "access",
-      description: "Give staff access to the records they need and keep sensitive actions in the right hands.",
-      deliverables: [
-        "Database structure and migration plan",
-        "A clear table of who can view or change records",
-        "Backup and database performance review",
-      ],
-      timeline: "1–3 weeks",
-      maxWeeks: 3,
-      startingPrice: "From $650 USD",
-    },
+    { id: "custom", title: "Custom software", description: "Software shaped around how your business really works, built from scratch.", timeline: "Depends on scope", range: "Quote after a short call" },
+    { id: "pos", title: "POS software", description: "Billing, stock and daily reports for shops and cafés, with an offline mode.", timeline: "4–8 weeks", range: "৳40,000–1,20,000", rangeNote: "or rent it monthly" },
+    { id: "backoffice", title: "Back-office & inventory", description: "Track stock, suppliers and staff work behind the counter.", timeline: "5–10 weeks", range: "৳50,000–1,50,000" },
+    { id: "business", title: "Business websites", description: "A fast, professional site that shows what you offer and brings in enquiries.", timeline: "2–4 weeks", range: "৳15,000–40,000" },
+    { id: "landing", title: "Landing pages", description: "One focused page that turns visitors into calls and messages.", timeline: "1–2 weeks", range: "৳8,000–15,000" },
+    { id: "portfolio", title: "Personal & portfolio websites", description: "A clean site that shows your work and your story.", timeline: "1–2 weeks", range: "৳5,000–12,000" },
+    { id: "ecommerce", title: "E-commerce", description: "An online shop with products, orders and payments.", timeline: "3–6 weeks", range: "৳30,000–80,000" },
+    { id: "dashboard", title: "Dashboards & web apps", description: "Screens that show your numbers, or web tools your team uses every day.", timeline: "3–12 weeks", range: "৳25,000–2,00,000" },
+    { id: "mobile", title: "Mobile-first apps", description: "Apps designed for phones first, for your staff or your customers.", timeline: "6–12 weeks", range: "৳80,000–2,50,000" },
   ],
   steps: [
     {
@@ -99,17 +55,17 @@ export const servicesContent = servicesSchema.parse({
     {
       title: "Fixed-scope project",
       bestFor: "A defined problem with clear acceptance criteria.",
-      price: "From $3,650 USD / project",
+      price: "Fixed quote after a short call",
     },
     {
       title: "Monthly retainer",
       bestFor: "Ongoing improvements and care for an existing system.",
-      price: "From $1,300 USD / month",
+      price: "Monthly fee agreed after a short call",
     },
     {
       title: "Architecture review",
       bestFor: "An independent review before a major technical decision.",
-      price: "From $650 USD / review",
+      price: "Quoted after a short call",
     },
   ],
   faqs: [
@@ -136,7 +92,7 @@ export const servicesContent = servicesSchema.parse({
     {
       question: "How is pricing decided?",
       answer:
-        "Scope, risks and acceptance criteria come first; a proposal follows.",
+        "The ranges on this page are typical. After a short call about your project I send a fixed quote, and the scope is written down before work starts.",
     },
     {
       question: "Who owns the code?",
@@ -157,7 +113,6 @@ export const servicesContent = servicesSchema.parse({
 });
 
 export const serviceDetails = {
-  audienceLabel: "Who it's for",
   whyTitle: "Why work with me",
   reasons: [
     { title: "Decisions with reasons", text: "I explain what each option buys, what it costs, and what would make me revisit the decision." },
@@ -165,46 +120,6 @@ export const serviceDetails = {
     { title: "Tested and reviewed", text: "I review changes and test realistic failure cases before release." },
     { title: "Offline-first experience", text: "I design for lost connections, retries, and reconciliation when work must keep moving." },
   ],
-  byService: {
-    architecture: {
-      audience: "Teams preparing a build, replacing a fragile system, or facing a decision they want to validate first.",
-    },
-    operations: {
-      audience: "Operators managing sales, stock or approvals across more than one role or location.",
-    },
-    offline: {
-      audience: "Counter staff and field teams who need to finish work without steady internet.",
-    },
-    access: {
-      audience: "Teams with shared records, branch boundaries or permissions that are hard to audit.",
-    },
-  },
 };
 
-export const serviceMockups = {
-  hero: ["Your business", "Your system", "Your dashboard"],
-  architecture: {
-    title: "Order workflow",
-    nodes: ["New order", "Check stock", "Send receipt"],
-    labels: ["Sales", "Inventory", "Customer"],
-  },
-  operations: {
-    title: "Sales overview",
-    summary: "Sales this week",
-    value: "$8,420",
-    order: "Open order",
-    amount: "$42.50",
-    action: "Take payment",
-    days: ["M", "T", "W", "T", "F", "S", "S"],
-  },
-  offline: {
-    title: "Field orders",
-    connection: "Connection lost",
-    statuses: ["Saved on device", "Waiting to sync", "Synced when online"],
-  },
-  access: {
-    title: "Staff permissions",
-    headers: ["Role", "View", "Edit", "Refund"],
-    roles: ["Owner", "Manager", "Cashier"],
-  },
-} as const;
+export const serviceHero = ["Your business", "Your system", "Your dashboard"] as const;

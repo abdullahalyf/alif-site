@@ -6,6 +6,8 @@ import { site, shell, pageContent } from "../src/content/site";
 import { searchContent as search } from "../src/content/search";
 import { diagrams, diagramContent } from "../src/content/diagrams";
 import { projects } from "../src/content/projects";
+import { servicesContent } from "../src/content/services";
+import { estimateContent } from "../src/content/estimate";
 import { waitForHydration } from "./helpers/routes";
 test("contact validates inline errors and prepares both external destinations", async ({
   page,
@@ -302,24 +304,23 @@ test("the Alez case study has three titled galleries", async ({ page }) => {
   for (const title of ["In-shop POS software", "Online management portal", "POS output"]) await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
 });
 
-test("each service offers a timeline and a link to the estimator", async ({ page }) => {
+test("each of the nine services shows a typical range and links to the estimator", async ({ page }) => {
   await page.goto("/services");
-  const blocks = page.locator(".service-block");
-  await expect(blocks).toHaveCount(4);
-  const presets = { architecture: "web", operations: "pos", offline: "mobile", access: "dashboard" };
-  for (const [service, type] of Object.entries(presets)) {
+  const cards = page.locator(".service-card");
+  await expect(cards).toHaveCount(9);
+  await expect(page.getByText("DEMO", { exact: false })).toHaveCount(0);
+  for (const block of servicesContent.blocks) {
     await page.goto("/services");
     await waitForHydration(page);
-    const block = blocks.and(page.locator(`#${service}`));
-    await expect(block.getByText("Typical timeline")).toBeVisible();
-    const link = block.getByRole("link", { name: "Estimate this" });
-    await expect(link).toHaveAttribute("href", `/estimate?service=${service}`);
+    const card = cards.and(page.locator(`#${block.id}`));
+    await expect(card.getByRole("heading", { name: block.title, exact: true })).toBeVisible();
+    await expect(card.getByText(block.range)).toBeVisible();
+    await expect(card.getByText(block.timeline)).toBeVisible();
+    const link = card.getByRole("link", { name: "Estimate this" });
+    await expect(link).toHaveAttribute("href", `/estimate?service=${block.id}`);
     await link.click();
-    await expect(page.getByRole("combobox", { name: "Project type" })).toHaveValue(type);
-    const offline = page.getByRole("checkbox", { name: "Needs to work offline" });
-    if (service === "offline") await expect(offline).toBeChecked();
-    else await expect(offline).not.toBeChecked();
+    await expect(page.getByRole("radio", { name: estimateContent.projectTypes[block.id] })).toBeChecked();
   }
   await page.goto("/estimate?service=constructor");
-  await expect(page.getByRole("combobox", { name: "Project type" })).toHaveValue("pos");
+  await expect(page.getByRole("radio", { name: estimateContent.projectTypes.pos })).toBeChecked();
 });
