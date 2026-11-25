@@ -42,6 +42,12 @@ export function Header() {
     return () => window.removeEventListener("scroll", sync);
   }, []);
 
+  useEffect(() => {
+    const dismiss = () => setDismissedWork(true);
+    window.addEventListener("scroll", dismiss, { passive: true });
+    return () => window.removeEventListener("scroll", dismiss);
+  }, []);
+
   function close() {
     dialog.current?.close();
     setOpen(false);

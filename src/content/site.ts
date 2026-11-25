@@ -277,6 +277,16 @@ export const workNavigation = {
   links: [navigationLinks.services, ...serviceDestinations, { ...navigationLinks.estimate, label: "Estimate" }],
 };
 
+export const aboutNavigation = {
+  label: "About sections",
+  links: [
+    navigationLinks.about,
+    navigationLinks.writing,
+    navigationLinks.travel,
+    navigationLinks.now,
+  ],
+};
+
 export const menuGroups = [
   { label: "Home", links: [{ label: "Home", href: "/" }] },
   { label: navigationLinks.services.label, links: workNavigation.links },

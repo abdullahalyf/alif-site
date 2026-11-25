@@ -5,6 +5,7 @@ import { aboutContent, site, seo } from "@/content/site";
 import { pageMetadata } from "@/seo/metadata";
 import { SectionLabel } from "@/components/section-label";
 import { StoryChapter } from "@/components/story-chapter";
+import { AboutSubnav } from "@/components/work-subnav";
 import { TravelTeaser } from "@/features/travel/TravelTeaser";
 import { AboutJourney } from "@/components/about/about-journey";
 import { Moments, NowAndLinks, OutsideWork } from "@/components/about/about-extras";
@@ -14,6 +15,7 @@ export const metadata = pageMetadata(seo.pages.about.title, seo.pages.about.desc
 export default function About() {
   return <>
     <section className="container section-space about-opening" aria-labelledby="about-title">
+      <AboutSubnav current="/about" />
       <SectionLabel>{aboutContent.label}</SectionLabel>
       <div className="about-top">
         <figure className="about-top__photo">

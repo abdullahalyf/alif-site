@@ -28,12 +28,13 @@ describe("HeroSide", () => {
     expect(screen.getByAltText(site.heroSide.alt)).toBeInTheDocument();
   });
 
-  it("serves the fixed-size JPEG directly", () => {
+  it("serves a responsive, optimised copy of the photo", () => {
     mockMatchMedia(false);
     const { container } = render(<HeroSide />);
 
     const photo = container.querySelector<HTMLImageElement>(".hero-side__photo");
-    expect(photo).toHaveAttribute("src", site.heroSide.src);
+    expect(photo?.getAttribute("src")).toContain(encodeURIComponent(site.heroSide.src));
+    expect(photo?.getAttribute("srcset")).toContain("_next/image");
     expect(photo).toHaveAttribute("width", String(site.heroSide.width));
     expect(photo).toHaveAttribute("height", String(site.heroSide.height));
   });
